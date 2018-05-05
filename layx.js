@@ -120,11 +120,11 @@
             },
             // 拖曳窗口大小监听
             resize: {
-                // 移动之前
+                // 拖曳之前
                 before: function(windowDom, winform) {},
-                // 移动中
+                // 拖曳中
                 resizing: function(windowDom, winform) {},
-                // 移动结束
+                // 拖曳结束
                 after: function(windowDom, winform) {}
             }
         }
@@ -424,7 +424,7 @@
                 Drag.isMove = false;
                 Drag.isTriggerMoveBefore = false;
                 var winform = Layx.windows[el.windowId];
-                if (el.windowDom.offsetTop === 0) {
+                if (el.windowDom.offsetTop === 0 && winform.config.maximizable === true) {
                     Layx.triggerMethod('max', el.windowId, winform, e);
                 }
                 if (Layx.windows[el.windowId].status !== "max") {
@@ -761,7 +761,7 @@
                     if (config.movable) {
                         new Drag(title, config.moveLimit, config.intercept.move);
                     }
-                    if (config.allowTitleDblclickToRestore === true) {
+                    if (config.allowTitleDblclickToRestore === true && config.maximizable === true) {
                         title.ondblclick = function(e) {
                             if (winform.status === "normal") {
                                 Layx.triggerMethod('max', config.id, winform, e);
@@ -1136,8 +1136,8 @@
                 Layx.setZindex(windowDom, winform);
                 filcker = setTimeout(function() {
                     windowDom.classList.remove('shadowFlicker');
+                    clearTimeout(filcker);
                 }, 120 * 8);
-                clearTimeout(filcker);
             }
         },
         // 设置置顶

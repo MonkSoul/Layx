@@ -24,6 +24,7 @@
     title:'打开一个文本窗口',
     content:'Layx 网页弹窗最佳选择.'
 });</code></pre>
+
     <strong style="margin-right: 20px;">打开一个HTML窗口</strong>
     <button id="layx2">查看效果</button>
     <pre><code data-language="javascript">layx.open({
@@ -32,39 +33,503 @@
     content: '<div style="color:#f00;">Layx 网页弹窗最佳选择.</div>'
 });</code></pre>
 
-    <p>整理中...</p>
-    <script src="../layx.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        function getId(id) {
-            return document.getElementById(id);
-        }
-        window.onload = function() {
-            setTimeout(function() {
-                layx.open({
-                    id: 'layx',
-                    title: 'Layx 网页弹窗最佳选择.',
-                    url: 'iframe.html',
-                    pinable: true
-                });
-            }, 100);
+    <strong style="margin-right: 20px;">打开iframe.html页面</strong>
+    <button id="layx3">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    title: '打开iframe.html页面',
+    url: './iframe.html'
+});</code></pre>
 
-            // 使用文档
-            getId('layx1').onclick = function() {
-                layx.open({
-                    id: this.id,
-                    title: '打开一个内容窗口',
-                    content: 'Layx 网页弹窗最佳选择.'
-                });
-            }
-            getId('layx2').onclick = function() {
-                layx.open({
-                    id: this.id,
-                    title: '打开一个HTML窗口',
-                    content: '<div style="color:#f00;">Layx 网页弹窗最佳选择.</div>'
-                });
-            }
+    <strong style="margin-right: 20px;">打开一个淘宝网窗口</strong>
+    <button id="layx4">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    title: '打开一个淘宝网窗口',
+    url: 'https://www.taobao.com/'
+});</code></pre>
+
+    <strong style="margin-right: 20px;color:#00f;">打开一个页面，并自动获取页面的标题填充窗口标题</strong>
+    <button id="layx5">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './child.html',
+    useFrameTitle: true
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开没有窗口图标的窗口</strong>
+    <button id="layx6">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: ' ← （没有图标）打开没有窗口图标的窗口',
+    icon: false
+});</code></pre>
+
+    <strong style="margin-right: 20px;color:#00f;">打开一个半透明窗口</strong>
+    <button id="layx7">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个半透明窗口',
+    opacity: 0.5
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个灰色背景窗口</strong>
+    <button id="layx8">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个灰色背景窗口',
+    bgColor: '#ccc'
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个黄色边框窗口</strong>
+    <button id="layx9">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个黄色边框窗口',
+    borderColor: '#ff0'
+});</code></pre>
+
+    <strong style="margin-right: 20px;color: #00f;">打开一个自定义窗口图标</strong>
+    <button id="layx10">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个自定义窗口图标',
+    icon: '<img src="taobao.jpg" style="height:18px;margin-top: 4px;" />'
+});</code></pre>
+
+    <strong style="margin-right: 20px;color: #00f;">打开一个iPhone 6大小的窗口</strong>
+    <button id="layx11">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: 'http://www.layui.com',
+    title: '打开一个iPhone 6大小的窗口',
+    width: 375,
+    height: 667
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个左上角的窗口</strong>
+    <button id="layx12">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个左上角的窗口',
+    position: 'lt'
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个右上角的窗口</strong>
+    <button id="layx13">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个右上角的窗口',
+    position: 'rt'
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个左下角的窗口</strong>
+    <button id="layx14">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个左下角的窗口',
+    position: 'lb'
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个右下角的窗口</strong>
+    <button id="layx15">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个右下角的窗口',
+    position: 'rb'
+});</code></pre>
+
+    <strong style="margin-right: 20px;color:#00f;">打开一个上边100，左边200的窗口</strong>
+    <button id="layx16">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个上边100，左边200的窗口',
+    position: [100,200]
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个中间显示的窗口</strong>
+    <button id="layx17">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个中间显示的窗口',
+    position: 'center'
+});</code></pre>
+
+    <strong style="margin-right: 20px;">加载窗口页面之前，显示 "亲，正在加载中哦，请稍后..."</strong>
+    <button id="layx18">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: 'https://www.oschina.net/',
+    title: '加载窗口页面之前，显示 "亲，正在加载中哦，请稍后..."',
+    loaddingText:'亲，正在加载中哦，请稍后...'
+});</code></pre>
+
+    <p>注：loaddingText也支持html代码哦</p>
+
+    <strong style="margin-right: 20px;">打开一个没有最小化的窗口</strong>
+    <button id="layx19">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+        id: this.id,
+        url: './iframe.html',
+        title: '打开一个没有最小化的窗口',
+        minimizable: false
+    });</code></pre>
+
+    <strong style="margin-right: 20px;color:#00f">打开一个只有关闭按钮的窗口</strong>
+    <button id="layx20">查看效果</button>
+    <pre><code data-language="javascript"></code>layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个只有关闭按钮的窗口',
+    minimizable: false,
+    maximizable: false
+});</pre>
+
+    <strong style="margin-right: 20px;color:#f00;">打开一个带阻隔（遮罩）的窗口</strong>
+    <button id="layx21">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个带阻隔（遮罩）的窗口，你可以窗口外试试',
+    shadable: true
+});</code></pre>
+
+    <strong style="margin-right: 20px;color:#f00;">打开一个置顶窗口</strong>
+    <button id="layx22">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个置顶窗口，请打开另外一个窗口试试。注：右边按钮可以取消/设置置顶',
+    alwaysOnTop: true,
+    position: [200, 300]
+});</code></pre>
+    <p>注：pinable为true显示显示图钉按钮，当 alwaysOnTop为true的时候，pinable自动显示</p>
+    <br />
+    <p>=============================分割线===========================</p>
+    <br />
+
+
+
+    <h1 style="color:#f00;">还有很多很多案例整理中...，可以先看参数！</p>
+        <pre><code data-language="javascript">var defaults = {
+    id: 'layx', // 唯一id
+    icon: '', // 图标，设置false不启用，这里支持html代码
+    title: '', // 窗口标题
+    bgColor: '#fff', // 背景颜色，iframe页面背景为透明有效
+    borderColor: '#3baced', // 边框颜色
+    opacity: 1, // 透明度
+    type: 'iframe', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
+    url: '', // iframe类型地址，type=iframe 时有效
+    content: '', // 非iframe类型内容，支持text,html
+    width: 800, // 初始化宽度
+    height: 600, // 初始化高度
+    loaddingText: '内容加载中...', // 内容加载文本内容，支持html
+    position: 'center', // 初始化位置，支持'center', 'lt', 'rt', 'lb', 'rb'以及 [top,left]数组
+    useFrameTitle: false, // 是否自动获取iframe页面标题填充窗口标题
+    minWidth: 150, // 拖曳大小最小宽度
+    minHeight: 150, // 拖曳大小最大宽度
+    shadable: false, // 是否启用窗口阻隔
+    alwaysOnTop: false, // 是否总是置顶
+    pinable: false, // 是否显示图钉按钮，当 alwaysOnTop为true的时候，pinable自动显示
+    minimizable: true, // 是否允许最小化
+    maximizable: true, // 是否允许最大化
+    closable: true, // 是否允许关闭
+    resizable: true, // 是否允许拖曳大小
+    // 拖曳方向控制
+    resizeLimit: {
+        t: true, // 是否允许上边拖曳大小，true允许
+        r: true, // 是否允许右边拖曳大小，true允许
+        b: true, // 是否允许下边拖曳大小，true允许
+        l: true, // 是否允许左边拖曳大小，true允许
+        lt: true, // 是否允许左上边拖曳大小，true允许
+        rt: true, // 是否允许右上边拖曳大小，true允许
+        lb: true, // 是否允许左下边拖曳大小，true允许
+        rb: true // 是否允许右下边拖曳大小，true允许
+    },
+    movable: true, // 是否允许拖动窗口
+    // 拖动窗口显示，vertical为true表示禁止水平拖动，horizontal为true表示禁止垂直拖动
+    moveLimit: {
+        vertical: false, // 是否禁止垂直拖动，false不禁止
+        horizontal: false, // 是否禁止水平拖动，false不禁止
+        leftOut: true, // 是否允许左边拖出，true允许
+        rightOut: true, // 是否允许右边拖出，true允许
+        topOut: true, // 是否允许上边拖出，true允许，此设置不管是false还是true，窗口都不能拖出窗体
+        bottomOut: true, // 是否允许下边拖出，true允许
+    },
+    statusBar: false, // 是否显示状态栏
+    focusable: true, // 是否启用iframe页面点击置顶
+    // scaleAnimatable: false, // 是否启用窗口缩放动画，开发中....
+    allowTitleDblclickToRestore: true, // 是否允许标题双击恢复窗体
+    // parent: null, // 父窗体id，设置此选项时，窗体将在窗体内部页面打开（MDI模式）并和父窗口共用同一个生命周期；注意：只支持非跨域页面。开发中...
+    // menuItems: [], // 自定义顶部下拉菜单，支持无限极，开发中....
+    // 拦截器，可以监听窗口各个状态
+    intercept: {
+        // iframe页面加载监听
+        load: {
+            // 加载之前，return false；禁止加载
+            before: function(windowDom, winform) {},
+            // 加载之后
+            after: function(windowDom, winform, iframe) {}
+        },
+        // 最小化监听
+        min: {
+            // 最小化之前，return false；禁止最小化
+            before: function(windowDom, winform) {},
+            // 最小化之后
+            after: function(windowDom, winform) {}
+        },
+        // 最大化监听
+        max: {
+            // 最大化之前，return false；禁止最大化
+            before: function(windowDom, winform) {},
+            // 最大化之后
+            after: function(windowDom, winform) {}
+        },
+        // 恢复监听
+        restore: {
+            // 恢复之前，return false；禁止恢复
+            before: function(windowDom, winform) {},
+            // 恢复之后
+            after: function(windowDom, winform) {}
+        },
+        // 关闭监听
+        destroy: {
+            // 关闭之前，return false；禁止关闭
+            before: function(windowDom, winform) {},
+            // 关闭之后
+            after: function(windowDom, winform) {}
+        },
+        // 置顶监听
+        pin: {
+            // 置顶之前，return false；禁止操作
+            before: function(windowDom, winform) {},
+            // 置顶之后
+            after: function(windowDom, winform) {}
+        },
+        // 移动窗口监听
+        move: {
+            // 移动之前
+            before: function(windowDom, winform) {},
+            // 移动中
+            moveing: function(windowDom, winform) {},
+            // 移动结束
+            after: function(windowDom, winform) {}
+        },
+        // 拖曳窗口大小监听
+        resize: {
+            // 拖曳之前
+            before: function(windowDom, winform) {},
+            // 拖曳中
+            resizing: function(windowDom, winform) {},
+            // 拖曳结束
+            after: function(windowDom, winform) {}
         }
-    </script>
+    }
+};</code></pre>
+        <script src="../layx.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function getId(id) {
+                return document.getElementById(id);
+            }
+            window.onload = function() {
+                setTimeout(function() {
+                    layx.open({
+                        id: 'layx',
+                        title: 'Layx 网页弹窗最佳选择.',
+                        url: 'iframe.html',
+                        pinable: true,
+                        shadable: true
+                    });
+                }, 100);
+
+                // 使用文档
+                getId('layx1').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        title: '打开一个内容窗口',
+                        content: 'Layx 网页弹窗最佳选择.'
+                    });
+                }
+                getId('layx2').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        title: '打开一个HTML窗口',
+                        content: '<div style="color:#f00;">Layx 网页弹窗最佳选择.</div>'
+                    });
+                }
+                getId('layx3').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        title: '打开iframe.html页面',
+                        url: './iframe.html'
+                    });
+                }
+                getId('layx4').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        title: '打开一个淘宝网窗口',
+                        url: 'https://www.taobao.com/'
+                    });
+                }
+                getId('layx5').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './child.html',
+                        useFrameTitle: true
+                    });
+                }
+                getId('layx6').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: ' ← （没有图标）打开没有窗口图标的窗口',
+                        icon: false,
+                    });
+                }
+                getId('layx7').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个半透明窗口',
+                        opacity: 0.5
+                    });
+                }
+                getId('layx8').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个灰色背景窗口',
+                        bgColor: '#ccc'
+                    });
+                }
+                getId('layx9').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个黄色边框窗口',
+                        borderColor: '#ff0'
+                    });
+                }
+                getId('layx10').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个自定义窗口图标（淘宝图标）',
+                        icon: '<img src="taobao.jpg" style="height:18px;margin-top: 4px;" />'
+                    });
+                }
+                getId('layx11').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: 'http://www.layui.com',
+                        title: '打开一个iPhone 6大小的窗口',
+                        width: 375,
+                        height: 667
+                    });
+                }
+                getId('layx12').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个左上角的窗口',
+                        position: 'lt'
+                    });
+                }
+                getId('layx13').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个右上角的窗口',
+                        position: 'rt'
+                    });
+                }
+                getId('layx14').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个左下角的窗口',
+                        position: 'lb'
+                    });
+                }
+                getId('layx15').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个右下角的窗口',
+                        position: 'rb'
+                    });
+                }
+                getId('layx16').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个上边100，左边200的窗口',
+                        position: [100, 200]
+                    });
+                }
+                getId('layx17').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个中间显示的窗口',
+                        position: 'center'
+                    });
+                }
+                getId('layx18').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: 'https://www.oschina.net/',
+                        title: '加载窗口页面之前，显示 "亲，正在加载中哦，请稍后..."',
+                        loaddingText: '亲，正在加载中哦，请稍后...'
+                    });
+                }
+                getId('layx19').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个没有最小化的窗口',
+                        minimizable: false
+                    });
+                }
+                getId('layx20').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个只有关闭按钮的窗口',
+                        minimizable: false,
+                        maximizable: false
+                    });
+                }
+                getId('layx21').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个带阻隔（遮罩）的窗口，你可以窗口外试试',
+                        shadable: true
+                    });
+                }
+                getId('layx22').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个置顶窗口，请打开另外一个窗口试试。注：右边按钮可以取消/设置置顶',
+                        alwaysOnTop: true,
+                        position: [200, 300]
+                    });
+                }
+            }
+        </script>
 </body>
 
 </html>
