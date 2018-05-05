@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="../layx.css" rel="stylesheet" />
+    <link href="github.css" rel="stylesheet" />
+    <script type="text/javascript" src="rainbow.min.js"></script>
+</head>
+
+<body>
+    <h1>开源地址</h1>
+    <div>
+        Gitee：<a href='https://gitee.com/monksoul/LayX' target="_blank">https://gitee.com/monksoul/LayX</a>
+    </div>
+    <h1>使用示例</h1>
+    <strong style="margin-right: 20px;">打开一个文本窗口</strong>
+    <button id="layx1">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: 'layx1',
+    title:'打开一个文本窗口',
+    content:'Layx 网页弹窗最佳选择.'
+});</code></pre>
+    <strong style="margin-right: 20px;">打开一个HTML窗口</strong>
+    <button id="layx2">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    title: '打开一个HTML窗口',
+    content: '<div style="color:#f00;">Layx 网页弹窗最佳选择.</div>'
+});</code></pre>
+
+    <p>整理中...</p>
+    <script src="../layx.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function getId(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            setTimeout(function() {
+                layx.open({
+                    id: 'layx',
+                    title: 'Layx 网页弹窗最佳选择.',
+                    url: 'iframe.html',
+                    pinable: true
+                });
+            }, 100);
+
+            // 使用文档
+            getId('layx1').onclick = function() {
+                layx.open({
+                    id: this.id,
+                    title: '打开一个内容窗口',
+                    content: 'Layx 网页弹窗最佳选择.'
+                });
+            }
+            getId('layx2').onclick = function() {
+                layx.open({
+                    id: this.id,
+                    title: '打开一个HTML窗口',
+                    content: '<div style="color:#f00;">Layx 网页弹窗最佳选择.</div>'
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
