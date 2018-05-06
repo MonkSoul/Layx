@@ -619,10 +619,8 @@
             if (!Layx.windows.hasOwnProperty(config.id)) {
                 if (config.url) {
                     config.type = 'iframe';
-                } else {
-                    config.type = 'html';
                 }
-                if (config.alwaysOnTop === true) {
+                if (config.alwaysOnTop === true && (['alert', 'confirm', 'prompt', 'msg', 'error', 'loading'].indexOf(config.type) < 0) && config.pinable !== false) {
                     config.pinable = true;
                 }
 
@@ -1178,6 +1176,7 @@
             var config = layxDeepClone({}, {
                 id: alertId,
                 title: title ? title : '提示消息',
+                type: 'alert',
                 shadable: true,
                 width: 352,
                 height: 157,
@@ -1185,6 +1184,8 @@
                 minimizable: false,
                 maximizable: false,
                 resizable: false,
+                alwaysOnTop: true,
+                pinable: false,
                 borderColor: '#d26c20',
                 content: '<div class="layx-alert-content">' + content + '</div>',
                 statusBar: '<div class="layx-alert-buttons"><button class="layx-status-button layx-button-ok" data-layxid="' + alertId + '">确定</button><button class="layx-status-button layx-button-cancel" data-layxid="' + alertId + '">取消</button></div>',
