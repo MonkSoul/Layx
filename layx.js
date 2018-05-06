@@ -138,7 +138,7 @@
         callback: function(id, winform) {} // 回调函数
     }, {
         label: '取消', // 标签
-        classList: 'layx-button-confirm', // class名，多个class用空格隔开
+        classList: 'layx-button-cancel', // class名，多个class用空格隔开
         callback: function(id, winform) { // 回调函数
             Layx.triggerMethod('destroy', id, winform);
         }
