@@ -215,7 +215,8 @@
     url: './iframe.html',
     title: '打开一个置顶窗口，请打开另外一个窗口试试。注：右边按钮可以取消/设置置顶',
     alwaysOnTop: true,
-    position: [200, 300]
+    position: [200, 300],
+    pinable:true
 });</code></pre>
 
     <p>注：pinable为true显示显示图钉按钮，当 alwaysOnTop为true的时候，pinable自动显示</p>
@@ -598,7 +599,8 @@
                         url: './iframe.html',
                         title: '打开一个置顶窗口，请打开另外一个窗口试试。注：右边按钮可以取消/设置置顶',
                         alwaysOnTop: true,
-                        position: [200, 300]
+                        position: [200, 300],
+                        pinable: true
                     });
                 }
                 getId('layx23').onclick = function() {
