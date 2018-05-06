@@ -18,7 +18,29 @@
         <br /> Github: <a href='https://github.com/MonkSoul/Layx' target="_blank">https://github.com/MonkSoul/Layx</a>
     </div>
     <h1>经典窗口</h1>
-    <button id="layx-alert1">提示框</button>
+    <button id="layx-alert1">默认提示框</button> <button id="layx-alert2">提示框-自定义按钮</button>
+    <pre><code data-language="javascript">layx.alert('Layx 网页弹窗最佳选择.');</code></pre>
+    <pre><code data-language="javascript">layx.alert('Layx 网页弹窗最佳选择.', '标题', [{
+    label: '保持内容',
+    classList: 'layx-button-save',
+    callback: function(id, winform) {
+        alert('我是保存操作');
+        layx.destroy(id);
+    }
+}, {
+    label: '确认',
+    classList: 'layx-button-confirm',
+    callback: function(id, winform) {
+        alert('我是确认操作');
+        layx.destroy(id);
+    }
+}, {
+    label: '取消',
+    classList: 'layx-button-confirm',
+    callback: function(id, winform) {
+        layx.destroy(id);
+    }
+}]);</code></pre>
     <h1>使用示例</h1>
     <strong style="margin-right: 20px;">打开一个文本窗口</strong>
     <button id="layx1">查看效果</button>
@@ -285,6 +307,15 @@
     resizable: false
 });</code></pre>
 
+    <strong style="margin-right: 20px;color:#f00;">打开一个3秒自动关闭的窗口</strong>
+    <button id="layx29">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+        id: this.id,
+        url: './iframe.html',
+        title: '打开一个3秒自动关闭的窗口',
+        autoDestroy: 3000
+    });</code></pre>
+
     <br />
     <p>=============================分割线===========================</p>
     <br />
@@ -299,7 +330,7 @@
     bgColor: '#fff', // 背景颜色，iframe页面背景为透明有效
     borderColor: '#3baced', // 边框颜色
     opacity: 1, // 透明度
-    type: 'iframe', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
+    type: 'html', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
     url: '', // iframe类型地址，type=iframe 时有效
     content: '', // 非iframe类型内容，支持text,html
     width: 800, // 初始化宽度
@@ -316,6 +347,7 @@
     maximizable: true, // 是否允许最大化
     closable: true, // 是否允许关闭
     resizable: true, // 是否允许拖曳大小
+    autoDestroy: false, // 窗口自动关闭，如果false不启用，参数可以是毫秒时间，比如3000=>3秒
     // 拖曳方向控制
     resizeLimit: {
         t: true, // 是否允许上边拖曳大小，true允许
@@ -425,6 +457,29 @@
 
                 getId('layx-alert1').onclick = function() {
                     layx.alert('Layx 网页弹窗最佳选择.');
+                }
+                getId('layx-alert2').onclick = function() {
+                    layx.alert('Layx 网页弹窗最佳选择.', '标题', [{
+                        label: '保持内容',
+                        classList: 'layx-button-save',
+                        callback: function(id, winform) {
+                            alert('我是保存操作');
+                            layx.destroy(id);
+                        }
+                    }, {
+                        label: '确认',
+                        classList: 'layx-button-confirm',
+                        callback: function(id, winform) {
+                            alert('我是确认操作');
+                            layx.destroy(id);
+                        }
+                    }, {
+                        label: '取消',
+                        classList: 'layx-button-confirm',
+                        callback: function(id, winform) {
+                            layx.destroy(id);
+                        }
+                    }]);
                 }
 
                 // 使用文档
@@ -658,6 +713,15 @@
                         url: './iframe.html',
                         title: '打开一个不能拖曳大小的窗口',
                         resizable: false
+                    });
+                }
+
+                getId('layx29').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个3秒自动关闭的窗口',
+                        autoDestroy: 3000
                     });
                 }
             }

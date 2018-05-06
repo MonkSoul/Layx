@@ -38,6 +38,7 @@
         maximizable: true, // 是否允许最大化
         closable: true, // 是否允许关闭
         resizable: true, // 是否允许拖曳大小
+        autoDestroy: false, // 窗口自动关闭，如果false不启用，参数可以是毫秒时间，比如3000=>3秒
         // 拖曳方向控制
         resizeLimit: {
             t: true, // 是否允许上边拖曳大小，true允许
@@ -129,6 +130,19 @@
             }
         }
     };
+
+    // 默认状态按钮
+    var defaultButtons = [{
+        label: '确认', // 标签
+        classList: 'layx-button-confirm', // class名，多个class用空格隔开
+        callback: function(id, winform) {} // 回调函数
+    }, {
+        label: '取消', // 标签
+        classList: 'layx-button-confirm', // class名，多个class用空格隔开
+        callback: function(id, winform) { // 回调函数
+            Layx.triggerMethod('destroy', id, winform);
+        }
+    }];
 
     // 对象深度复制
     (function(global) {
@@ -654,7 +668,7 @@
                 };
 
                 // 构建窗口骨架
-                var winTemplate = "\n                " + (config.shadable === true ? '\n                <div class="layx-shade" id="layx-' + config.id + '-shade" style="z-index:' + (config.alwaysOnTop === true ? (++Layx.pinZindex) : (++Layx.zIndex)) + '"></div>\n                ' : "") + '\n                <div class="layx-window" id="layx-' + config.id + '" style="min-width:' + config.minWidth + ';width:' + (typeof config.width === 'string' ? 'auto' : config.width + 'px') + ";min-height:" + config.minHeight + ";height:" + (typeof config.height === 'string' ? 'auto' : config.height + 'px') + ";top:" + position.top + "px;left:" + position.left + "px;z-index: " + (config.alwaysOnTop === true ? (++Layx.pinZindex) : (++Layx.zIndex)) + ";background-color:" + (config.bgColor ? config.bgColor : "transparent") + ";border-color:" + config.borderColor + ";opacity:" + config.opacity + '">\n                    <div class="layx-control-bar">\n                        <div class="layx-icons">\n                            ' + (config.icon === false ? "" : config.icon ? config.icon.toString() : '<div class="layx-icon">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-windows"></use>\n                                </svg>\n                            </div>') + '\n                        </div>\n                        <div class="layx-title" title="' + config.title + '">' + config.title + '</div>\n                        <div class="layx-menus">\n                        ' + (config.pinable === true ? '\n                            <div class="layx-operator layx-pin-menu" ' + (config.alwaysOnTop === true ? ' data-topable="1" ' : '') + '>\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-pin"></use>\n                                </svg>\n                            </div>\n                            ' : "") + "\n                            \n                            " + (config.minimizable === true ? '\n                            <div class="layx-operator layx-min-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-min"></use>\n                                </svg>\n                            </div>\n                            ' : "") + "\n                            \n                            " + (config.maximizable === true ? '\n                            <div class="layx-operator layx-max-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-max"></use>\n                                </svg>\n                            </div>\n                                ' : "") + "\n                            \n                            " + (config.closable === true ? '\n                                <div class="layx-operator layx-destroy-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-destroy"></use>\n                                </svg>\n                            </div>\n                                ' : "") + '\n                            \n                        </div>\n                    </div>\n                    <div class="layx-body">\n                        <div class="layx-fixed" data-enable="0"></div>\n                    </div>\n                    ' + (config.resizable === true ? '\n                        <div class="layx-resizes">\n                        ' + (config.resizeLimit.t === true ? '<div class="layx-resize-top"></div>' : "") + "\n                        " + (config.resizeLimit.r === true ? '<div class="layx-resize-right"></div>' : "") + "\n                        " + (config.resizeLimit.b === true ? '<div class="layx-resize-bottom"></div>' : "") + "\n                        " + (config.resizeLimit.l === true ? '<div class="layx-resize-left"></div>' : "") + "\n                        " + (config.resizeLimit.lt === true ? '<div class="layx-resize-left-top"></div>' : "") + "\n                        " + (config.resizeLimit.rt === true ? '<div class="layx-resize-right-top"></div>' : "") + "\n                        " + (config.resizeLimit.lb === true ? '<div class="layx-resize-left-bottom"></div>' : "") + "\n                        " + (config.resizeLimit.rb === true ? '<div class="layx-resize-right-bottom"></div>' : "") + "\n                    </div>\n                        " : "") + "\n                " + (config.statusBar === false ? "" : '<div class="layx-status-bar">' + config.statusBar + '</div>\n                        ') + "</div>\n                ";
+                var winTemplate = "\n                " + (config.shadable === true ? '\n                <div class="layx-shade" id="layx-' + config.id + '-shade" style="z-index:' + (config.alwaysOnTop === true ? (++Layx.pinZindex) : (++Layx.zIndex)) + '"></div>\n                ' : "") + '\n                <div class="layx-window" id="layx-' + config.id + '" style="min-width:' + config.minWidth + ';width:' + (typeof config.width === 'string' ? 'auto' : config.width + 'px') + ";min-height:" + config.minHeight + ";height:" + (typeof config.height === 'string' ? 'auto' : config.height + 'px') + ";top:" + position.top + "px;left:" + position.left + "px;z-index: " + (config.alwaysOnTop === true ? (++Layx.pinZindex) : (++Layx.zIndex)) + ";background-color:" + (config.bgColor ? config.bgColor : "transparent") + ";border-color:" + config.borderColor + ";opacity:" + config.opacity + '">\n                    <div class="layx-control-bar">\n                        <div class="layx-icons">\n                            ' + (config.icon === false ? "" : config.icon ? config.icon.toString() : '<div class="layx-icon">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-windows"></use>\n                                </svg>\n                            </div>') + '\n                        </div>\n                        <div class="layx-title" title="' + config.title + '">' + config.title + '</div>\n                        <div class="layx-menus">\n                        ' + (config.pinable === true ? '\n                            <div class="layx-operator layx-pin-menu" ' + (config.alwaysOnTop === true ? ' data-topable="1" ' : '') + '>\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-pin"></use>\n                                </svg>\n                            </div>\n                            ' : "") + "\n                            \n                            " + (config.minimizable === true ? '\n                            <div class="layx-operator layx-min-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-min"></use>\n                                </svg>\n                            </div>\n                            ' : "") + "\n                            \n                            " + (config.maximizable === true ? '\n                            <div class="layx-operator layx-max-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-max"></use>\n                                </svg>\n                            </div>\n                                ' : "") + "\n                            \n                            " + (config.closable === true ? '\n                                <div class="layx-operator layx-destroy-menu">\n                                <svg class="layx-iconfont" aria-hidden="true">\n                                    <use xlink:href="#layx-icon-destroy"></use>\n                                </svg>\n                            </div>\n                                ' : "") + '\n                            \n                        </div>\n                    </div>\n                    <div class="layx-body">\n                        <div class="layx-fixed" data-enable="0"></div>\n                    </div>\n                    ' + (config.resizable === true ? '\n                        <div class="layx-resizes">\n                        ' + (config.resizeLimit.t === true ? '<div class="layx-resize-top"></div>' : "") + "\n                        " + (config.resizeLimit.r === true ? '<div class="layx-resize-right"></div>' : "") + "\n                        " + (config.resizeLimit.b === true ? '<div class="layx-resize-bottom"></div>' : "") + "\n                        " + (config.resizeLimit.l === true ? '<div class="layx-resize-left"></div>' : "") + "\n                        " + (config.resizeLimit.lt === true ? '<div class="layx-resize-left-top"></div>' : "") + "\n                        " + (config.resizeLimit.rt === true ? '<div class="layx-resize-right-top"></div>' : "") + "\n                        " + (config.resizeLimit.lb === true ? '<div class="layx-resize-left-bottom"></div>' : "") + "\n                        " + (config.resizeLimit.rb === true ? '<div class="layx-resize-right-bottom"></div>' : "") + "\n                    </div>\n                        " : "") + "\n                " + (config.statusBar === false ? "" : config.statusBar === true ? '<div class="layx-status-bar"></div>\n                        ' : '<div class="layx-status-bar">' + config.statusBar + '</div>\n                        ') + "</div>\n                ";
 
                 utils.InsertAfter(winTemplate);
                 var windowDom = utils.getElementById('layx-' + config.id);
@@ -1172,6 +1186,28 @@
                 winform.defaultAreaInfo.top = pos.top;
             }
         },
+        createButtoms: function(id, windowDom, buttoms) {
+            var statusBar = utils.querySelector('.layx-status-bar', windowDom);
+            var btnWrap = document.createElement('div');
+            btnWrap.classList.add('layx-alert-buttons');
+            if (!utils.isArray(buttoms)) {
+                buttoms = defaultButtons;
+            }
+            for (var i = 0; i < buttoms.length; i++) {
+                var btn = document.createElement('button');
+                btn.setAttribute('class', 'layx-status-button ' + buttoms[i].classList);
+                btn.setAttribute("layx-window-id", id);
+                btn.innerHTML = buttoms[i].label;
+                btn.callback = buttoms[i].callback;
+                btn.onclick = function(e) {
+                    if (utils.isFunction(this.callback)) {
+                        this.callback(id, windowDom);
+                    }
+                }
+                btnWrap.appendChild(btn);
+            }
+            statusBar.appendChild(btnWrap);
+        },
         alert: function(content, title, buttoms, options) {
             var alertId = (options && options["id"]) ? options["id"] : 'layx-alert-' + (++Layx.pinZindex);
             var config = layxDeepClone({}, {
@@ -1189,7 +1225,7 @@
                 pinable: false,
                 borderColor: '#d26c20',
                 content: '<div class="layx-alert-content">' + content + '</div>',
-                statusBar: '<div class="layx-alert-buttons"><button class="layx-status-button layx-button-ok" data-layxid="' + alertId + '">确定</button><button class="layx-status-button layx-button-cancel" data-layxid="' + alertId + '">取消</button></div>',
+                statusBar: true,
                 moveLimit: {
                     leftOut: false,
                     rightOut: false,
@@ -1199,25 +1235,19 @@
             }, options || {});
             var winform = Layx.create(config);
             var windowDom = winform.windowDom;
-            var cancelMenu = utils.querySelector('.layx-button-cancel', windowDom);
-            var okMenu = utils.querySelector('.layx-button-ok', windowDom);
-            if (cancelMenu) {
-                cancelMenu.onclick = function(e) {
-                    Layx.destroy(config.id);
-                }
-            }
-            if (okMenu) {
-                okMenu.onclick = function(e) {
-                    alert('确定按钮');
-                }
-            }
+            Layx.createButtoms(config.id, windowDom, buttoms);
         }
     };
 
     win.layx = {
         // 打开窗口
         open: function(options) {
-            Layx.create(options);
+            var winform = Layx.create(options);
+            if (winform.config.autoDestroy !== false && typeof winform.config.autoDestroy === 'number') {
+                setTimeout(function() {
+                    Layx.triggerMethod('destroy', winform.id, winform);
+                }, winform.config.autoDestroy);
+            }
         },
         // 打开窗口并自动检测是否加载了layx.css，如果没有加载就自动加载，只适合非file:///协议环境
         openl: function(options) {
@@ -1228,21 +1258,31 @@
         },
         // 关闭窗口
         destroy: function(id) {
-            Layx.destroy(id);
+            Layx.triggerMethod('destroy', id, Layx.windows[id]);
         },
-        // 关闭所有窗口，调用此接口将不能执行 intercept定义的拦截器
-        destroyAll: function() {},
+        // 关闭所有窗口
+        destroyAll: function() {
+            var windows;
+            if (slf === over) {
+                windows = over.layx.Windows;
+            } else {
+                windows = slf.layx.Windows;
+            }
+            for (var id in windows) {
+                Layx.triggerMethod('destroy', id, windows[id]);
+            }
+        },
         // 最小化窗口
         min: function(id) {
-            Layx.min(id);
+            Layx.triggerMethod('min', id, Layx.windows[id]);
         },
         // 最大化窗口
         max: function(id) {
-            Layx.max(id);
+            Layx.triggerMethod('max', id, Layx.windows[id]);
         },
         // 恢复窗口
         restore: function(id) {
-            Layx.restore(id);
+            Layx.triggerMethod('restore', id, Layx.windows[id]);
         },
         // 获取窗口信息
         getWindow: function(id) {
@@ -1286,8 +1326,9 @@
         cancelOnTop: function(id) {
             Layx.cancelOnTop(id);
         },
-        alert: function(content, title) {
-            Layx.alert(content, title);
+        // 提示框
+        alert: function(content, title, buttoms, options) {
+            Layx.alert(content, title, buttoms, options);
         }
     };
 
