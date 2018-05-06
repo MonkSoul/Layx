@@ -17,6 +17,8 @@
         Gitee：<a href='https://gitee.com/monksoul/LayX' target="_blank">https://gitee.com/monksoul/LayX</a>
         <br /> Github: <a href='https://github.com/MonkSoul/Layx' target="_blank">https://github.com/MonkSoul/Layx</a>
     </div>
+    <h1>经典窗口</h1>
+    <button id="layx-alert1">提示框</button>
     <h1>使用示例</h1>
     <strong style="margin-right: 20px;">打开一个文本窗口</strong>
     <button id="layx1">查看效果</button>
@@ -216,6 +218,8 @@
     position: [200, 300]
 });</code></pre>
 
+    <p>注：pinable为true显示显示图钉按钮，当 alwaysOnTop为true的时候，pinable自动显示</p>
+
     <strong style="margin-right: 20px;color:#00f;">打开一个带状态栏窗口</strong>
     <button id="layx23">查看效果</button>
     <pre><code data-language="javascript">layx.open({
@@ -225,7 +229,61 @@
     statusBar: '<div style="color:#f00;">我是状态栏的内容哦</div>'
 });</code></pre>
 
-    <p>注：pinable为true显示显示图钉按钮，当 alwaysOnTop为true的时候，pinable自动显示</p>
+
+    <strong style="margin-right: 20px;">打开一个只能水平拖动的窗口</strong>
+    <button id="layx24">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个只能水平拖动的窗口',
+    moveLimit: {
+        vertical: true
+    }
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个只能垂直拖动的窗口窗口</strong>
+    <button id="layx25">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个只能垂直拖动的窗口',
+    moveLimit: {
+        horizontal: true
+    }
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个不能拖动窗口</strong>
+    <button id="layx26">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个只能垂直拖动的窗口',
+    movable: false
+});</code></pre>
+
+    <strong style="margin-right: 20px;color:#00f;">打开一个不能拖出可视区域的窗口</strong>
+    <button id="layx27">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个不能拖出可视区域的窗口',
+    moveLimit: {
+        leftOut: false, // 是否允许左边拖出，true允许
+        rightOut: false, // 是否允许右边拖出，true允许
+        topOut: false, // 是否允许上边拖出，true允许，此设置不管是false还是true，窗口都不能拖出窗体
+        bottomOut: false // 是否允许下边拖出，true允许
+    },
+});</code></pre>
+
+    <strong style="margin-right: 20px;">打开一个不能拖曳大小的窗口</strong>
+    <button id="layx28">查看效果</button>
+    <pre><code data-language="javascript">layx.open({
+    id: this.id,
+    url: './iframe.html',
+    title: '打开一个不能拖曳大小的窗口',
+    resizable: false
+});</code></pre>
+
     <br />
     <p>=============================分割线===========================</p>
     <br />
@@ -363,6 +421,10 @@
                         shadable: true
                     });
                 }, 100);
+
+                getId('layx-alert1').onclick = function() {
+                    layx.alert('Layx 网页弹窗最佳选择.');
+                }
 
                 // 使用文档
                 getId('layx1').onclick = function() {
@@ -545,6 +607,55 @@
                         url: './iframe.html',
                         title: '打开一个带状态栏窗口',
                         statusBar: '<div style="color:#f00;">我是状态栏的内容哦</div>'
+                    });
+                }
+                getId('layx24').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个只能水平拖动的窗口',
+                        moveLimit: {
+                            vertical: true
+                        }
+                    });
+                }
+                getId('layx25').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个只能垂直拖动的窗口',
+                        moveLimit: {
+                            horizontal: true
+                        }
+                    });
+                }
+                getId('layx26').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个只能垂直拖动的窗口',
+                        movable: false
+                    });
+                }
+                getId('layx27').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个不能拖出可视区域的窗口',
+                        moveLimit: {
+                            leftOut: false, // 是否允许左边拖出，true允许
+                            rightOut: false, // 是否允许右边拖出，true允许
+                            topOut: false, // 是否允许上边拖出，true允许，此设置不管是false还是true，窗口都不能拖出窗体
+                            bottomOut: false // 是否允许下边拖出，true允许
+                        },
+                    });
+                }
+                getId('layx28').onclick = function() {
+                    layx.open({
+                        id: this.id,
+                        url: './iframe.html',
+                        title: '打开一个不能拖曳大小的窗口',
+                        resizable: false
                     });
                 }
             }

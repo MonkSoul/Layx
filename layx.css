@@ -4,7 +4,7 @@
  * author : 百小僧/MonkSoul
  * version : v1.0.0
  * create time : 2018.05.03
- * update time : 2018.05.05
+ * update time : 2018.05.06
  */
 
 .layx-window,
@@ -290,6 +290,48 @@
     border-top: 1px solid #dfdfdf;
     font-size: 12px;
     line-height: 25px;
+}
+
+.layx-alert-content {
+    color: #003399;
+    font-size: 15px;
+    padding: 10px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -ms-justify-content: flex-start;
+    -moz-justify-content: flex-start;
+    -o-justify-content: flex-start;
+}
+
+.layx-alert-buttons {
+    padding: 10px;
+    text-align: right;
+    line-height: normal;
+}
+
+.layx-alert-buttons .layx-status-button {
+    padding: 0 16px;
+    height: 21px;
+    line-height: 21px;
+    color: #000000;
+    font-size: 14px;
+    border: 1px solid #adadad;
+    outline: none;
+    margin-left: 8px;
+    display: inline-block;
+    background-color: #e1e1e1;
+}
+
+.layx-alert-buttons .layx-status-button:hover {
+    background-color: #e5f1fb;
+    border: 1px solid #0078d7;
 }
 
 @keyframes layx-shadowFlicker {
