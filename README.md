@@ -42,6 +42,8 @@ Layx 是一款纯原生Javascript编写的网页弹窗插件，完全模仿Windo
 - 支持自动获取iframe页面标题填充窗口标题
 - 支持窗口状态拦截器，可以拦截窗口所有操作功能
 - 支持窗口加载提示控制
+- 支持窗口自动关闭控制
+- 支持消息提示窗口（alert,confirm,prompt,loadding,error) **只完成了alert**
 - 兼容IE9+、Chrome、Edge、FF、Opera等现代主流浏览器
 
 未来拥有的功能远不止这些...
@@ -62,7 +64,7 @@ Layx 是一款纯原生Javascript编写的网页弹窗插件，完全模仿Windo
         bgColor: '#fff', // 背景颜色，iframe页面背景为透明有效
         borderColor: '#3baced', // 边框颜色
         opacity: 1, // 透明度
-        type: 'iframe', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
+        type: 'html', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
         url: '', // iframe类型地址，type=iframe 时有效
         content: '', // 非iframe类型内容，支持text,html
         width: 800, // 初始化宽度
@@ -79,6 +81,7 @@ Layx 是一款纯原生Javascript编写的网页弹窗插件，完全模仿Windo
         maximizable: true, // 是否允许最大化
         closable: true, // 是否允许关闭
         resizable: true, // 是否允许拖曳大小
+        autoDestroy: false, // 窗口自动关闭，如果false不启用，参数可以是毫秒时间，比如3000=>3秒
         // 拖曳方向控制
         resizeLimit: {
             t: true, // 是否允许上边拖曳大小，true允许
@@ -161,11 +164,11 @@ Layx 是一款纯原生Javascript编写的网页弹窗插件，完全模仿Windo
             },
             // 拖曳窗口大小监听
             resize: {
-                // 移动之前
+                // 拖曳之前
                 before: function(windowDom, winform) {},
-                // 移动中
+                // 拖曳中
                 resizing: function(windowDom, winform) {},
-                // 移动结束
+                // 拖曳结束
                 after: function(windowDom, winform) {}
             }
         }
