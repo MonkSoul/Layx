@@ -21,7 +21,7 @@
         bgColor: '#fff', // 背景颜色，iframe页面背景为透明有效
         borderColor: '#3baced', // 边框颜色
         opacity: 1, // 透明度
-        type: 'iframe', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
+        type: 'html', // 窗口类型：支持iframe,alert,confirm,error,load,prompt
         url: '', // iframe类型地址，type=iframe 时有效
         content: '', // 非iframe类型内容，支持text,html
         width: 800, // 初始化宽度
@@ -617,6 +617,7 @@
         create: function(options) {
             var config = layxDeepClone({}, defaults, options || {});
             if (!Layx.windows.hasOwnProperty(config.id)) {
+
                 if (config.url) {
                     config.type = 'iframe';
                 }
