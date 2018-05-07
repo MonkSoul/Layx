@@ -9,7 +9,7 @@
  * update time : 2018.05.06
  */
 ;
-! function(over, win, slf) {
+! function (over, win, slf) {
     "use strict";
 
     // layx 默认配置参数
@@ -71,62 +71,62 @@
             // iframe页面加载监听
             load: {
                 // 加载之前，return false；禁止加载
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 加载之后
-                after: function(windowDom, winform, iframe) {}
+                after: function (windowDom, winform, iframe) { }
             },
             // 最小化监听
             min: {
                 // 最小化之前，return false；禁止最小化
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 最小化之后
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 最大化监听
             max: {
                 // 最大化之前，return false；禁止最大化
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 最大化之后
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 恢复监听
             restore: {
                 // 恢复之前，return false；禁止恢复
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 恢复之后
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 关闭监听
             destroy: {
                 // 关闭之前，return false；禁止关闭
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 关闭之后
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 置顶监听
             pin: {
                 // 置顶之前，return false；禁止操作
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 置顶之后
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 移动窗口监听
             move: {
                 // 移动之前
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 移动中
-                moveing: function(windowDom, winform) {},
+                moveing: function (windowDom, winform) { },
                 // 移动结束
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             },
             // 拖曳窗口大小监听
             resize: {
                 // 拖曳之前
-                before: function(windowDom, winform) {},
+                before: function (windowDom, winform) { },
                 // 拖曳中
-                resizing: function(windowDom, winform) {},
+                resizing: function (windowDom, winform) { },
                 // 拖曳结束
-                after: function(windowDom, winform) {}
+                after: function (windowDom, winform) { }
             }
         }
     };
@@ -135,22 +135,22 @@
     var defaultButtons = [{
         label: '确认', // 标签
         classList: 'layx-button-confirm', // class名，多个class用空格隔开
-        callback: function(id, winform) {} // 回调函数
+        callback: function (id, winform) { } // 回调函数
     }, {
         label: '取消', // 标签
         classList: 'layx-button-cancel', // class名，多个class用空格隔开
-        callback: function(id, winform) { // 回调函数
+        callback: function (id, winform) { // 回调函数
             Layx.triggerMethod('destroy', id, winform);
         }
     }];
 
     // 对象深度复制
-    (function(global) {
+    (function (global) {
         var extend,
             _extend,
             _isObject;
 
-        _isObject = function(o) {
+        _isObject = function (o) {
             return Object.prototype.toString.call(o) === '[object Object]';
         }
 
@@ -174,7 +174,7 @@
             }
         }
 
-        extend = function() {
+        extend = function () {
             var arr = arguments,
                 result = {},
                 i;
@@ -197,31 +197,31 @@
     // 工具类
     var utils = {
         // 是否数组类型
-        isArray: function(o) {
+        isArray: function (o) {
             return Object.prototype.toString.call(o) == '[object Array]';
         },
         // 是否一个方法类型
-        isFunction: function(func) {
+        isFunction: function (func) {
             return func && Object.prototype.toString.call(func) === '[object Function]';
         },
         // 根据id获取元素对象
-        getElementById: function(id) {
+        getElementById: function (id) {
             return document.getElementById(id);
         },
         // 根据选择器获取元素对象
-        querySelector: function(selector, el) {
+        querySelector: function (selector, el) {
             return (el && el.nodeType == 1 ? el : document).querySelector(selector);
         },
         // 在文档最后插入html
-        InsertAfter: function(html, el) {
+        InsertAfter: function (html, el) {
             (el && el.nodeType == 1 ? el : document.body).lastElementChild.insertAdjacentHTML('afterend', html);
         },
         // 获取浏览器可视区域，包含滚动条
-        getClientArea: function() {
+        getClientArea: function () {
             return { width: window.innerWidth, height: window.innerHeight };
         },
         // 解析窗口传入的位置参数，并转化为 {left: top: }对象
-        compilePositionParams: function(width, height, params) {
+        compilePositionParams: function (width, height, params) {
             var that = this;
             var posOptions = ['center', 'lt', 'rt', 'lb', 'rb'];
             var clientArea = that.getClientArea();
@@ -264,7 +264,7 @@
             return position;
         },
         // 创建iframe
-        createIframe: function(id, src, onload) {
+        createIframe: function (id, src, onload) {
             var that = this,
                 iframe = document.createElement("iframe");
 
@@ -277,14 +277,14 @@
 
             if (that.isFunction(onload)) {
                 if (iframe.attachEvent) {
-                    iframe.attachEvent("onreadystatechange", function() {
+                    iframe.attachEvent("onreadystatechange", function () {
                         if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
                             iframe.detachEvent("onreadystatechange", arguments.callee);
                             onload();
                         }
                     });
                 } else {
-                    iframe.addEventListener("load", function() {
+                    iframe.addEventListener("load", function () {
                         this.removeEventListener("load", arguments.call, false);
                         onload();
                     }, false);
@@ -294,16 +294,16 @@
             return iframe;
         },
         // 销毁iframe
-        destroyIframe: function(iframe) {
+        destroyIframe: function (iframe) {
             iframe.src = 'about:blank';
             try {
                 iframe.contentWindow.document.write('');
                 iframe.contentWindow.document.clear();
-            } catch (error) {}
+            } catch (error) { }
             iframe.parentNode.removeChild(iframe);
         },
         // 嵌入css元素
-        embedLayxCss: function(cssUrl) {
+        embedLayxCss: function (cssUrl) {
             var that = this;
             var layxCss = utils.getElementById('layx-css');
             if (!layxCss) {
@@ -319,7 +319,7 @@
             return layxCss;
         },
         // 监听css是否加载完毕
-        cssReady: function(fn, link) {
+        cssReady: function (fn, link) {
             var d = document,
                 t = d.createStyleSheet,
                 r = t ? 'rules' : 'cssRules',
@@ -341,14 +341,14 @@
             })();
         },
         // 加载css
-        loadCss: function(fn) {
+        loadCss: function (fn) {
             var that = this;
             var link = that.embedLayxCss('layx.css');
             that.cssReady(fn, link);
         },
         // 获取鼠标点击当前位置
-        getMousePosition: function(e) {
-            e = event || window.event;
+        getMousePosition: function (e) {
+            e = e || window.event;
             var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
             var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
             var x = e.pageX || e.clientX + scrollX;
@@ -356,7 +356,7 @@
             return { 'x': x, 'y': y };
         },
         // 向上递归查找元素
-        getNodeByClassName: function(node, className) {
+        getNodeByClassName: function (node, className) {
             var that = this;
             if (node === document.body) {
                 return null;
@@ -371,8 +371,8 @@
     };
 
     // 拖动类定义
-    var Drag = function(el, moveLimit, moveEvent) {
-        var drag = function(e) {
+    var Drag = function (el, moveLimit, moveEvent) {
+        var drag = function (e) {
             e = e || window.event;
 
             var button = e.button || e.which;
@@ -428,7 +428,7 @@
             }
         };
 
-        var dragend = function(e) {
+        var dragend = function (e) {
             e = e || window.event;
 
             document.onmouseup = null;
@@ -452,7 +452,7 @@
             el.layxFixed.removeAttribute('data-enable');
         };
 
-        var dragstart = function(e) {
+        var dragstart = function (e) {
             e = e || window.event;
 
             var windowDom = utils.getNodeByClassName(el, 'layx-window'),
@@ -489,8 +489,8 @@
     };
 
     // 拖曳类定义
-    var Resize = function(el, minWidth, minHeight, isTop, isLeft, lockX, lockY) {
-        var drag = function(e) {
+    var Resize = function (el, minWidth, minHeight, isTop, isLeft, lockX, lockY) {
+        var drag = function (e) {
             e = e || window.event;
 
             var button = e.button || e.which;
@@ -561,7 +561,7 @@
             }
         };
 
-        var dragend = function(e) {
+        var dragend = function (e) {
             e = e || window.event;
 
             document.onmouseup = null;
@@ -581,7 +581,7 @@
             el.layxFixed.removeAttribute('data-enable');
         };
 
-        var dragstart = function(e) {
+        var dragstart = function (e) {
             e = e || window.event;
 
             var windowDom = utils.getNodeByClassName(el, 'layx-window'),
@@ -628,7 +628,7 @@
         // 窗口置顶起始zIndex
         pinZindex: 20000000, // 置顶起始索引
         // 创建窗口对象
-        create: function(options) {
+        create: function (options) {
             var config = layxDeepClone({}, defaults, options || {});
             if (!Layx.windows.hasOwnProperty(config.id)) {
 
@@ -690,7 +690,7 @@
                 var layxBody = utils.querySelector('.layx-body', windowDom);
                 if (utils.isFunction(config.intercept.load.before) && config.intercept.load.before(winform, windowDom) !== false) {
                     if (config.type === "iframe") {
-                        var iframe = utils.createIframe("layx-" + config.id + '-content', config.url ? config.url : config.content, function() {
+                        var iframe = utils.createIframe("layx-" + config.id + '-content', config.url ? config.url : config.content, function () {
                             var windowDomId = iframe.id.substr(0, iframe.id.lastIndexOf('-'));
                             var layxBody = utils.querySelector('#' + windowDomId + ' .layx-body');
                             var waitPanel = utils.querySelector('#' + windowDomId + ' .layx-wait');
@@ -698,7 +698,7 @@
                             var _iframeTitle = '';
                             try {
                                 _iframeTitle = childFrame.contentDocument.querySelector('title').innerText;
-                            } catch (error) {}
+                            } catch (error) { }
 
                             var _iframe = childFrame.cloneNode(true);
                             layxBody.appendChild(_iframe);
@@ -709,7 +709,7 @@
                                     Layx.setTitle(config.id, _iframeTitle ? _iframeTitle : config.title);
                                 }
                                 if (config.focusable === true) {
-                                    _iframe.contentWindow.onclick = function(e) {
+                                    _iframe.contentWindow.onclick = function (e) {
                                         var that = this.self;
                                         if (that != over && that.frameElement && that.frameElement.tagName == "IFRAME") {
                                             var windowDom = that.frameElement.parentNode.parentElement;
@@ -740,7 +740,7 @@
                         div.innerHTML = config.content;
                         div.setAttribute("id", "layx-" + config.id + '-content');
                         layxBody.appendChild(div);
-                        windowDom.onclick = function(e) {
+                        windowDom.onclick = function (e) {
                             Layx.setZindex(this, winform);
                         };
                     }
@@ -748,23 +748,23 @@
 
                 // 绑定事件
                 var destroyMenu = utils.querySelector('.layx-destroy-menu', windowDom);
-                if (destroyMenu) destroyMenu.onclick = function(e) {
+                if (destroyMenu) destroyMenu.onclick = function (e) {
                     Layx.triggerMethod('destroy', config.id, winform, e);
                 };
 
                 var maxMenu = utils.querySelector('.layx-max-menu', windowDom);
-                if (maxMenu) maxMenu.onclick = function(e) {
+                if (maxMenu) maxMenu.onclick = function (e) {
                     Layx.triggerMethod('max', config.id, winform, e);
                 };
 
                 var minMenu = utils.querySelector('.layx-min-menu', windowDom);
-                if (minMenu) minMenu.onclick = function(e) {
+                if (minMenu) minMenu.onclick = function (e) {
                     Layx.triggerMethod('min', config.id, winform, e);
                 };
 
                 var pinMenu = utils.querySelector('.layx-pin-menu', windowDom);
                 if (pinMenu) {
-                    if (pinMenu) pinMenu.onclick = function(e) {
+                    if (pinMenu) pinMenu.onclick = function (e) {
                         Layx.triggerMethod('pin', config.id, winform, e);
                     };
                 }
@@ -775,7 +775,7 @@
                         new Drag(title, config.moveLimit, config.intercept.move);
                     }
                     if (config.allowTitleDblclickToRestore === true && config.maximizable === true) {
-                        title.ondblclick = function(e) {
+                        title.ondblclick = function (e) {
                             if (winform.status === "normal") {
                                 Layx.triggerMethod('max', config.id, winform, e);
                             } else {
@@ -787,7 +787,7 @@
 
                 var shade = utils.querySelector('.layx-shade');
                 if (shade) {
-                    shade.onclick = function(e) {
+                    shade.onclick = function (e) {
                         var that = this,
                             id = this.id,
                             windowId = id.substr(0, id.length - '-shade'.length);
@@ -854,12 +854,16 @@
             }
         },
         // 销毁窗口
-        destroy: function(id) {
+        destroy: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
 
             var shade = utils.getElementById('layx-' + id + '-shade');
             if (windowDom) {
+                var iframe = utils.getElementById("layx-" + id + "-content");
+                if (iframe) {
+                    utils.destroyIframe(iframe);
+                }
                 windowDom.parentNode.removeChild(windowDom);
                 if (shade) {
                     shade.parentNode.removeChild(shade);
@@ -876,7 +880,7 @@
             }
         },
         // 最大化窗口
-        max: function(id) {
+        max: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
 
@@ -889,7 +893,7 @@
                     maxMenu.setAttribute('data-ref', 'max');
 
                     var restoreMenu = utils.querySelector('.layx-restore-menu[data-ref="max"]', windowDom);
-                    if (restoreMenu) restoreMenu.onclick = function(e) {
+                    if (restoreMenu) restoreMenu.onclick = function (e) {
                         Layx.triggerMethod('restore', id, winform, e);
                     };
                 }
@@ -902,7 +906,7 @@
                     minMenu.removeAttribute('data-ref');
                     minMenu.removeAttribute('data-restore-statu');
 
-                    minMenu.onclick = function(e) {
+                    minMenu.onclick = function (e) {
                         Layx.triggerMethod('min', id, winform, e);
                     };
                 }
@@ -922,7 +926,7 @@
             }
         },
         // 恢复窗口
-        restore: function(id) {
+        restore: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
 
@@ -935,7 +939,7 @@
                     maxMenu.classList.add('layx-max-menu');
                     maxMenu.removeAttribute('data-ref');
 
-                    maxMenu.onclick = function(e) {
+                    maxMenu.onclick = function (e) {
                         Layx.triggerMethod('max', id, winform, e);
                     };
 
@@ -955,7 +959,7 @@
                     minMenu.classList.add('layx-min-menu');
                     minMenu.removeAttribute('data-ref');
 
-                    minMenu.onclick = function(e) {
+                    minMenu.onclick = function (e) {
                         Layx.triggerMethod('min', id, winform, e);
                     };
 
@@ -985,7 +989,7 @@
             }
         },
         // 最小化窗口
-        min: function(id) {
+        min: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (windowDom) {
@@ -998,7 +1002,7 @@
                     minMenu.setAttribute('data-restore-statu', winform.status);
 
                     var restoreMenu = utils.querySelector('.layx-restore-menu[data-ref="min"]', windowDom);
-                    if (restoreMenu) restoreMenu.onclick = function(e) {
+                    if (restoreMenu) restoreMenu.onclick = function (e) {
                         Layx.triggerMethod('restore', id, winform, e);
                     };
                 }
@@ -1010,7 +1014,7 @@
                     maxMenu.classList.add('layx-max-menu');
                     maxMenu.removeAttribute('data-ref');
 
-                    maxMenu.onclick = function(e) {
+                    maxMenu.onclick = function (e) {
                         Layx.triggerMethod('max', id, winform, e);
                     };
                 }
@@ -1024,7 +1028,8 @@
                 Layx.minManager();
             }
         },
-        pin: function(id) {
+        // 置顶窗口
+        pin: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (windowDom) {
@@ -1048,22 +1053,24 @@
             }
         },
         // 内部统一触发方法机制
-        triggerMethod: function(methodName, id, winform, e) {
+        triggerMethod: function (methodName, id, winform, e) {
             e = e || window.event;
             var beforeReval = true;
             if (winform && winform.config && winform.config.intercept[methodName] && utils.isFunction(winform.config.intercept[methodName].before) && winform.config.intercept[methodName].before(winform.windowDom, winform) === false) {
                 beforeReval = false;
             }
             if (beforeReval) {
-                Layx[methodName] && Layx[methodName](id);
+                Layx.hasOwnProperty(methodName) && Layx[methodName](id);
             }
             if (winform && winform.config && winform.config.intercept[methodName] && utils.isFunction(winform.config.intercept[methodName].after)) {
                 winform.config.intercept[methodName].after(winform.windowDom, winform);
             }
-            e.stopPropagation();
+            if (e) {
+                e.stopPropagation();
+            }
         },
         // 最小化管理
-        minManager: function() {
+        minManager: function () {
             var clientArea = utils.getClientArea(),
                 paddingLeft = 10,
                 paddingBottom = 10,
@@ -1085,7 +1092,7 @@
             }
         },
         // 如果窗口已经打开，则显示并置顶
-        ExistShow: function(id) {
+        ExistShow: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             Layx.setZindex(windowDom, winform);
@@ -1096,7 +1103,7 @@
             }
         },
         // 设置窗口zIndex
-        setZindex: function(windowDom, winform) {
+        setZindex: function (windowDom, winform) {
             if (windowDom && winform) {
                 if (winform.alwaysOnTop === true) {
                     windowDom.style.zIndex = ++Layx.pinZindex;
@@ -1108,7 +1115,7 @@
             }
         },
         // 设置窗口标题
-        setTitle: function(id, txt) {
+        setTitle: function (id, txt) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (windowDom) {
@@ -1119,7 +1126,7 @@
             }
         },
         // 设置窗口地址，只对type:iframe有效
-        setUrl: function(id, url) {
+        setUrl: function (id, url) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (windowDom) {
@@ -1130,7 +1137,7 @@
             }
         },
         // 设置窗口标题
-        setContent: function(id, content) {
+        setContent: function (id, content) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (windowDom) {
@@ -1139,7 +1146,7 @@
             }
         },
         // 设置窗口闪烁并显示到顶层
-        setFlicker: function(id) {
+        setFlicker: function (id) {
             var filcker = null;
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
@@ -1147,14 +1154,14 @@
                 if (windowDom.classList.contains('shadowFlicker')) windowDom.classList.remove('shadowFlicker');
                 windowDom.classList.add('shadowFlicker');
                 Layx.setZindex(windowDom, winform);
-                filcker = setTimeout(function() {
+                filcker = setTimeout(function () {
                     windowDom.classList.remove('shadowFlicker');
                     clearTimeout(filcker);
                 }, 120 * 8);
             }
         },
         // 设置置顶
-        setOnTop: function(id) {
+        setOnTop: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (winform) {
@@ -1164,7 +1171,7 @@
 
         },
         // 取消置顶
-        cancelOnTop: function(id) {
+        cancelOnTop: function (id) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
             if (winform) {
@@ -1174,7 +1181,7 @@
 
         },
         // 设置位置
-        setPosition: function(id, position) {
+        setPosition: function (id, position) {
             var windowDom = utils.getElementById("layx-" + id),
                 winform = Layx.windows[id];
 
@@ -1186,7 +1193,7 @@
                 winform.defaultAreaInfo.top = pos.top;
             }
         },
-        createButtoms: function(id, windowDom, buttoms) {
+        createButtoms: function (id, windowDom, buttoms) {
             var statusBar = utils.querySelector('.layx-status-bar', windowDom);
             var btnWrap = document.createElement('div');
             btnWrap.classList.add('layx-alert-buttons');
@@ -1199,7 +1206,7 @@
                 btn.setAttribute("layx-window-id", id);
                 btn.innerHTML = buttoms[i].label;
                 btn.callback = buttoms[i].callback;
-                btn.onclick = function(e) {
+                btn.onclick = function (e) {
                     if (utils.isFunction(this.callback)) {
                         this.callback(id, windowDom);
                     }
@@ -1208,7 +1215,7 @@
             }
             statusBar.appendChild(btnWrap);
         },
-        alert: function(content, title, buttoms, options) {
+        alert: function (content, title, buttoms, options) {
             var alertId = (options && options["id"]) ? options["id"] : 'layx-alert-' + (++Layx.pinZindex);
             var config = layxDeepClone({}, {
                 id: alertId,
@@ -1241,27 +1248,27 @@
 
     win.layx = {
         // 打开窗口
-        open: function(options) {
+        open: function (options) {
             var winform = Layx.create(options);
             if (winform.config.autoDestroy !== false && typeof winform.config.autoDestroy === 'number') {
-                setTimeout(function() {
+                setTimeout(function () {
                     Layx.triggerMethod('destroy', winform.id, winform);
                 }, winform.config.autoDestroy);
             }
         },
         // 打开窗口并自动检测是否加载了layx.css，如果没有加载就自动加载，只适合非file:///协议环境
-        openl: function(options) {
+        openl: function (options) {
             //自动加载css，目前不支持非本地环境（file:///)使用，还未找到解决方案
-            utils.loadCss(function() {
+            utils.loadCss(function () {
                 Layx.create(options);
             });
         },
         // 关闭窗口
-        destroy: function(id) {
+        destroy: function (id) {
             Layx.triggerMethod('destroy', id, Layx.windows[id]);
         },
         // 关闭所有窗口
-        destroyAll: function() {
+        destroyAll: function () {
             var windows;
             if (slf === over) {
                 windows = over.layx.Windows;
@@ -1273,22 +1280,22 @@
             }
         },
         // 最小化窗口
-        min: function(id) {
+        min: function (id) {
             Layx.triggerMethod('min', id, Layx.windows[id]);
         },
         // 最大化窗口
-        max: function(id) {
+        max: function (id) {
             Layx.triggerMethod('max', id, Layx.windows[id]);
         },
         // 恢复窗口
-        restore: function(id) {
+        restore: function (id) {
             Layx.triggerMethod('restore', id, Layx.windows[id]);
         },
         // 获取窗口信息
-        getWindow: function(id) {
+        getWindow: function (id) {
             return Layx.windows[id];
         },
-        getIframeContext: function(id) {
+        getIframeContext: function (id) {
             var iframeContext = null;
 
             if (over === slf && over.layx.Windows.hasOwnProperty(id)) {
@@ -1303,31 +1310,31 @@
         // 获取所有窗口信息
         Windows: Layx.windows,
         // 设置窗口标题
-        setTitle: function(id, title) {
+        setTitle: function (id, title) {
             Layx.setTitle(id, title);
         },
         // 设置窗口地址，只对iframe有效
-        setUrl: function(id, url) {
+        setUrl: function (id, url) {
             Layx.setUrl(id, url);
         },
         // 设置窗口位置
-        setPosition: function(id, position) {
+        setPosition: function (id, position) {
             Layx.setPosition(id, position);
         },
         // 设置窗口内容
-        setContent: function(id, content) {
+        setContent: function (id, content) {
             Layx.setContent(id, content);
         },
         // 设置置顶
-        setOnTop: function(id) {
+        setOnTop: function (id) {
             Layx.setOnTop(id);
         },
         // 取消置顶
-        cancelOnTop: function(id) {
+        cancelOnTop: function (id) {
             Layx.cancelOnTop(id);
         },
         // 提示框
-        alert: function(content, title, buttoms, options) {
+        alert: function (content, title, buttoms, options) {
             Layx.alert(content, title, buttoms, options);
         }
     };
@@ -1339,14 +1346,14 @@
 
 // symbol 字体图标
 ;
-!(function(window) {
+!(function (window) {
     var svgSprite = '<svg><symbol id="layx-icon-restore" viewBox="0 0 1157 1024"><path d="M1016.52185234 724.44050175L833.87364805 724.44050175 833.87364805 898.52098643 833.87364805 960.05279112 833.87364805 961.2211168 772.34184336 961.2211168 772.34184336 960.05279112 124.31068789 960.05279112 124.31068789 961.2211168 62.7788832 961.2211168 62.7788832 960.05279112 62.7788832 898.52098643 62.7788832 360.31241885 62.7788832 298.78061416 124.31068789 298.78061416 298.78061416 298.78061416 298.78061416 62.7788832 303.06447442 62.7788832 360.31241885 62.7788832 1016.52185234 62.7788832 1074.15923838 62.7788832 1078.05365615 62.7788832 1078.05365615 662.90869795 1078.05365615 724.44050175 1016.52185234 724.44050175ZM124.31068789 898.52098643L772.34184336 898.52098643 772.34184336 724.44050175 772.34184336 662.90869795 772.34184336 360.31241885 124.31068789 360.31241885 124.31068789 898.52098643ZM1016.52185234 124.31068789L360.31241885 124.31068789 360.31241885 298.78061416 772.34184336 298.78061416 833.87364805 298.78061416 833.87364805 360.31241885 833.87364805 662.90869795 1016.52185234 662.90869795 1016.52185234 124.31068789Z"  ></path></symbol><symbol id="layx-icon-windows" viewBox="0 0 1024 1024"><path d="M128 512 128 288 384 231.68 384 508.16 128 512M853.333333 128 853.333333 501.333333 426.666667 507.733333 426.666667 222.293333 853.333333 128M128 554.666667 384 558.506667 384 849.066667 128 800 128 554.666667M853.333333 565.333333 853.333333 938.666667 426.666667 857.173333 426.666667 558.933333 853.333333 565.333333Z"  ></path></symbol><symbol id="layx-icon-min" viewBox="0 0 1024 1024"><path d="M65.23884 456.152041 958.760137 456.152041l0 111.695918L65.23884 567.847959 65.23884 456.152041z"  ></path></symbol><symbol id="layx-icon-max" viewBox="0 0 1024 1024"><path d="M75.74912227 948.24738475L75.74912227 75.75145131l872.50059037 0 0 872.49593344L75.74912227 948.24738475zM839.18786674 184.81446115L184.81213326 184.81446115l0 654.37573462 654.37573461 0L839.18786674 184.81446115z"  ></path></symbol><symbol id="layx-icon-destroy" viewBox="0 0 1024 1024"><path d="M933.89254819 139.71606348L884.23129279 90.08990363 511.96490363 462.39138834 140.40044113 90.82692583 90.84447403 140.34779656 462.40893653 511.91225907 90.10745181 884.2137446 139.73361166 933.875 512.03509637 561.53841892 883.59955887 933.10288141 933.15552597 883.58201068 561.59106347 512.01754819Z"  ></path></symbol><symbol id="layx-icon-pin" viewBox="0 0 1024 1024"><path d="M326.4 5.65333333l7.89333333 174.72-224.74666666 376.64 168.32 117.86666667L77.22666667 1012.26666667l8.74666666 6.08 248.42666667-304 168.32 117.86666666L779.73333333 492.37333333l166.93333334-52.37333333L326.4 5.65333333z m-144.96 536.53333334l184.74666667-312.10666667L722.13333333 479.36 492.16 759.78666667l-310.72-217.6z m582.4-100.69333334l-1.92 0.64-374.4-262.18666666-0.10666667-2.02666667-2.98666666-66.56 442.88 310.18666667-63.46666667 19.94666666z" fill="" ></path></symbol></svg>';
-    var script = function() { var scripts = document.getElementsByTagName("script"); return scripts[scripts.length - 1] }();
+    var script = function () { var scripts = document.getElementsByTagName("script"); return scripts[scripts.length - 1] }();
     var shouldInjectCss = script.getAttribute("data-injectcss");
-    var ready = function(fn) {
+    var ready = function (fn) {
         if (document.addEventListener) {
             if (~["complete", "loaded", "interactive"].indexOf(document.readyState)) { setTimeout(fn, 0) } else {
-                var loadFn = function() {
+                var loadFn = function () {
                     document.removeEventListener("DOMContentLoaded", loadFn, false);
                     fn()
                 };
@@ -1357,18 +1364,18 @@
         function IEContentLoaded(w, fn) {
             var d = w.document,
                 done = false,
-                init = function() {
+                init = function () {
                     if (!done) {
                         done = true;
                         fn()
                     }
                 };
-            var polling = function() {
+            var polling = function () {
                 try { d.documentElement.doScroll("left") } catch (e) { setTimeout(polling, 50); return }
                 init()
             };
             polling();
-            d.onreadystatechange = function() {
+            d.onreadystatechange = function () {
                 if (d.readyState == "complete") {
                     d.onreadystatechange = null;
                     init()
@@ -1376,8 +1383,8 @@
             }
         }
     };
-    var before = function(el, target) { target.parentNode.insertBefore(el, target) };
-    var prepend = function(el, target) { if (target.firstChild) { before(el, target.firstChild) } else { target.appendChild(el) } };
+    var before = function (el, target) { target.parentNode.insertBefore(el, target) };
+    var prepend = function (el, target) { if (target.firstChild) { before(el, target.firstChild) } else { target.appendChild(el) } };
 
     function appendSvg() {
         var div, svg;
