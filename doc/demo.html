@@ -22,6 +22,7 @@
     <button id="xwck">询问窗口</button>
     <button id="srck">输入窗口</button>
     <button id="jzck">加载窗口</button>
+    <button id="tbck">打开淘宝</button>
     <h3>窗口外观</h3>
     整理中...
     <script type="text/javascript">
@@ -80,6 +81,10 @@
                 setTimeout(function () {
                     top.layx.destroy('loadid');
                 }, 5000);
+                e.stopPropagation();
+            }
+            $("#tbck").onclick = function (e) {
+                top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
         }

@@ -37,6 +37,7 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 - 支持窗口加载文字控制
 - 支持窗口滚动条自能判断
 - 支持窗口最小化统一管理
+- 支持滚动条智能判断
 
 # 使用
 
@@ -270,7 +271,7 @@ document.getElementById('btn').onclick=function(e){
 # 日志
 
 ```
-# 2018.05.14 v2.0.1 发布
+# 2018.05.15 v2.0.1 发布
 
 - [新增] var winform = layx.html(id,title,content,options) 快捷打开文本窗口方法
 - [新增] var winform = layx.iframe(id,title,url,options) 快捷打开网页窗口方法
