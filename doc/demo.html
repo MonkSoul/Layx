@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Layx 官方示例大全 v2.0.1</title>
+    <style type="text/css">
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>窗口类型</h3>
+    <button id="wbck">文本窗口</button>
+    <button id="wyck">网页窗口</button>
+    <button id="xxck">消息窗口</button>
+    <button id="tsck">提示窗口</button>
+    <button id="xwck">询问窗口</button>
+    <button id="srck">输入窗口</button>
+    <button id="jzck">加载窗口</button>
+    <h3>窗口外观</h3>
+    整理中...
+    <script type="text/javascript">
+        //生成从minNum到maxNum的随机数
+        function randomNum(minNum, maxNum) {
+            switch (arguments.length) {
+                case 1:
+                    return parseInt(Math.random() * minNum + 1, 10);
+                    break;
+                case 2:
+                    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+
+        //===================== 下面才是demo 代码 ==================
+        window.onload = function () {
+            $("#wbck").onclick = function (e) {
+                top.layx.html('wbck', '文本窗口', '<div style="padding:10px">我是一个文本窗口，支持 <strong>HTML</strong> 和 HTMLElment 对象</div>', { position: [randomNum(0, 200), randomNum(0, 500)] })
+                e.stopPropagation();
+            }
+            $("#wyck").onclick = function (e) {
+                top.layx.iframe('wyck', '网页窗口', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#xxck").onclick = function (e) {
+                top.layx.msg("我是消息窗口，5秒后关闭");
+                e.stopPropagation();
+            }
+            $("#tsck").onclick = function (e) {
+                top.layx.alert(null, "我是提示窗口");
+                e.stopPropagation();
+            }
+            $("#xwck").onclick = function (e) {
+                top.layx.confirm(null, "我是询问窗口", function (id) {
+                    alert('你点击了确定');
+                    top.layx.destroy(id);
+                });
+                e.stopPropagation();
+            }
+            $("#srck").onclick = function (e) {
+                top.layx.prompt(null, "请输入一个值试试", function (id, value, textarea) {
+                    alert('你输入的值为：' + value);
+                    top.layx.destroy(id);
+                });
+                e.stopPropagation();
+            }
+            $("#jzck").onclick = function (e) {
+                top.layx.load('loadid', '数据正在加载中（5秒后关闭）...');
+                setTimeout(function () {
+                    top.layx.destroy('loadid');
+                }, 5000);
+                e.stopPropagation();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.0
+ * version : v2.0.1
  * create time : 2018.05.11
- * update time : 2018.05.12
+ * update time : 2018.05.15
  */
 
 ;
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.0.0',
+        version: '2.0.1',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -45,7 +45,7 @@
             restorable: true,   // 是否允许恢复操作
             resizable: true, // 是否显示拖曳操作
             autodestroy: false,  // 自动关闭，支持数值类型毫秒
-            autodestroyText: true, // 是否显示关闭倒计时文本
+            autodestroyText: '<div style="padding: 0 8px; ">此窗口将在 <strong>{second}</strong> 秒内自动关闭.</div>', // 是否显示关闭倒计时文本
             // 拖曳方向控制
             resizeLimit: {
                 t: false, // 是否限制上边拖曳大小，false不限制
@@ -161,6 +161,8 @@
                 if (_winform.status === "min") {
                     that.restore(_winform.id);
                 }
+
+                that.flicker(config.id);
                 return _winform;
             }
 
@@ -272,6 +274,14 @@
                 controlBar.classList.add("layx-control-bar");
                 controlBar.classList.add("layx-flexbox");
                 config.controlStyle && controlBar.setAttribute("style", config.controlStyle);
+                // 为 html 类型添加更新层事件
+                if (config.type === "html") {
+                    layxWindow.onclick = function (e) {
+                        e = e || window.event;
+                        that.updateZIndex(config.id);
+                        e.stopPropagation();
+                    };
+                }
                 layxWindow.appendChild(controlBar);
 
                 // 创建窗口默认图标
@@ -671,14 +681,16 @@
             // 自动关闭提示
             if (/(^[1-9]\d*$)/.test(config.autodestroy)) {
                 var second = config.autodestroy / 1000;
-                var autodestroyTip = document.createElement("div");
-                autodestroyTip.classList.add("layx-auto-destroy-tip");
-                config.autodestroyText && (autodestroyTip.innerHTML = "<div style='padding:0 8px;'>此窗口 <strong>" + second + " </strong>秒后自动关闭...</div>");
-                layxWindow.appendChild(autodestroyTip);
+                if (config.autodestroyText !== false) {
+                    var autodestroyTip = document.createElement("div");
+                    autodestroyTip.classList.add("layx-auto-destroy-tip");
+                    autodestroyTip.innerHTML = config.autodestroyText.replace("{second}", second);
+                    layxWindow.appendChild(autodestroyTip);
+                }
                 var destroyTimer = setInterval(function () {
                     --second;
-                    if (config.autodestroyText === true) {
-                        config.autodestroyText && (autodestroyTip.innerHTML = "<div style='padding:0 8px;'>此窗口 <strong>" + second + " </strong>秒后自动关闭...</div>");
+                    if (config.autodestroyText !== false) {
+                        autodestroyTip.innerHTML = config.autodestroyText.replace("{second}", second);
                     }
                     if (second <= 0) {
                         clearInterval(destroyTimer);
@@ -765,6 +777,7 @@
                 var stickMenu = layxWindow.querySelector(".layx-stick-menu");
                 if (stickMenu) {
                     stickMenu.setAttribute("data-enable", winform.isStick ? "1" : "0");
+                    winform.isStick ? stickMenu.setAttribute("title", "取消置顶") : stickMenu.setAttribute("title", "置顶");
                 }
                 that.updateZIndex(id);
             }
@@ -926,6 +939,10 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform) {
+                var layxShade = document.getElementById("layx-" + id + "-shade");
+                if (layxShade) {
+                    layxShade.style.zIndex = (winform.isStick === true ? (++that.stickZIndex) : (++that.zIndex));
+                }
                 if (winform.isStick === true) {
                     winform.zIndex = ++that.stickZIndex;
                 }
@@ -942,7 +959,7 @@
                 innertArea = Utils.innerArea(),
                 paddingLeft = 10,
                 paddingBottom = 10,
-                widthByMinStatu = 220,
+                widthByMinStatu = 240,
                 stepIndex = 0,
                 lineMaxCount = Math.floor(innertArea.width / (widthByMinStatu + paddingLeft));
             for (var id in windows) {
@@ -1902,6 +1919,26 @@
         // 打开窗口
         open: function (options) {
             var winform = Layx.create(options);
+            return winform;
+        },
+        // 打开文本窗口快捷方法
+        html: function (id, title, content, options) {
+            var winform = Layx.create(layxDeepClone({}, {
+                id: id,
+                title: title,
+                type: 'html',
+                content: content
+            }, options || {}));
+            return winform;
+        },
+        // 打开网页窗口快捷方法
+        iframe: function (id, title, url, options) {
+            var winform = Layx.create(layxDeepClone({}, {
+                id: id,
+                title: title,
+                type: 'url',
+                url: url
+            }, options || {}));
             return winform;
         },
         // 获取窗口列表

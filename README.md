@@ -12,8 +12,8 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.0.0
-- `发布日期`：2018.05.12
+- `当前版本`：v2.0.1
+- `发布日期`：2018.05.15
 - `交流Q群`：18863883
 
 # 特性
@@ -118,7 +118,7 @@ layx.open({
   - `topOut`：是否允许窗口拖出浏览器上边可视区域，Boolean类型。默认值：true，**不管这个值设置为true或false，窗口总时不能拖出浏览器可视区域顶部**
   - `bottomOut`：是否允许窗口拖出浏览器下边可视区域，Boolean类型。默认值：true，**下边拖出时至少露出 15px 的窗口可视区域**
 - `autodestroy`：窗口自动关闭时间，Boolean 或 Number 类型。false：不自动关闭，Number 类型时表示 **多少毫秒后关闭**，如：5000，表示5秒后自动关闭窗口，默认值：false
-- `autodestroyText`：窗口自动关闭提示文字，Boolean类型。**设置 true 将会在窗口右下脚有倒计时提示**，默认值：true
+- `autodestroyText`：窗口自动关闭提示文字（在窗口右下角显示），Boolean 或 String 类型。false：不显示，默认值：`'<div style="padding: 0 8px; ">此窗口将在 <strong>{second}</strong> 秒内自动关闭.</div>'`，`{second}` 占位符代表 `autodestroy`的秒数
 - `focusable`：窗口是否允许获取焦点，Boolean 类型。窗口获取焦点后会自动显示在顶层，默认值：true，**只支持同域页面获取焦点**
 - `alwaysOnTop`：是否总是置顶，Boolean 类型。默认值 true，置顶之后将位于所有窗口之上（同级别除外）
 - `allowControlDbclick`：是否允许控制栏双击切换窗口大小，Boolean 类型。默认值：true
@@ -227,6 +227,8 @@ winform 是窗口信息对象，包含属性：
 
 - `var version = layx.v`：获取 layx 版本号，返回值：字符串
 - `var winform = layx.open(options)`：打开一个窗口，options：配置参数，返回值：winform 对象
+- `var winform = layx.html(id,title,content,options)`：打开一个文本窗口，id：窗口Id；title：窗口标题；content：窗口内容；options：配置参数，返回值：winform 对象
+- `var winform = layx.iframe(id,title,url,options)`：打开一个网页窗口，id：窗口Id；title：窗口标题；url：窗口地址；options：配置参数，返回值：winform 对象
 - `var windows = layx.windows()`：获取所有打开的窗口，返回值：{ 窗口Id：winform对象，窗口Id2：winform对象，...}
 - `var winform = layx.getWindow(id)`：获取当前窗口 winform 对象，id：窗口Id
 - `layx.destroy(id)`：关闭窗口，id：窗口Id
@@ -249,6 +251,44 @@ winform 是窗口信息对象，包含属性：
 - `var winform = layx.prompt(title,msg,yes,buttons,options)`：打开一个输入框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id,value,textarea){}`；buttons，Object类型，可选值：`[{ label:'', callback:function(id){}}]`；options：配置参数
 - `var promptTextare = layx.getPromptTextArea(id)`：获取输入框 `textarea` 对象 ，id：窗口Id，通常在 prompt 输入框点击按钮回调函数中使用
 - `var winform = layx.load(id,msg,options)`： 打开一个加载框，id：窗口Id；msg，消息，String类型；options：配置参数
+
+# 注意
+
+默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡，如：
+
+```
+document.getElementById('btn').onclick=function(e){
+    e=e||window.event;
+    
+    // 打开新窗口代码
+    
+    // 停止冒泡
+    e.stopPropagation();
+}
+```
+
+# 日志
+
+```
+# 2018.05.14 v2.0.1 发布
+
+- [新增] var winform = layx.html(id,title,content,options) 快捷打开文本窗口方法
+- [新增] var winform = layx.iframe(id,title,url,options) 快捷打开网页窗口方法
+- [新增] 窗口自动关闭文本可自定义功能：autodestroyText
+- [新增] 打开一个存在的窗口时窗口闪烁获取焦点
+- [更新] 调整最小化后显示宽度为：240px
+- [修复] 点击文本窗口内容无法置顶 bug
+- [修复] 置顶按钮点击切换 title 提示 bug
+- [修复] 置顶层带有阻隔层时没有阻隔的bug
+
+# 2018.05.12 v2.0.0 发布
+
+- [新增] v2.0.0 正式发布
+
+# 2018.05.06 v1.0.0 发布
+
+- [新增] v1.0.0 正式发布
+```
 
 # 开源
 
