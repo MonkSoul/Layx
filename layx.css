@@ -176,6 +176,7 @@ body.layx-body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
+    white-space: nowrap\0 !important;
     display: inline-block;
     pointer-events: none;
     word-wrap: break-word;
