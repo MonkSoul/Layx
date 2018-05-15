@@ -159,6 +159,7 @@ body.layx-body {
     -ms-user-select: none;
     user-select: none;
     margin-right: 8px;
+    min-width: 0;
 }
 
 .layx-title label {
@@ -175,11 +176,10 @@ body.layx-body {
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
-    white-space: nowrap\0 !important;
+    white-space: nowrap;
+    -webkit-white-space: nowrap;
     display: inline-block;
     pointer-events: none;
-    word-wrap: break-word;
     visibility: visible;
 }
 
