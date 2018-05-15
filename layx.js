@@ -2,7 +2,7 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.1
+ * version : v2.0.2
  * create time : 2018.05.11
  * update time : 2018.05.15
  */
@@ -11,7 +11,7 @@
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.0.1',
+        version: '2.0.2',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -305,7 +305,7 @@
                 title.classList.add("layx-title");
                 title.classList.add("layx-flexauto");
                 title.classList.add("layx-flexbox");
-                title.classList.add("layx-flex-vertical");
+                //title.classList.add("layx-flex-vertical");
                 // 绑定双击事件
                 if (config.allowControlDbclick === true) {
                     title.ondblclick = function (e) {

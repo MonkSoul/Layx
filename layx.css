@@ -2,7 +2,7 @@
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.1
+ * version : v2.0.2
  * create time : 2018.05.11
  * update time : 2018.05.15
  */
@@ -32,6 +32,7 @@
 
 .layx-flex-vertical {
     align-items: center;
+    -webkit-align-items: center;
     -moz-align-items: center;
     -ms-align-items: center;
     -o-align-items: center;
@@ -44,6 +45,7 @@
 
 .layx-flex-center {
     align-items: center;
+    -webkit-align-items: center;
     -moz-align-items: center;
     -ms-align-items: center;
     -o-align-items: center;
@@ -173,9 +175,11 @@ body.layx-body {
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
     display: inline-block;
     pointer-events: none;
+    word-wrap: break-word;
+    visibility: visible;
 }
 
 .layx-title * {
@@ -184,6 +188,8 @@ body.layx-body {
 
 .layx-inlay-menus {
     height: 100%;
+    height: 30px;
+    line-height: 30px;
 }
 
 .layx-inlay-menus {
