@@ -7,9 +7,7 @@
  * update time : 2018.05.16
  */
 
-.layx-shade,
-.layx-window,
-.layx-window * {
+*[class^="layx-"] {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -191,10 +189,9 @@ body.layx-body {
     height: 100%;
     height: 30px;
     line-height: 30px;
-}
-
-.layx-inlay-menus {
+    position: relative;
     max-height: 30px;
+    z-index: 2;
 }
 
 .layx-inlay-menus .layx-icon {

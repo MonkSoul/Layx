@@ -715,6 +715,11 @@
 
             // 存储窗口对象
             that.windows[config.id] = winform;
+
+            // 如果可视区域小于窗口窗口，自动最大化
+            if (_width > window.innerWidth || _height > window.innerHeight) {
+                that.max(config.id);
+            }
             return winform;
         },
         // 设置窗口内容，文本窗口有效
@@ -1080,11 +1085,11 @@
 
                 if (winform.closable !== true) return;
 
-                layxWindow.parentElement.removeChild(layxWindow);
                 delete that.windows[id];
+                layxWindow.parentNode.removeChild(layxWindow);
 
                 if (layxShade) {
-                    layxShade.parentElement.removeChild(layxShade);
+                    layxShade.parentNode.removeChild(layxShade);
                 }
 
                 // 更新最小化布局
@@ -1094,6 +1099,10 @@
                 if (Utils.isFunction(winform.event.ondestroy.after)) {
                     winform.event.ondestroy.after();
                 }
+                for (var key in winform) {
+                    delete winform[key];
+                }
+                winform = undefined;
             }
         },
         // 关闭所有窗口
@@ -1681,12 +1690,12 @@
             // 移除鼠标拖动遮罩层
             var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
             if (mousePreventDefault) {
-                mousePreventDefault.parentElement.removeChild(mousePreventDefault);
+                mousePreventDefault.parentNode.removeChild(mousePreventDefault);
             }
 
             var layxMove = document.getElementById("layx-window-move");
             if (layxMove) {
-                layxMove.parentElement.removeChild(layxMove);
+                layxMove.parentNode.removeChild(layxMove);
             }
 
             // 只有发生移动才触发
@@ -1866,11 +1875,11 @@
             // 移除鼠标拖动遮罩层
             var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
             if (mousePreventDefault) {
-                mousePreventDefault.parentElement.removeChild(mousePreventDefault);
+                mousePreventDefault.parentNode.removeChild(mousePreventDefault);
             }
             var layxMove = document.getElementById("layx-window-move");
             if (layxMove) {
-                layxMove.parentElement.removeChild(layxMove);
+                layxMove.parentNode.removeChild(layxMove);
             }
 
             // 只有发生移动才触发
