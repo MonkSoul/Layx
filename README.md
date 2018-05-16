@@ -300,7 +300,7 @@ document.getElementById('btn').onclick=function(e){
 ```
 # 2018.05.16 v2.0.3 发布
 
-- [新增] style 参数，可以前入css样式表
+- [新增] style 参数，可以嵌入css样式表
 
 # 2018.05.15 v2.0.2 发布
 
