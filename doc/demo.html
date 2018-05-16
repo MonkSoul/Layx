@@ -58,60 +58,60 @@
         //===================== 下面才是demo 代码 ==================
         window.onload = function () {
             $("#wbck").onclick = function (e) {
-                top.layx.html('wbck', '文本窗口', '<div style="padding:10px">我是一个文本窗口，支持 <strong>HTML</strong> 和 HTMLElment 对象</div>', { position: [randomNum(0, 200), randomNum(0, 500)] })
+                window.top.layx.html('wbck', '文本窗口', '<div style="padding:10px">我是一个文本窗口，支持 <strong>HTML</strong> 和 HTMLElment 对象</div>', { position: [randomNum(0, 200), randomNum(0, 500)] })
                 e.stopPropagation();
             }
             $("#wyck").onclick = function (e) {
-                top.layx.iframe('wyck', '网页窗口', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('wyck', '网页窗口', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
             $("#xxck").onclick = function (e) {
-                top.layx.msg("我是消息窗口，5秒后关闭");
+                window.top.layx.msg("我是消息窗口，5秒后关闭");
                 e.stopPropagation();
             }
             $("#tsck").onclick = function (e) {
-                top.layx.alert(null, "我是提示窗口");
+                window.top.layx.alert(null, "我是提示窗口");
                 e.stopPropagation();
             }
             $("#xwck").onclick = function (e) {
-                top.layx.confirm(null, "我是询问窗口", function (id) {
+                window.top.layx.confirm(null, "我是询问窗口", function (id) {
                     alert('你点击了确定');
-                    top.layx.destroy(id);
+                    window.top.layx.destroy(id);
                 });
                 e.stopPropagation();
             }
             $("#srck").onclick = function (e) {
-                top.layx.prompt(null, "请输入一个值试试", function (id, value, textarea) {
+                window.top.layx.prompt(null, "请输入一个值试试", function (id, value, textarea) {
                     alert('你输入的值为：' + value);
-                    top.layx.destroy(id);
+                    window.top.layx.destroy(id);
                 });
                 e.stopPropagation();
             }
             $("#jzck").onclick = function (e) {
-                top.layx.load('loadid', '数据正在加载中（5秒后关闭）...');
+                window.top.layx.load('loadid', '数据正在加载中（5秒后关闭）...');
                 setTimeout(function () {
-                    top.layx.destroy('loadid');
+                    window.top.layx.destroy('loadid');
                 }, 5000);
                 e.stopPropagation();
             }
             $("#tbck").onclick = function (e) {
-                top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
             $("#mrwg").onclick = function (e) {
-                top.layx.iframe('mrwg', '默认外观', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('mrwg', '默认外观', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
             $("#btlhs").onclick = function (e) {
-                top.layx.iframe('btlhs', '标题栏灰色', './iframe.html', { controlStyle: 'background-color: #f5f5f5;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('btlhs', '标题栏灰色', './iframe.html', { controlStyle: 'background-color: #f5f5f5;', position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
             $("#btlmls").onclick = function (e) {
-                top.layx.iframe('btlmls', '标题栏紫色', './iframe.html', { style: '#layx-btlmls .layx-inlay-menus .layx-icon:hover {background-color: #9953c0;}', controlStyle: 'background-color: #7719aa;color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('btlmls', '标题栏紫色', './iframe.html', { style: '#layx-btlmls .layx-inlay-menus .layx-icon:hover {background-color: #9953c0;}', controlStyle: 'background-color: #7719aa;color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
             $("#yj").onclick = function (e) {
-                top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
         }
