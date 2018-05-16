@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 官方示例大全 v2.0.2</title>
+    <title>Layx 官方示例大全 v2.0.3</title>
     <style type="text/css">
         button {
             margin: 5px;
@@ -24,6 +24,17 @@
     <button id="jzck">加载窗口</button>
     <button id="tbck">打开淘宝</button>
     <h3>窗口外观</h3>
+    <button id="mrwg">默认外观</button>
+    <button id="btlhs">标题栏灰色</button>
+    <button id="btlmls">标题栏紫色</button>
+    <button id="yj">圆角</button>
+    <h3>窗口方法</h3>
+    整理中...
+    <h3>窗口对象</h3>
+    整理中...
+    <h3>窗口通讯</h3>
+    整理中...
+    <h3>窗口事件</h3>
     整理中...
     <script type="text/javascript">
         //生成从minNum到maxNum的随机数
@@ -85,6 +96,22 @@
             }
             $("#tbck").onclick = function (e) {
                 top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#mrwg").onclick = function (e) {
+                top.layx.iframe('mrwg', '默认外观', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#btlhs").onclick = function (e) {
+                top.layx.iframe('btlhs', '标题栏灰色', './iframe.html', { controlStyle: 'background-color: #f5f5f5;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#btlmls").onclick = function (e) {
+                top.layx.iframe('btlmls', '标题栏紫色', './iframe.html', { style: '#layx-btlmls .layx-inlay-menus .layx-icon:hover {background-color: #9953c0;}', controlStyle: 'background-color: #7719aa;color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#yj").onclick = function (e) {
+                top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 500), randomNum(0, 500)] });
                 e.stopPropagation();
             }
         }

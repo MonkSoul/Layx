@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.2
+ * version : v2.0.3
  * create time : 2018.05.11
- * update time : 2018.05.15
+ * update time : 2018.05.16
  */
 
 ;
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.0.2',
+        version: '2.0.3',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -23,6 +23,7 @@
             minHeight: 100, // 最小高度，支持百分比 '100%'
             position: 'ct', // 初始化位置，支持'ct', 'lt', 'rt', 'lb', 'rb', 'lc', 'tc', 'rc', 'bc'，以及 [top,left]数组，同时也数字也支持混合写法，如：[100,'tc']
             control: true, // 是否显示控制栏
+            style: '',   // style样式，
             controlStyle: '', // 控制栏样式
             bgColor: "#fff",  // 窗口颜色：默认透明
             shadow: true,   // 是否显示阴影
@@ -182,6 +183,19 @@
                     e = e || window.event;
                     that.flicker(config.id);
                     e.stopPropagation();
+                }
+            }
+            // 动态插入样式
+            if (config.style) {
+                var style = document.getElementById("layx-style");
+                if (style) {
+                    style.innerHTML += config.style;
+                } else {
+                    style = document.createElement("style");
+                    style.setAttribute("id", "layx-style");
+                    style.type = "text/css";
+                    style.innerHTML = config.style;
+                    document.getElementsByTagName("HEAD").item(0).appendChild(style);
                 }
             }
 

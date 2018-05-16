@@ -12,8 +12,8 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.0.2
-- `发布日期`：2018.05.15
+- `当前版本`：v2.0.3
+- `发布日期`：2018.05.16
 - `交流Q群`：18863883
 
 # 特性
@@ -79,6 +79,7 @@ layx.open({
 - `minWidth`：窗口最小宽度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：100
 - `minHeight`：窗口最小高度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：100
 - `position`：窗口初始化位置，Array[Number/Enum，Number/Enum] 或 Enum 类型。Enum 枚举类型有： `ct：浏览器正中间`、`lt：浏览器左上角`、`rt：浏览器右上角`、`lb：浏览器左下角`、`rb：浏览器右下角`、`lc：浏览器左中间`、`tc：浏览器上中间`、`rc：浏览器右中间`、`bc：浏览器下中间`，也支持自定义上边、左边距离，如：`[100,200]`，表示上边距离100px、左边距离200px，还可以更组合配置，如：`[100,'tc']`，表示顶部中间并距离顶部 100px，默认值：ct
+- **`style`**：定义窗口的css样式，通过style可以定制窗口所有的外观属性，是一个非常强大的功能，String 类型。如：`.layx-window:{border-radius:4px;}`默认值：空字符串
 - `control`：是否显示控制栏（标题栏），Boolean 类型。默认值：true
 - `controlStyle`：控制栏（标题栏）样式，String 类型。支持 `color:#f00;font-size:14px;`，默认值：空字符串 
 - `bgColor`：窗口背景颜色，String 类型。支持 css 颜色值，透明颜色为：`transparent`，默认值：#fff
@@ -253,6 +254,32 @@ winform 是窗口信息对象，包含属性：
 - `var promptTextare = layx.getPromptTextArea(id)`：获取输入框 `textarea` 对象 ，id：窗口Id，通常在 prompt 输入框点击按钮回调函数中使用
 - `var winform = layx.load(id,msg,options)`： 打开一个加载框，id：窗口Id；msg，消息，String类型；options：配置参数
 
+# 外观
+
+通过窗口的 `style`属性可以定义窗口的外观，可以定制成任何您需要的样子。如：
+
+```
+style:`
+#layx-窗口Id{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;}
+`
+```
+
+窗口css选择器说明：
+
+- `#layx-窗口Id`：特定窗口最外层 `div`
+- `.layx-window`：所有窗口最外层 `div`
+- `.layx-control-bar`：所有窗口状态栏 `div`，如果需置顶窗口，则：`#layx-窗口Id .layx-control-bar`
+- `.layx-title`：所有窗口标题 `div`，指定窗口同上。
+- `.layx-inlay-menus`：所有窗口内置按钮（最小化，最大化，置顶、关闭、恢复）外层 `div`，指定窗口同上
+...
+...
+...
+
+如果你想修改更多外观，可以使用 Chrome 浏览器 F12检查元素获取您想要修改部分的标签名，然后写进 `style` 属性即可。如：
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0516/100648_d44ba9ee_974299.jpeg "crs.jpg")
+
+
 # 注意
 
 默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡，如：
@@ -271,6 +298,10 @@ document.getElementById('btn').onclick=function(e){
 # 日志
 
 ```
+# 2018.05.16 v2.0.3 发布
+
+- [新增] style 参数，可以前入css样式表
+
 # 2018.05.15 v2.0.2 发布
 
 - [修复] 低版本Chrome 浏览器bug
