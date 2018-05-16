@@ -67,7 +67,7 @@ layx.open({
 
 # 示例
 
-[查看更多示例](http://baisoft.gotoip11.com/layx/doc/)
+[查看更多示例](http://monksoul.gitee.io/layx/doc/)
 
 # 参数
 
