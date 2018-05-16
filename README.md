@@ -302,6 +302,7 @@ document.getElementById('btn').onclick=function(e){
 
 - [新增] style 参数，可以嵌入css样式表
 - [修复] 拖动层、拖曳层调整大小多窗口冲突bug
+- [修复] 部分浏览器页面窗口不能自适应 bug
 
 # 2018.05.15 v2.0.2 发布
 

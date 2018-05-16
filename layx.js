@@ -156,6 +156,10 @@
             var that = this,
                 config = layxDeepClone({}, that.defaults, options || {}),
                 winform = {};
+            if (!config.id) {
+                console.error("窗口id不能为空且唯一");
+                return;
+            };
 
             var _winform = that.windows[config.id];
             if (_winform) {
@@ -166,11 +170,6 @@
                 that.flicker(config.id);
                 return _winform;
             }
-
-            if (!config.id) {
-                console.error("窗口id不能为空且唯一");
-                return;
-            };
 
             // 创建窗口阻隔
             if (config.shadable === true) {
@@ -210,6 +209,7 @@
                 layxWindow.style.setProperty("-webkit-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
             }
 
+            // 转换最小化参数
             var _minWidth = Utils.compileLayxWidthOrHeight("width", config.minWidth, that.defaults.minWidth);
             var _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
 
