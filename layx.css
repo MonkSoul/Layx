@@ -64,7 +64,7 @@
     -ms-flex: 1;
 }
 
-.layx-shade {
+.layx-shade, #layx-window-move {
     position: fixed;
     top: 0;
     right: 0;

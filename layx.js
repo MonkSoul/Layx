@@ -958,10 +958,10 @@
                     layxShade.style.zIndex = (winform.isStick === true ? (++that.stickZIndex) : (++that.zIndex));
                 }
                 if (winform.isStick === true) {
-                    winform.zIndex = ++that.stickZIndex;
+                    winform.zIndex = (++that.stickZIndex) + 1;
                 }
                 else {
-                    winform.zIndex = ++that.zIndex;
+                    winform.zIndex = (++that.zIndex) + 1;
                 }
                 layxWindow.style.zIndex = winform.zIndex;
             }
@@ -1608,13 +1608,6 @@
 
                     if (LayxResize.isFirstResizing === true) {
                         LayxResize.isFirstResizing = false;
-                        // 解决鼠标拖出目标容器bug
-                        var mousePreventDefault = document.createElement("div");
-                        mousePreventDefault.classList.add("layx-mouse-preventDefault");
-                        var main = handle.layxWindow.querySelector(".layx-main");
-                        if (main) {
-                            main.appendChild(mousePreventDefault);
-                        }
 
                         // 绑定拖曳之前事件
                         if (Utils.isFunction(handle.winform.event.onresize.before)) {
@@ -1685,15 +1678,22 @@
             e = e || window.event;
             document.onmouseup = null;
             document.onmousemove = null;
+            // 移除鼠标拖动遮罩层
+            var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
+            if (mousePreventDefault) {
+                mousePreventDefault.parentElement.removeChild(mousePreventDefault);
+            }
+
+            var layxMove = document.getElementById("layx-window-move");
+            if (layxMove) {
+                layxMove.parentElement.removeChild(layxMove);
+            }
+
             // 只有发生移动才触发
             if (LayxResize.isResizing === true) {
                 LayxResize.isResizing = false;
                 LayxResize.isFirstResizing = true;
-                // 移除鼠标拖动遮罩层
-                var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
-                if (mousePreventDefault) {
-                    mousePreventDefault.parentElement.removeChild(mousePreventDefault);
-                }
+
 
                 // 更新窗口位置信息
                 handle.winform.area.top = handle.layxWindow.offsetTop;
@@ -1723,8 +1723,17 @@
                 if (winform) {
                     // 最小化不允许拖曳
                     if (winform.status !== "min" && winform.resizable === true) {
+                        // 创建全局遮罩层
+                        var layxMove = document.getElementById("layx-window-move");
+                        if (!layxMove) {
+                            layxMove = document.createElement("div");
+                            layxMove.setAttribute("id", "layx-window-move");
+                            document.body.appendChild(layxMove);
+                        }
                         // 更新层级别
                         Layx.updateZIndex(id);
+                        layxMove.style.zIndex = winform.zIndex - 1;
+
                         // 获取鼠标点击坐标
                         var mouseCoord = Utils.getMousePosition(e);
                         // 存储一开始的坐标
@@ -1739,6 +1748,17 @@
                         e.preventDefault();
                         // 禁止冒泡
                         e.stopPropagation();
+
+                        var mousePreventDefault = layxWindow.querySelector(".layx-mouse-preventDefault");
+                        if (!mousePreventDefault) {
+                            // 解决鼠标拖出目标容器bug
+                            mousePreventDefault = document.createElement("div");
+                            mousePreventDefault.classList.add("layx-mouse-preventDefault");
+                            var main = layxWindow.querySelector(".layx-main");
+                            if (main) {
+                                main.appendChild(mousePreventDefault);
+                            }
+                        }
 
                         document.onmouseup = dragend;
                         document.onmousemove = drag;
@@ -1776,13 +1796,6 @@
 
                     if (LayxDrag.isFirstMoveing === true) {
                         LayxDrag.isFirstMoveing = false;
-                        // 解决鼠标拖出目标容器bug
-                        var mousePreventDefault = document.createElement("div");
-                        mousePreventDefault.classList.add("layx-mouse-preventDefault");
-                        var main = handle.layxWindow.querySelector(".layx-main");
-                        if (main) {
-                            main.appendChild(mousePreventDefault);
-                        }
 
                         // 绑定移动之前事件
                         if (Utils.isFunction(handle.winform.event.onmove.before)) {
@@ -1850,15 +1863,20 @@
             e = e || window.event;
             document.onmouseup = null;
             document.onmousemove = null;
+            // 移除鼠标拖动遮罩层
+            var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
+            if (mousePreventDefault) {
+                mousePreventDefault.parentElement.removeChild(mousePreventDefault);
+            }
+            var layxMove = document.getElementById("layx-window-move");
+            if (layxMove) {
+                layxMove.parentElement.removeChild(layxMove);
+            }
+
             // 只有发生移动才触发
             if (LayxDrag.isMoveing === true) {
                 LayxDrag.isMoveing = false;
                 LayxDrag.isFirstMoveing = true;
-                // 移除鼠标拖动遮罩层
-                var mousePreventDefault = handle.layxWindow.querySelector(".layx-mouse-preventDefault");
-                if (mousePreventDefault) {
-                    mousePreventDefault.parentElement.removeChild(mousePreventDefault);
-                }
 
                 // 更新窗口位置信息
                 handle.winform.area.top = handle.layxWindow.offsetTop;
@@ -1893,8 +1911,17 @@
                 if (winform) {
                     // 最小化不允许拖动
                     if (winform.status !== "min" && winform.movable === true) {
+                        // 创建全局遮罩层
+                        var layxMove = document.getElementById("layx-window-move");
+                        if (!layxMove) {
+                            layxMove = document.createElement("div");
+                            layxMove.setAttribute("id", "layx-window-move");
+                            document.body.appendChild(layxMove);
+                        }
                         // 更新层级别
                         Layx.updateZIndex(id);
+                        layxMove.style.zIndex = winform.zIndex - 1;
+
                         // 获取鼠标点击坐标
                         var mouseCoord = Utils.getMousePosition(e);
                         // 存储一开始的坐标
@@ -1911,6 +1938,17 @@
                         e.preventDefault();
                         // 禁止冒泡
                         e.stopPropagation();
+
+                        var mousePreventDefault = layxWindow.querySelector(".layx-mouse-preventDefault");
+                        if (!mousePreventDefault) {
+                            // 解决鼠标拖出目标容器bug
+                            mousePreventDefault = document.createElement("div");
+                            mousePreventDefault.classList.add("layx-mouse-preventDefault");
+                            var main = layxWindow.querySelector(".layx-main");
+                            if (main) {
+                                main.appendChild(mousePreventDefault);
+                            }
+                        }
 
                         document.onmouseup = dragend;
                         document.onmousemove = drag;
