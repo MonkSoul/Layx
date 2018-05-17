@@ -60,13 +60,15 @@
     <button id="xzj">下中间</button>
     <button id="yzj">右中间</button>
     <button id="zdy">自定义 上 100，左 100</button>
+    <h3>窗口事件</h3>
+    <button id="jzsj">事件监听</button>
+    <div id="event" style="border:1px solid #ccc;background:#f5f5f5; height:300px;overflow:auto;font-size:14px;padding:10px;line-height:1.5;">
+    </div>
     <h3>窗口方法</h3>
     整理中...
     <h3>窗口对象</h3>
     整理中...
     <h3>窗口通讯</h3>
-    整理中...
-    <h3>窗口事件</h3>
     整理中...
     <script type="text/javascript">
         function func1() {
@@ -317,6 +319,129 @@
                 window.top.layx.iframe('zdyztl', '自定义状态栏并绑定自己的事件', './iframe.html', {
                     statusBar: '<div style="padding:10px;text-align:right;"><button onclick="top.layx.getChildContext(\'doc\').func1();">自定义按钮1</button> <button onclick="top.layx.getChildContext(\'doc\').func2();">自定义按钮2</button></div>',
                     position: 'ct'
+                });
+                e.stopPropagation();
+            }
+
+            $("#jzsj").onclick = function (e) {
+                window.top.layx.iframe('jzsj', '加载事件', './iframe.html', {
+                    position: 'ct',
+                    event: {
+                        onload: {
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>加载之前...</strong></div><div>===================</div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>加载之后...</strong></div><div>===================</div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 最小化事件
+                        onmin: {
+                            // 最小化之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>最小化之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 最小化之后
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>最小化之后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 最大化事件
+                        onmax: {
+                            // 最大化之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>最大化之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 最大化之后
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>最大化之后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 恢复事件
+                        onrestore: {
+                            // 恢复之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>恢复窗口之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 恢复之后
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>恢复窗口之后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 关闭事件
+                        ondestroy: {
+                            // 关闭之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>关闭之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 关闭之后
+                            after: function () {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>关闭之后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 移动事件
+                        onmove: {
+                            // 移动之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>移动窗口之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 移动中
+                            progress: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>移动窗口中...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 移动之后
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>移动窗口之后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        },
+                        // 拖曳事件
+                        onresize: {
+                            // 拖曳之前，return false 不执行
+                            before: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小之前...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 拖曳中
+                            progress: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小之中...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            },
+                            // 拖曳之后
+                            after: function (layxWindow, winform) {
+                                var div = document.getElementById("event");
+                                div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小后...</strong><div>===================</div></div>";
+                                div.scrollTop = div.scrollHeight;
+                            }
+                        }
+                    }
                 });
                 e.stopPropagation();
             }

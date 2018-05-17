@@ -158,7 +158,7 @@ buttons:[
 buttons:[
     {
         label:'确定',
-        callback:function(id,value,textarea){
+        cackback:function(id,value,textarea){
             // your code...
 
             // 关闭窗口
@@ -167,7 +167,7 @@ buttons:[
     },
     {
         label:'取消',
-        callback:function(id,value,textarea){
+        cackback:function(id,value,textarea){
 
             // 关闭窗口
             layx.destroy(id);   
