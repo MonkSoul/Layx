@@ -28,6 +28,23 @@
     <button id="btlhs">标题栏灰色</button>
     <button id="btlmls">标题栏紫色</button>
     <button id="yj">圆角</button>
+    <button id="hsck">灰色窗口</button>
+    <button id="ahzt">暗黑主题</button>
+    <button id="tmck">透明窗口</button>
+    <button id="zygbal">只有关闭按钮</button>
+    <button id="ggcktb">更改窗口图标</button>
+    <button id="myyy">没有阴影</button>
+    <button id="wbk">无边框</button>
+    <button id="bntd">不能拖动</button>
+    <button id="bntcksqy">不能拖出可视区域</button>
+    <button id="znsptd">只能水平拖动</button>
+    <button id="zncztd">只能垂直拖动</button>
+    <button id="bntydx">不能拖曳大小</button>
+    <button id="ckzg">窗口阻隔</button>
+    <button id="smzdgb">3秒自动关闭</button>
+    <button id="dzjzwb">定制加载文本</button>
+    <button id="dztl">带状态栏</button>
+    <button id="dkzdck">打开置顶窗口</button>
     <h3>窗口方法</h3>
     整理中...
     <h3>窗口对象</h3>
@@ -112,6 +129,89 @@
             }
             $("#yj").onclick = function (e) {
                 window.top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#hsck").onclick = function (e) {
+                window.top.layx.iframe('hsck', '灰色窗口', './iframe.html', { bgColor: "#ccc", position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#ahzt").onclick = function (e) {
+                window.top.layx.iframe('ahzt', '暗黑主题', './iframe.html', { bgColor: "#000", style: '#layx-ahzt .layx-inlay-menus .layx-icon:hover {background-color: #666;}', controlStyle: 'color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#tmck").onclick = function (e) {
+                window.top.layx.iframe('tmck', '透明窗口', './iframe.html', { opacity: 0.5, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#zygbal").onclick = function (e) {
+                window.top.layx.iframe('zygbal', '只有关闭按钮', './iframe.html', { minMenu: false, maxMenu: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#ggcktb").onclick = function (e) {
+                window.top.layx.iframe('ggcktb', '更改窗口图标', './iframe.html', { icon: '<img src="logo.png" style="height:22px;display:block;" />', position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#myyy").onclick = function (e) {
+                window.top.layx.iframe('myyy', '没有阴影', './iframe.html', { shadow: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#wbk").onclick = function (e) {
+                window.top.layx.iframe('wbk', '无边框', './iframe.html', { border: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#bntd").onclick = function (e) {
+                window.top.layx.iframe('bntd', '不能拖动', './iframe.html', { movable: false });
+                e.stopPropagation();
+            }
+            $("#bntcksqy").onclick = function (e) {
+                window.top.layx.iframe('bntcksqy', '不能拖出可视区域', './iframe.html', {
+                    moveLimit: {
+                        leftOut: false,
+                        rightOut: false,
+                        topOut: false,
+                        bottomOut: false,
+                    }, position: 'rc'
+                });
+                e.stopPropagation();
+            }
+            $("#znsptd").onclick = function (e) {
+                window.top.layx.iframe('znsptd', '只能水平拖动', './iframe.html', {
+                    moveLimit: {
+                        vertical: true
+                    }, position: 'bc'
+                });
+                e.stopPropagation();
+            }
+            $("#zncztd").onclick = function (e) {
+                window.top.layx.iframe('zncztd', '只能垂直拖动', './iframe.html', {
+                    moveLimit: {
+                        horizontal: true
+                    }, position: [randomNum(0, 500), randomNum(0, 500)]
+                });
+                e.stopPropagation();
+            }
+            $("#bntydx").onclick = function (e) {
+                window.top.layx.iframe('bntydx', '不能拖曳大小', './iframe.html', { resizable: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#ckzg").onclick = function (e) {
+                window.top.layx.iframe('ckzg', '窗口阻隔', './iframe.html', { shadable: true, position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#smzdgb").onclick = function (e) {
+                window.top.layx.iframe('smzdgb', '3秒自动关闭', './iframe.html', { autodestroy: 3000, position: 'center' });
+                e.stopPropagation();
+            }
+            $("#dzjzwb").onclick = function (e) {
+                window.top.layx.iframe('dzjzwb', '定制加载文本', 'https://www.oschina.net', { loaddingText: '亲们，我正在加载内容哦~', position: 'center' });
+                e.stopPropagation();
+            }
+            $("#dztl").onclick = function (e) {
+                window.top.layx.iframe('dztl', '带状态栏', './iframe.html', { statusBar: '我是状态栏哦~~', position: 'center' });
+                e.stopPropagation();
+            }
+            $("#dkzdck").onclick = function (e) {
+                window.top.layx.iframe('dkzdck', '打开置顶窗口', './iframe.html', { alwaysOnTop: true, stickMenu: true, position: 'center' });
                 e.stopPropagation();
             }
         }
