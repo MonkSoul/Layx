@@ -2,7 +2,7 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.3
+ * version : v2.0.4
  * create time : 2018.05.11
  * update time : 2018.05.17
  */
