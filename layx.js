@@ -277,8 +277,6 @@
             winform.maxable = config.maxable;
             winform.restorable = config.restorable;
             winform.closable = config.closable;
-            // 存储当前window
-            winform.currentWindow = win;
             // 存储事件
             winform.event = config.event;
 

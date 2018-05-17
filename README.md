@@ -251,7 +251,6 @@ winform 是窗口信息对象，包含属性：
 - `maxable`：是否允许窗口最大化操作
 - `restorable`：是否允许窗口恢复操作
 - `closable`：是否允许窗口关闭操作
-- `currentWindow`：当前窗口的 Window 对象
 - `event`：窗口事件，包含属性
   - `onload`：内容加载事件
     - `before`：内容加载之前
