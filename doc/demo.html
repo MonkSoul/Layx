@@ -46,6 +46,7 @@
     <button id="dztl">带状态栏</button>
     <button id="dkzdck">打开置顶窗口</button>
     <button id="bxsbtl">不显示标题栏</button>
+    <button id="bxscktb">不显示窗口图标</button>
     <h3>窗口位置</h3>
     <button id="zjdk">中间打开</button>
     <button id="zsj">左上角</button>
@@ -228,6 +229,10 @@
             }
             $("#bxsbtl").onclick = function (e) {
                 window.top.layx.html('bxsbtl', '不显示标题栏', '<div style="padding:10px"><button onclick="window.top.layx.destroy(\'bxsbtl\')">关闭</button></div>', { control: false, position: 'ct' });
+                e.stopPropagation();
+            }
+            $("#bxscktb").onclick = function (e) {
+                window.top.layx.iframe('bxscktb', '不显示窗口图标', './iframe.html', { icon: false, position: 'ct' });
                 e.stopPropagation();
             }
             $("#zjdk").onclick = function (e) {
