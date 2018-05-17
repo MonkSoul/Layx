@@ -45,6 +45,18 @@
     <button id="dzjzwb">定制加载文本</button>
     <button id="dztl">带状态栏</button>
     <button id="dkzdck">打开置顶窗口</button>
+    <button id="bxsbtl">不显示标题栏</button>
+    <h3>窗口位置</h3>
+    <button id="zjdk">中间打开</button>
+    <button id="zsj">左上角</button>
+    <button id="ysj">右上角</button>
+    <button id="zxj">左下角</button>
+    <button id="rxj">右下角</button>
+    <button id="szj">上中间</button>
+    <button id="zzj">左中间</button>
+    <button id="xzj">下中间</button>
+    <button id="yzj">右中间</button>
+    <button id="zdy">自定义 上 100，左 100</button>
     <h3>窗口方法</h3>
     整理中...
     <h3>窗口对象</h3>
@@ -199,19 +211,63 @@
                 e.stopPropagation();
             }
             $("#smzdgb").onclick = function (e) {
-                window.top.layx.iframe('smzdgb', '3秒自动关闭', './iframe.html', { autodestroy: 3000, position: 'center' });
+                window.top.layx.iframe('smzdgb', '3秒自动关闭', './iframe.html', { autodestroy: 3000, position: 'ct' });
                 e.stopPropagation();
             }
             $("#dzjzwb").onclick = function (e) {
-                window.top.layx.iframe('dzjzwb', '定制加载文本', 'https://www.oschina.net', { loaddingText: '亲们，我正在加载内容哦~', position: 'center' });
+                window.top.layx.iframe('dzjzwb', '定制加载文本', 'https://www.oschina.net', { loaddingText: '亲们，我正在加载内容哦~', position: 'ct' });
                 e.stopPropagation();
             }
             $("#dztl").onclick = function (e) {
-                window.top.layx.iframe('dztl', '带状态栏', './iframe.html', { statusBar: '我是状态栏哦~~', position: 'center' });
+                window.top.layx.iframe('dztl', '带状态栏', './iframe.html', { statusBar: '我是状态栏哦~~', position: 'ct' });
                 e.stopPropagation();
             }
             $("#dkzdck").onclick = function (e) {
-                window.top.layx.iframe('dkzdck', '打开置顶窗口', './iframe.html', { alwaysOnTop: true, stickMenu: true, position: 'center' });
+                window.top.layx.iframe('dkzdck', '打开置顶窗口', './iframe.html', { alwaysOnTop: true, stickMenu: true, position: 'ct' });
+                e.stopPropagation();
+            }
+            $("#bxsbtl").onclick = function (e) {
+                window.top.layx.html('bxsbtl', '不显示标题栏', '<div style="padding:10px"><button onclick="window.top.layx.destroy(\'bxsbtl\')">关闭</button></div>', { control: false, position: 'ct' });
+                e.stopPropagation();
+            }
+            $("#zjdk").onclick = function (e) {
+                window.top.layx.iframe('zjdk', '中间打开', './iframe.html', { position: 'ct' });
+                e.stopPropagation();
+            }
+            $("#zsj").onclick = function (e) {
+                window.top.layx.iframe('zsj', '左上角', './iframe.html', { position: 'lt' });
+                e.stopPropagation();
+            }
+            $("#ysj").onclick = function (e) {
+                window.top.layx.iframe('ysj', '右上角', './iframe.html', { position: 'rt' });
+                e.stopPropagation();
+            }
+            $("#zxj").onclick = function (e) {
+                window.top.layx.iframe('zxj', '左下角', './iframe.html', { position: 'lb' });
+                e.stopPropagation();
+            }
+            $("#rxj").onclick = function (e) {
+                window.top.layx.iframe('zxj', '右下角', './iframe.html', { position: 'rb' });
+                e.stopPropagation();
+            }
+            $("#szj").onclick = function (e) {
+                window.top.layx.iframe('szj', '上中间', './iframe.html', { position: 'tc' });
+                e.stopPropagation();
+            }
+            $("#zzj").onclick = function (e) {
+                window.top.layx.iframe('zzj', '左中间', './iframe.html', { position: 'lc' });
+                e.stopPropagation();
+            }
+            $("#xzj").onclick = function (e) {
+                window.top.layx.iframe('xzj', '下中间', './iframe.html', { position: 'bc' });
+                e.stopPropagation();
+            }
+            $("#yzj").onclick = function (e) {
+                window.top.layx.iframe('yzj', '右中间', './iframe.html', { position: 'rc' });
+                e.stopPropagation();
+            }
+            $("#zdy").onclick = function (e) {
+                window.top.layx.iframe('zdy', '自定义 上 200，左 200', './iframe.html', { position: [100, 100] });
                 e.stopPropagation();
             }
         }

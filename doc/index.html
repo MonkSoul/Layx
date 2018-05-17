@@ -13,31 +13,27 @@
     <script type="text/javascript">
         window.onload = function (e) {
             layx.open({
+                id: 'doc',
+                type: 'url',
+                url: 'demo.html',
+                useFrameTitle: true,
+                stickMenu: true,
+                width: 320,
+                height: 568,
+                position: ['lc', 20],
+                closeMenu: false,
+                maxMenu: false,
+                minMenu: false
+            });
+
+            layx.open({
                 id: 'demo',
                 type: 'url',
                 url: 'iframe.html',
                 useFrameTitle: true,
                 shadable: true,
                 autodestroy: 5000,
-                stickMenu: true,
-                event: {
-                    ondestroy: {
-                        before: function (layxWindow, winform) {
-                        },
-                        after: function () {
-                            layx.open({
-                                id: 'doc',
-                                type: 'url',
-                                url: 'demo.html',
-                                useFrameTitle: true,
-                                stickMenu: true,
-                                width: 320,
-                                height: 568,
-                                position: ['lc', 20]
-                            });
-                        }
-                    }
-                }
+                stickMenu: true
             });
         };
     </script>
