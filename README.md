@@ -350,7 +350,7 @@ document.getElementById('btn').onclick=function(e){
 # 日志
 
 ```
-# 2018.05.16 v2.0.4 发布
+# 2018.05.17 v2.0.4 发布
 
 - [新增] buttons 配置属性
 - [更新] 提示框、询问框、输入框代码
