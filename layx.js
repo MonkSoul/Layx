@@ -4,14 +4,14 @@
  * author : 百小僧/MonkSoul
  * version : v2.0.3
  * create time : 2018.05.11
- * update time : 2018.05.16
+ * update time : 2018.05.17
  */
 
 ;
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.0.3',
+        version: '2.0.4',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -58,6 +58,8 @@
                 lb: false, // 是否限制左下边拖曳大小，false不限制
                 rb: false // 是否限制右下边拖曳大小，false不限制
             },
+            buttons: [],    // 生成状态栏按钮，必须设置statusBar=true
+            isPrompt: false,    // 是否输入窗口，此窗口比较特殊，单独设置参数
             movable: true,  // 是否允许拖动窗口
             moveLimit: {
                 vertical: false, // 是否禁止垂直拖动，false不禁止
@@ -681,12 +683,20 @@
                 var statusBar = document.createElement("div");
                 statusBar.classList.add("layx-statu-bar");
                 config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
-                // dom元素直接添加
-                if (Utils.isDom(config.statusBar)) {
-                    statusBar.appendChild(config.statusBar);
+                // 创建按钮
+
+                if (config.statusBar === true && Utils.isArray(config.buttons)) {
+                    var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
+                    statusBar.appendChild(btnElement);
                 }
                 else {
-                    statusBar.innerHTML = config.statusBar;
+                    // dom元素直接添加
+                    if (Utils.isDom(config.statusBar)) {
+                        statusBar.appendChild(config.statusBar);
+                    }
+                    else {
+                        statusBar.innerHTML = config.statusBar;
+                    }
                 }
 
                 layxWindow.appendChild(statusBar);
@@ -1239,30 +1249,11 @@
             return winform;
         },
         // 提示框
-        alert: function (title, msg, yes, buttons, options) {
-            var that = this,
-                id = 'layx-alert-' + Utils.rndNum(8);
+        alert: function (title, msg, yes, options) {
+            var that = this;
 
-            // 创建button
-            // 创建button
-            if (!Utils.isArray(buttons)) {
-                buttons = [
-                    {
-                        label: '确定',
-                        callback: function (id) {
-                            if (Utils.isFunction(yes)) {
-                                yes(id);
-                            }
-                            else {
-                                Layx.destroy(id);
-                            }
-                        }
-                    }
-                ];
-            }
-            var buttonElement = that.createLayxButtons(buttons, id);
             var winform = that.create(layxDeepClone({}, {
-                id: id,
+                id: 'layx-alert-' + Utils.rndNum(8),
                 title: title || "提示消息",
                 icon: false,
                 type: 'html',
@@ -1279,7 +1270,19 @@
                 resizable: false,
                 allowControlDbclick: false,
                 shadable: true,
-                statusBar: buttonElement,
+                statusBar: true,
+                buttons: [
+                    {
+                        label: '确定',
+                        callback: function (id) {
+                            if (Utils.isFunction(yes)) {
+                                yes(id);
+                            }
+                            else {
+                                Layx.destroy(id);
+                            }
+                        }
+                    }],
                 position: 'ct',
             }, that.options));
 
@@ -1287,32 +1290,11 @@
             return winform;
         },
         // 询问框
-        confirm: function (title, msg, yes, buttons, options) {
-            var that = this,
-                id = 'layx-confirm-' + Utils.rndNum(8);
+        confirm: function (title, msg, yes, options) {
+            var that = this;
 
-            // 创建button
-            if (!Utils.isArray(buttons)) {
-                buttons = [
-                    {
-                        label: '确定',
-                        callback: function (id) {
-                            if (Utils.isFunction(yes)) {
-                                yes(id);
-                            }
-                        }
-                    },
-                    {
-                        label: '取消',
-                        callback: function (id) {
-                            Layx.destroy(id);
-                        }
-                    }
-                ];
-            }
-            var buttonElement = that.createLayxButtons(buttons, id);
             var winform = that.create(layxDeepClone({}, {
-                id: id,
+                id: 'layx-confirm-' + Utils.rndNum(8),
                 title: title || "询问消息",
                 icon: false,
                 type: 'html',
@@ -1329,7 +1311,23 @@
                 resizable: false,
                 allowControlDbclick: false,
                 shadable: true,
-                statusBar: buttonElement,
+                buttons: [
+                    {
+                        label: '确定',
+                        callback: function (id) {
+                            if (Utils.isFunction(yes)) {
+                                yes(id);
+                            }
+                        }
+                    },
+                    {
+                        label: '取消',
+                        callback: function (id) {
+                            Layx.destroy(id);
+                        }
+                    }
+                ],
+                statusBar: true,
                 position: 'ct',
             }, that.options));
 
@@ -1354,13 +1352,30 @@
             return null;
         },
         // 输入框
-        prompt: function (title, msg, yes, buttons, options) {
-            var that = this,
-                id = 'layx-prompt-' + Utils.rndNum(8);
+        prompt: function (title, msg, yes, options) {
+            var that = this;
 
-            // 创建button
-            if (!Utils.isArray(buttons)) {
-                buttons = [
+            var winform = that.create(layxDeepClone({}, {
+                id: 'layx-prompt-' + Utils.rndNum(8),
+                title: title || "请输入信息",
+                icon: false,
+                type: 'html',
+                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'></textarea></div>",
+                width: 352,
+                height: 200,
+                minHeight: 200,
+                stickMenu: false,
+                minMenu: false,
+                minable: false,
+                maxMenu: false,
+                maxable: false,
+                alwaysOnTop: true,
+                resizable: false,
+                allowControlDbclick: false,
+                shadable: true,
+                statusBar: true,
+                isPrompt: true,
+                buttons: [
                     {
                         label: '确定',
                         callback: function (id, value, textarea) {
@@ -1380,28 +1395,7 @@
                             Layx.destroy(id);
                         }
                     }
-                ];
-            }
-            var buttonElement = that.createLayxButtons(buttons, id, true);
-            var winform = that.create(layxDeepClone({}, {
-                id: id,
-                title: title || "请输入信息",
-                icon: false,
-                type: 'html',
-                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'></textarea></div>",
-                width: 352,
-                height: 200,
-                minHeight: 200,
-                stickMenu: false,
-                minMenu: false,
-                minable: false,
-                maxMenu: false,
-                maxable: false,
-                alwaysOnTop: true,
-                resizable: false,
-                allowControlDbclick: false,
-                shadable: true,
-                statusBar: buttonElement,
+                ],
                 position: 'ct',
             }, that.options));
 
@@ -2072,20 +2066,20 @@
             return Layx.msg(msg, options);
         },
         // 提示框
-        alert: function (title, msg, yes, buttons, options) {
-            return Layx.alert(title, msg, yes, buttons, options);
+        alert: function (title, msg, yes, options) {
+            return Layx.alert(title, msg, yes, options);
         },
         // 询问框
-        confirm: function (title, msg, yes, buttons, options) {
-            return Layx.confirm(title, msg, yes, buttons, options);
+        confirm: function (title, msg, yes, options) {
+            return Layx.confirm(title, msg, yes, options);
         },
         // 获取prompt输入框textarea对象
         getPromptTextArea: function (id) {
             return Layx.getPromptTextArea(id);
         },
         // 输入框
-        prompt: function (title, msg, yes, buttons, options) {
-            return Layx.prompt(title, msg, yes, buttons, options);
+        prompt: function (title, msg, yes, options) {
+            return Layx.prompt(title, msg, yes, options);
         },
         // 加载框
         load: function (id, msg, options) {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 官方示例大全 v2.0.3</title>
+    <title>Layx 官方示例大全 v2.0.4</title>
     <style type="text/css">
         button {
             margin: 5px;
@@ -23,6 +23,7 @@
     <button id="srck">输入窗口</button>
     <button id="jzck">加载窗口</button>
     <button id="tbck">打开淘宝</button>
+    <button id="danniu">带操作按钮</button>
     <h3>窗口外观</h3>
     <button id="mrwg">默认外观</button>
     <button id="btlhs">标题栏灰色</button>
@@ -47,6 +48,7 @@
     <button id="dkzdck">打开置顶窗口</button>
     <button id="bxsbtl">不显示标题栏</button>
     <button id="bxscktb">不显示窗口图标</button>
+    <button id="zdyztl">自定义状态栏并绑定自己的事件</button>
     <h3>窗口位置</h3>
     <button id="zjdk">中间打开</button>
     <button id="zsj">左上角</button>
@@ -67,6 +69,14 @@
     <h3>窗口事件</h3>
     整理中...
     <script type="text/javascript">
+        function func1() {
+            alert("我是按钮1，点击后关闭");
+            top.layx.destroy("zdyztl");
+        }
+
+        function func2() {
+            alert("我是按钮2，点击后我不想关闭");
+        }
         //生成从minNum到maxNum的随机数
         function randomNum(minNum, maxNum) {
             switch (arguments.length) {
@@ -126,6 +136,33 @@
             }
             $("#tbck").onclick = function (e) {
                 window.top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                e.stopPropagation();
+            }
+            $("#danniu").onclick = function (e) {
+                window.top.layx.iframe('danniu', '带操作按钮', './iframe.html', {
+                    statusBar: true,
+                    buttons: [
+                        {
+                            label: '其他按钮',
+                            callback: function (id) {
+                                alert("我是其他按钮，点击后啥也不干");
+                            }
+                        },
+                        {
+                            label: '确定',
+                            callback: function (id) {
+                                alert("我是确定按钮，点击后关闭");
+                                top.layx.destroy(id);
+                            }
+                        },
+                        {
+                            label: '取消',
+                            callback: function (id) {
+                                top.layx.destroy(id);
+                            }
+                        }
+                    ], position: [randomNum(0, 500), randomNum(0, 500)]
+                });
                 e.stopPropagation();
             }
             $("#mrwg").onclick = function (e) {
@@ -273,6 +310,14 @@
             }
             $("#zdy").onclick = function (e) {
                 window.top.layx.iframe('zdy', '自定义 上 200，左 200', './iframe.html', { position: [100, 100] });
+                e.stopPropagation();
+            }
+
+            $("#zdyztl").onclick = function (e) {
+                window.top.layx.iframe('zdyztl', '自定义状态栏并绑定自己的事件', './iframe.html', {
+                    statusBar: '<div style="padding:10px;text-align:right;"><button onclick="top.layx.getChildContext(\'doc\').func1();">自定义按钮1</button> <button onclick="top.layx.getChildContext(\'doc\').func2();">自定义按钮2</button></div>',
+                    position: 'ct'
+                });
                 e.stopPropagation();
             }
         }

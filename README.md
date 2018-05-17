@@ -12,8 +12,8 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.0.3
-- `发布日期`：2018.05.16
+- `当前版本`：v2.0.4
+- `发布日期`：2018.05.17
 - `交流Q群`：18863883
 
 # 特性
@@ -124,6 +124,58 @@ layx.open({
 - `focusable`：窗口是否允许获取焦点，Boolean 类型。窗口获取焦点后会自动显示在顶层，默认值：true，**只支持同域页面获取焦点**
 - `alwaysOnTop`：是否总是置顶，Boolean 类型。默认值 true，置顶之后将位于所有窗口之上（同级别除外）
 - `allowControlDbclick`：是否允许控制栏双击切换窗口大小，Boolean 类型。默认值：true
+- `buttons`：窗口按钮组，需设置 `statusBar:true` 才有效，Array(Button) 类型，Button 对象可选值：
+  - `label`：按钮名称，String 类型
+  - `callback`：按钮点击回调函数，如：`function(id){}`，id 表示窗口Id，**注意：如果窗口是 prompt 类型时，callback参赛为：function(id, value, textarea){}; id：窗口Id，value：输入框值，textarea：输入框对象**
+
+传入示例：
+
+```
+buttons:[
+    {
+        label:'确定',
+        cackback:function(id){
+            // your code...
+
+            // 关闭窗口
+            layx.destroy(id);   
+        }
+    },
+    {
+        label:'取消',
+        cackback:function(id){
+
+            // 关闭窗口
+            layx.destroy(id);   
+        }
+    }
+]
+```
+
+如果是 prompt 输入框
+
+```
+buttons:[
+    {
+        label:'确定',
+        cackback:function(id,value,textarea){
+            // your code...
+
+            // 关闭窗口
+            layx.destroy(id);   
+        }
+    },
+    {
+        label:'取消',
+        cackback:function(id,value,textarea){
+
+            // 关闭窗口
+            layx.destroy(id);   
+        }
+    }
+]
+```
+
 - `statusBar`：是否显示窗口状态栏，Boolean 或 String 或 HTMLElement 类型。支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：false
 - `statusBarStyle`：窗口状态栏样式 ，String 类型。支持 `color:#f00;font-size:14px;`，默认值：空字符串 
 - `event`：窗口事件，Object/Class 类型。可选值：
@@ -248,9 +300,9 @@ winform 是窗口信息对象，包含属性：
 - `layx.setUrl(id,url)`：设置页面窗口url地址，id：窗口Id；url：网址 或 文件路径
 - `layx.destroyAll()`：关闭所有窗口
 - `var winform = layx.msg(msg,options)`：打开一个消息框，msg，消息，String类型；options：配置参数
-- `var winform = layx.alert(title,msg,yes,buttons,options)`：打开一个提示框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；buttons，Object类型，可选值：`[{ label:'', callback:function(id){}}]`；options：配置参数
-- `var winform = layx.confirm(title,msg,yes,buttons,options)`：打开一个询问框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；buttons，Object类型，可选值：`[{ label:'', callback:function(id){}}]`；options：配置参数
-- `var winform = layx.prompt(title,msg,yes,buttons,options)`：打开一个输入框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id,value,textarea){}`；buttons，Object类型，可选值：`[{ label:'', callback:function(id){}}]`；options：配置参数
+- `var winform = layx.alert(title,msg,yes,options)`：打开一个提示框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；options：配置参数
+- `var winform = layx.confirm(title,msg,yes,options)`：打开一个询问框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；options：配置参数
+- `var winform = layx.prompt(title,msg,yes,options)`：打开一个输入框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id,value,textarea){}`；options：配置参数
 - `var promptTextare = layx.getPromptTextArea(id)`：获取输入框 `textarea` 对象 ，id：窗口Id，通常在 prompt 输入框点击按钮回调函数中使用
 - `var winform = layx.load(id,msg,options)`： 打开一个加载框，id：窗口Id；msg，消息，String类型；options：配置参数
 
@@ -298,6 +350,11 @@ document.getElementById('btn').onclick=function(e){
 # 日志
 
 ```
+# 2018.05.16 v2.0.4 发布
+
+- [新增] buttons 配置属性
+- [更新] 提示框、询问框、输入框代码
+
 # 2018.05.16 v2.0.3 发布
 
 - [新增] style 参数，可以嵌入css样式表
