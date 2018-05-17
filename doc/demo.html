@@ -331,18 +331,17 @@
                 e.stopPropagation();
             }
 
+            var div = document.getElementById("event");
             $("#jzsj").onclick = function (e) {
                 window.top.layx.iframe('jzsj', '加载事件', './iframe.html', {
                     position: 'ct',
                     event: {
                         onload: {
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>加载之前...</strong></div><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>加载之后...</strong></div><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -351,13 +350,11 @@
                         onmin: {
                             // 最小化之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>最小化之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 最小化之后
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>最小化之后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -366,13 +363,11 @@
                         onmax: {
                             // 最大化之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>最大化之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 最大化之后
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>最大化之后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -381,13 +376,11 @@
                         onrestore: {
                             // 恢复之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>恢复窗口之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 恢复之后
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>恢复窗口之后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -396,13 +389,11 @@
                         ondestroy: {
                             // 关闭之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>关闭之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 关闭之后
                             after: function () {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>关闭之后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -411,19 +402,16 @@
                         onmove: {
                             // 移动之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>移动窗口之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 移动中
                             progress: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>移动窗口中...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 移动之后
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>移动窗口之后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
@@ -432,19 +420,16 @@
                         onresize: {
                             // 拖曳之前，return false 不执行
                             before: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小之前...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 拖曳中
                             progress: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小之中...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             },
                             // 拖曳之后
                             after: function (layxWindow, winform) {
-                                var div = document.getElementById("event");
                                 div.innerHTML += "<div>" + new Date() + " <strong>改变窗口大小后...</strong><pre>" + JSON.stringify(winform, null, 4) + "</pre><div>===================</div></div>";
                                 div.scrollTop = div.scrollHeight;
                             }
