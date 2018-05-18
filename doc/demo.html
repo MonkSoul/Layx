@@ -61,6 +61,7 @@
     <button id="bxsbtl">不显示标题栏</button>
     <button id="bxscktb">不显示窗口图标</button>
     <button id="zdhqwybt">自动获取网页标题</button>
+    <button id="zdzdh">自动最大化</button>
     <h3>窗口位置</h3>
     <button id="zjdk">中间打开</button>
     <button id="zsj">左上角</button>
@@ -324,6 +325,19 @@
 
             $("#zdhqwybt").onclick = function (e) {
                 window.top.layx.iframe('zdhqwybt', null, './iframe.html', { useFrameTitle: true, position: [randomNum(0, 200), randomNum(0, 200)] });
+                e.stopPropagation();
+            }
+
+            $("#zdzdh").onclick = function (e) {
+                window.top.layx.iframe('zdzdh', '打开自动最大化', './iframe.html', {
+                    event: {
+                        onload: {
+                            after: function (layxWindow, winform) {
+                                top.layx.max(winform.id);
+                            }
+                        }
+                    }
+                });
                 e.stopPropagation();
             }
 
