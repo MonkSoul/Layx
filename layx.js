@@ -593,10 +593,14 @@
                                 frameBody.setAttribute("data-enable", "1");
                             }
                             main.appendChild(frameBody);
+                            //生成内容
                             if (frameConfig.type === "html") {
                                 that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig);
-                                groupLoadCount++;
-                                if (groupLoadCount == config.frames.length) {
+                                // 加载完毕，添加complete标识
+                                frameBody.setAttribute("data-complete", "1");
+
+                                var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
+                                if (loadComplteMains.length === config.frames.length) {
                                     main.removeChild(contentShade);
                                     // 绑定加载之后事件
                                     if (Utils.isFunction(config.event.onload.after)) {
@@ -605,7 +609,7 @@
                                 }
                             }
                             else if (frameConfig.type === "url") {
-                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig, groupLoadCount);
+                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig);
                             }
                         }
                     }
@@ -782,7 +786,7 @@
             main.appendChild(html);
         },
         // 创建Frame内容
-        createFrameBody: function (main, config, layxWindow, winform, type, frameConfig, groupLoadCount) {
+        createFrameBody: function (main, config, layxWindow, winform, type, frameConfig) {
             var that = this;
             var contentShade = (type === "group" ? main.parentNode : main).querySelector(".layx-content-shade");
 
@@ -838,10 +842,12 @@
                             console.warn(e);
                         }
 
-                        groupLoadCount++;
                         if (contentShade) {
                             if (type === "group") {
-                                if (config.frames.length == groupLoadCount) {
+                                main.setAttribute("data-complete", "1");
+                                var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
+
+                                if (config.frames.length === loadComplteMains.length) {
                                     contentShade.parentNode.removeChild(contentShade);
                                     // 绑定加载之后事件
                                     if (Utils.isFunction(config.event.onload.after)) {
@@ -898,10 +904,12 @@
                         console.warn(e);
                     }
 
-                    groupLoadCount++;
                     if (contentShade) {
                         if (type === "group") {
-                            if (config.frames.length == groupLoadCount) {
+                            main.setAttribute("data-complete", "1");
+                            var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
+
+                            if (config.frames.length === loadComplteMains.length) {
                                 contentShade.parentNode.removeChild(contentShade);
                                 // 绑定加载之后事件
                                 if (Utils.isFunction(config.event.onload.after)) {

@@ -381,6 +381,7 @@ document.getElementById('btn').onclick=function(e){
 - [新增] setGroupContent，setGroupTitle，setGroupUrl，setGroupIndex，group方法
 - [更新] layx.css 样式表
 - [修复] 最小化样式
+- [修复] 窗口组加载完成bug
 
 # 2018.05.17 v2.0.4 发布
 
