@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 官方示例大全 v2.0.4</title>
+    <title>Layx 官方示例大全 v2.0.5</title>
     <style type="text/css">
         button {
             margin: 5px;
@@ -22,6 +22,9 @@
 </head>
 
 <body>
+    <h3>开源地址</h3>
+    <a id="gitee" href="https://gitee.com/monksoul/LayX" target="_blank">Gitee</a>
+    <a id="github" href="https://github.com/MonkSoul/Layx" target="_blank">Github</a>
     <h3>窗口类型</h3>
     <button id="wbck">文本窗口</button>
     <button id="wyck">网页窗口</button>
@@ -32,6 +35,7 @@
     <button id="jzck">加载窗口</button>
     <button id="tbck">打开淘宝</button>
     <button id="danniu">带操作按钮</button>
+    <button id="ckz">窗口组</button>
     <h3>窗口外观</h3>
     <button id="mrwg">默认外观</button>
     <button id="btlhs">标题栏灰色</button>
@@ -56,7 +60,7 @@
     <button id="dkzdck">打开置顶窗口</button>
     <button id="bxsbtl">不显示标题栏</button>
     <button id="bxscktb">不显示窗口图标</button>
-    <button id="zdyztl">自定义状态栏并绑定自己的事件</button>
+    <button id="zdhqwybt">自动获取网页标题</button>
     <h3>窗口位置</h3>
     <button id="zjdk">中间打开</button>
     <button id="zsj">左上角</button>
@@ -79,14 +83,7 @@
     <h3>窗口通讯</h3>
     整理中...
     <script type="text/javascript">
-        function func1() {
-            alert("我是按钮1，点击后关闭");
-            top.layx.destroy("zdyztl");
-        }
 
-        function func2() {
-            alert("我是按钮2，点击后我不想关闭");
-        }
         //生成从minNum到maxNum的随机数
         function randomNum(minNum, maxNum) {
             switch (arguments.length) {
@@ -105,14 +102,16 @@
             return document.querySelector(selector);
         }
 
+
         //===================== 下面才是demo 代码 ==================
         window.onload = function () {
+
             $("#wbck").onclick = function (e) {
-                window.top.layx.html('wbck', '文本窗口', '<div style="padding:10px">我是一个文本窗口，支持 <strong>HTML</strong> 和 HTMLElment 对象</div>', { position: [randomNum(0, 200), randomNum(0, 500)] })
+                window.top.layx.html('wbck', '文本窗口', '<div style="padding:10px">我是一个文本窗口，支持 <strong>HTML</strong> 和 HTMLElment 对象</div>', { position: [randomNum(0, 200), randomNum(0, 200)] })
                 e.stopPropagation();
             }
             $("#wyck").onclick = function (e) {
-                window.top.layx.iframe('wyck', '网页窗口', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('wyck', '网页窗口', './iframe.html', { position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#xxck").onclick = function (e) {
@@ -145,7 +144,7 @@
                 e.stopPropagation();
             }
             $("#tbck").onclick = function (e) {
-                window.top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('tbck', '淘宝网', 'https://www.taobao.com', { position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#danniu").onclick = function (e) {
@@ -171,52 +170,52 @@
                                 top.layx.destroy(id);
                             }
                         }
-                    ], position: [randomNum(0, 500), randomNum(0, 500)]
+                    ], position: [randomNum(0, 200), randomNum(0, 200)]
                 });
                 e.stopPropagation();
             }
             $("#mrwg").onclick = function (e) {
-                window.top.layx.iframe('mrwg', '默认外观', './iframe.html', { position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('mrwg', '默认外观', './iframe.html', { position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#btlhs").onclick = function (e) {
-                window.top.layx.iframe('btlhs', '标题栏灰色', './iframe.html', { controlStyle: 'background-color: #f5f5f5;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('btlhs', '标题栏灰色', './iframe.html', { controlStyle: 'background-color: #f5f5f5;', position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#btlmls").onclick = function (e) {
-                window.top.layx.iframe('btlmls', '标题栏紫色', './iframe.html', { style: '#layx-btlmls .layx-inlay-menus .layx-icon:hover {background-color: #9953c0;}', controlStyle: 'background-color: #7719aa;color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('btlmls', '标题栏紫色', './iframe.html', { style: '#layx-btlmls .layx-inlay-menus .layx-icon:hover {background-color: #9953c0;}', controlStyle: 'background-color: #7719aa;color:#fff;', position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#yj").onclick = function (e) {
-                window.top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('yj', '圆角', './iframe.html', { style: '#layx-yj{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;}', position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#hsck").onclick = function (e) {
-                window.top.layx.iframe('hsck', '灰色窗口', './iframe.html', { bgColor: "#ccc", position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('hsck', '灰色窗口', './iframe.html', { bgColor: "#ccc", position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#ahzt").onclick = function (e) {
-                window.top.layx.iframe('ahzt', '暗黑主题', './iframe.html', { bgColor: "#000", style: '#layx-ahzt .layx-inlay-menus .layx-icon:hover {background-color: #666;}', controlStyle: 'color:#fff;', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('ahzt', '暗黑主题', './iframe.html', { bgColor: "#000", style: '#layx-ahzt .layx-inlay-menus .layx-icon:hover {background-color: #666;}', controlStyle: 'color:#fff;', position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#tmck").onclick = function (e) {
-                window.top.layx.iframe('tmck', '透明窗口', './iframe.html', { opacity: 0.5, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('tmck', '透明窗口', './iframe.html', { opacity: 0.5, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#zygbal").onclick = function (e) {
-                window.top.layx.iframe('zygbal', '只有关闭按钮', './iframe.html', { minMenu: false, maxMenu: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('zygbal', '只有关闭按钮', './iframe.html', { minMenu: false, maxMenu: false, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#ggcktb").onclick = function (e) {
-                window.top.layx.iframe('ggcktb', '更改窗口图标', './iframe.html', { icon: '<img src="logo.png" style="height:22px;display:block;" />', position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('ggcktb', '更改窗口图标', './iframe.html', { icon: '<img src="logo.png" style="height:22px;display:block;" />', position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#myyy").onclick = function (e) {
-                window.top.layx.iframe('myyy', '没有阴影', './iframe.html', { shadow: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('myyy', '没有阴影', './iframe.html', { shadow: false, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#wbk").onclick = function (e) {
-                window.top.layx.iframe('wbk', '无边框', './iframe.html', { border: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('wbk', '无边框', './iframe.html', { border: false, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#bntd").onclick = function (e) {
@@ -246,16 +245,16 @@
                 window.top.layx.iframe('zncztd', '只能垂直拖动', './iframe.html', {
                     moveLimit: {
                         horizontal: true
-                    }, position: [randomNum(0, 500), randomNum(0, 500)]
+                    }, position: [randomNum(0, 200), randomNum(0, 200)]
                 });
                 e.stopPropagation();
             }
             $("#bntydx").onclick = function (e) {
-                window.top.layx.iframe('bntydx', '不能拖曳大小', './iframe.html', { resizable: false, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('bntydx', '不能拖曳大小', './iframe.html', { resizable: false, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#ckzg").onclick = function (e) {
-                window.top.layx.iframe('ckzg', '窗口阻隔', './iframe.html', { shadable: true, position: [randomNum(0, 500), randomNum(0, 500)] });
+                window.top.layx.iframe('ckzg', '窗口阻隔', './iframe.html', { shadable: true, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
             $("#smzdgb").onclick = function (e) {
@@ -323,11 +322,8 @@
                 e.stopPropagation();
             }
 
-            $("#zdyztl").onclick = function (e) {
-                window.top.layx.iframe('zdyztl', '自定义状态栏并绑定自己的事件', './iframe.html', {
-                    statusBar: '<div style="padding:10px;text-align:right;"><button onclick="top.layx.getChildContext(\'doc\').func1();">自定义按钮1</button> <button onclick="top.layx.getChildContext(\'doc\').func2();">自定义按钮2</button></div>',
-                    position: 'ct'
-                });
+            $("#zdhqwybt").onclick = function (e) {
+                window.top.layx.iframe('zdhqwybt', null, './iframe.html', { useFrameTitle: true, position: [randomNum(0, 200), randomNum(0, 200)] });
                 e.stopPropagation();
             }
 
@@ -436,6 +432,25 @@
                         }
                     }
                 });
+                e.stopPropagation();
+            }
+
+            $("#ckz").onclick = function (e) {
+                window.top.layx.group('ckz', [
+                    {
+                        id: 'group1',
+                        title: '窗口组1',
+                        type: 'html',
+                        content: '你好啊，百小僧'
+                    },
+                    {
+                        id: 'group2',
+                        useFrameTitle: true,
+                        type: 'url',
+                        url: './iframe.html'
+                    }
+                ], 0);
+
                 e.stopPropagation();
             }
         }

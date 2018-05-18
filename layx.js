@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.0.4
+ * version : v2.0.5
  * create time : 2018.05.11
- * update time : 2018.05.17
+ * update time : 2018.05.18
  */
 
 ;
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.0.4',
+        version: '2.0.5',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -28,7 +28,9 @@
             bgColor: "#fff",  // 窗口颜色：默认透明
             shadow: true,   // 是否显示阴影
             border: "1px solid #3baced", // 边框，false不启用边框
-            type: 'html',   // 窗口类型，支持：html,url
+            type: 'html',   // 窗口类型，支持：html,url,group
+            frames: [], // 子框架
+            frameIndex: 0,  // 默认显示自框架索引
             content: '', // type为html有效，支持字符串和element对象
             url: '', // type为url有效
             useFrameTitle: false, // 是否自动获取iframe页面标题填充窗口标题
@@ -147,6 +149,21 @@
                 }
             }
         },
+        // 按钮配置参数
+        defaultButtons: {
+            label: '确定',
+            callback: function (id) {
+            }
+        },
+        // 默认子frame参数
+        defaultFrames: {
+            id: '',
+            title: '',
+            type: 'html',
+            url: '',
+            content: '',
+            useFrameTitle: false,
+        },
         // 普通层级别
         zIndex: 10000000,
         // 窗口集合
@@ -235,6 +252,14 @@
             }
             layxWindow.style.backgroundColor = config.bgColor;
             layxWindow.style.opacity = Utils.isNumber(config.opacity) ? config.opacity : 1;
+            // 为 html 类型添加更新层事件
+            if (config.type === "html" || config.type === "group") {
+                layxWindow.onclick = function (e) {
+                    e = e || window.event;
+                    that.updateZIndex(config.id);
+                    e.stopPropagation();
+                };
+            }
             document.body.appendChild(layxWindow);
 
             // ================ 存储对象信息
@@ -250,6 +275,12 @@
             winform.status = "normal";
             // 存储窗口类型
             winform.type = config.type;
+            // 存储按钮集合
+            winform.buttons = config.buttons;
+            // 存储子窗口
+            winform.frames = config.frames;
+            // 存储子窗口索引
+            winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             // 存储窗口初始化区域信息
             winform.area = {
                 width: _width,
@@ -288,13 +319,8 @@
                 controlBar.classList.add("layx-control-bar");
                 controlBar.classList.add("layx-flexbox");
                 config.controlStyle && controlBar.setAttribute("style", config.controlStyle);
-                // 为 html 类型添加更新层事件
-                if (config.type === "html") {
-                    layxWindow.onclick = function (e) {
-                        e = e || window.event;
-                        that.updateZIndex(config.id);
-                        e.stopPropagation();
-                    };
+                if (config.type === "group") {
+                    controlBar.classList.add("layx-type-group");
                 }
                 layxWindow.appendChild(controlBar);
 
@@ -319,7 +345,9 @@
                 title.classList.add("layx-title");
                 title.classList.add("layx-flexauto");
                 title.classList.add("layx-flexbox");
-                //title.classList.add("layx-flex-vertical");
+                if (config.type === "group") {
+                    title.classList.add("layx-type-group");
+                }
                 // 绑定双击事件
                 if (config.allowControlDbclick === true) {
                     title.ondblclick = function (e) {
@@ -335,11 +363,44 @@
                     new LayxDrag(title);
                 }
                 controlBar.appendChild(title);
-                // 标题标签
-                var label = document.createElement("label");
-                label.innerHTML = config.title;
-                title.setAttribute("title", label.innerText);
-                title.appendChild(label);
+                if (config.type !== "group") {
+                    // 标题标签
+                    var label = document.createElement("label");
+                    label.innerHTML = config.title;
+                    title.setAttribute("title", label.innerText);
+                    title.appendChild(label);
+                }
+                else {
+                    // 窗口窗口组标题
+                    if (Utils.isArray(config.frames)) {
+                        for (var i = 0; i < config.frames.length; i++) {
+                            var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
+                            var frameTitle = document.createElement("div");
+                            frameTitle.setAttribute("data-frameId", frameConfig.id);
+                            frameTitle.classList.add("layx-group-title");
+                            if (i === config.frameIndex) {
+                                frameTitle.setAttribute("data-enable", "1");
+                            }
+                            frameTitle.onclick = function (e) {
+                                e = e || window.event;
+                                var prevSelectTitle = layxWindow.querySelector(".layx-group-title[data-enable='1']");
+                                if (prevSelectTitle !== this) {
+                                    prevSelectTitle.removeAttribute("data-enable");
+                                    this.setAttribute("data-enable", "1");
+                                    // 设置选中
+                                    that._setGroupIndex(config.id, this);
+                                }
+                                e.stopPropagation();
+                            }
+                            title.appendChild(frameTitle);
+                            // 窗口组Label
+                            var groupLabel = document.createElement("label");
+                            groupLabel.innerHTML = frameConfig.title;
+                            frameTitle.setAttribute("title", groupLabel.innerText);
+                            frameTitle.appendChild(groupLabel);
+                        }
+                    }
+                }
 
                 // 创建控制栏右边容器
                 var rightBar = document.createElement("div");
@@ -487,17 +548,7 @@
                         }
                     }
                     // 创建html内容
-                    var html = document.createElement("div");
-                    html.classList.add("layx-html");
-                    html.classList.add("layx-flexbox");
-                    // dom元素直接添加
-                    if (Utils.isDom(config.content)) {
-                        html.appendChild(config.content);
-                    }
-                    else {
-                        html.innerHTML = config.content;
-                    }
-                    main.appendChild(html);
+                    that.createHtmlBody(main, config, config.content);
                     main.removeChild(contentShade);
 
                     // 绑定加载之后事件
@@ -513,95 +564,51 @@
                             return;
                         }
                     }
+                    that.createFrameBody(main, config, layxWindow, winform);
 
-                    var iframe = document.createElement("iframe");
-                    iframe.setAttribute("id", "layx-" + config.id + "-iframe");
-                    iframe.classList.add("layx-iframe");
-                    iframe.classList.add("layx-flexbox");
-                    iframe.setAttribute("allowtransparency", "true");
-                    iframe.setAttribute("frameborder", "0");
-                    iframe.setAttribute("scrolling", "auto");
-                    iframe.setAttribute("allowfullscreen", "");
-                    iframe.setAttribute("mozallowfullscreen", "");
-                    iframe.setAttribute("webkitallowfullscreen", "");
-                    iframe.src = config.url || 'about:blank';
-
-                    var iframeTitle = "";
-                    // ie9+
-                    if (iframe.attachEvent) {
-                        iframe.attachEvent("onreadystatechange", function () {
-                            if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
-                                iframe.detachEvent("onreadystatechange", arguments.callee);
-                                try {
-                                    if (config.useFrameTitle === true) {
-                                        // 获取iframe标题
-                                        iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                        that.setTitle(config.id, iframeTitle);
-                                    }
-                                    if (config.focusable === true) {
-                                        // 添加iframe点击事件
-                                        iframe.contentWindow.onclick = function (e) {
-                                            var _slf = this.self;
-                                            e = e || iframe.contentWindow.event;
-                                            if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
-                                                // 获取窗口dom对象
-                                                var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
-                                                // 更新层级别
-                                                var windowId = layxWindow.getAttribute("id").substr(5);
-                                                that.updateZIndex(windowId);
-                                            }
-                                            e.stopPropagation();
-                                        }
-                                    }
-                                } catch (e) {
-                                    console.warn(e);
-                                }
-                                main.removeChild(contentShade);
-
-                                // 绑定加载之后事件
-                                if (Utils.isFunction(config.event.onload.after)) {
-                                    config.event.onload.after(layxWindow, winform);
-                                }
-                            }
-                        });
-                    }
-                    // chrome,foxfire,opera...
-                    else {
-                        iframe.addEventListener("load", function () {
-                            this.removeEventListener("load", arguments.call, false);
-                            try {
-                                if (config.useFrameTitle === true) {
-                                    // 获取iframe标题
-                                    iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                    that.setTitle(config.id, iframeTitle);
-                                }
-                                if (config.focusable === true) {
-                                    // 添加iframe点击事件
-                                    iframe.contentWindow.onclick = function (e) {
-                                        var _slf = this.self;
-                                        e = e || iframe.contentWindow.event;
-                                        if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
-                                            // 获取窗口dom对象
-                                            var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
-                                            // 更新层级别
-                                            var windowId = layxWindow.getAttribute("id").substr(5);
-                                            that.updateZIndex(windowId);
-                                        }
-                                        e.stopPropagation();
-                                    }
-                                }
-                            } catch (e) {
-                                console.warn(e);
-                            }
-                            main.removeChild(contentShade);
-                        }, false);
-                    }
-                    main.appendChild(iframe);
                     // 绑定加载之后事件
                     if (Utils.isFunction(config.event.onload.after)) {
                         config.event.onload.after(layxWindow, winform);
                     }
 
+                    break;
+                case "group":
+                    // 创建窗口组主体
+                    if (Utils.isArray(config.frames)) {
+                        // 绑定加载之前事件
+                        if (Utils.isFunction(config.event.onload.before)) {
+                            var revel = config.event.onload.before(layxWindow, winform);
+                            if (revel === false) {
+                                return;
+                            }
+                        }
+
+                        var groupLoadCount = 0;
+                        for (var i = 0; i < config.frames.length; i++) {
+                            var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
+                            var frameBody = document.createElement("div");
+                            frameBody.classList.add("layx-group-main");
+                            frameBody.setAttribute("data-frameId", frameConfig.id);
+                            if (i === config.frameIndex) {
+                                frameBody.setAttribute("data-enable", "1");
+                            }
+                            main.appendChild(frameBody);
+                            if (frameConfig.type === "html") {
+                                that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig);
+                                groupLoadCount++;
+                                if (groupLoadCount == config.frames.length) {
+                                    main.removeChild(contentShade);
+                                    // 绑定加载之后事件
+                                    if (Utils.isFunction(config.event.onload.after)) {
+                                        config.event.onload.after(layxWindow, winform);
+                                    }
+                                }
+                            }
+                            else if (frameConfig.type === "url") {
+                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig, groupLoadCount);
+                            }
+                        }
+                    }
                     break;
             }
 
@@ -730,6 +737,190 @@
             }
             return winform;
         },
+        // 设置窗口组选择（内部方法）
+        _setGroupIndex: function (id, target) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                var frameId = target.getAttribute("data-frameId");
+                var prevGroupMain = layxWindow.querySelector(".layx-group-main[data-enable='1']");
+                var currentGroupMain = layxWindow.querySelector(".layx-group-main[data-frameId='" + frameId + "']");
+                if (currentGroupMain !== prevGroupMain) {
+                    prevGroupMain.removeAttribute("data-enable");
+                    currentGroupMain.setAttribute("data-enable", "1");
+                    winform.groupCurrentId = frameId;
+                }
+            }
+        },
+        // 设置窗口组索引
+        setGroupIndex: function (id, frameId) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                var title = layxWindow.querySelector(".layx-group-title[data-frameId='" + frameId + "']");
+                title.click();
+            }
+        },
+        // 创建HTML内容
+        createHtmlBody: function (main, config, content, type, frameConfig) {
+            // 创建html内容
+            var html = document.createElement("div");
+            html.classList.add("layx-html");
+            html.classList.add("layx-flexbox");
+            html.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "html");
+            // dom元素直接添加
+            if (Utils.isDom(content)) {
+                html.appendChild(content);
+            }
+            else {
+                html.innerHTML = content;
+            }
+            main.appendChild(html);
+        },
+        // 创建Frame内容
+        createFrameBody: function (main, config, layxWindow, winform, type, frameConfig, groupLoadCount) {
+            var that = this;
+            var contentShade = (type === "group" ? main.parentNode : main).querySelector(".layx-content-shade");
+
+            var iframe = document.createElement("iframe");
+            iframe.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "iframe");
+            iframe.classList.add("layx-iframe");
+            iframe.classList.add("layx-flexbox");
+            iframe.setAttribute("allowtransparency", "true");
+            iframe.setAttribute("frameborder", "0");
+            iframe.setAttribute("scrolling", "auto");
+            iframe.setAttribute("allowfullscreen", "");
+            iframe.setAttribute("mozallowfullscreen", "");
+            iframe.setAttribute("webkitallowfullscreen", "");
+            iframe.src = (type === "group" ? frameConfig.url : config.url) || 'about:blank';
+
+            var iframeTitle = "";
+            // ie9+
+            if (iframe.attachEvent) {
+                iframe.attachEvent("onreadystatechange", function () {
+                    if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
+                        iframe.detachEvent("onreadystatechange", arguments.callee);
+                        try {
+                            if (type === "group") {
+                                if (frameConfig.useFrameTitle === true) {
+                                    // 获取iframe标题
+                                    iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                                    that.setGroupTitle(config.id, frameConfig.id, iframeTitle);
+                                }
+                            }
+                            else {
+                                if (config.useFrameTitle === true) {
+                                    // 获取iframe标题
+                                    iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                                    that.setTitle(config.id, iframeTitle);
+                                }
+                            }
+                            if (config.focusable === true) {
+                                // 添加iframe点击事件
+                                iframe.contentWindow.onclick = function (e) {
+                                    var _slf = this.self;
+                                    e = e || iframe.contentWindow.event;
+                                    if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
+                                        // 获取窗口dom对象
+                                        var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
+                                        // 更新层级别
+                                        var windowId = layxWindow.getAttribute("id").substr(5);
+                                        that.updateZIndex(windowId);
+                                    }
+                                    e.stopPropagation();
+                                }
+                            }
+                        } catch (e) {
+                            console.warn(e);
+                        }
+
+                        groupLoadCount++;
+                        if (contentShade) {
+                            if (type === "group") {
+                                if (config.frames.length == groupLoadCount) {
+                                    contentShade.parentNode.removeChild(contentShade);
+                                    // 绑定加载之后事件
+                                    if (Utils.isFunction(config.event.onload.after)) {
+                                        config.event.onload.after(layxWindow, winform);
+                                    }
+                                }
+                            }
+                            else {
+                                contentShade.parentNode.removeChild(contentShade);
+                                // 绑定加载之后事件
+                                if (Utils.isFunction(config.event.onload.after)) {
+                                    config.event.onload.after(layxWindow, winform);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            // chrome,foxfire,opera...
+            else {
+                iframe.addEventListener("load", function () {
+                    this.removeEventListener("load", arguments.call, false);
+                    try {
+                        if (type === "group") {
+                            if (frameConfig.useFrameTitle === true) {
+                                // 获取iframe标题
+                                iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                                that.setGroupTitle(config.id, frameConfig.id, iframeTitle);
+                            }
+                        }
+                        else {
+                            if (config.useFrameTitle === true) {
+                                // 获取iframe标题
+                                iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                                that.setTitle(config.id, iframeTitle);
+                            }
+                        }
+                        if (config.focusable === true) {
+                            // 添加iframe点击事件
+                            iframe.contentWindow.onclick = function (e) {
+                                var _slf = this.self;
+                                e = e || iframe.contentWindow.event;
+                                if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
+                                    // 获取窗口dom对象
+                                    var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
+                                    // 更新层级别
+                                    var windowId = layxWindow.getAttribute("id").substr(5);
+                                    that.updateZIndex(windowId);
+                                }
+                                e.stopPropagation();
+                            }
+                        }
+                    } catch (e) {
+                        console.warn(e);
+                    }
+
+                    groupLoadCount++;
+                    if (contentShade) {
+                        if (type === "group") {
+                            if (config.frames.length == groupLoadCount) {
+                                contentShade.parentNode.removeChild(contentShade);
+                                // 绑定加载之后事件
+                                if (Utils.isFunction(config.event.onload.after)) {
+                                    config.event.onload.after(layxWindow, winform);
+                                }
+                            }
+                        }
+                        else {
+                            contentShade.parentNode.removeChild(contentShade);
+                            // 绑定加载之后事件
+                            if (Utils.isFunction(config.event.onload.after)) {
+                                config.event.onload.after(layxWindow, winform);
+                            }
+                        }
+                    }
+                }, false);
+            }
+            main.appendChild(iframe);
+        },
         // 设置窗口内容，文本窗口有效
         setContent: function (id, content) {
             var that = this,
@@ -738,7 +929,39 @@
                 winform = that.windows[id];
             if (layxWindow && winform) {
                 if (winform.type === "html") {
-                    var html = layxWindow.querySelector(".layx-html");
+                    var html = layxWindow.querySelector("#layx-" + id + "-html");
+                    if (html) {
+                        if (Utils.isDom(content)) {
+                            html.appendChild(content);
+                        }
+                        else {
+                            html.innerHTML = content;
+                        }
+                    }
+                }
+            }
+        },
+        // 获取窗口组Frame对象
+        getGroupFrame: function (frames, frameId) {
+            var frm = {};
+            for (var i = 0; i < frames.length; i++) {
+                if (frames[i].id === frameId) {
+                    frm = frames[i];
+                    break;
+                }
+            }
+            return frm;
+        },
+        // 设置窗口组内容
+        setGroupContent: function (id, frameId, content) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform && Utils.isArray(winform.frames)) {
+
+                if (that.getGroupFrame(winform.frames, frameId).type === "html") {
+                    var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
                         if (Utils.isDom(content)) {
                             html.appendChild(content);
@@ -759,9 +982,49 @@
                 winform = that.windows[id];
             if (layxWindow && winform) {
                 if (winform.type === "url") {
-                    var iframe = layxWindow.querySelector(".layx-iframe");
+                    var iframe = layxWindow.querySelector("#layx-" + id + "-iframe");
                     if (iframe) {
                         iframe.setAttribute("src", url);
+                    }
+                }
+            }
+        },
+        // 设置窗口组Url
+        setGroupUrl: function (id, frameId, url) {
+            url = url || 'about:blank';
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                if (that.getGroupFrame(winform.frames, frameId).type === "html") {
+                    var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
+                    if (iframe) {
+                        iframe.setAttribute("src", url);
+                    }
+                }
+            }
+        },
+        // 设置窗口组标题
+        setGroupTitle: function (id, frameId, content, useFrameTitle) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                var title = layxWindow.querySelector(".layx-group-title[data-frameId='" + frameId + "']");
+                if (title) {
+                    // 获取iframe标题
+                    if (useFrameTitle === true) {
+                        var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
+                        try {
+                            content = iframe.contentDocument.querySelector("title").innerText;
+                        } catch (e) { }
+                    }
+                    var label = title.querySelector("label");
+                    if (label) {
+                        label.innerHTML = content;
+                        title.setAttribute("title", label.innerHTML);
                     }
                 }
             }
@@ -777,12 +1040,12 @@
                 if (title) {
                     // 获取iframe标题
                     if (useFrameTitle === true) {
-                        var iframe = layxWindow.querySelector("#" + id + "-iframe");
+                        var iframe = layxWindow.querySelector("#layx-" + id + "-iframe");
                         try {
                             content = iframe.contentDocument.querySelector("title").innerText;
                         } catch (e) { }
                     }
-                    var label = layxWindow.querySelector(".layx-title label");
+                    var label = title.querySelector("label");
                     if (label) {
                         label.innerHTML = content;
                         title.setAttribute("title", label.innerHTML);
@@ -894,6 +1157,10 @@
                 that.windows[id] = _winform;
                 // 更新最小化布局
                 that.updateMinLayout();
+
+                if (layxWindow.classList.contains("layx-min-statu")) {
+                    layxWindow.classList.remove("layx-min-statu");
+                }
 
                 // 绑定恢复之后事件
                 if (Utils.isFunction(winform.event.onrestore.after)) {
@@ -1066,6 +1333,10 @@
                 // 更新最小化布局
                 that.updateMinLayout();
 
+                if (layxWindow.classList.contains("layx-min-statu")) {
+                    layxWindow.classList.remove("layx-min-statu");
+                }
+
                 // 绑定最大化之后事件
                 if (Utils.isFunction(winform.event.onmax.after)) {
                     winform.event.onmax.after(layxWindow, winform);
@@ -1185,12 +1456,6 @@
             }
         },
         // ================ 内置组件
-        // 按钮配置参数
-        defaultsButtons: {
-            label: '确定',
-            callback: function (id) {
-            }
-        },
         // 创建layx按钮
         createLayxButtons: function (buttons, id, isPrompt) {
             var that = this;
@@ -1199,7 +1464,7 @@
             buttonPanel.classList.add("layx-buttons");
             for (var i = 0; i < buttons.length; i++) {
                 var buttonItem = document.createElement("button");
-                var buttonConfig = layxDeepClone({}, that.defaultsButtons, buttons[i]);
+                var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
                 buttonItem.classList.add("layx-button-item");
                 buttonItem.innerText = buttonConfig.label;
                 buttonItem.callback = buttons[i].callback;
@@ -1994,6 +2259,16 @@
             }, options || {}));
             return winform;
         },
+        // 打开窗口组快捷方法
+        group: function (id, frames, frameIndex, options) {
+            var winform = Layx.create(layxDeepClone({}, {
+                id: id,
+                type: 'group',
+                frames: frames,
+                frameIndex: frameIndex,
+            }, options || {}));
+            return winform;
+        },
         // 获取窗口列表
         windows: function () {
             return Layx.windows;
@@ -2053,6 +2328,22 @@
         // 设置iframe地址，iframe窗口有效
         setUrl: function (id, url) {
             Layx.setUrl(id, url);
+        },
+        // 设置窗口组内容
+        setGroupContent: function (id, frameId, content) {
+            Layx.setGroupContent(id, frameId, content);
+        },
+        // 设置窗口组标题
+        setGroupTitle: function (id, frameId, title, useFrameTitle) {
+            Layx.setGroupTitle(id, frameId, title, useFrameTitle);
+        },
+        // 设置窗口组Url
+        setGroupUrl: function (id, frameId, url) {
+            Layx.setGroupUrl(id, frameId, url);
+        },
+        // 设置窗口组索引
+        setGroupIndex: function (id, frameId) {
+            Layx.setGroupIndex(id, frameId);
         },
         // 关闭所有窗口
         destroyAll: function () {

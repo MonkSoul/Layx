@@ -12,15 +12,15 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.0.4
-- `发布日期`：2018.05.17
+- `当前版本`：v2.0.5
+- `发布日期`：2018.05.18
 - `交流Q群`：18863883
 
 # 特性
 
 - 纯原生Javascript实现，不依赖任何第三方框架
 - 支持IE10+（含IE10）、Chrome、Firefox、Opera、Edge等主流浏览器
-- 支持多种窗口类型：`html：文本窗口`，`url：页面窗口`，`alert：提示窗口`，`msg：消息窗口`，`confirm：询问窗口`，`prompt：输入窗口`，`load：加载窗口`
+- 支持多种窗口类型：`html：文本窗口`，`url：页面窗口`，`group：窗口组`，`alert：提示窗口`，`msg：消息窗口`，`confirm：询问窗口`，`prompt：输入窗口`，`load：加载窗口`
 - 支持窗口最大化、最小化、恢复、置顶、关闭控制及事件监听
 - 支持窗口阻隔、窗口闪烁功能
 - 支持窗口点击标题获取焦点、点击内容/页面获取焦点
@@ -85,7 +85,7 @@ layx.open({
 - `bgColor`：窗口背景颜色，String 类型。支持 css 颜色值，透明颜色为：`transparent`，默认值：#fff
 - `shadow`：是否显示窗口阴影，Boolean 类型。默认值：true
 - `border`：窗口边框，Boolean 或 String 类型。false：不启用边框，默认值：1px solid #3baced
-- `type`：窗口类型，Enum 类型。Enum枚举类型有：`html：html窗口`、`url：页面窗口`，默认值：html
+- `type`：窗口类型，Enum 类型。Enum枚举类型有：`html：html窗口`、`url：页面窗口`，`group：窗口组`，默认值：html
 - `content`：窗口内容，String 或 HTMLElement 类型。`type:'html'`时有效，支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：空字符串
 - `url`：窗口页面地址，URL 类型， `type:'url'`时有效，默认值：空字符串
 - `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题，Boolean 类型，**只支持同域页面标题获取**，默认值：false
@@ -124,6 +124,14 @@ layx.open({
 - `focusable`：窗口是否允许获取焦点，Boolean 类型。窗口获取焦点后会自动显示在顶层，默认值：true，**只支持同域页面获取焦点**
 - `alwaysOnTop`：是否总是置顶，Boolean 类型。默认值 true，置顶之后将位于所有窗口之上（同级别除外）
 - `allowControlDbclick`：是否允许控制栏双击切换窗口大小，Boolean 类型。默认值：true
+- `frames`：窗口组页面配置，`type:'group'`有效，Array(Frame) 类型，Frame 类型可选值：
+  - `id`：窗口组窗口唯一Id，String 类型。
+  - `title`：窗口组窗口标题，String 类型。支持 TEXT/HTML 字符串，默认值：空字符串
+  - `type`：窗口组窗口类型，Enum 类型。Enum枚举类型有：`html：html窗口`、`url：页面窗口`，默认值：html
+  - `content`：窗口组窗口内容，String 或 HTMLElement 类型。`type:'html'`时有效，支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：空字符串
+  - `url`：窗口页面地址，URL 类型， `type:'url'`时有效，默认值：空字符串
+  - `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题，Boolean 类型，**只支持同域页面标题获取**，默认值：false
+- `frameIndex`：窗口组默认显示索引，Number 类型，默认值：0 
 - `buttons`：窗口按钮组，需设置 `statusBar:true` 才有效，Array(Button) 类型，Button 对象可选值：
   - `label`：按钮名称，String 类型
   - `callback`：按钮点击回调函数，如：`function(id){}`，id 表示窗口Id，**注意：如果窗口是 prompt 类型时，callback参赛为：function(id, value, textarea){}; id：窗口Id，value：输入框值，textarea：输入框对象**
@@ -251,6 +259,17 @@ winform 是窗口信息对象，包含属性：
 - `maxable`：是否允许窗口最大化操作
 - `restorable`：是否允许窗口恢复操作
 - `closable`：是否允许窗口关闭操作
+- `frames`：窗口组页面配置
+  - `id`：窗口组窗口唯一Id
+  - `title`：窗口组窗口标题
+  - `type`：窗口组窗口类型
+  - `content`：窗口组窗口内容
+  - `url`：窗口页面地址
+  - `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题
+- `groupCurrentId`：当前窗口组激活窗口Id
+- `buttons`：窗口组页面配置
+  - `label`：按钮名称
+  - `callback`：按钮点击回调函数
 - `event`：窗口事件，包含属性
   - `onload`：内容加载事件
     - `before`：内容加载之前
@@ -282,6 +301,7 @@ winform 是窗口信息对象，包含属性：
 - `var winform = layx.open(options)`：打开一个窗口，options：配置参数，返回值：winform 对象
 - `var winform = layx.html(id,title,content,options)`：打开一个文本窗口，id：窗口Id；title：窗口标题；content：窗口内容；options：配置参数，返回值：winform 对象
 - `var winform = layx.iframe(id,title,url,options)`：打开一个网页窗口，id：窗口Id；title：窗口标题；url：窗口地址；options：配置参数，返回值：winform 对象
+- `var winfrom = layx.group(id, frames, frameIndex, options)`：打开一个窗口组，id：窗口Id；frames：窗口组数组对象；frameIndex：窗口组默认显示索引；options：配置参数，
 - `var windows = layx.windows()`：获取所有打开的窗口，返回值：{ 窗口Id：winform对象，窗口Id2：winform对象，...}
 - `var winform = layx.getWindow(id)`：获取当前窗口 winform 对象，id：窗口Id
 - `layx.destroy(id)`：关闭窗口，id：窗口Id
@@ -304,6 +324,11 @@ winform 是窗口信息对象，包含属性：
 - `var winform = layx.prompt(title,msg,yes,options)`：打开一个输入框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id,value,textarea){}`；options：配置参数
 - `var promptTextare = layx.getPromptTextArea(id)`：获取输入框 `textarea` 对象 ，id：窗口Id，通常在 prompt 输入框点击按钮回调函数中使用
 - `var winform = layx.load(id,msg,options)`： 打开一个加载框，id：窗口Id；msg，消息，String类型；options：配置参数
+- `layx.setGroupContent(id, frameId,content)`：设置窗口组文本窗口内容，id：窗口Id；frameId：窗口组窗口Id；content：String 或 HTMLElement
+- `layx.setGroupTitle(id,frameId,title,useFrameTitle)`：设置窗口组窗口标题，id：窗口Id；frameId：窗口组窗口Id；title：标题，支持html；useFrameTitle：是否自动获取 iframe页面标题填充，默认值：false
+- `layx.setGroupUrl(id,frameId,url)`：设置窗口组页面窗口url地址，id：窗口Id；frameId：窗口组窗口Id；url：网址 或 文件路径
+- `layx.setGroupIndex(id,frameId)`：设置窗口组显示哪个窗口，id：窗口Id；frameId：窗口组窗口Id；
+
 
 # 外观
 
@@ -349,6 +374,14 @@ document.getElementById('btn').onclick=function(e){
 # 日志
 
 ```
+# 2018.05.18 v2.0.5 发布
+
+- [新增] 窗口组类型
+- [新增] frames,frameIndex 配置参数
+- [新增] setGroupContent，setGroupTitle，setGroupUrl，setGroupIndex，group方法
+- [更新] layx.css 样式表
+- [修复] 最小化样式
+
 # 2018.05.17 v2.0.4 发布
 
 - [新增] buttons 配置属性
