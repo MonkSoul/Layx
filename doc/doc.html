@@ -1,0 +1,796 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文档</title>
+    <link href="doc.css" rel="stylesheet" />
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="code">
+        <strong id="mulu">目录导航</strong>
+        <div id="toc"></div>
+        <h2 name="简单入门">简单入门</h2>
+        <h3 name="引入layx组件">引入layx组件</h3>
+        <pre>&lt;link href="layx.min.css" rel="stylesheet" type="text/css" /&gt;
+&lt;script src="layx.min.js" type="text/javascript"&gt;&lt;/script&gt;
+</pre>
+        <h3 name="输出 Hello Layx!">输出 Hello Layx!</h3>
+        <div class="demo">
+            <pre>layx.html('str','字符串文本','Hello Layx!');</pre>
+        </div>
+        <h2 name="配置参数">配置参数</h2>
+        <h3 name="主窗口参数 options">主窗口参数 options</h3>
+        <div class="doc-item">
+            <p><label>id：唯一ID</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：是<br />
+                <span>默认值</span>：无<br />
+                <span>说明</span>：无<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>icon：图标 或 标题栏左边内容</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString/Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true，默认窗口图标<br />
+                <span>说明</span>：设置 false 将不启用窗口标题<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>title：标题</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：无<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>width：初始化宽度</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number/百分比<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：800<br />
+                <span>说明</span>：支持传入百分比，百分比是相对于浏览器可视区域宽度<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>height：初始化高度</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number/百分比<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：600<br />
+                <span>说明</span>：支持传入百分比，百分比是相对于浏览器可视区域高度<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>minWidth：最小宽度</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number/百分比<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：100<br />
+                <span>说明</span>：支持传入百分比，百分比是相对于浏览器可视区域宽度。如果宽度小于最小宽度，则宽度强制性设置为最小宽度。最小宽度作用于拖曳调整窗口大小时。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>minHeight：最小高度</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number/百分比<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：100<br />
+                <span>说明</span>：支持传入百分比，百分比是相对于浏览器可视区域高度。如果宽度小于最小高度，则高度强制性设置为最小高度。最小高度作用于拖曳调整窗口大小时。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>position：窗口位置</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Enum/Array[top/Enum,left/Enum]<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：'ct'<br />
+                <span>说明</span>：内置Enum参数：<br />
+                <pre>ct：正中间
+lt：左上角
+rt：右上角
+lb：左下角
+rb：右下角
+lc：左中间
+rc：右中间
+tc：上中间
+bc：下中间
+也可以传入 [100,200] 数组类型，组合数组类型 ['tc',20]</pre>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>control：是否显示控制标题栏</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置 false 将不显示控制标题栏，同时窗口拖动功能失效，需手动调用关闭方法关闭窗口。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>style：嵌入窗口样式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/CssString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：支持强大的CSS样式表、如需插入多行可用 layx.multiLine(function(){/* 多行样式 */})。通过修改此属性可以获得最大外观修改效果。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>controlStyle：控制标题栏样式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/CssString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：修改控制标题栏样式，如：background-color:#f00;color:#fff;<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>bgColor：窗口背景颜色</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：#fff<br />
+                <span>说明</span>：支持css颜色样式值，包括 transparent 透明背景。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>shadow：窗口阴影</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置是否显示窗口阴影。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>border：窗口边框</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean/String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：1px solid #3baced<br />
+                <span>说明</span>：设置false将不启用边框，支持css边框设置属性。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>type：窗口类型</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Enum<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：html<br />
+                <span>说明</span>：内置 Enum参数有：<br />
+                <pre>html：文本类型
+url：页面类型
+group：窗口组类型
+
+目前所有的窗口都是通过设定 type实现的</pre>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>frames：窗口组子窗口数组</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Array<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：[]<br />
+                <span>说明</span>：设置 type:group 有效，配置见 <strong>子窗口参数 frames 说明</strong>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>frameIndex：窗口组默认显示子窗口索引</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：0<br />
+                <span>说明</span>：设置 type:group 有效，设置窗口组默认初始化显示索引
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>content：文本窗口内容</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString/HTMLElement<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置 type:html 有效，支持传入字符串、HTML代码以及DOM对象
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>cloneElementContent：设置文本窗口DOM对象拷贝模式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置 type:html 有效，如果content传入的是DOM对象并且DOM对象包含触发事件，需设置false采用原对象填充content内容。设置为true拷贝一份填充content内容，但所有事件失效。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>url：页面窗口地址</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/Path<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置 type:url 有效，设置页面窗口URL地址，支持本地路径、互联网路径以及 'about:blank'
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>useFrameTitle：是否自动获取页面标题</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置 type:url 有效，设置true将自动获取iframe页面的标题填充主窗口标题，只支持同域url地址
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>opacity：主窗口透明度</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：1<br />
+                <span>说明</span>：设置主窗口透明度、取值0~1 浮点值
+                <pre>0：完全透明
+1：不透明
+0.5：半透明</pre>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>shadable：窗口阻隔、遮罩</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置true窗口以外的区域将不能操作
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>loaddingText：窗口内容加载时显示文本</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/Boolean/HTMLString/HTMLElement<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：内容正在加载中，请稍后<br />
+                <span>说明</span>：设置false将不启用加载提示。如果设置为String/HtmlString类型，将自动追加 ... 加载效果，支持传入DOM对象
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>stickMenu：置顶按钮</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置false不显示置顶按钮
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>stickable：是否允许置顶/取消置顶操作</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false置顶功能将失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>minMenu：最小化按钮</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false不显示最小化按钮
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>minable：是否允许最小化操作</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false最小化功能将失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>maxMenu：最大化按钮</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false不显示最大化按钮
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>maxable：是否允许最大化操作</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false最大化功能将失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>closeMenu：关闭按钮</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false不显示关闭按钮
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>closable：是否允许关闭操作</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false关闭功能将失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>restorable：是否允许恢复操作</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false恢复功能将失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>autodestroy：自动关闭窗口</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean/Number<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置窗口关闭等待秒数，如5000毫秒。设置false需手动关闭窗口。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>autodestroyText：自动关闭提示文本</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString/Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：'&lt;div style="padding: 0 8px; "&gt;此窗口将在 &lt;strong&gt;{second}&lt;/strong&gt; 秒内自动关闭.<br />
+                <span>说明</span>：设置false启用倒计时提示。倒计时提示默认在右下角显示。{second} 表示 autodestroy 设置的秒数。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>resizable：是否允许拖曳调整大小</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false拖曳调整大小功能失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>resizeLimit：设置拖曳调整大小限制项</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Object<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：
+                <pre>{
+    t: false, // 是否限制上边拖曳大小，false不限制
+    r: false, // 是否限制右边拖曳大小，false不限制
+    b: false, // 是否限制下边拖曳大小，false不限制
+    l: false, // 是否限制左边拖曳大小，false不限制
+    lt: false, // 是否限制左上边拖曳大小，false不限制
+    rt: false, // 是否限制右上边拖曳大小，false不限制
+    lb: false, // 是否限制左下边拖曳大小，false不限制
+    rb: false // 是否限制右下边拖曳大小，false不限制
+}</pre>
+                <span>说明</span>：支持 8 个方向拖曳改变窗口大小。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>buttons：状态栏按钮数组</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Array<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：[]<br />
+                <span>说明</span>：设置 statusBar:true 有效，配置见 <strong>按钮参数 buttons</strong>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>isPrompt：是否输入框</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：标识是否是输入框、Layx 内部使用。设置 true 将会影响 buttons中对象 callback的传入参数。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>movable：是否允许拖动窗口位置</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false控制标题栏拖动功能失效
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>moveLimit：设置拖动窗口位置限制项</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Object<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：
+                <pre>{
+    vertical: false, // 是否禁止垂直拖动，false不禁止
+    horizontal: false, // 是否禁止水平拖动，false不禁止
+    leftOut: true, // 是否允许左边拖出，true允许
+    rightOut: true, // 是否允许右边拖出，true允许
+    topOut: true, // 是否允许上边拖出，true允许，此设置不管是false还是true，窗口都不能拖出窗体
+    bottomOut: true, // 是否允许下边拖出，true允许
+}</pre>
+                <span>说明</span>：支持控制窗口拖动方向及拖出属性。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>focusable：窗口获取焦点</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置true将启用点击窗口内容将在所有层上面显示。只支持同域页面。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>alwaysOnTop：是否总是置顶</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置true窗口将置顶显示，如果stickMenu:true，则置顶按钮处于选中状态。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>allowControlDbclick：允许双击控制栏功能</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置true双击控制标题栏将最大化/恢复窗口，设置false不启用。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>statusBar：状态栏</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/Boolean/HTMLString/HTMLElement<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置false将不启用状态栏。支持传入HTML字符串、DOM对象
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>statusBarStyle：控制状态栏样式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/CssString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：修改状态栏样式，如：background-color:#f00;color:#fff;<br />
+            </div>
+        </div>
+        <h3 name="主窗口参数 options.event 事件">主窗口参数 options.event 事件</h3>
+        <div class="doc-item">
+            <p><label>event：监听窗口事件</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Object<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：<br />
+                <pre>{
+    // 加载事件
+    onload: {
+        // 加载之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 加载之后
+        after: function (layxWindow, winform) {
+        }
+    },
+    // 最小化事件
+    onmin: {
+        // 最小化之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 最小化之后
+        after: function (layxWindow, winform) {
+        }
+    },
+    // 最大化事件
+    onmax: {
+        // 最大化之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 最大化之后
+        after: function (layxWindow, winform) {
+        }
+    },
+    // 恢复事件
+    onrestore: {
+        // 恢复之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 恢复之后
+        after: function (layxWindow, winform) {
+        }
+    },
+    // 关闭事件
+    ondestroy: {
+        // 关闭之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 关闭之后
+        after: function () {
+        }
+    },
+    // 移动事件
+    onmove: {
+        // 移动之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 移动中
+        progress: function (layxWindow, winform) {
+        },
+        // 移动之后
+        after: function (layxWindow, winform) {
+        }
+    },
+    // 拖曳事件
+    onresize: {
+        // 拖曳之前，return false 不执行
+        before: function (layxWindow, winform) {
+        },
+        // 拖曳中
+        progress: function (layxWindow, winform) {
+        },
+        // 拖曳之后
+        after: function (layxWindow, winform) {
+        }
+    }
+}</pre>
+                <span>说明</span>：监听窗口事件
+            </div>
+        </div>
+        <h3 name="按钮参数 buttons">按钮参数 buttons</h3>
+        <div class="doc-item">
+            <p><label>label：按钮标签名</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：是<br />
+                <span>默认值</span>：确定<br />
+                <span>说明</span>：设置按钮显示名称<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>callback：按钮操作回调函数</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Function(id)/Function(id,value,textarea)<br />
+                <span>必需</span>：是<br />
+                <span>默认值</span>：function(id){ }<br />
+                <span>说明</span>：按钮点击回调函数，<br />
+                <pre>// 普通按钮回调函数
+callback:function(id){
+}
+
+// 输入框按钮回调函数
+callback:function(id,value,textarae){
+}
+</pre>
+            </div>
+        </div>
+        <h3 name="子窗口参数 frames">子窗口参数 frames</h3>
+        <div class="doc-item">
+            <p><label>id：窗口组窗口唯一ID</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：是<br />
+                <span>默认值</span>：无<br />
+                <span>说明</span>：无<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>title：窗口组窗口标题</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：无<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>type：窗口组窗口类型</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Enum<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：html<br />
+                <span>说明</span>：内置 Enum参数有：<br />
+                <pre>html：文本类型
+url：页面类型</pre>
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>content：窗口组文本窗口内容</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/HTMLString/HTMLElement<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置 type:html 有效，支持传入字符串、HTML代码以及DOM对象
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>cloneElementContent：设置窗口组文本窗口DOM对象拷贝模式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置 type:html 有效，如果content传入的是DOM对象并且DOM对象包含触发事件，需设置false采用原对象填充content内容。设置为true拷贝一份填充content内容，但所有事件失效。
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>url：窗口组页面窗口地址</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/Path<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置 type:url 有效，设置页面窗口URL地址，支持本地路径、互联网路径以及 'about:blank'
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>useFrameTitle：是否自动获取窗口组页面标题</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置 type:url 有效，设置true将自动获取iframe页面的标题填充主窗口标题，只支持同域url地址
+            </div>
+        </div>
+        <h2 name="内置对象">内置对象</h2>
+        <h3 name="layxWindow 窗口DOM对象">layxWindow 窗口DOM对象</h3>
+        <div>layxWindow 表示当前DOM对象，通过layxWindow可以操作窗口HTML元素及节点，HTMLElement类型</div>
+        <h3 name="winform 窗口对象">winform 窗口对象</h3>
+        <div>winform记录了窗口所有主要信息，Object 类型，包含属性有：</div>
+        <pre>winform.id // Id
+winform.title // 标题
+winform.windowId // layxWindow对象id属性
+winform.window // layxWindow 对象
+winform.createDate // 创建时间
+winform.status // 状态：min、max、normal
+winform.type // 窗口类型
+winform.frames // 窗口组窗口数组
+winform.useFrameTitle // 标题应用模式
+winform.cloneElementContent // 内容拷贝模式
+winform.groupCurrentId // 当前窗口组索引
+winform.area // 位置大小 { width , height , minWidth , minHeight , top , left}
+winform.loaddingText // 加载文本
+winform.focusable // 焦点状态
+winform.isStick // 置顶状态
+winform.zIndex // 层级别
+winform.movable // 拖动状态
+winform.moveLimit // 拖动限制
+winform.resizable // 拖曳状态
+winform.resizeLimit  // 拖曳大小限制
+winform.stickable // 置顶操作
+winform.minable // 最小化操作
+winform.maxable // 最大化操作
+winform.restorable // 恢复操作
+winform.closable // 关闭操作
+winform.event // 窗口事件
+</pre>
+        <h2 name="操作方法">操作方法</h2>
+        <h3 name="获取版本号">获取版本号</h3>
+        <pre>var version = layx.v;</pre>
+        <h3 name="打开新窗口">打开新窗口</h3>
+        <pre>var winform = layx.open(options);</pre>
+        <h3 name="打开文本窗口">打开文本窗口</h3>
+        <pre>var winform = layx.html(id, title, content, options);</pre>
+        <h3 name="打开页面窗口">打开页面窗口</h3>
+        <pre>var winform = layx.iframe(id, title, url, options);</pre>
+        <h3 name="打开窗口组">打开窗口组</h3>
+        <pre>var winform = layx.group(id, frames, frameIndex, options);</pre>
+        <h3 name="获取窗口列表">获取窗口列表</h3>
+        <pre>var windows = layx.windows();</pre>
+        <h3 name="获取当前窗口对象">获取当前窗口对象</h3>
+        <pre>var winform = layx.getWindow(id);</pre>
+        <h3 name="关闭窗口">关闭窗口</h3>
+        <pre>layx.destroy(id);</pre>
+        <h3 name="窗口最小化">窗口最小化</h3>
+        <pre>layx.min(id);</pre>
+        <h3 name="窗口最大化">窗口最大化</h3>
+        <pre>layx.max(id);</pre>
+        <h3 name="设置标题">设置标题</h3>
+        <pre>layx.setTitle(id, title, useFrameTitle);</pre>
+        <h3 name="闪烁窗口">闪烁窗口</h3>
+        <pre>layx.flicker(id);</pre>
+        <h3 name="恢复窗口">恢复窗口</h3>
+        <pre>layx.restore(id);</pre>
+        <h3 name="更新层级别">更新层级别</h3>
+        <pre>layx.updateMinLayout(id);</pre>
+        <h3 name="置顶切换">置顶切换</h3>
+        <pre>layx.stickToggle(id);</pre>
+        <h3 name="设置窗口位置">设置窗口位置</h3>
+        <pre>layx.setPosition(id, position);</pre>
+        <h3 name="获取页面窗口window对象">获取页面窗口window对象</h3>
+        <pre>var contentWindow = layx.getFrameContext(id);</pre>
+        <h3 name="获取页面窗口parent对象">获取页面窗口parent对象</h3>
+        <pre>var parentContentWindow = layx.getParentContext(id);</pre>
+        <h3 name="设置文本窗口内容">设置文本窗口内容</h3>
+        <pre>layx.setContent(id,content);</pre>
+        <h3 name="设置页面窗口地址">设置页面窗口地址</h3>
+        <pre>layx.setUrl(id,url);</pre>
+        <h3 name="设置窗口组文本窗口内容">设置窗口组文本窗口内容</h3>
+        <pre>layx.setGroupContent(id,frameId,content); // frameId：窗口组窗口id</pre>
+        <h3 name="设置窗口组标题">设置窗口组标题</h3>
+        <pre>layx.setGroupTitle(id, frameId, title, useFrameTitle); // frameId：窗口组窗口id</pre>
+        <h3 name="设置窗口组页面窗口地址">设置窗口组页面窗口地址</h3>
+        <pre>layx.setGroupUrl(id, frameId, url); // frameId：窗口组窗口id</pre>
+        <h3 name="设置窗口组索引">设置窗口组索引</h3>
+        <pre>layx.setGroupIndex(id, frameId); // frameId：窗口组窗口id</pre>
+        <h3 name="关闭所有窗口">关闭所有窗口</h3>
+        <pre>layx.destroyAll(); // closable:false 不可关闭</pre>
+        <h3 name="消息框">消息框</h3>
+        <pre>layx.msg(msg, options);</pre>
+        <h3 name="提示框">提示框</h3>
+        <pre>layx.msg(title, msg, yes, options);    // yes 默认确定按钮回调函数</pre>
+        <h3 name="询问框">询问框</h3>
+        <pre>layx.confirm(title, msg, yes, options);    // yes 默认确定按钮回调函数</pre>
+        <h3 name="获取输入框textarea对象">获取输入框textarea对象</h3>
+        <pre>var textarea = layx.getPromptTextArea(id);</pre>
+        <h3 name="输入框">输入框</h3>
+        <pre>layx.prompt(title, msg, yes, options);    // yes 默认确定按钮回调函数</pre>
+        <h3 name="加载框">加载框</h3>
+        <pre>layx.load(id,msg, options);</pre>
+        <h3 name="多行字符串">多行字符串</h3>
+        <pre>var mulitStr = layx.multiLine(f);  // f：function(){/* 你的多行代码 */}</pre>
+        <h3 name="重载页面窗口">重载页面窗口</h3>
+        <pre>layx.reloadFrame(id);</pre>
+        <h3 name="重载窗口组页面窗口">重载窗口组页面窗口</h3>
+        <pre>layx.reloadGroupFrame(id,frameId); // frameId：窗口组窗口id</pre>
+        <h2 name="窗口冒泡">窗口冒泡</h2>
+        <h3 name="解决打开新窗口层索引冲突">解决打开新窗口层索引冲突</h3>
+        由于默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡：
+        <pre>document.getElementById('btn').onclick=function(e){
+    e=e||window.event;
+    
+    // 打开新窗口代码
+    
+    // 停止冒泡
+    e.stopPropagation();
+}</pre>
+        <h2 name="外观定制">外观定制</h2>
+        <h3 name="尽情写您的外观css样式吧">尽情写您的外观css样式吧</h3>
+        通过窗口的 <strong>options. style </strong>属性可以定义窗口的外观，可以定制成任何您需要的样子，如：
+        <pre>layx.iframe('radiu-style','自定义外观，比如圆角','./iframe.html',{
+    style:layx.multiLine(function(){/*
+
+        #layx-radiu-style{
+            border-radius:4px;
+            -webkit-border-radius:4px;
+            -moz-border-radius:4px;
+            -ms-border-radius:4px;
+        }
+
+        #layx-radiu-style .layx-window-icon{
+            color:#f00;
+        }
+
+*/})
+});</pre>
+        <p>如果 Layx 对您有帮助，可以请 作者 喝杯咖啡</p>
+        <img src="./code.jpg" style="width:100%;display:block;" />
+        <script src="doc.js"></script>
+    </div>
+</body>
+
+</html>

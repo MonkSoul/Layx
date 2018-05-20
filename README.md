@@ -4,16 +4,14 @@
 
 # 序言
 
-Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，我们想在B/S架构上实现类C/S架构窗口功能，但百度、谷歌过后依然没能找到合适的Javascript插件。于是乎在2018年05月01日五一劳动节期间连夜赶工创造出了 Layx 。
-
-目前 Layx 拥有和C/S架构一样灵活的操作方式，支持网页多窗口、多任务协同操作，支持窗口各种事件。
+Layx 是一款网页弹窗JavaScript插件，她将助力于互联网web开发，并提供优质的弹窗体验。
 
 ## 信息
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.0.5
-- `发布日期`：2018.05.18
+- `当前版本`：v2.1.0
+- `发布日期`：2018.05.20
 - `交流Q群`：18863883
 
 # 特性
@@ -44,336 +42,54 @@ Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，
 第一步：引入 layx.css / layx.min.css
 
 ```
-<link href="layx.css" rel="stylesheet" type="text/css" />
+<link href="layx.min.css" rel="stylesheet" type="text/css" />
 ```
 
 第二步：引入 layx.js / layx.min.js
 
 ```
-<script src="layx.js" type="text/javascript"></script>
+<script src="layx.min.js" type="text/javascript"></script>
 ```
 
 第三步：打开一个窗口试试
 
 ```
-layx.open({
-    id: 'new-window',
-    title: 'Layx 网页弹窗最佳选择.',
-    content: 'Hello World!'
-});
+layx.html('str','字符串文本','Hello Layx!');
 ```
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0512/233004_05e32570_974299.png "helloworld.png")
 
-# 示例
 
-[查看更多示例](http://monksoul.gitee.io/layx/doc/)
+# 文档
 
-# 参数
-
-- `id`：窗口唯一Id，String 类型。
-- `icon`：窗口图标，Boolean 或 String 类型。false：不启用窗口图标，支持 TEXT/HTML 字符串，默认值：空字符串
-- `title`：窗口标题，String 类型。支持 TEXT/HTML 字符串，默认值：空字符串
-- `width`：窗口初始化宽度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：800
-- `height`：窗口初始化高度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：600
-- `minWidth`：窗口最小宽度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：100
-- `minHeight`：窗口最小高度，Number 或 百分比字符串 类型。支持 正整数或 百分比（如：`50%`），默认值：100
-- `position`：窗口初始化位置，Array[Number/Enum，Number/Enum] 或 Enum 类型。Enum 枚举类型有： `ct：浏览器正中间`、`lt：浏览器左上角`、`rt：浏览器右上角`、`lb：浏览器左下角`、`rb：浏览器右下角`、`lc：浏览器左中间`、`tc：浏览器上中间`、`rc：浏览器右中间`、`bc：浏览器下中间`，也支持自定义上边、左边距离，如：`[100,200]`，表示上边距离100px、左边距离200px，还可以更组合配置，如：`[100,'tc']`，表示顶部中间并距离顶部 100px，默认值：ct
-- **`style`**：定义窗口的css样式，通过style可以定制窗口所有的外观属性，是一个非常强大的功能，String 类型。如：`.layx-window:{border-radius:4px;}`默认值：空字符串
-- `control`：是否显示控制栏（标题栏），Boolean 类型。默认值：true
-- `controlStyle`：控制栏（标题栏）样式，String 类型。支持 `color:#f00;font-size:14px;`，默认值：空字符串 
-- `bgColor`：窗口背景颜色，String 类型。支持 css 颜色值，透明颜色为：`transparent`，默认值：#fff
-- `shadow`：是否显示窗口阴影，Boolean 类型。默认值：true
-- `border`：窗口边框，Boolean 或 String 类型。false：不启用边框，默认值：1px solid #3baced
-- `type`：窗口类型，Enum 类型。Enum枚举类型有：`html：html窗口`、`url：页面窗口`，`group：窗口组`，默认值：html
-- `content`：窗口内容，String 或 HTMLElement 类型。`type:'html'`时有效，支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：空字符串
-- `url`：窗口页面地址，URL 类型， `type:'url'`时有效，默认值：空字符串
-- `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题，Boolean 类型，**只支持同域页面标题获取**，默认值：false
-- `opacity`：窗口透明度，Float 类型，取值：`0~1`，`0：完全不可见`，`0.5：半透明`，`1：可见`，默认值：1
-- `shadable`：是否显示窗口阻隔/遮罩，Boolean 类型。true：阻隔非当前窗口的所有操作直至关闭才释放，默认值：false
-- `loaddingText`：窗口内容加载中提示符，String 或 HTMLElement 类型。支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：内容正在加载中，请稍后...
-- `stickMenu`：是否显示置顶按钮，Boolean 类型。默认值：false
-- `stickable`：是否允许置顶操作，Boolean 类型。默认值：true
-- `minMenu`：是否显示最小化按钮，Boolean 类型。默认值：true
-- `minable`：是否允许最小化操作，Boolean 类型。默认值：true
-- `maxMenu`：是否显示最大化按钮，Boolean 类型。默认值：true
-- `maxable`：是否允许最大化操作，Boolean 类型。默认值：true
-- `closeMenu`：是否显示关闭按钮，Boolean 类型。默认值：true
-- `closable`：是否允许关闭操作，Boolean 类型。默认值：true
-- `restorable`：是否允许恢复操作，Boolean 类型。默认值：true
-- `resizable`：是否允许窗口拖曳调整大小，Boolean 类型。默认值：true
-- `resizeLimit`：窗口拖曳调整大小方向限制，Object/Class 类型。可选值：
-  - `t`：是否限制上边拖曳调整大小，Boolean类型。默认值：false
-  - `r`：是否限制右边拖曳调整大小，Boolean类型。默认值：false
-  - `b`：是否限制下边拖曳调整大小，Boolean类型。默认值：false
-  - `l:`：是否限制左边拖曳调整大小，Boolean类型。默认值：false
-  - `lt:`：是否限制左上边拖曳调整大小，Boolean类型。默认值：false
-  - `rt:`：是否限制右上边拖曳调整大小，Boolean类型。默认值：false
-  - `lb:`：是否限制左下边拖曳调整大小，Boolean类型。默认值：false
-  - `rb:`：是否限制右下边拖曳调整大小，Boolean类型。默认值：false
-- `movable`：是否允许窗口拖动位置，Boolean 类型。默认值：false
-- `moveLimit`：窗口拖动方向、范围限制，Object/Class 类型。可选值：
-  - `vertical`：是否禁止垂直拖动，Boolean类型。默认值：false
-  - `horizontal`：是否禁止水平拖动，Boolean类型。默认值：false
-  - `leftOut`：是否允许窗口拖出浏览器左边可视区域，Boolean类型。默认值：true
-  - `rightOut`：是否允许窗口拖出浏览器右边可视区域，Boolean类型。默认值：true
-  - `topOut`：是否允许窗口拖出浏览器上边可视区域，Boolean类型。默认值：true，**不管这个值设置为true或false，窗口总时不能拖出浏览器可视区域顶部**
-  - `bottomOut`：是否允许窗口拖出浏览器下边可视区域，Boolean类型。默认值：true，**下边拖出时至少露出 15px 的窗口可视区域**
-- `autodestroy`：窗口自动关闭时间，Boolean 或 Number 类型。false：不自动关闭，Number 类型时表示 **多少毫秒后关闭**，如：5000，表示5秒后自动关闭窗口，默认值：false
-- `autodestroyText`：窗口自动关闭提示文字（在窗口右下角显示），Boolean 或 String 类型。false：不显示，默认值：`'<div style="padding: 0 8px; ">此窗口将在 <strong>{second}</strong> 秒内自动关闭.</div>'`，`{second}` 占位符代表 `autodestroy`的秒数
-- `focusable`：窗口是否允许获取焦点，Boolean 类型。窗口获取焦点后会自动显示在顶层，默认值：true，**只支持同域页面获取焦点**
-- `alwaysOnTop`：是否总是置顶，Boolean 类型。默认值 true，置顶之后将位于所有窗口之上（同级别除外）
-- `allowControlDbclick`：是否允许控制栏双击切换窗口大小，Boolean 类型。默认值：true
-- `frames`：窗口组页面配置，`type:'group'`有效，Array(Frame) 类型，Frame 类型可选值：
-  - `id`：窗口组窗口唯一Id，String 类型。
-  - `title`：窗口组窗口标题，String 类型。支持 TEXT/HTML 字符串，默认值：空字符串
-  - `type`：窗口组窗口类型，Enum 类型。Enum枚举类型有：`html：html窗口`、`url：页面窗口`，默认值：html
-  - `content`：窗口组窗口内容，String 或 HTMLElement 类型。`type:'html'`时有效，支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：空字符串
-  - `url`：窗口页面地址，URL 类型， `type:'url'`时有效，默认值：空字符串
-  - `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题，Boolean 类型，**只支持同域页面标题获取**，默认值：false
-- `frameIndex`：窗口组默认显示索引，Number 类型，默认值：0 
-- `buttons`：窗口按钮组，需设置 `statusBar:true` 才有效，Array(Button) 类型，Button 对象可选值：
-  - `label`：按钮名称，String 类型
-  - `callback`：按钮点击回调函数，如：`function(id){}`，id 表示窗口Id，**注意：如果窗口是 prompt 类型时，callback参赛为：function(id, value, textarea){}; id：窗口Id，value：输入框值，textarea：输入框对象**
-
-传入示例：
-
-```
-buttons:[
-    {
-        label:'确定',
-        callback:function(id){
-            // your code...
-
-            // 关闭窗口
-            layx.destroy(id);   
-        }
-    },
-    {
-        label:'取消',
-        callback:function(id){
-
-            // 关闭窗口
-            layx.destroy(id);   
-        }
-    }
-]
-```
-
-如果是 prompt 输入框
-
-```
-buttons:[
-    {
-        label:'确定',
-        cackback:function(id,value,textarea){
-            // your code...
-
-            // 关闭窗口
-            layx.destroy(id);   
-        }
-    },
-    {
-        label:'取消',
-        cackback:function(id,value,textarea){
-
-            // 关闭窗口
-            layx.destroy(id);   
-        }
-    }
-]
-```
-
-- `statusBar`：是否显示窗口状态栏，Boolean 或 String 或 HTMLElement 类型。支持 TEXT/HTML 字符串，同时也支持 HTMLElement 元素对象，默认值：false
-- `statusBarStyle`：窗口状态栏样式 ，String 类型。支持 `color:#f00;font-size:14px;`，默认值：空字符串 
-- `event`：窗口事件，Object/Class 类型。可选值：
-  - `onload`：内容加载事件，Object/Class 类型。可选值：
-    - `before`：内容加载之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `after`：内容加载之后，Function（layxWindow,winform) 类型
-  - `onmin`：窗口最小化事件，Object/Class 类型。可选值：
-    - `before`：最小化之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `after`：最小化之后，Function（layxWindow,winform) 类型
-  - `onmax`：窗口最大化事件，Object/Class 类型。可选值：
-    - `before`：最大化之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `after`：最大化之后，Function（layxWindow,winform) 类型
-  - `onrestore`：窗口恢复事件，Object/Class 类型。可选值：
-    - `before`：恢复之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `after`：恢复之后，Function（layxWindow,winform) 类型
-  - `ondestroy`：窗口关闭事件，Object/Class 类型。可选值：
-    - `before`：关闭之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `after`：关闭之后，Function（) 类型
-  - `onmove`：窗口拖动事件，Object/Class 类型。可选值：
-    - `before`：拖动之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `progress`：拖动中，Function（layxWindow,winform) 类型
-    - `after`：拖动之后，Function（layxWindow,winform) 类型
-  - `onresize`：窗口拖曳调整大小事件，Object/Class 类型。可选值：
-    - `before`：拖曳调整大小之前，Function（layxWindow,winform) 类型，**设置 return false 禁止后续所有操作**
-    - `progress`：拖曳调整大小中，Function（layxWindow,winform) 类型
-    - `after`：拖曳调整大小之后，Function（layxWindow,winform) 类型
-  
-# 对象
-
-## layxWindow
-
-layxWindow 是窗口的 HTMLElment对象
-
-## winform
-
-winform 是窗口信息对象，包含属性：
-
-- `id`：窗口Id
-- `windowId`：layxWindow 对象Id
-- `window`：layxWindow 对象
-- `createDate`：创建时间
-- `status`：窗口当前状态：可选值：`normal：正常`、`min：最小化`、`max：最大化`
-- `type`：窗口类型，可选值：`html：文本窗口`、`url:页面窗口`
-- `area`：窗口位置信息，包含属性：
-  - `width`：窗口宽度
-  - `height`：窗口高度
-  - `minWidth`：窗口最小宽度
-  - `minHeight`：窗口最小高度
-  - `top`：窗口上边距离
-  - `left`：窗口左边距离
-- `isStick`：是否置顶状态
-- `zIndex`：窗口层级别
-- `movable`：窗口是否可拖动位置
-- `moveLimit`：窗口拖动位置限制，包含属性：
-  - `vertical`：是否禁止垂直拖动
-  - `horizontal`：是否禁止水平拖动
-  - `leftOut`：是否允许窗口拖出浏览器左边可视区域
-  - `rightOut`：是否允许窗口拖出浏览器右边可视区域
-  - `topOut`：是否允许窗口拖出浏览器上边可视区域
-  - `bottomOut`：是否允许窗口拖出浏览器下边可视区域
-- `resizable`：窗口是否可拖曳调整大小
-- `resizeLimit`：窗口拖曳调整大小限制，包含属性：
-  - `t`：是否限制上边拖曳调整大小
-  - `r`：是否限制右边拖曳调整大小
-  - `b`：是否限制下边拖曳调整大小
-  - `l:`：是否限制左边拖曳调整大小
-  - `lt:`：是否限制左上边拖曳调整大小
-  - `rt:`：是否限制右上边拖曳调整大小
-  - `lb:`：是否限制左下边拖曳调整大小
-  - `rb:`：是否限制右下边拖曳调整大小
-- `stickable`：是否允许窗口置顶操作
-- `minable`：是否允许窗口最小化操作
-- `maxable`：是否允许窗口最大化操作
-- `restorable`：是否允许窗口恢复操作
-- `closable`：是否允许窗口关闭操作
-- `frames`：窗口组页面配置
-  - `id`：窗口组窗口唯一Id
-  - `title`：窗口组窗口标题
-  - `type`：窗口组窗口类型
-  - `content`：窗口组窗口内容
-  - `url`：窗口页面地址
-  - `useFrameTitle`：是否自动获取 iframe 页面标题设置为当前窗口标题
-- `groupCurrentId`：当前窗口组激活窗口Id
-- `buttons`：窗口组页面配置
-  - `label`：按钮名称
-  - `callback`：按钮点击回调函数
-- `event`：窗口事件，包含属性
-  - `onload`：内容加载事件
-    - `before`：内容加载之前
-    - `after`：内容加载之后
-  - `onmin`：窗口最小化事件
-    - `before`：最小化之前
-    - `after`：最小化之后
-  - `onmax`：窗口最大化事件
-    - `before`：最大化之前
-    - `after`：最大化之后
-  - `onrestore`：窗口恢复事件
-    - `before`：恢复之前
-    - `after`：恢复之后
-  - `ondestroy`：窗口关闭事件
-    - `before`：关闭之前
-    - `after`：关闭之后
-  - `onmove`：窗口拖动事件
-    - `before`：拖动之前
-    - `progress`：拖动中
-    - `after`：拖动之后
-  - `onresize`：窗口拖曳调整大小事件
-    - `before`：拖曳调整大小之前
-    - `progress`：拖曳调整大小中
-    - `after`：拖曳调整大小之后
-
-# 方法
-
-- `var version = layx.v`：获取 layx 版本号，返回值：字符串
-- `var winform = layx.open(options)`：打开一个窗口，options：配置参数，返回值：winform 对象
-- `var winform = layx.html(id,title,content,options)`：打开一个文本窗口，id：窗口Id；title：窗口标题；content：窗口内容；options：配置参数，返回值：winform 对象
-- `var winform = layx.iframe(id,title,url,options)`：打开一个网页窗口，id：窗口Id；title：窗口标题；url：窗口地址；options：配置参数，返回值：winform 对象
-- `var winfrom = layx.group(id, frames, frameIndex, options)`：打开一个窗口组，id：窗口Id；frames：窗口组数组对象；frameIndex：窗口组默认显示索引；options：配置参数，
-- `var windows = layx.windows()`：获取所有打开的窗口，返回值：{ 窗口Id：winform对象，窗口Id2：winform对象，...}
-- `var winform = layx.getWindow(id)`：获取当前窗口 winform 对象，id：窗口Id
-- `layx.destroy(id)`：关闭窗口，id：窗口Id
-- `layx.max(id)`：最大化窗口，id：窗口Id
-- `layx.setTitle(id,title,useFrameTitle)`：设置窗口标题，id：窗口Id；title：标题，支持html；useFrameTitle：是否自动获取 iframe页面标题填充，默认值：false
-- `layx.flicker(id)`：**闪烁窗口**，id：窗口Id
-- `layx.restore(id)`：恢复窗口，id：窗口Id
-- `layx.updateZIndex(id)`：更新窗口层级别，id：窗口Id
-- `layx.updateMinLayout()`：更新窗口最小化排版
-- `layx.stickToggle(id)`：窗口置顶切换，id：窗口Id
-- `layx.setPosition(id,position)`：设置窗口位置，id：窗口Id；position：见**参数**中position
-- `var iframe = layx.getChildContext(id)`：获取 iframe 页面 Window 对象，id：窗口Id，**窗口通讯**
-- `var iframeParent = layx.getParentContext(id)`：获取iframe 页面上级 Window 对象 ，id：窗口Id，**窗口通讯**
-- `layx.setContent(id, content)`：设置文本窗口内容，id：窗口Id；content：String 或 HTMLElement
-- `layx.setUrl(id,url)`：设置页面窗口url地址，id：窗口Id；url：网址 或 文件路径
-- `layx.destroyAll()`：关闭所有窗口
-- `var winform = layx.msg(msg,options)`：打开一个消息框，msg，消息，String类型；options：配置参数
-- `var winform = layx.alert(title,msg,yes,options)`：打开一个提示框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；options：配置参数
-- `var winform = layx.confirm(title,msg,yes,options)`：打开一个询问框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id){}`；options：配置参数
-- `var winform = layx.prompt(title,msg,yes,options)`：打开一个输入框，title：提示框标题，String类型；msg，消息，String类型；yes：点击确定回调函数，`function(id,value,textarea){}`；options：配置参数
-- `var promptTextare = layx.getPromptTextArea(id)`：获取输入框 `textarea` 对象 ，id：窗口Id，通常在 prompt 输入框点击按钮回调函数中使用
-- `var winform = layx.load(id,msg,options)`： 打开一个加载框，id：窗口Id；msg，消息，String类型；options：配置参数
-- `layx.setGroupContent(id, frameId,content)`：设置窗口组文本窗口内容，id：窗口Id；frameId：窗口组窗口Id；content：String 或 HTMLElement
-- `layx.setGroupTitle(id,frameId,title,useFrameTitle)`：设置窗口组窗口标题，id：窗口Id；frameId：窗口组窗口Id；title：标题，支持html；useFrameTitle：是否自动获取 iframe页面标题填充，默认值：false
-- `layx.setGroupUrl(id,frameId,url)`：设置窗口组页面窗口url地址，id：窗口Id；frameId：窗口组窗口Id；url：网址 或 文件路径
-- `layx.setGroupIndex(id,frameId)`：设置窗口组显示哪个窗口，id：窗口Id；frameId：窗口组窗口Id；
-
-
-# 外观
-
-通过窗口的 `style`属性可以定义窗口的外观，可以定制成任何您需要的样子。如：
-
-```
-style:`
-#layx-窗口Id{border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;}
-`
-```
-
-窗口css选择器说明：
-
-- `#layx-窗口Id`：特定窗口最外层 `div`
-- `.layx-window`：所有窗口最外层 `div`
-- `.layx-control-bar`：所有窗口状态栏 `div`，如果需置顶窗口，则：`#layx-窗口Id .layx-control-bar`
-- `.layx-title`：所有窗口标题 `div`，指定窗口同上。
-- `.layx-inlay-menus`：所有窗口内置按钮（最小化，最大化，置顶、关闭、恢复）外层 `div`，指定窗口同上
-...
-...
-...
-
-如果你想修改更多外观，可以使用 Chrome 浏览器 F12检查元素获取您想要修改部分的标签名，然后写进 `style` 属性即可。如：
-
-![输入图片说明](https://gitee.com/uploads/images/2018/0516/100648_d44ba9ee_974299.jpeg "crs.jpg")
-
-
-# 注意
-
-默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡，如：
-
-```
-document.getElementById('btn').onclick=function(e){
-    e=e||window.event;
-    
-    // 打开新窗口代码
-    
-    // 停止冒泡
-    e.stopPropagation();
-}
-```
+[查看文档、示例](http://monksoul.gitee.io/layx/doc/)
 
 # 日志
 
 ```
+# 2018.05.19 v2.1.0 发布
+
+- [新增] cloneElementContent 参数，可配置 HTMLElement 是拷贝模式还是取用模式
+- [新增] 多行字符串处理方法
+- [新增] 内容正在加载中动态提示
+- [新增] 改变页面窗口地址时重新触发事件
+- [新增] 重载页面窗口方法
+- [更新] 提示框、询问框 内容内容对齐方式
+- [修复] 禁用窗口最大化后拖曳到顶部再拖下来位置错误 bug
+- [修复] 禁用恢复操作后窗口最大化状态往下拖动窗口位置错误 bug
+- [修复] 内容窗口滚动条 bug
+- [修复] 内容窗口内容高度不自动高度 bug
+- [修复] 窗口组不传默认索引出错bug， 默认为0，也就是第一个
+- [修复] 禁用窗口调整大小后拖曳到顶部还能最大化 bug
+- [修复] 加载完成触发两次 bug
+- [修复] 提示框、消息框、询问框、加载框、输入框 事件不应用 bug
+- [修复] 页面窗口加载监听机制中遮罩对象获取错误 bug
+- [修复] 窗口处于最小化或最大化时还能最小化，最大化 bug
+- [修复] 设置窗口位置 bug
+- [修复] 设置页面窗口地址时不显示 加载遮罩层 bug
+- [修复] frames、buttons 不能深度复制对象 bug
+- [修复] 设置窗口组文本内容、URL内容 bug
+
 # 2018.05.18 v2.0.5 发布
 
 - [新增] 窗口组类型
@@ -424,5 +140,3 @@ document.getElementById('btn').onclick=function(e){
 
 - `Gitee`：[https://gitee.com/monksoul/LayX](https://gitee.com/monksoul/LayX)
 - `Github` [https://github.com/MonkSoul/Layx](https://github.com/MonkSoul/Layx)
-
-# 捐赠

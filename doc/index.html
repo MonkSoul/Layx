@@ -1,40 +1,1052 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例</title>
+    <title>Layx 演示示例 v2.1.0</title>
     <link href="../layx.min.css" rel="stylesheet" />
+    <link href="doc.css" rel="stylesheet" />
 </head>
 <body>
-    <script type="text/javascript" src="../layx.min.js"></script>
-    <script type="text/javascript">
-        window.onload = function (e) {
-            layx.open({
-                id: 'doc',
-                type: 'url',
-                url: 'demo.html',
-                useFrameTitle: true,
-                stickMenu: true,
-                width: 320,
-                height: 568,
-                position: ['lc', 20],
-                closeMenu: false,
-                minMenu: false
-            });
+    <div id="demo">
+        <div id="code">
+            <strong id="mulu">目录导航</strong>
+            <div id="toc"></div>
+            <h2 name="窗口类型">窗口类型</h2>
+            <h3 name="文本窗口">文本窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个字符串文本">打开一个字符串文本</h4>
+                <pre>layx.html('str','字符串文本','Hello Layx!');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="打开一个HTMLElement 窗口">打开一个HTMLElement 窗口</h4>
+                <pre>layx.html('dom','HTMLElement 窗口',document.getElementById('dom'));</pre>
+                <p id="dom"><strong>Layx</strong> 网页弹窗最佳选择.</p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="HTML字符串窗口">HTML字符串窗口</h4>
+                <pre>layx.html('htmlstr','HTML字符串窗口',layx.multiLine(function () {/*
+             
+             &lt;style type="text/css"&gt;
+             #about-layx{
+                    padding:10px;
+                    line-height:1.5;
+            }
 
-            layx.open({
-                id: 'demo',
-                type: 'url',
-                url: 'iframe.html',
-                useFrameTitle: true,
-                shadable: true,
-                autodestroy: 5000,
-                stickMenu: true
-            });
-        };
-    </script>
+            #about-layx h2{
+                border-bottom:1px solid #ccc;
+            }
+
+            #about-layx label {
+                margin: 0 2px;
+                padding: 0 5px;
+                white-space: nowrap;
+                border: 0;
+                background-color: #f8f8f8;
+                border-radius: 3px;
+                display:inline-block;
+            }
+             &lt;/style&gt;
+
+             &lt;div id="about-layx"&gt;
+                &lt;h2&gt;序言&lt;/h2&gt;
+                &lt;p&gt;Layx 诞生于一次C/S架构系统往B/S架构系统迁移项目中。起初，我们想在B/S架构上实现类C/S架构窗口功能，但百度、谷歌过后依然没能找到合适的Javascript插件。于是乎在2018年05月01日五一劳动节期间连夜赶工创造出了 Layx 。&lt;/p&gt;
+                &lt;p&gt;目前 Layx 拥有和C/S架构一样灵活的操作方式，支持网页多窗口、多任务协同操作，支持窗口各种事件。&lt;/p&gt;
+                &lt;h2&gt;信息&lt;/h2&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.1.0&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.19&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;h2&gt;特性&lt;/h2&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;纯原生Javascript实现，不依赖任何第三方框架&lt;/li&gt;
+                    &lt;li&gt;支持IE10+（含IE10）、Chrome、Firefox、Opera、Edge等主流浏览器&lt;/li&gt;
+                    &lt;li&gt;支持多种窗口类型：文本窗口，页面窗口，窗口组，提示窗口，消息窗口，询问窗口，输入窗口，加载窗口&lt;/li&gt;
+                    &lt;li&gt;支持窗口最大化、最小化、恢复、置顶、关闭控制及事件监听&lt;/li&gt;
+                    &lt;li&gt;支持窗口阻隔、窗口闪烁功能&lt;/li&gt;
+                    &lt;li&gt;支持窗口点击标题获取焦点、点击内容/页面获取焦点&lt;/li&gt;
+                    &lt;li&gt;支持窗口图标定制、操作按钮定制&lt;/li&gt;
+                    &lt;li&gt;支持窗口四个方向拖动及方向控制&lt;/li&gt;
+                    &lt;li&gt;支持窗口八个方向拖曳大小及拖曳方向控制&lt;/li&gt;
+                    &lt;li&gt;支持窗口自动获取页面标题&lt;/li&gt;
+                    &lt;li&gt;支持窗口位置记录及恢复&lt;/li&gt;
+                    &lt;li&gt;支持窗口相互通讯&lt;/li&gt;
+                    &lt;li&gt;支持窗口设定自动关闭&lt;/li&gt;
+                    &lt;li&gt;支持窗口外观控制、状态栏、透明度控制&lt;/li&gt;
+                    &lt;li&gt;支持窗口操作拦截器、可以拦截任何不正常操作&lt;/li&gt;
+                    &lt;li&gt;支持窗口初始化位置、宽高度、最小化宽高度控制&lt;/li&gt;
+                    &lt;li&gt;支持窗口加载文字控制&lt;/li&gt;
+                    &lt;li&gt;支持窗口滚动条自能判断&lt;/li&gt;
+                    &lt;li&gt;支持窗口最小化统一管理&lt;/li&gt;
+                    &lt;li&gt;支持滚动条智能判断&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;h2&gt;项目&lt;/h2&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Gitee：&lt;a href="https://gitee.com/monksoul/LayX" target="_blank"&gt;https://gitee.com/monksoul/LayX&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;Github：&lt;a href="https://github.com/MonkSoul/Layx"  target="_blank"&gt;https://github.com/MonkSoul/Layx&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;h2&gt;捐赠&lt;/h2&gt;
+                &lt;p&gt;如果 Layx 对您有帮助，可以请 作者 喝杯咖啡&lt;/p&gt;
+                &lt;img src="./code.jpg" style="width:100%;display:block;" /&gt;
+             &lt;/div&gt;
+
+            */}));</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="网页窗口">网页窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个本地网页">打开一个本地网页</h4>
+                <pre>layx.iframe('localsite','本地网页','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="打开淘宝网">打开淘宝网</h4>
+                <pre>layx.iframe('localsite','淘宝网','https://www.taobao.com');</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="消息窗口">消息窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个消息窗口">打开一个消息窗口</h4>
+                <pre>layx.msg('Layx 网页弹窗最佳选择.');</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="提示窗口">提示窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个提示窗口">打开一个提示窗口</h4>
+                <pre>layx.alert('版本更新','Layx v2.1.0 版本更新啦！');</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="询问窗口">询问窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个询问窗口">打开一个询问窗口</h4>
+                <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('感谢您的支持！');
+    layx.destroy(id);
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="输入窗口">输入窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个输入窗口">打开一个输入窗口</h4>
+                <pre>layx.prompt('Layx 体验报告','写下您对 Layx 的建议：',function(id,value,textarea){
+    alert(value);
+    layx.destroy(id);
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="加载窗口">加载窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个加载窗口">打开一个加载窗口</h4>
+                <pre>layx.load('loadId','数据正在加载中，请稍后');
+
+// 5 秒后自动关闭
+setTimeout(function(){
+    layx.destroy('loadId');
+},5000);
+</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="操作窗口">操作窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个操作窗口">打开一个操作窗口</h4>
+                <pre>layx.iframe('operator','带操作按钮窗口','./iframe.html',{
+    statusBar:true,
+    buttons:[
+        {
+            label:'保存',
+            callback:function(id){
+                // 获取 iframe 页面 window对象
+                var iframeWindow=layx.getChildContext(id);
+                alert(iframeWindow.document.body.innerHTML);
+
+                layx.destroy(id);    
+            }
+        },
+        {
+            label:'取消',
+            callback:function(id){
+                layx.destroy(id);
+            }
+        }
+    ]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="窗口组">窗口组</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个窗口组窗口">打开一个窗口组窗口</h4>
+                <pre>layx.group('group',[
+    {
+        id:'group1',
+        title:'文本窗口',
+        content:'Layx 网页弹窗最佳选择.'
+    },
+    {
+        id:'group2',
+        title:'网页窗口',
+        type:'url',
+        url:'./iframe.html'
+    },
+    {
+        id:'taobao',
+        title:'淘宝网',
+        type:'url',
+        url:'https://www.taobao.com'
+    }
+],1);</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="倒计时窗口">倒计时窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个倒计时关闭窗口">打开一个倒计时关闭窗口</h4>
+                <pre>layx.iframe('settimeout','打开一个倒计时关闭窗口','./iframe.html',{
+    autodestroy:5000
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="遮罩、阻隔窗口">遮罩、阻隔窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个遮罩、阻隔窗口">打开一个遮罩、阻隔窗口</h4>
+                <pre>layx.iframe('shadow','打开一个遮罩、阻隔窗口，点击窗口外试试','./iframe.html',{
+    shadable:true
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="置顶窗口">置顶窗口</h3>
+            <div class="demo">
+                <h4 class="tip" name="打开一个置顶窗口">打开一个置顶窗口</h4>
+                <pre>layx.iframe('sticktop','打开一个置顶窗口，再打开另外的窗口试试','./iframe.html',{
+    alwaysOnTop:true,
+    stickMenu:true,  // 可选，是否显示切换置顶按钮
+    position:[100,100]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="窗口外观">窗口外观</h2>
+            <h3 name="主窗口外观">主窗口外观</h3>
+            <div class="demo">
+                <h4 class="tip" name="默认外观">默认外观</h4>
+                <pre>layx.iframe('default-style','默认外观','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="灰色背景">灰色背景</h4>
+                <pre>layx.iframe('gray-style','灰色背景','./iframe.html',{
+    bgColor:'#ccc'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="透明窗口">透明窗口</h4>
+                <pre>layx.iframe('opacity-style','透明窗口','./iframe.html',{
+    opacity:0.5
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="无边框">无边框</h4>
+                <pre>layx.iframe('noborder-style','无边框','./iframe.html',{
+    border:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="无阴影">无阴影</h4>
+                <pre>layx.iframe('noshadow-style','无阴影','./iframe.html',{
+    shadow:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="红色边框">红色边框</h4>
+                <pre>layx.iframe('redborder-style','红色边框','./iframe.html',{
+    border:'1px solid #f00'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="无标题栏">无标题栏</h4>
+                <pre>layx.html('nocontrol-style','无标题栏','&lt;button style="margin:10px;" onclick="layx.destroy(\'nocontrol-style\');"&gt;关闭&lt;/button&gt;',{
+    control:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带状态栏">带状态栏</h4>
+                <pre>layx.iframe('statusbar-style','带状态栏','./iframe.html',{
+    statusBar:'&lt;div style="line-height:25px;padding:0 10px;" &gt;我是状态栏内容&lt;/div&gt;'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义外观，比如圆角">自定义外观，比如圆角</h4>
+                <pre>layx.iframe('radiu-style','自定义外观，比如圆角','./iframe.html',{
+    style:layx.multiLine(function(){/*
+
+        #layx-radiu-style{
+            border-radius:4px;
+            -webkit-border-radius:4px;
+            -moz-border-radius:4px;
+            -ms-border-radius:4px;
+        }
+
+        #layx-radiu-style .layx-window-icon{
+            color:#f00;
+        }
+
+*/})
+});</pre>
+                <p>在这里，可以尽情写 css 样式了，改成任何您想要的外观</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="标题栏外观">标题栏外观</h3>
+            <div class="demo">
+                <h4 class="tip" name="紫色标题栏">紫色标题栏</h4>
+                <pre>layx.iframe('purple-control-style','紫色标题栏','./iframe.html',{
+    controlStyle:'background-color: #7719aa; color:#fff;',
+    style:layx.multiLine(function(){/*
+
+    #layx-purple-control-style .layx-inlay-menus .layx-icon:hover {
+        background-color: #9953c0;
+    }   
+     
+*/})
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="没有窗口图标">没有窗口图标</h4>
+                <pre>layx.iframe('no-icon','没有窗口图标','./iframe.html',{
+    icon:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义图标">自定义图标</h4>
+                <pre>layx.iframe('custom-icon','自定义图标','./iframe.html',{
+    icon:'&lt;img src="logo.png" style="height:22px;display:block;" /&gt;'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不显示标题、图标">不显示标题、图标</h4>
+                <pre>layx.iframe('no-title',null,'./iframe.html',{
+    icon:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="显示置顶按钮">显示置顶按钮</h4>
+                <pre>layx.iframe('stick-show','显示置顶按钮','./iframe.html',{
+    stickMenu:true
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不显示最小化按钮">不显示最小化按钮</h4>
+                <pre>layx.iframe('minhide','不显示最小化按钮','./iframe.html',{
+    minMenu:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不显示最大化按钮">不显示最大化按钮</h4>
+                <pre>layx.iframe('maxhide','不显示最大化按钮','./iframe.html',{
+    maxMenu:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不显示关闭按钮">不显示关闭按钮</h4>
+                <pre>layx.html('closehide','不显示关闭按钮','&lt;button style="margin:10px;" onclick="layx.destroy(\'closehide\');"&gt;关闭&lt;/button&gt;',{
+    closeMenu:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="只显示关闭按钮">只显示关闭按钮</h4>
+                <pre>layx.iframe('onlyclose','只显示关闭按钮','./iframe.html',{
+    minMenu:false,
+    maxMenu:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义标题栏左边区域">自定义标题栏左边区域</h4>
+                <pre>layx.iframe('leftbar','自定义标题栏左边区域','./iframe.html',{
+    icon:'&lt;button&gt;按钮一&lt;/button&gt; &lt;img src="logo.png" style="height:22px;vertical-align: middle;" /&gt; &lt;button&gt;按钮二&lt;/button&gt;'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自动获取iframe标题">自动获取iframe标题</h4>
+                <pre>layx.iframe('autotitle',null,'./iframe.html',{
+   useFrameTitle:true
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="行为控制">行为控制</h2>
+            <h3 name="拖动控制">拖动控制</h3>
+            <div class="demo">
+                <h4 class="tip" name="默认拖动">默认拖动</h4>
+                <pre>layx.iframe('defaultmove','鼠标拖动标题栏看看','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="只允许垂直拖动">只允许垂直拖动</h4>
+                <pre>layx.iframe('onlyvertical','只允许垂直拖动','./iframe.html',{
+    moveLimit:{
+        horizontal:true
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="只允许水平拖动">只允许水平拖动</h4>
+                <pre>layx.iframe('onlyhorizontal','只允许水平拖动','./iframe.html',{
+    moveLimit:{
+        vertical:true
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不允许拖出可视窗口">不允许拖出可视窗口</h4>
+                <pre>layx.iframe('noallowout','不允许拖出可视窗口','./iframe.html',{
+    moveLimit:{
+        leftOut: false, 
+        rightOut: false,
+        topOut: false,
+        bottomOut: false, 
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不允许拖动">不允许拖动</h4>
+                <pre>layx.iframe('nomove','不允许拖动','./iframe.html',{
+    movable:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="四个方向限制，比如不允许拖出底部">四个方向限制，比如不允许拖出底部</h4>
+                <pre>layx.iframe('nomovebottom','四个方向限制，比如不允许拖出底部','./iframe.html',{
+    moveLimit:{
+        leftOut: true, 
+        rightOut: true,
+        topOut: true,
+        bottomOut: false, 
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="拖曳大小控制">拖曳大小控制</h3>
+            <div class="demo">
+                <h4 class="tip" name="默认可以8个方向拖曳改变大小">默认可以8个方向拖曳改变大小</h4>
+                <pre>layx.iframe('defaultresize','默认可以8个方向拖曳改变大小','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="8个方向拖曳大小控制，比如不允许顶部和底部拖曳改变">8个方向拖曳大小控制，比如不允许顶部和底部拖曳改变</h4>
+                <pre>layx.iframe('notopbottomresize','8个方向拖曳大小控制，比如不允许顶部和底部拖曳改变','./iframe.html',{
+    resizeLimit: {
+        t: true, 
+        r: false,
+        b: true, 
+        l: false, 
+        lt: false,
+        rt: false,
+        lb: false, 
+        rb: false 
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="不允许改变大小">不允许改变大小</h4>
+                <pre>layx.iframe('noresize','不允许改变大小','./iframe.html',{
+    resizable:false
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="窗口大小、位置">窗口大小、位置</h2>
+            <h3 name="窗口大小">窗口大小</h3>
+            <div class="demo">
+                <h4 class="tip" name="默认大小">默认大小</h4>
+                <pre>layx.iframe('defaultsize','默认大小（宽800px，高600px）','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义宽度、高度">自定义宽度、高度</h4>
+                <pre>layx.iframe('customsize','自定义宽度、高度（宽300px，高300px）','./iframe.html',{
+    width:300,
+    height:300
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="最小高度、宽度">最小高度、宽度</h4>
+                <pre>layx.iframe('minwidthheight','拖曳调整浏览器窗口大小试试，最小300px x 300px','./iframe.html',{
+    minWidth:300,
+    minHeight:300
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="窗口位置">窗口位置</h3>
+            <div class="demo">
+                <h4 class="tip" name="中间打开">中间打开</h4>
+                <pre>layx.iframe('resize-ct','中间打开','./iframe.html');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="左上角打开">左上角打开</h4>
+                <pre>layx.iframe('resize-lt','左上角打开','./iframe.html',{
+    position:'lt'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="右上角打开">右上角打开</h4>
+                <pre>layx.iframe('resize-rt','右上角打开','./iframe.html',{
+    position:'rt'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="左下角打开">左下角打开</h4>
+                <pre>layx.iframe('resize-lb','左下角打开','./iframe.html',{
+    position:'lb'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="右下角打开">右下角打开</h4>
+                <pre>layx.iframe('resize-rb','右下角打开','./iframe.html',{
+    position:'rb'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="上边中间打开">上边中间打开</h4>
+                <pre>layx.iframe('resize-tc','上边中间打开','./iframe.html',{
+    position:'tc'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="左边中间打开">左边中间打开</h4>
+                <pre>layx.iframe('resize-lc','左边中间打开','./iframe.html',{
+    position:'lc'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="右边中间打开">右边中间打开</h4>
+                <pre>layx.iframe('resize-rc','右边中间打开','./iframe.html',{
+    position:'rc'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="下边中间打开">下边中间打开</h4>
+                <pre>layx.iframe('resize-bc','下边中间打开','./iframe.html',{
+    position:'bc'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义位置">自定义位置</h4>
+                <pre>layx.iframe('resize-custom','自定义位置（上边100px，左边200px）','./iframe.html',{
+    position:[100,200]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="自定义位置（组合模式）">自定义位置（组合模式）</h4>
+                <pre>layx.iframe('resize-custom','自定义位置（组合模式，顶部中间并距离20px）','./iframe.html',{
+    position:[20,'tc']
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="窗口事件">窗口事件</h2>
+            <h3 name="加载事件">加载事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="加载前后控制">加载前后控制</h4>
+                <pre>layx.iframe('event-onload','加载前后控制','./iframe.html',{
+    event:{
+        onload:{
+            before:function(layxWindow,winform){
+                alert("加载之前");
+                console.log(new Date()+"加载之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                alert("加载之后");
+                console.log(new Date()+"加载之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="最小化事件">最小化事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="最小化事件">最小化事件</h4>
+                <pre>layx.iframe('event-onmin','最小化前后控制','./iframe.html',{
+    event:{
+        onmin:{
+            before:function(layxWindow,winform){
+                alert("最小化之前");
+                console.log(new Date()+"最小化之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                alert("最小化之后");
+                console.log(new Date()+"最小化之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="最大化事件">最大化事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="最大化事件">最大化事件</h4>
+                <pre>layx.iframe('event-onmax','最大化前后控制','./iframe.html',{
+    event:{
+        onmax:{
+            before:function(layxWindow,winform){
+                alert("最大化之前");
+                console.log(new Date()+"最大化之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                alert("最大化之后");
+                console.log(new Date()+"最大化之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="恢复事件">恢复事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="恢复事件">恢复事件</h4>
+                <pre>layx.iframe('event-onrestore','恢复前后控制','./iframe.html',{
+    event:{
+        onrestore:{
+            before:function(layxWindow,winform){
+                alert("恢复之前");
+                console.log(new Date()+"恢复之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                alert("恢复之后");
+                console.log(new Date()+"恢复之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="关闭事件">关闭事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="关闭事件">关闭事件</h4>
+                <pre>layx.iframe('event-ondestroy','关闭前后控制','./iframe.html',{
+    event:{
+        ondestroy:{
+            before:function(layxWindow,winform){
+                alert("关闭之前");
+                console.log(new Date()+"关闭之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                alert("关闭之后");
+                console.log(new Date()+"关闭之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="拖动事件">拖动事件</h4>
+                <pre>layx.iframe('event-onmove','拖动前中后控制','./iframe.html',{
+    event:{
+        onmove:{
+            before:function(layxWindow,winform){
+                console.log(new Date()+"拖动之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            progress:function(layxWindow,winform){
+                console.log(new Date()+"拖动之中~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                console.log(new Date()+"拖动之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="拖曳大小事件">拖曳大小事件</h4>
+                <pre>layx.iframe('event-onresize','拖曳大小前中后控制','./iframe.html',{
+    event:{
+        onresize:{
+            before:function(layxWindow,winform){
+                console.log(new Date()+"拖曳大小之前~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            progress:function(layxWindow,winform){
+                console.log(new Date()+"拖动大小之中~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform) {
+                console.log(new Date()+"拖曳大小之后~")
+                console.log(winform);
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="更多示例">更多示例</h2>
+            <h3 name="事件组合">事件组合</h3>
+            <div class="demo">
+                <h4 class="tip" name="自动最大化窗口">自动最大化窗口</h4>
+                <pre>layx.iframe('maxauto','自动最大化窗口','./iframe.html',{
+    event:{
+        onload:{
+            after:function(layxWindow,winform){
+                layx.max(winform.id);
+            }
+        }
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="只有输入Layx才能关闭窗口">只有输入Layx才能关闭窗口</h4>
+                <pre>layx.prompt('请输入当前框架的名称','请输入Layx名字：',function(id,value,textarea){
+    layx.destroy(id);
+},{
+    event:{
+        ondestroy: {
+             before: function (layxWindow, winform) {
+                var textarea=layx.getPromptTextArea(winform.id);
+                if(textarea.value==="Layx"){
+                    alert("你正确输入了 Layx");
+                }
+                else{
+                    alert("您输入的是："+textarea.value+"，您必须输入 Layx 才能关闭 ");
+                    return false;
+                }
+            }
+        }
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="其他示例">其他示例</h3>
+            <div class="demo">
+                <h4 class="tip" name="定制加载提示文本">定制加载提示文本</h4>
+                <pre>layx.iframe('loadtext','定制加载提示文本','https://www.taobao.com',{
+    loaddingText: '正在加载淘宝网官方网站，请稍后哦'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="定制倒计时文本">定制倒计时文本</h4>
+                <pre>layx.iframe('destroysettimeout','定制倒计时文本','./iframe.html',{
+    autodestroy:5000,
+    autodestroyText: '&lt;div style="padding: 0 8px; "&gt;亲~，此窗口将在 &lt;strong&gt;{second}&lt;/strong&gt; 秒内自动关闭哦.&lt;/div&gt;'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="定制询问框按钮">定制询问框按钮</h4>
+                <pre>layx.confirm('温馨提示','你还为保存文本内容，请选择操作。',null,{
+    buttons:[
+        {
+            label:'保存文本',
+            callback:function(id){
+                alert("你点击了保存文本");
+            }
+        },
+        {
+            label:'确定',
+            callback:function(id){
+                alert("你点击了确定");
+            }
+        },
+        {
+            label:'关闭',
+            callback:function(id){
+                alert("你点击了关闭");
+                layx.destroy(id);
+            }
+        }
+    ]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h2 name="常用方法及窗口通讯">常用方法及窗口通讯</h2>
+            <h3 name="常用方法">常用方法</h3>
+            <div class="demo">
+                <h4 class="tip" name="获取Layx版本">获取Layx版本</h4>
+                <pre>alert(layx.v);</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="通用打开窗口方法">通用打开窗口方法</h4>
+                <pre>layx.open({
+    id:'common',
+    title:'通用打开窗口方法',
+    content:'&lt;div style="padding:10px;"&gt;Layx 所有的窗口类型全部都是基于此操作方法创建的。&lt;/div&gt;'
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="获取所有打开窗口列表">获取所有打开窗口列表</h4>
+                <pre>var windows=layx.windows();
+
+var jsonStr=JSON.stringify(windows, null, 4);
+console.log(jsonStr);
+alert(jsonStr);
+</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="获取单个窗口winform对象">获取单个窗口winform对象</h4>
+                <pre>// 第一种方法，直接接收返回值
+var winform = layx.iframe('single','测试操作方法、通讯窗口','./iframe.html');
+alert(JSON.stringify(winform, null, 4));
+
+// 第二种方法，通过 layx.getWindow(id) 获取窗口的winform对象
+var winform2 = layx.getWindow('single');
+alert(JSON.stringify(winform2, null, 4));
+</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口标题">设置窗口标题</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置窗口标题</strong></p>
+                <pre>layx.setTitle('iframe-demo','我是新的标题');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口标题（自动获取页面标题）">设置窗口标题（自动获取页面标题）</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置窗口标题（自动获取页面标题）</strong></p>
+                <pre>layx.setTitle('iframe-demo',null,true);</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置文本窗口内容">设置文本窗口内容</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.html('text-demo', '窗口操作方法测试、通讯窗口', 'Layx 网页弹窗最佳选择.');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置文本窗口内容</strong></p>
+                <pre>layx.setContent('text-demo',new Date()+' 我是新设置的内容 ');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置网页窗口地址">设置网页窗口地址</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置网页窗口地址为 https://www.taobao.com/</strong></p>
+                <pre>layx.setUrl('iframe-demo','https://www.taobao.com/');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置网页窗口地址（自动获取标题）">设置网页窗口地址（自动获取标题）</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo1', null, './iframe.html', { useFrameTitle: true }); var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置网页窗口地址为 ./child.html</strong></p>
+                <pre>layx.setUrl('iframe-demo1','./child.html');</pre>
+                <p style="color:#f00;">测试窗口必须设置 useFrameTitle:true </p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="闪烁一下窗口">闪烁一下窗口</h4>
+                <pre>layx.flicker('layx');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="最大化窗口">最大化窗口</h4>
+                <pre>layx.max('layx');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="恢复窗口">恢复窗口</h4>
+                <pre>layx.restore('layx');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="最小化窗口">最小化窗口</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置最小化</strong></p>
+                <pre>layx.min('iframe-demo');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="置顶/取消置顶">置顶/取消置顶</h4>
+                <pre>layx.stickToggle('layx');</pre>
+                <p style="color:#f00;">注意看 Layx 演示案例 右上角置顶图标颜色变化 </p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口位置">设置窗口位置</h4>
+                <pre>layx.setPosition('layx','ct');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="关闭窗口">关闭窗口</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：关闭窗口</strong></p>
+                <pre>layx.destroy('iframe-demo');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="重载页面窗口">重载页面窗口</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：重载页面窗口</strong></p>
+                <pre>layx.reloadFrame('iframe-demo');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="关闭所有窗口">关闭所有窗口</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html'); layx.iframe('iframe-demo2', '窗口操作方法测试、通讯窗口', './iframe.html', {position:[30,200]});var e = e || window.event; e.stopPropagation();">先打开多个窗口再操作，点击打开</button>
+                <p><strong>第二步：关闭所有窗口</strong></p>
+                <pre>layx.destroyAll();</pre>
+                <p style="color:#f00;">注意看 设置 closable:false 窗口不可关闭 </p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组标题">设置窗口组标题</h4>
+                <pre>layx.setGroupTitle('layx','demo','演示示例');</pre>
+                <p style="color:#f00;">注意看 当前文档的标题哦 </p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组文本内容">设置窗口组文本内容</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}]);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：设置窗口组一内容</strong></p>
+                <pre>layx.setGroupContent('group-demo','group1','我是新设置的内容');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组页面窗口URL地址">设置窗口组页面窗口URL地址</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}]);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：设置窗口组二URL地址</strong></p>
+                <pre>layx.setGroupUrl('group-demo','group2','https://www.taobao.com');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组页面窗口URL地址（自动获取标题）">设置窗口组页面窗口URL地址（自动获取标题）</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo2', [{ id: 'group1', title: '窗口组一', content: 'Layx 网页弹窗最佳选择' }, { id: 'group2', type: 'url', url: './iframe.html', useFrameTitle: true }]); var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：设置窗口组二URL地址</strong></p>
+                <pre>layx.setGroupUrl('group-demo2','group2','./child.html');</pre>
+                <p style="color:#f00;">窗口组二必须设置 useFrameTitle:true </p>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组索引">设置窗口组索引</h4>
+                <pre>layx.setGroupIndex('layx','info');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="重载窗口组页面窗口">重载窗口组页面窗口</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：重载窗口组页面窗口</strong></p>
+                <pre>layx.reloadGroupFrame('group-demo','group2');</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="窗口通讯（页面窗口）">窗口通讯（页面窗口）</h3>
+            <div class="demo">
+                <h4 class="tip" name="获取 页面窗口对象，并获取页面HTML">获取 页面窗口对象，并获取页面HTML</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：获取页面HTML</strong></p>
+                <pre>var win = layx.getFrameContext('iframe-demo');
+alert(win.document.body.innerHTML);</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="获取 页面窗口对象，并设置页面HTML">获取 页面窗口对象，并设置页面HTML</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置页面HTML</strong></p>
+                <pre>var win = layx.getFrameContext('iframe-demo');
+win.document.body.innerHTML='&lt;label&gt;Hello Layx!&lt;/label&gt;';</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="获取 页面窗口对象，并调用页面定义方法">获取 页面窗口对象，并调用页面定义方法</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：调用页面定义方法 iframeFunc</strong></p>
+                <pre>var win = layx.getFrameContext('iframe-demo');
+win.iframeFunc();</pre>
+                <button class="run">运行</button>
+            </div>
+
+            <p>如果 Layx 对您有帮助，可以请 作者 喝杯咖啡</p>
+            <img src="./code.jpg" style="width:100%;display:block;" />
+        </div>
+
+        <script type="text/javascript" src="../layx.min.js"></script>
+        <script type="text/javascript" src="doc.js"></script>
 </body>
 </html>
