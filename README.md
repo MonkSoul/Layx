@@ -67,7 +67,7 @@ layx.html('str','字符串文本','Hello Layx!');
 # 日志
 
 ```
-# 2018.05.19 v2.1.0 发布
+# 2018.05.20 v2.1.0 发布
 
 - [新增] cloneElementContent 参数，可配置 HTMLElement 是拷贝模式还是取用模式
 - [新增] 多行字符串处理方法
