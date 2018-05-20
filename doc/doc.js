@@ -30,7 +30,7 @@
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 是一款网页弹窗JavaScript插件，她将助力于互联网web开发，并提供优质的弹窗体验。</p>
+                <p>Layx 是一款网页弹窗JavaScript插件，她将助力于互联网Web开发，提供优质的弹窗体验。</p>
                 <h2>信息</h2>
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>

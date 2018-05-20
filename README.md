@@ -1,10 +1,8 @@
-> Layx 网页弹窗最佳选择.
-
 ![输入图片说明](https://gitee.com/uploads/images/2018/0512/233240_d215028a_974299.png "layx.png")
 
 # 序言
 
-Layx 是一款网页弹窗JavaScript插件，她将助力于互联网web开发，并提供优质的弹窗体验。
+Layx 是一款网页弹窗JavaScript插件，她将助力于互联网Web开发，提供优质的弹窗体验。
 
 ## 信息
 

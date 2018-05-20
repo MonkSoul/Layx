@@ -1616,6 +1616,26 @@
                 return null;
             }
         },
+        //获取窗口组页面窗口window对象
+        getGroupFrameContext: function (id, frameId) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id],
+                iframeWindow = null;
+            if (layxWindow && winform && winform.type === "group") {
+                var frameform = that.getGroupFrame(winform.frames, frameId);
+                if (frameform.type === "url") {
+                    var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
+                    if (iframe) {
+                        try {
+                            iframeWindow = iframe.contentWindow;
+                        } catch (e) { }
+                    }
+                }
+            }
+            return iframeWindow;
+        },
         // ================ 内置组件
         // 创建layx按钮
         createLayxButtons: function (buttons, id, isPrompt) {
@@ -2515,6 +2535,10 @@
         // 设置窗口组索引
         setGroupIndex: function (id, frameId) {
             Layx.setGroupIndex(id, frameId);
+        },
+        // 获取窗口组页面窗口window对象
+        getGroupFrameContext: function (id, frameId) {
+            return Layx.getGroupFrameContext(id, frameId);
         },
         // 关闭所有窗口
         destroyAll: function () {

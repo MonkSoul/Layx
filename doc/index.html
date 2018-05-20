@@ -163,8 +163,8 @@ setTimeout(function(){
             label:'保存',
             callback:function(id){
                 // 获取 iframe 页面 window对象
-                var iframeWindow=layx.getChildContext(id);
-                alert(iframeWindow.document.body.innerHTML);
+                var contentWindow=layx.getFrameContext(id);
+                alert(contentWindow.document.body.innerHTML);
 
                 layx.destroy(id);    
             }
@@ -1041,7 +1041,33 @@ win.document.body.innerHTML='&lt;label&gt;Hello Layx!&lt;/label&gt;';</pre>
 win.iframeFunc();</pre>
                 <button class="run">运行</button>
             </div>
-
+            <div class="demo">
+                <h4 class="tip" name="获取窗口组页面窗口HTML">获取窗口组页面窗口HTML</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：获取窗口组二HTML</strong></p>
+                <pre>var win = layx.getGroupFrameContext('group-demo','group2');
+alert(win.document.body.innerHTML);</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组页面窗口HTML">设置窗口组页面窗口HTML</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：设置窗口组二HTML</strong></p>
+                <pre>var win = layx.getGroupFrameContext('group-demo','group2');
+win.document.querySelector("label").innerHTML="Hello Layx!";</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="调用窗口组页面窗口定义的方法">调用窗口组页面窗口定义的方法</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：调用页面定义方法 iframeFunc</strong></p>
+                <pre>var win = layx.getGroupFrameContext('group-demo','group2');
+win.iframeFunc();</pre>
+                <button class="run">运行</button>
+            </div>
             <p>如果 Layx 对您有帮助，可以请 作者 喝杯咖啡</p>
             <img src="./code.jpg" style="width:100%;display:block;" />
         </div>
