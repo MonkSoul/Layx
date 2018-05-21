@@ -2046,6 +2046,9 @@
             // 只允许鼠标左键拖曳
             var button = e.button || e.which;
             if (button == 1 && e.shiftKey == false) {
+                // 禁止浏览器默认事件
+                e.preventDefault();
+
                 var moveMouseCoord = Utils.getMousePosition(e),
                     distX = moveMouseCoord.x - handle.mouseStartCoord.x,
                     distY = moveMouseCoord.y - handle.mouseStartCoord.y,
@@ -2197,10 +2200,6 @@
                         handle.winform = winform;
                         // 存储浏览器可视区域信息
                         handle.innerArea = Utils.innerArea();
-                        // 禁止浏览器默认事件
-                        e.preventDefault();
-                        // 禁止冒泡
-                        e.stopPropagation();
 
                         var mousePreventDefault = layxWindow.querySelector(".layx-mouse-preventDefault");
                         if (!mousePreventDefault) {
@@ -2238,6 +2237,9 @@
             // 只允许鼠标左键拖曳
             var button = e.button || e.which;
             if (button == 1 && e.shiftKey == false) {
+                // 禁止浏览器默认事件
+                e.preventDefault();
+
                 var moveMouseCoord = Utils.getMousePosition(e),
                     distX = moveMouseCoord.x - handle.mouseStartCoord.x,
                     distY = moveMouseCoord.y - handle.mouseStartCoord.y;
@@ -2387,10 +2389,6 @@
                         handle.innerArea = Utils.innerArea();
                         // 存储最一开始的位置信息
                         handle.defaultArea = layxDeepClone({}, winform.area);
-                        // 禁止浏览器默认事件
-                        e.preventDefault();
-                        // 禁止冒泡
-                        e.stopPropagation();
 
                         var mousePreventDefault = layxWindow.querySelector(".layx-mouse-preventDefault");
                         if (!mousePreventDefault) {
