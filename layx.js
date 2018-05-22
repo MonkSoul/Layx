@@ -38,6 +38,7 @@
             opacity: 1,
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
+            isOverToMax: true,
             stickMenu: false,
             stickable: true,
             minMenu: true,
@@ -625,8 +626,10 @@
                 }, 1000);
             }
             that.windows[config.id] = winform;
-            if (_width > window.innerWidth || _height > window.innerHeight) {
-                that.max(config.id);
+            if (isOverToMax === true) {
+                if (_width > window.innerWidth || _height > window.innerHeight) {
+                    that.max(config.id);
+                }
             }
             return winform;
         },
