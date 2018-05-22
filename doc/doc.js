@@ -77,6 +77,7 @@ window.onload = function () {
 - [更新] 拖动窗口、拖曳窗口流畅度
 - [更新] layx.css样式，添加各个浏览器兼容性处理
 - [更新] layx.js 代码
+- [修复] Firefox Developer Edition 版本关闭 bug
 
 # 2018.05.20 v2.1.0 发布
 
