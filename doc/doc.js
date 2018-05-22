@@ -36,7 +36,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.1.1</li>
+                    <li><label>当前版本</label>：v2.1.2</li>
                     <li><label>发布日期</label>：2018.05.22</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -71,10 +71,11 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
-# 2018.05.22 v2.1.1 发布
+# 2018.05.22 v2.1.2 发布
 
 - [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于session存储）
 - [新增] isOverToMax 配置参数、控制初始化窗口时超出可视区域自动最大化
+- [新增] 非同域网站触发iframe点击功能（！！！重点更新！！！）
 - [更新] 拖动窗口、拖曳窗口流畅度
 - [更新] layx.css样式，添加各个浏览器兼容性处理
 - [更新] layx.js 代码

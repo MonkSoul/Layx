@@ -2,7 +2,7 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.1
+ * version : v2.1.2
  * create time : 2018.05.11
  * update time : 2018.05.22
  */
@@ -11,7 +11,7 @@
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.1',
+        version: '2.1.2',
         defaults: {
             id: '',
             icon: true,
@@ -723,16 +723,9 @@
                                 }
                             }
                             if (config.focusable === true) {
-                                iframe.contentWindow.onclick = function (e) {
-                                    var _slf = this.self;
-                                    e = e || iframe.contentWindow.event;
-                                    if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
-                                        var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
-                                        var windowId = layxWindow.getAttribute("id").substr(5);
-                                        that.updateZIndex(windowId);
-                                    }
-                                    e.stopPropagation();
-                                };
+                                IframeOnClick.track(iframe, function () {
+                                    that.updateZIndex(config.id);
+                                }); 
                             }
                         } catch (e) {
                             console.warn(e);
@@ -773,16 +766,9 @@
                             }
                         }
                         if (config.focusable === true) {
-                            iframe.contentWindow.onclick = function (e) {
-                                var _slf = this.self;
-                                e = e || iframe.contentWindow.event;
-                                if (_slf !== over && _slf.frameElement && _slf.frameElement.tagName === "IFRAME") {
-                                    var layxWindow = Utils.getNodeByClassName(_slf.frameElement, 'layx-window', _slf);
-                                    var windowId = layxWindow.getAttribute("id").substr(5);
-                                    that.updateZIndex(windowId);
-                                }
-                                e.stopPropagation();
-                            };
+                            IframeOnClick.track(iframe, function () {
+                                that.updateZIndex(config.id);
+                            }); 
                         }
                     } catch (e) {
                         console.warn(e);
@@ -1597,6 +1583,38 @@
                 loaddingText: false
             }, options));
             return winform;
+        }
+    };
+    var IframeOnClick = {
+        resolution: 200,
+        iframes: [],
+        interval: null,
+        Iframe: function () {
+            this.element = arguments[0];
+            this.cb = arguments[1];
+            this.hasTracked = false;
+        },
+        track: function (element, cb) {
+            this.iframes.push(new this.Iframe(element, cb));
+            if (!this.interval) {
+                var _this = this;
+                this.interval = setInterval(function () { _this.checkClick(); }, this.resolution);
+            }
+        },
+        checkClick: function () {
+            if (document.activeElement) {
+                var activeElement = document.activeElement;
+                for (var i in this.iframes) {
+                    if (activeElement === this.iframes[i].element) { // user is in this Iframe  
+                        if (this.iframes[i].hasTracked == false) {
+                            this.iframes[i].cb.apply(window, []);
+                            this.iframes[i].hasTracked = true;
+                        }
+                    } else {
+                        this.iframes[i].hasTracked = false;
+                    }
+                }
+            }
         }
     };
     var Utils = {
