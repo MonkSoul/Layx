@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.0
+ * version : v2.1.1
  * create time : 2018.05.11
- * update time : 2018.05.20
+ * update time : 2018.05.22
  */
 
 ;
 !(function (over, win, slf) {
     var Layx = {
         // 版本号
-        version: '2.1.0',
+        version: '2.1.1',
         // 默认配置
         defaults: {
             id: '',// 窗口唯一id
@@ -22,6 +22,7 @@
             minWidth: 100,  // 最小宽度，支持百分比 '100%'
             minHeight: 100, // 最小高度，支持百分比 '100%'
             position: 'ct', // 初始化位置，支持'ct', 'lt', 'rt', 'lb', 'rb', 'lc', 'tc', 'rc', 'bc'，以及 [top,left]数组，同时也数字也支持混合写法，如：[100,'tc']
+            storeStatus: true,  // 存储状态，默认基于session存储
             control: true, // 是否显示控制栏
             style: '',   // style样式，
             controlStyle: '', // 控制栏样式
@@ -245,26 +246,50 @@
                 layxWindow.style.setProperty("-moz-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
                 layxWindow.style.setProperty("-webkit-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
             }
+            var _minWidth, _minHeight, _width, _height, _top, _left;
 
             // 转换最小化参数
-            var _minWidth = Utils.compileLayxWidthOrHeight("width", config.minWidth, that.defaults.minWidth);
-            var _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
-
-            var _width = Utils.compileLayxWidthOrHeight("width", config.width, that.defaults.width);
-            _width = Math.max(_width, _minWidth);
-
-            var _height = Utils.compileLayxWidthOrHeight("height", config.height, that.defaults.height);
-            _height = Math.max(_height, _minHeight);
+            _minWidth = Utils.compileLayxWidthOrHeight("width", config.minWidth, that.defaults.minWidth);
+            _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
+            _width = Utils.compileLayxWidthOrHeight("width", config.width, that.defaults.width);
+            _height = Utils.compileLayxWidthOrHeight("height", config.height, that.defaults.height);
 
             var _position = Utils.compileLayxPosition(_width, _height, config.position);
+            _top = _position.top;
+            _left = _position.left;
+            _width = Math.max(_width, _minWidth);
+            _height = Math.max(_height, _minHeight);
+
+            if (config.storeStatus === true) {
+                var _areaInfo = that.getStoreWindowAreaInfo(config.id);
+                if (_areaInfo) {
+                    _width = _areaInfo.width;
+                    _height = _areaInfo.height;
+                    _top = _areaInfo.top;
+                    _left = _areaInfo.left;
+                }
+                else {
+                    that.storeWindowAreaInfo(config.id, {
+                        width: _width,
+                        height: _height,
+                        top: _top,
+                        left: _left
+                    });
+                }
+            }
+            else {
+                that.removeStoreWindowAreaInfo(config.id);
+            }
 
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
             layxWindow.style.height = _height + "px";
             layxWindow.style.minWidth = _minWidth + "px";
             layxWindow.style.minHeight = _minHeight + "px";
-            layxWindow.style.top = _position.top + "px";
-            layxWindow.style.left = _position.left + "px";
+            layxWindow.style.top = _top + "px";
+            layxWindow.style.left = _left + "px";
+
+
             if (config.border !== false) {
                 layxWindow.style.setProperty("border", config.border === true ? '1px solid #3baced' : config.border);
             }
@@ -303,6 +328,8 @@
             winform.useFrameTitle = config.useFrameTitle;
             // 存储文本窗口内容方式
             winform.cloneElementContent = config.cloneElementContent;
+            // 存储窗口位置信息
+            winform.storeStatus = config.storeStatus;
             // 存储子窗口索引
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             // 存储窗口初始化区域信息
@@ -311,8 +338,8 @@
                 height: _height,
                 minWidth: _minWidth,
                 minHeight: _minHeight,
-                top: _position.top,
-                left: _position.left
+                top: _top,
+                left: _left
             };
             // 存储加载文本
             winform.loaddingText = config.loaddingText;
@@ -777,6 +804,31 @@
                 that.max(config.id);
             }
             return winform;
+        },
+        // 删除存储中的窗口区域信息
+        removeStoreWindowAreaInfo: function (id) {
+            var that = this,
+                windowId = "layx-" + id,
+                storeAreaInfo = sessionStorage.getItem(windowId);
+            if (storeAreaInfo) {
+                sessionStorage.removeItem(windowId);
+            }
+        },
+        // 存储窗口区域信息
+        storeWindowAreaInfo: function (id, area) {
+            var that = this,
+                windowId = "layx-" + id;
+            sessionStorage.setItem(windowId, JSON.stringify(area));
+        },
+        // 获取存储中的窗口区域信息
+        getStoreWindowAreaInfo: function (id) {
+            var that = this,
+                windowId = "layx-" + id,
+                storeAreaInfo = sessionStorage.getItem(windowId);
+            if (storeAreaInfo) {
+                return JSON.parse(storeAreaInfo);
+            }
+            return null;
         },
         // 设置窗口组选择（内部方法）
         _setGroupIndex: function (id, target) {
@@ -2156,6 +2208,13 @@
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
                 handle.winform.area.width = handle.layxWindow.offsetWidth;
                 handle.winform.area.height = handle.layxWindow.offsetHeight;
+                // 存储位置信息
+                Layx.storeWindowAreaInfo(handle.winform.id, {
+                    top: handle.winform.area.top,
+                    left: handle.winform.area.left,
+                    width: handle.winform.area.width,
+                    height: handle.winform.area.height
+                });
 
                 // 恢复滚动条
                 if (document.body.classList.contains("layx-body")) {
@@ -2336,6 +2395,13 @@
                 // 更新窗口位置信息
                 handle.winform.area.top = handle.layxWindow.offsetTop;
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
+                // 存储位置信息
+                Layx.storeWindowAreaInfo(handle.winform.id, {
+                    top: handle.winform.area.top,
+                    left: handle.winform.area.left,
+                    width: handle.winform.area.width,
+                    height: handle.winform.area.height
+                });
 
                 // 恢复滚动条
                 if (document.body.classList.contains("layx-body")) {
@@ -2346,6 +2412,13 @@
                 if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true) {
                     handle.winform.area.top = handle.defaultArea.top;
                     handle.winform.area.left = handle.defaultArea.left;
+                    // 存储位置信息
+                    Layx.storeWindowAreaInfo(handle.winform.id, {
+                        top: handle.winform.area.top,
+                        left: handle.winform.area.left,
+                        width: handle.winform.area.width,
+                        height: handle.winform.area.height
+                    });
                     Layx.max(handle.winform.id);
                 }
 

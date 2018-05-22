@@ -30,14 +30,14 @@
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 是一款网页弹窗JavaScript插件，她将助力于互联网Web开发，提供优质的弹窗体验。</p>
+                <p>Layx 一款熟悉但又不太一样的Web弹窗插件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>信息</h2>
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.1.0</li>
-                    <li><label>发布日期</label>：2018.05.20</li>
+                    <li><label>当前版本</label>：v2.1.1</li>
+                    <li><label>发布日期</label>：2018.05.22</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
@@ -62,6 +62,7 @@
                     <li>支持窗口滚动条自能判断</li>
                     <li>支持窗口最小化统一管理</li>
                     <li>支持滚动条智能判断</li>
+                    <li>支持窗口位置记录保存</li>
                 </ul>
                 <h2>项目</h2>
                 <ul>
@@ -70,6 +71,11 @@
                 </ul>
                 <h2>日志</h2>
                 <pre>
+# 2018.05.22 v2.1.1 发布
+
+- [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于session存储）
+- [更新] 拖动窗口、拖曳窗口流畅度
+
 # 2018.05.20 v2.1.0 发布
 
 - [新增] cloneElementContent 参数，可配置 HTMLElement 是拷贝模式还是取用模式
