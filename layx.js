@@ -1605,7 +1605,7 @@
             if (document.activeElement) {
                 var activeElement = document.activeElement;
                 for (var i in this.iframes) {
-                    if (activeElement === this.iframes[i].element) { // user is in this Iframe  
+                    if (activeElement === this.iframes[i].element) { 
                         if (this.iframes[i].hasTracked == false) {
                             this.iframes[i].cb.apply(window, []);
                             this.iframes[i].hasTracked = true;
