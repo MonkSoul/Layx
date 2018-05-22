@@ -626,7 +626,7 @@
                 }, 1000);
             }
             that.windows[config.id] = winform;
-            if (isOverToMax === true) {
+            if (config.isOverToMax === true) {
                 if (_width > window.innerWidth || _height > window.innerHeight) {
                     that.max(config.id);
                 }
