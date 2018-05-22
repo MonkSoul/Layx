@@ -21,7 +21,6 @@
 
 .layx-flexbox {
     display: -webkit-box;
-    display: -moz-box;
     display: -ms-flexbox;
     display: flex;
     display: -webkit-flex;
@@ -29,12 +28,15 @@
 }
 
 .layx-flex-vertical {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-align-items: center;
     -moz-align-items: center;
     -ms-align-items: center;
     -o-align-items: center;
-    -webkit-justify-content: flex-start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
     -ms-justify-content: flex-start;
     -moz-justify-content: flex-start;
@@ -42,12 +44,15 @@
 }
 
 .layx-flex-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-align-items: center;
     -moz-align-items: center;
     -ms-align-items: center;
     -o-align-items: center;
-    -webkit-justify-content: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
     -ms-justify-content: center;
     -moz-justify-content: center;
@@ -82,14 +87,12 @@ body.layx-body {
     overflow: hidden;
     box-orient: vertical;
     -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
     -o-box-orient: vertical;
     box-direction: normal;
     -webkit-box-direction: normal;
-    -moz-box-direction: normal;
     -o-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-flex-direction: column;
     -moz-flex-direction: column;
     -o-flex-direction: column;
     color: #000;
@@ -156,7 +159,6 @@ body.layx-body {
     font-size: 14px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -173,10 +175,10 @@ body.layx-body {
     -ms-line-clamp: 1;
     box-orient: vertical;
     -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
     line-height: 28px;
     word-wrap: break-word;
     overflow: hidden;
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
     -webkit-white-space: nowrap;
@@ -489,45 +491,25 @@ body.layx-body {
 
 @keyframes layx-flicker {
     from {
+        -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
     }
 
     to {
+        -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
     }
 }
 
 @-webkit-keyframes layx-flicker {
     from {
+        -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         opacity: 1;
     }
 
     to {
-        box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
-        opacity: 0.5;
-    }
-}
-
-@-moz-keyframes layx-flicker {
-    from {
-        box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
-        opacity: 1;
-    }
-
-    to {
-        box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
-        opacity: 0.5;
-    }
-}
-
-@-o-keyframes layx-flicker {
-    from {
-        box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
-        opacity: 1;
-    }
-
-    to {
+        -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         opacity: 0.5;
     }

@@ -24,6 +24,7 @@
 
 #mulu {
     position: absolute;
+    position: -webkit-sticky;
     position: sticky;
     top: 10px;
     right: 10px;
@@ -40,6 +41,7 @@
 
 #toc {
     position: absolute;
+    position: -webkit-sticky;
     position: sticky;
     left: 0;
     top: 0;

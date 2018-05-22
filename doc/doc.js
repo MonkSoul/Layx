@@ -1,11 +1,11 @@
-﻿window.onload = function () {
+﻿"use strict";
+window.onload = function () {
     if (window.layx) {
-        layx.group('layx', [
-            {
-                id: 'info',
-                title: '关于',
-                cloneElementContent: false,
-                content: layx.multiLine(function () {/*
+        layx.group('layx', [{
+            id: 'info',
+            title: '关于',
+            cloneElementContent: false,
+            content: layx.multiLine(function () {/*
              
              <style type="text/css">
              #about-layx{
@@ -75,6 +75,8 @@
 
 - [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于session存储）
 - [更新] 拖动窗口、拖曳窗口流畅度
+- [更新] layx.css样式，添加各个浏览器兼容性处理
+- [更新] layx.js 代码
 
 # 2018.05.20 v2.1.0 发布
 
@@ -148,30 +150,37 @@
                 <img src="./code.jpg" style="width:100%;display:block;" />
              </div>
 
-            */})
-            },
-            {
-                id: 'demo',
-                title: '示例',
-                cloneElementContent: false,
-                content: document.getElementById('code')
-            },
-            {
-                id: 'doc',
-                title: '文档',
-                type: 'url',
-                url: './doc.html'
-            }
-        ], 0, {
-                width: 320, height: 568, minWidth: 320, minHeight: 568, position: [20, 20], closable: false, closeMenu: false, minable: false, minMenu: false, maxMenu: false, stickMenu: true, moveLimit: {
+            */ })
+        }, {
+            id: 'demo',
+            title: '示例',
+            cloneElementContent: false,
+            content: document.getElementById('code')
+        }, {
+            id: 'doc',
+            title: '文档',
+            type: 'url',
+            url: './doc.html'
+        }], 0, {
+                width: 320,
+                height: 568,
+                minWidth: 320,
+                minHeight: 568,
+                position: [20, 20],
+                closable: false,
+                closeMenu: false,
+                minable: false,
+                minMenu: false,
+                maxMenu: false,
+                stickMenu: true,
+                moveLimit: {
                     leftOut: false,
                     rightOut: false,
                     topOut: false,
-                    bottomOut: false,
+                    bottomOut: false
                 }
             });
     }
-
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {
         runs[i].onclick = function (e) {
@@ -179,10 +188,8 @@
             var pre = this.parentNode.querySelector("pre");
             eval(pre.innerText);
             e.stopPropagation();
-        }
+        };
     }
-
-    // 自动生成演示文档目录
     var toc = document.querySelector("#toc");
     var code = document.querySelector("#layx-layx-demo-html");
     code = code ? code : document.body;
@@ -197,19 +204,16 @@
             code.scrollTop = code.querySelector("*[name='" + this.innerHTML + "']").offsetTop;
             document.querySelector('#mulu').click();
             e.stopPropagation();
-        }
+        };
         toc.appendChild(a);
     }
-
-    // 切换目录
     document.querySelector('#mulu').onclick = function (e) {
         if (window.getComputedStyle(toc).display === "none") {
             this.innerText = "关闭导航";
             toc.style.display = "block";
-        }
-        else {
+        } else {
             this.innerText = "目录导航";
             toc.style.display = "none";
         }
     };
-}
+};
