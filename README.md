@@ -8,8 +8,8 @@ gzip压缩版仅 `13.5kb`，非常小巧。
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.1.3
-- `发布日期`：2018.05.23
+- `当前版本`：v2.1.4
+- `发布日期`：2018.05.24
 - `交流Q群`：18863883
 
 # 特性
@@ -66,6 +66,16 @@ layx.html('str','字符串文本','Hello Layx!');
 # 日志
 
 ```
+# 2018.05.24 v2.1.4 发布
+
+- [新增] buttons配置参数id、classes、style属性、提供按钮更多定制功能
+- [新增] buttons配置参数callback中提供按钮自身DOM对象
+- [新增] ondestroy.before回调参数inside参数，用来判断是点击内置按钮关闭还是用户调用关闭
+- [新增] ondestroy.before回调参数params参数，记录用户关闭传递的参数
+- [新增] 操作按钮启用、禁用操作 setButtonStatus(id, buttonId, isEnable);
+- [更新] layx.destroy方法，新增params参数，可关闭之前传递参数，常用于event.ondestroy.before中判断
+
+
 # 2018.05.23 v2.1.3 发布
 
 - [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于session存储）

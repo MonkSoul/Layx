@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.3
+ * version : v2.1.4
  * create time : 2018.05.11
- * update time : 2018.05.23
+ * update time : 2018.05.24
  */
 
 "use strict";
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.3',
+        version: '2.1.4',
         defaults: {
             id: '',
             icon: true,
@@ -95,7 +95,7 @@
                     after: function (layxWindow, winform) { }
                 },
                 ondestroy: {
-                    before: function (layxWindow, winform) { },
+                    before: function (layxWindow, winform, params, inside) { },
                     after: function () { }
                 },
                 onmove: {
@@ -113,7 +113,10 @@
         },
         defaultButtons: {
             label: '确定',
-            callback: function (id) { }
+            callback: function (id, button) { },
+            id: '',
+            classes: [],
+            style: ''
         },
         defaultFrames: {
             id: '',
@@ -443,7 +446,7 @@
                         destroyMenu.onclick = function (e) {
                             e = e || window.event;
                             if (config.closable === true) {
-                                that.destroy(config.id);
+                                that.destroy(config.id, null, true);
                             }
                             e.stopPropagation();
                         };
@@ -622,7 +625,7 @@
                     }
                     if (second <= 0) {
                         clearInterval(destroyTimer);
-                        that.destroy(config.id);
+                        that.destroy(config.id, null, true);
                     }
                 }, 1000);
             }
@@ -1259,7 +1262,7 @@
                 }
             }
         },
-        destroy: function (id) {
+        destroy: function (id, params, inside) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
@@ -1268,7 +1271,7 @@
             if (layxWindow && winform) {
                 that.updateZIndex(id);
                 if (Utils.isFunction(winform.event.ondestroy.before)) {
-                    var revel = winform.event.ondestroy.before(layxWindow, winform);
+                    var revel = winform.event.ondestroy.before(layxWindow, winform, params || {}, inside === true);
                     if (revel === false) {
                         return;
                     }
@@ -1380,20 +1383,45 @@
                 var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
                 buttonItem.classList.add("layx-button-item");
                 buttonItem.innerText = buttonConfig.label;
+                buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
+                if (Utils.isArray(buttonConfig.classes)) {
+                    for (var n = 0; n < buttonConfig.classes.length; n++) {
+                        buttonItem.classList.add(buttonConfig.classes[n]);
+                    }
+                } else {
+                    buttonConfig.classes && buttonItem.classList.add(buttonConfig.classes.toString());
+                }
+                buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
                 buttonItem.callback = buttons[i].callback;
                 buttonItem.onclick = function (e) {
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
-                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea);
+                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this);
                         } else {
-                            this.callback(id);
+                            this.callback(id, this);
                         }
                     }
                 };
                 buttonPanel.appendChild(buttonItem);
             }
             return buttonPanel;
+        },
+        setButtonStatus: function (id, buttonId, isEnable) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                var button = layxWindow.querySelector("#layx-" + id + "-button-" + buttonId);
+                if (button) {
+                    if (isEnable === false) {
+                        button.setAttribute("disabled", "disabled");
+                    } else {
+                        button.removeAttribute("disabled");
+                    }
+                }
+            }
         },
         msg: function (msg, options) {
             var that = this;
@@ -1443,9 +1471,9 @@
                 statusBar: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id) {
+                    callback: function (id, button) {
                         if (Utils.isFunction(yes)) {
-                            yes(id);
+                            yes(id, button);
                         } else {
                             Layx.destroy(id);
                         }
@@ -1478,14 +1506,14 @@
                 shadable: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id) {
+                    callback: function (id, button) {
                         if (Utils.isFunction(yes)) {
-                            yes(id);
+                            yes(id, button);
                         }
                     }
                 }, {
                     label: '取消',
-                    callback: function (id) {
+                    callback: function (id, button) {
                         Layx.destroy(id);
                     }
                 }],
@@ -1535,18 +1563,18 @@
                 isPrompt: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id, value, textarea) {
+                    callback: function (id, value, textarea, button) {
                         if (textarea && value.length === 0) {
                             textarea.focus();
                         } else {
                             if (Utils.isFunction(yes)) {
-                                yes(id, value, textarea);
+                                yes(id, value, textarea, button);
                             }
                         }
                     }
                 }, {
                     label: '取消',
-                    callback: function (id, value, textarea) {
+                    callback: function (id, value, textarea, button) {
                         Layx.destroy(id);
                     }
                 }],
@@ -2090,8 +2118,8 @@
         getWindow: function (id) {
             return Layx.windows[id];
         },
-        destroy: function (id) {
-            Layx.destroy(id);
+        destroy: function (id, params) {
+            Layx.destroy(id, params);
         },
         min: function (id) {
             Layx.min(id);
@@ -2176,6 +2204,9 @@
         },
         reloadGroupFrame: function (id, frameId) {
             Layx.reloadGroupFrame(id, frameId);
+        },
+        setButtonStatus: function (id, buttonId, isEnable) {
+            Layx.setButtonStatus(id, buttonId, isEnable);
         }
     };
 })(top, window, self);

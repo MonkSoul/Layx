@@ -187,3 +187,15 @@ pre {
     display: inline-block;
     color: #0094ff;
 }
+
+.custom-button {
+    color: #fff;
+    background: #0094ff;
+    border: none;
+}
+
+.custom-button:hover {
+    background: rgba(0, 148, 255,0.8)!important;
+    border: none!important;
+    color: #fff!important;
+}

@@ -1,11 +1,5 @@
 [
   {
-    "outputFileName": "doc/doc.min.js",
-    "inputFiles": [
-      "doc/doc.js"
-    ]
-  },
-  {
     "outputFileName": "layx.min.js",
     "inputFiles": [
       "layx.js"
@@ -15,12 +9,6 @@
     "outputFileName": "layx.min.css",
     "inputFiles": [
       "layx.css"
-    ]
-  },
-  {
-    "outputFileName": "doc/doc.min.css",
-    "inputFiles": [
-      "doc/doc.css"
     ]
   }
 ]

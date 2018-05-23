@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>文档</title>
-    <link href="doc.min.css" rel="stylesheet" />
+    <link href="doc.css" rel="stylesheet" />
     <style type="text/css">
         html, body {
             margin: 0;
@@ -507,7 +507,7 @@ group：窗口组类型
                 <span>类型</span>：Object<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：<br />
-                                 <pre>{
+                <pre>{
     // 加载事件
     onload: {
         // 加载之前，return false 不执行
@@ -546,8 +546,8 @@ group：窗口组类型
     },
     // 关闭事件
     ondestroy: {
-        // 关闭之前，return false 不执行
-        before: function (layxWindow, winform) {
+        // 关闭之前，return false 不执行，inside 区分用户点击内置关闭按钮还是自动调用，用户关闭之前传递的参数
+        before: function (layxWindow, winform,params,inside) {
         },
         // 关闭之后
         after: function () {
@@ -595,18 +595,45 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
+            <p><label>id：按钮Id</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：设置按钮的id属性，最终生成的Id为：layx-窗口Id-button-按钮Id<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>classes：按钮class属性</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Array/String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：[]<br />
+                <span>说明</span>：设置按钮的class属性，支持字符串和数组类型，字符串类型时只能添加一个；如需设置多个class，传递数组类型，如：["layx-button","red-button"]，默认会生成 class="layx-button red-button"<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>style：控制按钮内联样式</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String/CssString<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：''<br />
+                <span>说明</span>：控制按钮内联样式，如：background-color:#f00;color:#fff;<br />
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>callback：按钮操作回调函数</label></p>
             <div class="doc-des">
-                <span>类型</span>：Function(id)/Function(id,value,textarea)<br />
+                <span>类型</span>：Function(id, button)/Function(id,value,textarea, button)<br />
                 <span>必需</span>：是<br />
-                <span>默认值</span>：function(id){ }<br />
+                <span>默认值</span>：function(id, button){ }<br />
                 <span>说明</span>：按钮点击回调函数，<br />
                 <pre>// 普通按钮回调函数
-callback:function(id){
+callback:function(id, button){
 }
 
 // 输入框按钮回调函数
-callback:function(id,value,textarae){
+callback:function(id,value,textarea, button){
 }
 </pre>
             </div>
@@ -725,7 +752,7 @@ winform.event // 窗口事件
         <h3 name="获取当前窗口对象">获取当前窗口对象</h3>
         <pre>var winform = layx.getWindow(id);</pre>
         <h3 name="关闭窗口">关闭窗口</h3>
-        <pre>layx.destroy(id);</pre>
+        <pre>layx.destroy(id,params);   // 设置了params参数，可以在event.ondestroy.before中监听</pre>
         <h3 name="窗口最小化">窗口最小化</h3>
         <pre>layx.min(id);</pre>
         <h3 name="窗口最大化">窗口最大化</h3>
@@ -780,6 +807,8 @@ winform.event // 窗口事件
         <pre>layx.reloadFrame(id);</pre>
         <h3 name="重载窗口组页面窗口">重载窗口组页面窗口</h3>
         <pre>layx.reloadGroupFrame(id,frameId); // frameId：窗口组窗口id</pre>
+        <h3 name="设置按钮状态">设置按钮状态</h3>
+        <pre>layx.setButtonStatus(id, buttonId, isEnable) // buttonId：按钮Id</pre>
         <h2 name="窗口冒泡">窗口冒泡</h2>
         <h3 name="解决打开新窗口层索引冲突">解决打开新窗口层索引冲突</h3>
         由于默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡：
@@ -812,7 +841,7 @@ winform.event // 窗口事件
 });</pre>
         <p>如果 Layx 对您有帮助，可以请 作者 喝杯咖啡</p>
         <img src="./code.jpg" style="width:100%;display:block;" />
-        <script src="doc.min.js"></script>
+        <script src="doc.js"></script>
     </div>
 </body>
 

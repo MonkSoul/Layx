@@ -2,9 +2,9 @@
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.3
+ * version : v2.1.4
  * create time : 2018.05.11
- * update time : 2018.05.23
+ * update time : 2018.05.24
  */
 
 *[class^="layx-"] {
@@ -382,6 +382,16 @@ body.layx-body {
 .layx-buttons .layx-button-item:hover {
     background-color: #e5f1fb;
     border: 1px solid #0078d7;
+}
+
+.layx-buttons .layx-button-item[disabled] {
+    color: #999;
+    cursor: not-allowed;
+}
+
+.layx-buttons .layx-button-item[disabled]:hover {
+    background-color: #e1e1e1;
+    border: 1px solid #adadad;
 }
 
 .layx-iframe {

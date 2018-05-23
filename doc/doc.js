@@ -36,8 +36,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.1.3</li>
-                    <li><label>发布日期</label>：2018.05.23</li>
+                    <li><label>当前版本</label>：v2.1.4</li>
+                    <li><label>发布日期</label>：2018.05.24</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
@@ -71,6 +71,15 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
+# 2018.05.24 v2.1.4 发布
+
+- [新增] buttons配置参数id、classes、style属性、提供按钮更多定制功能
+- [新增] buttons配置参数callback中提供按钮自身DOM对象
+- [新增] ondestroy.before回调参数inside参数，用来判断是点击内置按钮关闭还是用户调用关闭
+- [新增] ondestroy.before回调参数params参数，记录用户关闭传递的参数
+- [新增] 操作按钮启用、禁用操作 setButtonStatus(id, buttonId, isEnable);
+- [更新] layx.destroy方法，新增params参数，可关闭之前传递参数，常用于event.ondestroy.before中判断
+
 # 2018.05.23 v2.1.3 发布
 
 - [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于sessionStorage存储）
@@ -182,49 +191,69 @@ window.onload = function () {
                     rightOut: false,
                     topOut: false,
                     bottomOut: false
-                }
-            });
-
-        layx.html('layx-eval', 'Layx 在线调试', layx.multiLine(function () { /*
+                },
+                statusBar: true,
+                buttons: [
+                    {
+                        id: 'open-run',
+                        label: '在线调试',
+                        classes: 'custom-button',
+                        callback: function (id, button) {
+                            layx.html('eval', 'Layx 在线调试', layx.multiLine(function () { /*
  
  <style type="text/css">
-     #evel-panel{padding:10px;}
-     #eval-textarea{height:200px;background:#f9f9f9;margin-bottom:10px;}
+     #evel-panel,#evel-panel *{box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;}
+     #evel-panel{padding:10px;height: 100%;}
+     #eval-textarea{height:100%;background:#f9f9f9;margin:0; font-family: Arial;}
  </style>
 
 <div id="evel-panel">
-    <textarea id="eval-textarea" class="layx-textarea" placeholder="请输入代码调试">alert(layx.v);</textarea>
-    <button id="evel-run">运行调试</button>
+    <textarea id="eval-textarea" class="layx-textarea" placeholder="请输入代码调试">layx.confirm('Layx 调查问卷','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('您的支持是Layx发展的动力！');
+    layx.destroy(id);
+});</textarea>
 </div>
 */}), {
-                width: 300, height: 300,
-                moveLimit: {
-                    leftOut: false,
-                    rightOut: false,
-                    topOut: false,
-                    bottomOut: false,
-                },
-                maxMenu: false,
-                maxable: false,
-                closable: false,
-                closeMenu: false,
-                event: {
-                    onload: {
-                        after: function (layxWindow, winform) {
-                            layxWindow.querySelector('#evel-run').onclick = function (e) {
-                                try {
-                                    e = e || window.event;
-                                    var codeStr = layxWindow.querySelector("#eval-textarea");
-                                    eval(codeStr.value);
-                                    e.stopPropagation();
-                                } catch (e) {
-                                    alert("请输入正确的代码再执行。");
-                                }
-                            }
+                                    width: 400, height: 400,
+                                    moveLimit: {
+                                        leftOut: false,
+                                        rightOut: false,
+                                        topOut: false,
+                                        bottomOut: false,
+                                    },
+                                    stickMenu: true,
+                                    statusBar: true,
+                                    buttons: [
+                                        {
+                                            id: 'run',
+                                            label: '运行调试',
+                                            classes: 'custom-button',
+                                            callback: function (id, button) {
+                                                try {
+                                                    var codeStr = document.querySelector("#eval-textarea");
+                                                    if (!codeStr.value) {
+                                                        codeStr.focus();
+                                                    }
+                                                    else {
+                                                        eval(codeStr.value);
+                                                    }
+                                                } catch (e) {
+                                                    alert("请输入正确的代码再执行。");
+                                                }
+                                            }
+                                        }
+                                    ]
+                                });
                         }
                     }
-                }
+                ]
             });
+
+        
     }
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.1.3</title>
+    <title>Layx 演示示例 v2.1.4</title>
     <link href="../layx.min.css" rel="stylesheet" />
-    <link href="doc.min.css" rel="stylesheet" />
+    <link href="doc.css" rel="stylesheet" />
 </head>
 <body>
     <div id="demo">
@@ -132,6 +132,49 @@
 });</pre>
                 <button class="run">运行</button>
             </div>
+            <div class="demo">
+                <h4 class="tip" name="询问框按钮更多控制">询问框按钮更多控制</h4>
+                <pre>layx.confirm('默认提示','Layx 会做为你下一个项目弹窗的首选吗？',null,{
+    buttons:[
+        {
+            label:'确定',
+            callback:function(id, button){
+                alert("你点击了确定操作");
+                layx.destroy(id);
+            }
+        },
+        {
+            label:'取消',
+            callback:function(id, button){
+                alert("你点击了取消操作");
+                layx.destroy(id);
+            }
+        }
+    ]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="用户点击了取消或关闭">用户点击了取消或关闭</h4>
+                <pre>layx.confirm('监听操作','你关闭了窗口我都知道呢！',function(id,button){
+    alert('你点击了确定');
+    layx.destroy(id,{noTip:true});  // destroy可以设置参数，设置后可以在ondestroy.before中判断
+},{
+    event:{
+        ondestroy:{
+            before:function(layxWindow,winform,params,inside){
+                if(params.noTip===true){
+                        // 不需要提示
+                }
+                else{
+                        alert("我被关闭了");
+                }
+            }
+        }
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
             <h3 name="输入窗口">输入窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个输入窗口">打开一个输入窗口</h4>
@@ -161,7 +204,7 @@ setTimeout(function(){
     buttons:[
         {
             label:'保存',
-            callback:function(id){
+            callback:function(id, button){
                 // 获取 iframe 页面 window对象
                 var contentWindow=layx.getFrameContext(id);
                 alert(contentWindow.document.body.innerHTML);
@@ -171,7 +214,7 @@ setTimeout(function(){
         },
         {
             label:'取消',
-            callback:function(id){
+            callback:function(id, button){
                 layx.destroy(id);
             }
         }
@@ -389,6 +432,43 @@ setTimeout(function(){
                 <h4 class="tip" name="自动获取iframe标题">自动获取iframe标题</h4>
                 <pre>layx.iframe('autotitle',null,'./iframe.html',{
    useFrameTitle:true
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="操作按钮外观">操作按钮外观</h3>
+            <div class="demo">
+                <h4 class="tip" name="自定义按钮style样式">自定义按钮style样式</h4>
+                <pre>layx.html('custom-button-style','自定义按钮style样式','设置按钮字体大小和颜色',{
+    width:300,
+    height:300,
+    statusBar:true,
+    buttons:[
+        {
+            label:'确定',
+            callback:function(id,button){
+                layx.destroy(id);
+            },
+            style:'color:#f00;font-size:16px;'
+        }
+    ]
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="添加class样式">添加class样式</h4>
+                <pre>layx.html('custom-button-classes','添加class样式','为按钮添加custom-button 类',{
+    width:300,
+    height:300,
+    statusBar:true,
+    buttons:[
+        {
+            label:'确定',
+            callback:function(id,button){
+                layx.destroy(id);
+            },
+            classes:'custom-button'
+        }
+    ]
 });</pre>
                 <button class="run">运行</button>
             </div>
@@ -686,7 +766,7 @@ setTimeout(function(){
                 <pre>layx.iframe('event-ondestroy','关闭前后控制','./iframe.html',{
     event:{
         ondestroy:{
-            before:function(layxWindow,winform){
+            before:function(layxWindow,winform,inside){
                 alert("关闭之前");
                 console.log(new Date()+"关闭之前~")
                 console.log(winform);
@@ -793,7 +873,7 @@ setTimeout(function(){
 },{
     event:{
         ondestroy: {
-             before: function (layxWindow, winform) {
+             before: function (layxWindow, winform,inside) {
                 var textarea=layx.getPromptTextArea(winform.id);
                 if(textarea.value==="Layx"){
                     alert("你正确输入了 Layx");
@@ -830,19 +910,19 @@ setTimeout(function(){
     buttons:[
         {
             label:'保存文本',
-            callback:function(id){
+            callback:function(id, button){
                 alert("你点击了保存文本");
             }
         },
         {
             label:'确定',
-            callback:function(id){
+            callback:function(id, button){
                 alert("你点击了确定");
             }
         },
         {
             label:'关闭',
-            callback:function(id){
+            callback:function(id, button){
                 alert("你点击了关闭");
                 layx.destroy(id);
             }
@@ -1094,7 +1174,7 @@ win.iframeFunc();</pre>
             <img src="./code.jpg" style="width:100%;display:block;" />
         </div>
     </div>
-    <script type="text/javascript" src="../layx.js"></script>
-    <script type="text/javascript" src="doc.min.js"></script>
+    <script type="text/javascript" src="../layx.min.js"></script>
+    <script type="text/javascript" src="doc.js"></script>
 </body>
 </html>
