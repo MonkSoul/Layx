@@ -184,6 +184,47 @@ window.onload = function () {
                     bottomOut: false
                 }
             });
+
+        layx.html('layx-eval', 'Layx 在线调试', layx.multiLine(function () { /*
+ 
+ <style type="text/css">
+     #evel-panel{padding:10px;}
+     #eval-textarea{height:200px;background:#f9f9f9;margin-bottom:10px;}
+ </style>
+
+<div id="evel-panel">
+    <textarea id="eval-textarea" class="layx-textarea" placeholder="请输入代码调试">alert(layx.v);</textarea>
+    <button id="evel-run">运行调试</button>
+</div>
+*/}), {
+                width: 300, height: 300,
+                moveLimit: {
+                    leftOut: false,
+                    rightOut: false,
+                    topOut: false,
+                    bottomOut: false,
+                },
+                maxMenu: false,
+                maxable: false,
+                closable: false,
+                closeMenu: false,
+                event: {
+                    onload: {
+                        after: function (layxWindow, winform) {
+                            layxWindow.querySelector('#evel-run').onclick = function (e) {
+                                try {
+                                    e = e || window.event;
+                                    var codeStr = layxWindow.querySelector("#eval-textarea");
+                                    eval(codeStr.value);
+                                    e.stopPropagation();
+                                } catch (e) {
+                                    alert("请输入正确的代码再执行。");
+                                }
+                            }
+                        }
+                    }
+                }
+            });
     }
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {
