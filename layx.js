@@ -2,16 +2,16 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.2
+ * version : v2.1.3
  * create time : 2018.05.11
- * update time : 2018.05.22
+ * update time : 2018.05.23
  */
 
 "use strict";
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.2',
+        version: '2.1.3',
         defaults: {
             id: '',
             icon: true,
@@ -107,7 +107,8 @@
                     before: function (layxWindow, winform) { },
                     progress: function (layxWindow, winform) { },
                     after: function (layxWindow, winform) { }
-                }
+                },
+                onfocus: function (layxWindow, winform) { }
             }
         },
         defaultButtons: {
@@ -724,8 +725,15 @@
                             }
                             if (config.focusable === true) {
                                 IframeOnClick.track(iframe, function () {
+                                    if (Utils.isFunction(config.event.onfocus)) {
+                                        var revel = Utils.isFunction(config.event.onfocus);
+                                        if (revel === false) {
+                                            return;
+                                        }
+                                        config.event.onfocus(layxWindow, winform);
+                                    }
                                     that.updateZIndex(config.id);
-                                }); 
+                                });
                             }
                         } catch (e) {
                             console.warn(e);
@@ -767,8 +775,15 @@
                         }
                         if (config.focusable === true) {
                             IframeOnClick.track(iframe, function () {
+                                if (Utils.isFunction(config.event.onfocus)) {
+                                    var revel = Utils.isFunction(config.event.onfocus);
+                                    if (revel === false) {
+                                        return;
+                                    }
+                                    config.event.onfocus(layxWindow, winform);
+                                }
                                 that.updateZIndex(config.id);
-                            }); 
+                            });
                         }
                     } catch (e) {
                         console.warn(e);
@@ -1598,14 +1613,16 @@
             this.iframes.push(new this.Iframe(element, cb));
             if (!this.interval) {
                 var _this = this;
-                this.interval = setInterval(function () { _this.checkClick(); }, this.resolution);
+                this.interval = setInterval(function () {
+                    _this.checkClick();
+                }, this.resolution);
             }
         },
         checkClick: function () {
             if (document.activeElement) {
                 var activeElement = document.activeElement;
                 for (var i in this.iframes) {
-                    if (activeElement === this.iframes[i].element) { 
+                    if (activeElement === this.iframes[i].element) {
                         if (this.iframes[i].hasTracked == false) {
                             this.iframes[i].cb.apply(window, []);
                             this.iframes[i].hasTracked = true;

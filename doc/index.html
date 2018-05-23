@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.1.2</title>
+    <title>Layx 演示示例 v2.1.3</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.min.css" rel="stylesheet" />
 </head>
@@ -60,8 +60,8 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.1.1&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.22&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.1.3&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.23&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                 &lt;/ul&gt;
                 &lt;h2&gt;特性&lt;/h2&gt;
@@ -120,14 +120,14 @@
             <h3 name="提示窗口">提示窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个提示窗口">打开一个提示窗口</h4>
-                <pre>layx.alert('版本更新','Layx v2.1.0 版本更新啦！');</pre>
+                <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！');</pre>
                 <button class="run">运行</button>
             </div>
             <h3 name="询问窗口">询问窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个询问窗口">打开一个询问窗口</h4>
                 <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
-    alert('感谢您的支持！');
+    alert('您的支持是Layx发展的动力！');
     layx.destroy(id);
 });</pre>
                 <button class="run">运行</button>
@@ -704,8 +704,9 @@ setTimeout(function(){
                 <p style="color:#f00;">请打开控制台查看</p>
                 <button class="run">运行</button>
             </div>
+            <h3 name="拖动事件">拖动事件</h3>
             <div class="demo">
-                <h4 class="tip" name="拖动事件">拖动事件</h4>
+                <h4 class="tip" name="拖动窗口试试">拖动窗口试试</h4>
                 <pre>layx.iframe('event-onmove','拖动前中后控制','./iframe.html',{
     event:{
         onmove:{
@@ -730,8 +731,9 @@ setTimeout(function(){
                 <p style="color:#f00;">请打开控制台查看</p>
                 <button class="run">运行</button>
             </div>
+            <h3 name="拖曳事件">拖曳事件</h3>
             <div class="demo">
-                <h4 class="tip" name="拖曳大小事件">拖曳大小事件</h4>
+                <h4 class="tip" name="改变窗口大小试试">改变窗口大小试试</h4>
                 <pre>layx.iframe('event-onresize','拖曳大小前中后控制','./iframe.html',{
     event:{
         onresize:{
@@ -751,6 +753,19 @@ setTimeout(function(){
                 console.log("=============分割线===============");
             }
         }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="焦点事件">焦点事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="点击窗口看看">点击窗口看看</h4>
+                <pre>layx.iframe('event-onfocus','点击窗口看看','./iframe.html',{
+    event:{
+        onfocus:function(layxWindow,winform){
+    alert("我获取焦点啦，我的窗口Id是："+winform.id);
+}
     }
 });</pre>
                 <p style="color:#f00;">请打开控制台查看</p>
