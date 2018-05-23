@@ -199,6 +199,7 @@ window.onload = function () {
                         label: '在线调试',
                         classes: 'custom-button',
                         callback: function (id, button) {
+                            window.event.stopPropagation();
                             layx.html('eval', 'Layx 在线调试', layx.multiLine(function () { /*
  
  <style type="text/css">
