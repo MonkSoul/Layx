@@ -36,6 +36,7 @@
             useFrameTitle: false,
             opacity: 1,
             floatTarget: false,
+            aliveClose: false,
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
             isOverToMax: true,
@@ -146,8 +147,11 @@
                     that.restore(_winform.id);
                 }
                 that.flicker(config.id);
+                if (_winform.aliveClose === true) {
+                    _winform.layxWindow.classList.remove("layx-hide-statu");
+                }
                 if (Utils.isFunction(config.event.onexist)) {
-                    config.event.onexist(layxWindow, winform);
+                    config.event.onexist(_winform.layxWindow, _winform);
                 }
                 return _winform;
             }
@@ -265,8 +269,8 @@
             document.body.appendChild(layxWindow);
             winform.id = config.id;
             winform.title = config.title;
-            winform.windowId = layxWindow.getAttribute("id");
-            winform.window = layxWindow;
+            winform.layxWindowId = layxWindow.getAttribute("id");
+            winform.layxWindow = layxWindow;
             winform.createDate = new Date();
             winform.status = "normal";
             winform.type = config.type;
@@ -288,6 +292,7 @@
             };
             winform.isFloatTarget = Utils.isDom(config.floatTarget);
             winform.floatTarget = config.floatTarget;
+            winform.aliveClose = config.aliveClose;
             winform.loaddingText = config.loaddingText;
             winform.focusable = config.focusable;
             winform.isStick = config.alwaysOnTop === true;
@@ -1345,19 +1350,28 @@
                 }
                 if (winform.closable !== true)
                     return;
-                delete that.windows[id];
-                layxWindow.parentNode.removeChild(layxWindow);
-                if (layxShade) {
-                    layxShade.parentNode.removeChild(layxShade);
+                if (winform.aliveClose !== true) {
+                    delete that.windows[id];
+                    layxWindow.parentNode.removeChild(layxWindow);
+                    if (layxShade) {
+                        layxShade.parentNode.removeChild(layxShade);
+                    }
+                    that.updateMinLayout();
+                    if (Utils.isFunction(winform.event.ondestroy.after)) {
+                        winform.event.ondestroy.after();
+                    }
+                    for (var key in winform) {
+                        delete winform[key];
+                    }
+                    winform = undefined;
                 }
-                that.updateMinLayout();
-                if (Utils.isFunction(winform.event.ondestroy.after)) {
-                    winform.event.ondestroy.after();
+                else {
+                    layxWindow.classList.add("layx-hide-statu");
+                    that.updateMinLayout();
+                    if (Utils.isFunction(winform.event.ondestroy.after)) {
+                        winform.event.ondestroy.after();
+                    }
                 }
-                for (var key in winform) {
-                    delete winform[key];
-                }
-                winform = undefined;
             }
         },
         destroyAll: function () {

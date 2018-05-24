@@ -210,6 +210,15 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
+            <p><label>aliveClose：是否真的销毁</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置true时，关闭后还一直存活，也就是窗口只是隐藏起来
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>frames：窗口组子窗口数组</label></p>
             <div class="doc-des">
                 <span>类型</span>：Array<br />
@@ -732,8 +741,8 @@ url：页面类型</pre>
         <div>winform记录了窗口所有主要信息，Object 类型，包含属性有：</div>
         <pre>winform.id // Id
 winform.title // 标题
-winform.windowId // layxWindow对象id属性
-winform.window // layxWindow 对象
+winform.layxWindowId // layxWindow对象id属性
+winform.layxWindow // layxWindow 对象
 winform.createDate // 创建时间
 winform.status // 状态：min、max、normal
 winform.type // 窗口类型

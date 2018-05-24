@@ -132,6 +132,10 @@ body.ilayx-body {
     position: absolute !important;
 }
 
+.layx-window.layx-hide-statu {
+    display: none !important;
+}
+
 .layx-control-bar {
     min-height: 30px;
     overflow: hidden;

@@ -44,7 +44,7 @@ window.onload = function () {
                 <ul>
                     <li>纯原生Javascript实现，不依赖任何第三方框架</li>
                     <li>支持IE10+（含IE10）、Chrome、Firefox、Opera、Edge等主流浏览器</li>
-                    <li>支持多种窗口类型：文本窗口，页面窗口，窗口组，提示窗口，消息窗口，询问窗口，输入窗口，加载窗口</li>
+                    <li>支持多种窗口类型：文本窗口，页面窗口，窗口组，提示窗口，消息窗口，询问窗口，输入窗口，加载窗口、浮动窗口、置顶窗口、倒计时窗口</li>
                     <li>支持窗口最大化、最小化、恢复、置顶、关闭控制及事件监听</li>
                     <li>支持窗口阻隔、窗口闪烁功能</li>
                     <li>支持窗口点击标题获取焦点、点击内容/页面获取焦点</li>
@@ -74,11 +74,13 @@ window.onload = function () {
 # 2018.05.25 v2.1.8 发布
 
 - [新增] 浮动窗口
-- [新增] 浮动窗口options.floatTarget参数
+- [新增] 浮动窗口options.floatTarget参数，floatTarget 用来设置吸附到那个元素上
+- [新增] options.aliveClose 参数，表示是否关闭后还一直存内存中，也就是是否真的销毁窗口
 - [新增] 窗口调试信息按钮，开发阶段非常方便调试工作
 - [新增] 窗口最小化状态下不显示置顶按钮、调试按钮
 - [新增] 更新浮动窗口位置方法 layx.updateFloatTargetPosition(id);
 - [新增] 设置窗口位置 layx.setPosition(id,position,isFloatTarget); isFloatTarget 参数，用来判断是否是浮动窗口
+- [更新] winform.windowId为winform.layxWindowId，winform.window为layxWindow
 - [修正] 拖动、最大化滚动条 bug
 
 # 2018.05.24 v2.1.6 发布
