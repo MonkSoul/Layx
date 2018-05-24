@@ -285,8 +285,7 @@ window.onload = function () {
         a.onclick = function (e) {
             e = e || window.event;
             var scrollDiv = code.querySelector("*[name='" + this.innerHTML + "']");
-            alert(scrollDiv.getBoundingClientRect().top);
-            code.scrollTop = code.querySelector("*[name='" + this.innerHTML + "']").offsetTop;
+            code.scrollTop = scrollDiv.offsetTop;
             document.querySelector('#mulu').click();
             e.stopPropagation();
         };
