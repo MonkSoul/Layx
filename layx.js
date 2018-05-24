@@ -1,25 +1,15 @@
-/*
- * file : layx.js
- * gitee : https://gitee.com/monksoul/LayX
- * author : 百小僧/MonkSoul
- * version : v2.1.4
- * create time : 2018.05.11
- * update time : 2018.05.24
- */
-
-"use strict";
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.4',
+        version: '2.1.5',
         defaults: {
             id: '',
             icon: true,
             title: '',
             width: 800,
             height: 600,
-            minWidth: 100,
-            minHeight: 100,
+            minWidth: 200,
+            minHeight: 200,
             position: 'ct',
             storeStatus: true,
             control: true,
@@ -1423,17 +1413,45 @@
                 }
             }
         },
+        getStrSizeRange: function (str, minWidth, minHeight, maxWidth, maxHeight) {
+            var width = 0,
+                height = 0,
+                span = document.createElement("span");
+            span.innerHTML = str;
+            span.style.visibility = 'hidden';
+            span.style.display = 'inline-block';
+            span.style.minWidth = minWidth + "px";
+            span.style.minHeight = minHeight + "px";
+            span.style.maxWidth = maxWidth + "px";
+            span.style.maxHeight = maxHeight + "px";
+            span.style.paddingLeft = 10 + 'px';
+            span.style.paddingRight = 10 + 'px';
+            span.style.paddingTop = 10 + 'px';
+            span.style.paddingBottom = 10 + 'px';
+            span.style.margin = "0";
+            span.style.border = "none";
+            span.style.lineHeight = 1.5;
+            document.body.appendChild(span);
+            width = span.offsetWidth;
+            height = span.offsetHeight + 1;
+            document.body.removeChild(span);
+            return {
+                width: width,
+                height: height
+            };
+        },
         msg: function (msg, options) {
             var that = this;
+            var msgSizeRange = that.getStrSizeRange(msg, 120, 20, 320, 90);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-msg-' + Utils.rndNum(8),
                 type: 'html',
                 control: false,
-                content: "<div class='layx-msg layx-flexbox layx-flex-center' style='height:83px;width:100%;'>" + msg + "</div>",
+                content: "<div class='layx-msg layx-flexbox layx-flex-center'>" + msg + "</div>",
                 autodestroy: 5000,
-                width: 320,
-                height: 85,
-                minHeight: 85,
+                width: msgSizeRange.width,
+                height: msgSizeRange.height,
+                minHeight: msgSizeRange.height,
                 stickMenu: false,
                 minMenu: false,
                 maxMenu: false,
@@ -1444,21 +1462,23 @@
                 allowControlDbclick: false,
                 position: [10, 'tc'],
                 autodestroyText: false,
-                loaddingText: false
+                loaddingText: false,
+                storeStatus: false
             }, options));
             return winform;
         },
         alert: function (title, msg, yes, options) {
             var that = this;
+            var msgSizeRange = that.getStrSizeRange(msg, 157, 157, 352, 157);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-alert-' + Utils.rndNum(8),
                 title: title || "提示消息",
                 icon: false,
                 type: 'html',
                 content: "<div class='layx-alert'>" + msg + "</div>",
-                width: 352,
-                height: 157,
-                minHeight: 157,
+                width: msgSizeRange.width,
+                height: msgSizeRange.height,
+                minHeight: msgSizeRange.height,
                 stickMenu: false,
                 minMenu: false,
                 minable: false,
@@ -1480,21 +1500,23 @@
                     }
                 }],
                 position: 'ct',
-                loaddingText: false
+                loaddingText: false,
+                storeStatus: false
             }, options));
             return winform;
         },
         confirm: function (title, msg, yes, options) {
             var that = this;
+            var msgSizeRange = that.getStrSizeRange(msg, 180, 157, 352, 180);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-confirm-' + Utils.rndNum(8),
                 title: title || "询问消息",
                 icon: false,
                 type: 'html',
                 content: "<div class='layx-confirm'>" + msg + "</div>",
-                width: 352,
-                height: 157,
-                minHeight: 157,
+                width: msgSizeRange.width,
+                height: msgSizeRange.height,
+                minHeight: msgSizeRange.height,
                 stickMenu: false,
                 minMenu: false,
                 minable: false,
@@ -1519,7 +1541,8 @@
                 }],
                 statusBar: true,
                 position: 'ct',
-                loaddingText: false
+                loaddingText: false,
+                storeStatus: false
             }, options));
             return winform;
         },
@@ -1541,15 +1564,16 @@
         },
         prompt: function (title, msg, yes, options) {
             var that = this;
+            var msgSizeRange = that.getStrSizeRange(msg, 200, 165, 352, 200);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-prompt-' + Utils.rndNum(8),
                 title: title || "请输入信息",
                 icon: false,
                 type: 'html',
                 content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'></textarea></div>",
-                width: 352,
-                height: 200,
-                minHeight: 200,
+                width: msgSizeRange.width,
+                height: msgSizeRange.height,
+                minHeight: msgSizeRange.height,
                 stickMenu: false,
                 minMenu: false,
                 minable: false,
@@ -1579,18 +1603,18 @@
                     }
                 }],
                 position: 'ct',
-                loaddingText: false
+                loaddingText: false,
+                storeStatus: false
             }, options));
             return winform;
         },
         load: function (id, msg, options) {
             var that = this;
+            var msgSizeRange = that.getStrSizeRange(msg, 200, 20, 320, 90);
             var loadElement = document.createElement("div");
             loadElement.classList.add("layx-load");
             loadElement.classList.add("layx-flexbox");
             loadElement.classList.add("layx-flex-center");
-            loadElement.style.height = 83 + "px";
-            loadElement.style.width = "100%";
             loadElement.innerHTML = msg;
             var dotCount = 0;
             var loadTimer = setInterval(function () {
@@ -1611,9 +1635,9 @@
                 shadable: true,
                 content: loadElement,
                 cloneElementContent: false,
-                width: 320,
-                height: 85,
-                minHeight: 85,
+                width: msgSizeRange.width,
+                height: msgSizeRange.height,
+                minHeight: msgSizeRange.height,
                 stickMenu: false,
                 minMenu: false,
                 maxMenu: false,
@@ -1623,7 +1647,8 @@
                 movable: false,
                 allowControlDbclick: false,
                 position: 'ct',
-                loaddingText: false
+                loaddingText: false,
+                storeStatus: false
             }, options));
             return winform;
         }
