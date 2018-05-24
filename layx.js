@@ -395,7 +395,7 @@
                                 debugMenu: false,
                                 minMenu: false,
                                 minable: false,
-                                position: [_top + 10, _left + 10],
+                                position: [layxWindow.offsetTop + 10, layxWindow.offsetLeft + 10],
                                 storeStatus: false
                             });
                             e.stopPropagation();
