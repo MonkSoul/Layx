@@ -1396,6 +1396,7 @@
                 buttonItem.callback = buttons[i].callback;
                 buttonItem.onclick = function (e) {
                     e = e || window.event;
+                    e.stopPropagation();
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
@@ -1505,6 +1506,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
+                        event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             yes(id, button, event);
                         } else {
@@ -1542,6 +1544,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
+                        event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             yes(id, button);
                         }
@@ -1549,6 +1552,7 @@
                 }, {
                     label: '取消',
                     callback: function (id, button, event) {
+                        event.stopPropagation();
                         Layx.destroy(id);
                     }
                 }],
@@ -1601,6 +1605,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, value, textarea, button, event) {
+                        event.stopPropagation();
                         if (textarea && value.length === 0) {
                             textarea.focus();
                         } else {
@@ -1612,6 +1617,7 @@
                 }, {
                     label: '取消',
                     callback: function (id, value, textarea, button, event) {
+                        event.stopPropagation();
                         Layx.destroy(id);
                     }
                 }],
