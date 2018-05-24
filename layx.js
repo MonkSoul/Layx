@@ -98,7 +98,8 @@
                     progress: function (layxWindow, winform) { },
                     after: function (layxWindow, winform) { }
                 },
-                onfocus: function (layxWindow, winform) { }
+                onfocus: function (layxWindow, winform) { },
+                onexist: function (layxWindow, winform) { }
             }
         },
         defaultButtons: {
@@ -135,6 +136,9 @@
                     that.restore(_winform.id);
                 }
                 that.flicker(config.id);
+                if (Utils.isFunction(config.event.onexist)) {
+                    config.event.onexist(layxWindow, winform);
+                }
                 return _winform;
             }
             if (Utils.isArray(config.frames)) {

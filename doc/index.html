@@ -848,7 +848,18 @@ setTimeout(function(){
 }
     }
 });</pre>
-                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="存在事件">存在事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="再点击创建相同的窗口看看">再点击创建相同的窗口看看</h4>
+                <pre>layx.iframe('event-onexist','再点击创建相同的窗口看看','./iframe.html',{
+    event:{
+        onexist:function(layxWindow,winform){
+    alert("我已经打开啦");
+}
+    }
+});</pre>
                 <button class="run">运行</button>
             </div>
             <h2 name="更多示例">更多示例</h2>

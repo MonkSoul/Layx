@@ -73,6 +73,7 @@ window.onload = function () {
                 <pre>
 # 2018.05.24 v2.1.5 发布
 
+- [新增] 窗口存在事件event.onexist,常用于窗口已经打开刷新URL操作
 - [新增] 提示框、消息框、询问框、输入框、加载框 宽度高度自适应功能
 - [新增] buttons配置参数id、classes、style属性、提供按钮更多定制功能
 - [新增] buttons配置参数callback中提供按钮自身DOM对象

@@ -507,7 +507,7 @@ group：窗口组类型
                 <span>类型</span>：Object<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：<br />
-                <pre>{
+                                 <pre>{
     // 加载事件
     onload: {
         // 加载之前，return false 不执行
@@ -579,6 +579,9 @@ group：窗口组类型
     },
     // 获取焦点事件、return false 不置顶
     onfocus: function (layxWindow, winform) {
+     },
+    // 窗口存在事件
+    onexist: function (layxWindow, winform) {
      }
 }</pre>
                 <span>说明</span>：监听窗口事件
