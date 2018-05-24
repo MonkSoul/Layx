@@ -1482,7 +1482,7 @@
         },
         alert: function (title, msg, yes, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 157, 157, 352, 157);
+            var msgSizeRange = that.getStrSizeRange(msg, 137, 137, 352, 157);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-alert-' + Utils.rndNum(8),
                 title: title || "提示消息",
@@ -1520,7 +1520,7 @@
         },
         confirm: function (title, msg, yes, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 180, 157, 352, 180);
+            var msgSizeRange = that.getStrSizeRange(msg, 180, 137, 352, 180);
             var winform = that.create(layxDeepClone({}, {
                 id: 'layx-confirm-' + Utils.rndNum(8),
                 title: title || "询问消息",
@@ -1583,7 +1583,7 @@
                 title: title || "请输入信息",
                 icon: false,
                 type: 'html',
-                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'>" + defaultValue + "</textarea></div>",
+                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'>" + (defaultValue ? defaultValue.toString() : '') + "</textarea></div>",
                 width: msgSizeRange.width,
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
