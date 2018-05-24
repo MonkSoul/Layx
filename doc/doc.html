@@ -627,16 +627,16 @@ group：窗口组类型
         <div class="doc-item">
             <p><label>callback：按钮操作回调函数</label></p>
             <div class="doc-des">
-                <span>类型</span>：Function(id, button)/Function(id,value,textarea, button)<br />
+                <span>类型</span>：Function(id, button, event)/Function(id,value,textarea, button, event)<br />
                 <span>必需</span>：是<br />
                 <span>默认值</span>：function(id, button){ }<br />
                 <span>说明</span>：按钮点击回调函数，<br />
-                <pre>// 普通按钮回调函数
-callback:function(id, button){
+                                         <pre>// 普通按钮回调函数
+callback:function(id, button, event){
 }
 
 // 输入框按钮回调函数
-callback:function(id,value,textarea, button){
+callback:function(id,value,textarea, button, event){
 }
 </pre>
             </div>

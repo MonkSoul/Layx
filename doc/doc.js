@@ -36,7 +36,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.1.5</li>
+                    <li><label>当前版本</label>：v2.1.6</li>
                     <li><label>发布日期</label>：2018.05.24</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -71,19 +71,22 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
-# 2018.05.24 v2.1.5 发布
+# 2018.05.24 v2.1.6 发布
 
+- [新增] 窗口冒泡默认处理方法
 - [新增] 输入框prompt 默认值设置
 - [新增] 窗口存在事件event.onexist,常用于窗口已经打开刷新URL操作
 - [新增] 提示框、消息框、询问框、输入框、加载框 宽度高度自适应功能
 - [新增] buttons配置参数id、classes、style属性、提供按钮更多定制功能
 - [新增] buttons配置参数callback中提供按钮自身DOM对象
+- [新增] buttons配置参数callback中提供按钮event对象，用来处理冒泡事件和默认事件
 - [新增] ondestroy.before回调参数inside参数，用来判断是点击内置按钮关闭还是用户调用关闭
 - [新增] ondestroy.before回调参数params参数，记录用户关闭传递的参数
 - [新增] 操作按钮启用、禁用操作 setButtonStatus(id, buttonId, isEnable);
 - [更新] layx.destroy方法，新增params参数，可关闭之前传递参数，常用于event.ondestroy.before中判断
 - [更新] 提示框、消息框、询问框、输入框、加载框生成代码
 - [更新] 窗口最小宽度、最小高度为200
+- [修复] 手机IOS自带浏览器滚动条bug
 
 # 2018.05.23 v2.1.3 发布
 
@@ -203,8 +206,8 @@ window.onload = function () {
                         id: 'open-run',
                         label: '在线调试',
                         classes: 'custom-button',
-                        callback: function (id, button) {
-                            window.event.stopPropagation();
+                        callback: function (id, button, event) {
+                            event.stopPropagation();
                             layx.html('eval', 'Layx 在线调试', layx.multiLine(function () { /*
  
  <style type="text/css">
@@ -238,7 +241,7 @@ window.onload = function () {
                                             id: 'run',
                                             label: '运行调试',
                                             classes: 'custom-button',
-                                            callback: function (id, button) {
+                                            callback: function (id, button, event) {
                                                 try {
                                                     var codeStr = document.querySelector("#eval-textarea");
                                                     if (!codeStr.value) {
@@ -259,7 +262,7 @@ window.onload = function () {
                 ]
             });
 
-        
+
     }
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {
@@ -281,6 +284,8 @@ window.onload = function () {
         a.innerHTML = hTitles[i].innerHTML;
         a.onclick = function (e) {
             e = e || window.event;
+            var scrollDiv = code.querySelector("*[name='" + this.innerHTML + "']");
+            alert(scrollDiv.getBoundingClientRect().top);
             code.scrollTop = code.querySelector("*[name='" + this.innerHTML + "']").offsetTop;
             document.querySelector('#mulu').click();
             e.stopPropagation();

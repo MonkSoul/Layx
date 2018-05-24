@@ -1,7 +1,15 @@
+/*
+ * file : layx.js
+ * gitee : https://gitee.com/monksoul/LayX
+ * author : 百小僧/MonkSoul
+ * version : v2.1.6
+ * create time : 2018.05.11
+ * update time : 2018.05.24
+ */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.5',
+        version: '2.1.6',
         defaults: {
             id: '',
             icon: true,
@@ -104,7 +112,7 @@
         },
         defaultButtons: {
             label: '确定',
-            callback: function (id, button) { },
+            callback: function (id, button, event) { },
             id: '',
             classes: [],
             style: ''
@@ -129,7 +137,6 @@
                 console.error("窗口id不能为空且唯一");
                 return;
             }
-            ;
             var _winform = that.windows[config.id];
             if (_winform) {
                 if (_winform.status === "min") {
@@ -1388,12 +1395,13 @@
                 buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
                 buttonItem.callback = buttons[i].callback;
                 buttonItem.onclick = function (e) {
+                    e = e || window.event;
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
-                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this);
+                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
                         } else {
-                            this.callback(id, this);
+                            this.callback(id, this, e);
                         }
                     }
                 };
@@ -1495,9 +1503,9 @@
                 statusBar: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id, button) {
+                    callback: function (id, button, event) {
                         if (Utils.isFunction(yes)) {
-                            yes(id, button);
+                            yes(id, button, event);
                         } else {
                             Layx.destroy(id);
                         }
@@ -1532,14 +1540,14 @@
                 shadable: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id, button) {
+                    callback: function (id, button, event) {
                         if (Utils.isFunction(yes)) {
                             yes(id, button);
                         }
                     }
                 }, {
                     label: '取消',
-                    callback: function (id, button) {
+                    callback: function (id, button, event) {
                         Layx.destroy(id);
                     }
                 }],
@@ -1591,18 +1599,18 @@
                 isPrompt: true,
                 buttons: [{
                     label: '确定',
-                    callback: function (id, value, textarea, button) {
+                    callback: function (id, value, textarea, button, event) {
                         if (textarea && value.length === 0) {
                             textarea.focus();
                         } else {
                             if (Utils.isFunction(yes)) {
-                                yes(id, value, textarea, button);
+                                yes(id, value, textarea, button, event);
                             }
                         }
                     }
                 }, {
                     label: '取消',
-                    callback: function (id, value, textarea, button) {
+                    callback: function (id, value, textarea, button, event) {
                         Layx.destroy(id);
                     }
                 }],

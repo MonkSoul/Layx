@@ -2,7 +2,7 @@
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.5
+ * version : v2.1.6
  * create time : 2018.05.11
  * update time : 2018.05.24
  */
@@ -325,6 +325,7 @@ body.layx-body {
     bottom: 0;
     left: 0;
     z-index: 1;
+    -webkit-overflow-scrolling: touch;
 }
 
 .layx-msg, .layx-load {

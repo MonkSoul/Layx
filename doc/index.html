@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.1.5</title>
+    <title>Layx 演示示例 v2.1.6</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -138,14 +138,14 @@
     buttons:[
         {
             label:'确定',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 alert("你点击了确定操作");
                 layx.destroy(id);
             }
         },
         {
             label:'取消',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 alert("你点击了取消操作");
                 layx.destroy(id);
             }
@@ -212,7 +212,7 @@ setTimeout(function(){
     buttons:[
         {
             label:'保存',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 // 获取 iframe 页面 window对象
                 var contentWindow=layx.getFrameContext(id);
                 alert(contentWindow.document.body.innerHTML);
@@ -222,7 +222,7 @@ setTimeout(function(){
         },
         {
             label:'取消',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 layx.destroy(id);
             }
         }
@@ -453,7 +453,7 @@ setTimeout(function(){
     buttons:[
         {
             label:'确定',
-            callback:function(id,button){
+            callback:function(id,button, event){
                 layx.destroy(id);
             },
             style:'color:#f00;font-size:16px;'
@@ -471,7 +471,7 @@ setTimeout(function(){
     buttons:[
         {
             label:'确定',
-            callback:function(id,button){
+            callback:function(id,button, event){
                 layx.destroy(id);
             },
             classes:'custom-button'
@@ -929,13 +929,13 @@ setTimeout(function(){
     buttons:[
         {
             label:'保存文本',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 alert("你点击了保存文本");
             }
         },
         {
             label:'确定',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 alert("你点击了确定");
             }
         },

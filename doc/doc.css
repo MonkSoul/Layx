@@ -37,6 +37,10 @@
     padding: 5px 10px;
     z-index: 2;
     float: right;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
 }
 
 #toc {
@@ -46,7 +50,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 210px;
+    width: 190px;
     z-index: 3;
     background: #f9f9f9;
     border: 1px solid #ccc;
@@ -55,6 +59,10 @@
     padding: 10px 0;
     max-height: 518px;
     white-space: nowrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
 }
 
 #toc .toc-title {
@@ -123,6 +131,8 @@
     float: left;
     width: 100%;
     position: relative;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tip {
@@ -195,7 +205,7 @@ pre {
 }
 
 .custom-button:hover {
-    background: rgba(0, 148, 255,0.8)!important;
-    border: none!important;
-    color: #fff!important;
+    background: rgba(0, 148, 255,0.8) !important;
+    border: none !important;
+    color: #fff !important;
 }
