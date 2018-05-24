@@ -1477,6 +1477,7 @@
                 loaddingText: false,
                 storeStatus: false
             }, options));
+            that.flicker(winform.id);
             return winform;
         },
         alert: function (title, msg, yes, options) {
