@@ -339,6 +339,15 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
+            <p><label>debugMenu：调试按钮</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false不显示调试按钮
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>closeMenu：关闭按钮</label></p>
             <div class="doc-des">
                 <span>类型</span>：Boolean<br />
@@ -631,7 +640,7 @@ group：窗口组类型
                 <span>必需</span>：是<br />
                 <span>默认值</span>：function(id, button){ }<br />
                 <span>说明</span>：按钮点击回调函数，<br />
-                                         <pre>// 普通按钮回调函数
+                <pre>// 普通按钮回调函数
 callback:function(id, button, event){
 }
 
@@ -726,6 +735,8 @@ winform.groupCurrentId // 当前窗口组索引
 winform.area // 位置大小 { width , height , minWidth , minHeight , top , left}
 winform.loaddingText // 加载文本
 winform.focusable // 焦点状态
+winform.url // 窗口url地址
+winform.content // 窗口内容
 winform.isStick // 置顶状态
 winform.zIndex // 层级别
 winform.movable // 拖动状态
