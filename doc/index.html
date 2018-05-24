@@ -184,6 +184,14 @@
 });</pre>
                 <button class="run">运行</button>
             </div>
+            <div class="demo">
+                <h4 class="tip" name="输入窗口带默认值">输入窗口带默认值</h4>
+                <pre>layx.prompt('有默认值的输入框','你喜欢Layx吗？',function(id,value,textarea){
+    alert(value);
+    layx.destroy(id);
+},'非常喜欢');</pre>
+                <button class="run">运行</button>
+            </div>
             <h3 name="加载窗口">加载窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个加载窗口">打开一个加载窗口</h4>

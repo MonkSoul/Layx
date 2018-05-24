@@ -1566,7 +1566,7 @@
             }
             return null;
         },
-        prompt: function (title, msg, yes, options) {
+        prompt: function (title, msg, yes, defaultValue, options) {
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 200, 165, 352, 200);
             var winform = that.create(layxDeepClone({}, {
@@ -1574,7 +1574,7 @@
                 title: title || "请输入信息",
                 icon: false,
                 type: 'html',
-                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'></textarea></div>",
+                content: "<div class='layx-prompt'><label>" + msg + "</label><textarea class='layx-textarea'>" + defaultValue + "</textarea></div>",
                 width: msgSizeRange.width,
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
