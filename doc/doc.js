@@ -71,10 +71,15 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
-# 2018.05.25 v2.1.7 发布
+# 2018.05.25 v2.1.8 发布
 
+- [新增] 浮动窗口
+- [新增] 浮动窗口options.floatTarget参数
 - [新增] 窗口调试信息按钮，开发阶段非常方便调试工作
 - [新增] 窗口最小化状态下不显示置顶按钮、调试按钮
+- [新增] 更新浮动窗口位置方法 layx.updateFloatTargetPosition(id);
+- [新增] 设置窗口位置 layx.setPosition(id,position,isFloatTarget); isFloatTarget 参数，用来判断是否是浮动窗口
+- [修正] 拖动、最大化滚动条 bug
 
 # 2018.05.24 v2.1.6 发布
 

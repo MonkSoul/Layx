@@ -2,7 +2,7 @@
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.7
+ * version : v2.1.8
  * create time : 2018.05.11
  * update time : 2018.05.25
  */
@@ -78,7 +78,7 @@
     background-color: transparent;
 }
 
-body.layx-body {
+body.ilayx-body {
     overflow: hidden !important;
 }
 
@@ -125,6 +125,11 @@ body.layx-body {
 
 .layx-window.layx-min-statu .layx-inlay-menus .layx-stick-menu, .layx-window.layx-min-statu .layx-inlay-menus .layx-debug-menu {
     display: none;
+}
+
+.layx-window.layx-bubble-type {
+    overflow: visible !important;
+    position: absolute !important;
 }
 
 .layx-control-bar {
@@ -516,6 +521,28 @@ body.layx-body {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     background: #f5f5f5;
+}
+
+.layx-bubble {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 11px solid #3baced;
+    position: absolute;
+    top: -11px;
+    left: 5px;
+}
+
+.layx-bubble-inlay {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid #fff;
+    top: 2px;
+    left: -9px;
 }
 
 .layx-pre {

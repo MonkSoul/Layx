@@ -201,6 +201,15 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
+            <p><label>floatTarget：是否浮动窗口</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean/HTMLElement<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：false<br />
+                <span>说明</span>：设置为DOM对象时，窗口将吸附到按钮上
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>frames：窗口组子窗口数组</label></p>
             <div class="doc-des">
                 <span>类型</span>：Array<br />
@@ -735,6 +744,7 @@ winform.groupCurrentId // 当前窗口组索引
 winform.area // 位置大小 { width , height , minWidth , minHeight , top , left}
 winform.loaddingText // 加载文本
 winform.focusable // 焦点状态
+winform.isFloatTarget // 是否浮动窗口
 winform.url // 窗口url地址
 winform.content // 窗口内容
 winform.isStick // 置顶状态
@@ -782,7 +792,9 @@ winform.event // 窗口事件
         <h3 name="置顶切换">置顶切换</h3>
         <pre>layx.stickToggle(id);</pre>
         <h3 name="设置窗口位置">设置窗口位置</h3>
-        <pre>layx.setPosition(id, position);</pre>
+        <pre>layx.setPosition(id, position,isFloatTarget); // ,isFloatTarget 是否是浮动窗口</pre>
+        <h3 name="更新浮动窗口位置">更新浮动窗口位置</h3>
+        <pre>layx.updateFloatTargetPosition(id);</pre>
         <h3 name="获取页面窗口window对象">获取页面窗口window对象</h3>
         <pre>var contentWindow = layx.getFrameContext(id);</pre>
         <h3 name="获取窗口组页面窗口window对象">获取窗口组页面窗口window对象</h3>

@@ -2,15 +2,15 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.7
+ * version : v2.1.8
  * create time : 2018.05.11
- * update time : 2018.05.24
+ * update time : 2018.05.25
  */
 "use strict";
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.7',
+        version: '2.1.8',
         defaults: {
             id: '',
             icon: true,
@@ -35,6 +35,7 @@
             url: '',
             useFrameTitle: false,
             opacity: 1,
+            floatTarget: false,
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
             isOverToMax: true,
@@ -212,7 +213,7 @@
             _left = _position.left;
             _width = Math.max(_width, _minWidth);
             _height = Math.max(_height, _minHeight);
-            if (config.storeStatus === true) {
+            if (config.storeStatus === true && config.floatTarget === false) {
                 var _areaInfo = that.getStoreWindowAreaInfo(config.id);
                 if (_areaInfo) {
                     _width = _areaInfo.width;
@@ -229,6 +230,18 @@
                 }
             } else {
                 that.removeStoreWindowAreaInfo(config.id);
+                if (Utils.isDom(config.floatTarget)) {
+                    layxWindow.classList.add("layx-bubble-type");
+                    var bubble = document.createElement("div");
+                    bubble.classList.add("layx-bubble");
+                    layxWindow.appendChild(bubble);
+                    var bubbleInlay = document.createElement("div");
+                    bubbleInlay.classList.add("layx-bubble-inlay");
+                    bubble.appendChild(bubbleInlay);
+                    var floatTargetPos = Utils.getElementPos(config.floatTarget);
+                    _top = floatTargetPos.y + config.floatTarget.offsetHeight + 11;
+                    _left = floatTargetPos.x;
+                }
             }
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
@@ -273,6 +286,8 @@
                 top: _top,
                 left: _left
             };
+            winform.isFloatTarget = Utils.isDom(config.floatTarget);
+            winform.floatTarget = config.floatTarget;
             winform.loaddingText = config.loaddingText;
             winform.focusable = config.focusable;
             winform.isStick = config.alwaysOnTop === true;
@@ -324,7 +339,7 @@
                         e.stopPropagation();
                     };
                 }
-                if (config.movable === true) {
+                if (config.movable === true && Utils.isDom(config.floatTarget) == false) {
                     new LayxDrag(title);
                 }
                 controlBar.appendChild(title);
@@ -374,99 +389,101 @@
                     inlayMenu.classList.add("layx-inlay-menus");
                     inlayMenu.classList.add("layx-flexbox");
                     rightBar.appendChild(inlayMenu);
-                    if (config.debugMenu === true) {
-                        var debugMenu = document.createElement("div");
-                        debugMenu.classList.add("layx-icon");
-                        debugMenu.classList.add("layx-flexbox");
-                        debugMenu.classList.add("layx-flex-center");
-                        debugMenu.classList.add("layx-debug-menu");
-                        debugMenu.setAttribute("title", "调试信息");
-                        debugMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-debug"></use></svg>';
-                        debugMenu.onclick = function (e) {
-                            e = e || window.event;
-                            var jsonStr = JSON.stringify(winform, null, 4).replace(/</g, "&lt;").replace("/>/g", "&gt;");
-                            that.create({
-                                id: 'layx-' + config.id + '-debug',
-                                title: "窗口调试信息",
-                                width: 300,
-                                height: 300,
-                                content: '<div class="layx-padding" style="padding:10px;height:100%;overflow:hidden;"><div class="layx-code"><pre class="layx-pre">' + jsonStr + '</pre></div></div>',
-                                shadable: true,
-                                debugMenu: false,
-                                minMenu: false,
-                                minable: false,
-                                position: [layxWindow.offsetTop + 10, layxWindow.offsetLeft + 10],
-                                storeStatus: false
-                            });
-                            e.stopPropagation();
-                        };
-                        inlayMenu.appendChild(debugMenu);
-                    }
-                    if (config.stickMenu === true || (config.alwaysOnTop === true && config.stickMenu)) {
-                        var stickMenu = document.createElement("div");
-                        stickMenu.classList.add("layx-icon");
-                        stickMenu.classList.add("layx-flexbox");
-                        stickMenu.classList.add("layx-flex-center");
-                        stickMenu.classList.add("layx-stick-menu");
-                        config.alwaysOnTop === true ? stickMenu.setAttribute("title", "取消置顶") : stickMenu.setAttribute("title", "置顶");
-                        config.alwaysOnTop === true && stickMenu.setAttribute("data-enable", "1");
-                        stickMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-stick"></use></svg>';
-                        if (config.stickable === true) {
-                            stickMenu.onclick = function (e) {
+                    if (!Utils.isDom(config.floatTarget)) {
+                        if (config.debugMenu === true) {
+                            var debugMenu = document.createElement("div");
+                            debugMenu.classList.add("layx-icon");
+                            debugMenu.classList.add("layx-flexbox");
+                            debugMenu.classList.add("layx-flex-center");
+                            debugMenu.classList.add("layx-debug-menu");
+                            debugMenu.setAttribute("title", "调试信息");
+                            debugMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-debug"></use></svg>';
+                            debugMenu.onclick = function (e) {
                                 e = e || window.event;
-                                that.stickToggle(config.id);
+                                var jsonStr = JSON.stringify(winform, null, 4).replace(/</g, "&lt;").replace("/>/g", "&gt;");
+                                that.create({
+                                    id: 'layx-' + config.id + '-debug',
+                                    title: "窗口调试信息",
+                                    width: 300,
+                                    height: 300,
+                                    content: '<div class="layx-padding" style="padding:10px;height:100%;overflow:hidden;"><div class="layx-code"><pre class="layx-pre">' + jsonStr + '</pre></div></div>',
+                                    shadable: true,
+                                    debugMenu: false,
+                                    minMenu: false,
+                                    minable: false,
+                                    position: [layxWindow.offsetTop + 10, layxWindow.offsetLeft + 10],
+                                    storeStatus: false
+                                });
                                 e.stopPropagation();
                             };
+                            inlayMenu.appendChild(debugMenu);
                         }
-                        inlayMenu.appendChild(stickMenu);
-                    }
-                    if (config.minMenu === true) {
-                        var minMenu = document.createElement("div");
-                        minMenu.classList.add("layx-icon");
-                        minMenu.classList.add("layx-flexbox");
-                        minMenu.classList.add("layx-flex-center");
-                        minMenu.classList.add("layx-min-menu");
-                        minMenu.setAttribute("title", "最小化");
-                        minMenu.setAttribute("data-menu", "min");
-                        minMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-min"></use></svg>';
-                        minMenu.onclick = function (e) {
-                            e = e || window.event;
-                            if (!this.classList.contains("layx-restore-menu")) {
-                                if (config.minable === true) {
-                                    that.min(config.id);
-                                }
-                            } else {
-                                if (config.restorable === true) {
-                                    that.restore(config.id);
-                                }
+                        if (config.stickMenu === true || (config.alwaysOnTop === true && config.stickMenu)) {
+                            var stickMenu = document.createElement("div");
+                            stickMenu.classList.add("layx-icon");
+                            stickMenu.classList.add("layx-flexbox");
+                            stickMenu.classList.add("layx-flex-center");
+                            stickMenu.classList.add("layx-stick-menu");
+                            config.alwaysOnTop === true ? stickMenu.setAttribute("title", "取消置顶") : stickMenu.setAttribute("title", "置顶");
+                            config.alwaysOnTop === true && stickMenu.setAttribute("data-enable", "1");
+                            stickMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-stick"></use></svg>';
+                            if (config.stickable === true) {
+                                stickMenu.onclick = function (e) {
+                                    e = e || window.event;
+                                    that.stickToggle(config.id);
+                                    e.stopPropagation();
+                                };
                             }
-                            e.stopPropagation();
-                        };
-                        inlayMenu.appendChild(minMenu);
-                    }
-                    if (config.maxMenu === true) {
-                        var maxMenu = document.createElement("div");
-                        maxMenu.classList.add("layx-icon");
-                        maxMenu.classList.add("layx-flexbox");
-                        maxMenu.classList.add("layx-flex-center");
-                        maxMenu.classList.add("layx-max-menu");
-                        maxMenu.setAttribute("title", "最大化");
-                        maxMenu.setAttribute("data-menu", "max");
-                        maxMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-max"></use></svg>';
-                        maxMenu.onclick = function (e) {
-                            e = e || window.event;
-                            if (!this.classList.contains("layx-restore-menu")) {
-                                if (config.maxable === true) {
-                                    that.max(config.id);
+                            inlayMenu.appendChild(stickMenu);
+                        }
+                        if (config.minMenu === true) {
+                            var minMenu = document.createElement("div");
+                            minMenu.classList.add("layx-icon");
+                            minMenu.classList.add("layx-flexbox");
+                            minMenu.classList.add("layx-flex-center");
+                            minMenu.classList.add("layx-min-menu");
+                            minMenu.setAttribute("title", "最小化");
+                            minMenu.setAttribute("data-menu", "min");
+                            minMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-min"></use></svg>';
+                            minMenu.onclick = function (e) {
+                                e = e || window.event;
+                                if (!this.classList.contains("layx-restore-menu")) {
+                                    if (config.minable === true) {
+                                        that.min(config.id);
+                                    }
+                                } else {
+                                    if (config.restorable === true) {
+                                        that.restore(config.id);
+                                    }
                                 }
-                            } else {
-                                if (config.restorable === true) {
-                                    that.restore(config.id);
+                                e.stopPropagation();
+                            };
+                            inlayMenu.appendChild(minMenu);
+                        }
+                        if (config.maxMenu === true) {
+                            var maxMenu = document.createElement("div");
+                            maxMenu.classList.add("layx-icon");
+                            maxMenu.classList.add("layx-flexbox");
+                            maxMenu.classList.add("layx-flex-center");
+                            maxMenu.classList.add("layx-max-menu");
+                            maxMenu.setAttribute("title", "最大化");
+                            maxMenu.setAttribute("data-menu", "max");
+                            maxMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-max"></use></svg>';
+                            maxMenu.onclick = function (e) {
+                                e = e || window.event;
+                                if (!this.classList.contains("layx-restore-menu")) {
+                                    if (config.maxable === true) {
+                                        that.max(config.id);
+                                    }
+                                } else {
+                                    if (config.restorable === true) {
+                                        that.restore(config.id);
+                                    }
                                 }
-                            }
-                            e.stopPropagation();
-                        };
-                        inlayMenu.appendChild(maxMenu);
+                                e.stopPropagation();
+                            };
+                            inlayMenu.appendChild(maxMenu);
+                        }
                     }
                     if (config.closeMenu === true) {
                         var destroyMenu = document.createElement("div");
@@ -578,11 +595,37 @@
                 var resize = document.createElement("div");
                 resize.classList.add("layx-resizes");
                 layxWindow.appendChild(resize);
-                if (config.resizeLimit.t === false) {
-                    var resizeTop = document.createElement("div");
-                    resizeTop.classList.add("layx-resize-top");
-                    new LayxResize(resizeTop, true, false, true, false);
-                    resize.appendChild(resizeTop);
+                if (!Utils.isDom(config.floatTarget)) {
+                    if (config.resizeLimit.t === false) {
+                        var resizeTop = document.createElement("div");
+                        resizeTop.classList.add("layx-resize-top");
+                        new LayxResize(resizeTop, true, false, true, false);
+                        resize.appendChild(resizeTop);
+                    }
+                    if (config.resizeLimit.l === false) {
+                        var resizeLeft = document.createElement("div");
+                        resizeLeft.classList.add("layx-resize-left");
+                        new LayxResize(resizeLeft, false, true, false, true);
+                        resize.appendChild(resizeLeft);
+                    }
+                    if (config.resizeLimit.lt === false) {
+                        var resizeLeftTop = document.createElement("div");
+                        resizeLeftTop.classList.add("layx-resize-left-top");
+                        new LayxResize(resizeLeftTop, true, true, false, false);
+                        resize.appendChild(resizeLeftTop);
+                    }
+                    if (config.resizeLimit.rt === false) {
+                        var resizeRightTop = document.createElement("div");
+                        resizeRightTop.classList.add("layx-resize-right-top");
+                        new LayxResize(resizeRightTop, true, false, false, false);
+                        resize.appendChild(resizeRightTop);
+                    }
+                    if (config.resizeLimit.lb === false) {
+                        var resizeLeftBottom = document.createElement("div");
+                        resizeLeftBottom.classList.add("layx-resize-left-bottom");
+                        new LayxResize(resizeLeftBottom, false, true, false, false);
+                        resize.appendChild(resizeLeftBottom);
+                    }
                 }
                 if (config.resizeLimit.r === false) {
                     var resizeRight = document.createElement("div");
@@ -595,30 +638,6 @@
                     resizeBottom.classList.add("layx-resize-bottom");
                     new LayxResize(resizeBottom, false, false, true, false);
                     resize.appendChild(resizeBottom);
-                }
-                if (config.resizeLimit.l === false) {
-                    var resizeLeft = document.createElement("div");
-                    resizeLeft.classList.add("layx-resize-left");
-                    new LayxResize(resizeLeft, false, true, false, true);
-                    resize.appendChild(resizeLeft);
-                }
-                if (config.resizeLimit.lt === false) {
-                    var resizeLeftTop = document.createElement("div");
-                    resizeLeftTop.classList.add("layx-resize-left-top");
-                    new LayxResize(resizeLeftTop, true, true, false, false);
-                    resize.appendChild(resizeLeftTop);
-                }
-                if (config.resizeLimit.rt === false) {
-                    var resizeRightTop = document.createElement("div");
-                    resizeRightTop.classList.add("layx-resize-right-top");
-                    new LayxResize(resizeRightTop, true, false, false, false);
-                    resize.appendChild(resizeRightTop);
-                }
-                if (config.resizeLimit.lb === false) {
-                    var resizeLeftBottom = document.createElement("div");
-                    resizeLeftBottom.classList.add("layx-resize-left-bottom");
-                    new LayxResize(resizeLeftBottom, false, true, false, false);
-                    resize.appendChild(resizeLeftBottom);
                 }
                 if (config.resizeLimit.rb === false) {
                     var resizeRightBottom = document.createElement("div");
@@ -669,6 +688,21 @@
                 }
             }
             return winform;
+        },
+        updateFloatTargetPosition: function (id) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform && winform.isFloatTarget === true) {
+                var floatTargetPos = Utils.getElementPos(winform.floatTarget);
+                var top = floatTargetPos.y + winform.floatTarget.offsetHeight + 11;
+                var left = floatTargetPos.x;
+                that.setPosition(id, {
+                    top: top,
+                    left: left
+                }, true);
+            }
         },
         removeStoreWindowAreaInfo: function (id) {
             var that = this,
@@ -1099,8 +1133,8 @@
                 if (winform.status === "normal") {
                     that.max(id);
                 } else if (winform.status === "max") {
-                    if (document.body.classList.contains("layx-body")) {
-                        document.body.classList.remove('layx-body');
+                    if (document.body.classList.contains("ilayx-body")) {
+                        document.body.classList.remove('ilayx-body');
                     }
                     layxWindow.style.top = area.top + "px";
                     layxWindow.style.left = area.left + "px";
@@ -1160,7 +1194,7 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id],
                 innertArea = Utils.innerArea();
-            if (layxWindow && winform) {
+            if (layxWindow && winform && winform.isFloatTarget === false) {
                 if (winform.minable !== true || winform.status === "min")
                     return;
                 that.updateZIndex(id);
@@ -1249,7 +1283,7 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id],
                 innertArea = Utils.innerArea();
-            if (layxWindow && winform) {
+            if (layxWindow && winform && winform.isFloatTarget === false) {
                 if (winform.maxable !== true || winform.status === "max")
                     return;
                 that.updateZIndex(id);
@@ -1259,7 +1293,7 @@
                         return;
                     }
                 }
-                document.body.classList.add('layx-body');
+                document.body.classList.add('ilayx-body');
                 layxWindow.style.top = 0;
                 layxWindow.style.left = 0;
                 layxWindow.style.width = innertArea.width + "px";
@@ -1350,13 +1384,13 @@
                 }, 120 * 8);
             }
         },
-        setPosition: function (id, position) {
+        setPosition: function (id, position, isFloatTarget) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform) {
-                var _position = Utils.compileLayxPosition(winform.area.width, winform.area.height, position);
+                var _position = isFloatTarget === true ? position : Utils.compileLayxPosition(winform.area.width, winform.area.height, position);
                 winform.area.left = _position.left;
                 winform.area.top = _position.top;
                 layxWindow.style.left = _position.left + "px";
@@ -1863,6 +1897,63 @@
                 'x': x,
                 'y': y
             };
+        },
+        getElementPos: function (el) {
+            var ua = navigator.userAgent.toLowerCase();
+            var isOpera = (ua.indexOf('opera') != -1);
+            var isIE = (ua.indexOf('msie') != -1 && !isOpera);
+            if (el.parentNode === null || el.style.display == 'none') {
+                return false;
+            }
+            var parent = null;
+            var pos = [];
+            var box;
+            if (el.getBoundingClientRect) {
+                box = el.getBoundingClientRect();
+                var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+                var scrollLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+                return {
+                    x: box.left + scrollLeft,
+                    y: box.top + scrollTop
+                };
+            } else if (document.getBoxObjectFor) {
+                box = document.getBoxObjectFor(el);
+                var borderLeft = (el.style.borderLeftWidth) ? parseInt(el.style.borderLeftWidth) : 0;
+                var borderTop = (el.style.borderTopWidth) ? parseInt(el.style.borderTopWidth) : 0;
+                pos = [box.x - borderLeft, box.y - borderTop];
+            } else {
+                pos = [el.offsetLeft, el.offsetTop];
+                parent = el.offsetParent;
+                if (parent != el) {
+                    while (parent) {
+                        pos[0] += parent.offsetLeft;
+                        pos[1] += parent.offsetTop;
+                        parent = parent.offsetParent;
+                    }
+                }
+                if (ua.indexOf('opera') != -1 || (ua.indexOf('safari') != -1 && el.style.position == 'absolute')) {
+                    pos[0] -= document.body.offsetLeft;
+                    pos[1] -= document.body.offsetTop;
+                }
+            }
+            if (el.parentNode) {
+                parent = el.parentNode;
+            } else {
+                parent = null;
+            }
+            while (parent && parent.tagName != 'BODY' && parent.tagName != 'HTML') {
+                pos[0] -= parent.scrollLeft;
+                pos[1] -= parent.scrollTop;
+                if (parent.parentNode) {
+                    parent = parent.parentNode;
+                } else {
+                    parent = null;
+                }
+            }
+            return {
+                x: pos[0],
+                y: pos[1]
+            };
         }
     };
     var LayxResize = function (handle, isTop, isLeft, lockX, lockY) {
@@ -1882,7 +1973,7 @@
                     _width = isLeft ? handle.winform.area.width - distX : handle.winform.area.width + distX;
                 if (distX !== 0 || distY !== 0) {
                     LayxResize.isResizing = true;
-                    document.body.classList.add('layx-body');
+                    document.body.classList.add('ilayx-body');
                     if (LayxResize.isFirstResizing === true) {
                         LayxResize.isFirstResizing = false;
                         if (Utils.isFunction(handle.winform.event.onresize.before)) {
@@ -1961,8 +2052,8 @@
                     width: handle.winform.area.width,
                     height: handle.winform.area.height
                 });
-                if (document.body.classList.contains("layx-body")) {
-                    document.body.classList.remove('layx-body');
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
                 }
                 if (Utils.isFunction(handle.winform.event.onresize.after)) {
                     handle.winform.event.onresize.after(handle.layxWindow, handle.winform);
@@ -2023,7 +2114,7 @@
                     distY = moveMouseCoord.y - handle.mouseStartCoord.y;
                 if (distX !== 0 || distY !== 0) {
                     LayxDrag.isMoveing = true;
-                    document.body.classList.add('layx-body');
+                    document.body.classList.add('ilayx-body');
                     if (LayxDrag.isFirstMoveing === true) {
                         LayxDrag.isFirstMoveing = false;
                         if (Utils.isFunction(handle.winform.event.onmove.before)) {
@@ -2092,8 +2183,8 @@
                     width: handle.winform.area.width,
                     height: handle.winform.area.height
                 });
-                if (document.body.classList.contains("layx-body")) {
-                    document.body.classList.remove('layx-body');
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
                 }
                 if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true) {
                     handle.winform.area.top = handle.defaultArea.top;
@@ -2283,6 +2374,9 @@
         },
         setButtonStatus: function (id, buttonId, isEnable) {
             Layx.setButtonStatus(id, buttonId, isEnable);
+        },
+        updateFloatTargetPosition: function (id) {
+            Layx.updateFloatTargetPosition(id);
         }
     };
 })(top, window, self);
