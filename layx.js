@@ -838,7 +838,7 @@
                         } catch (e) {
                             console.warn(e);
                         }
-                        var contentShade = (type === "group" ? this.parentNode.parentNode : this.parentNode).querySelector(".layx-content-shade");
+                        var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
                         if (contentShade) {
                             if (type === "group") {
                                 main.setAttribute("data-complete", "1");
@@ -888,7 +888,7 @@
                     } catch (e) {
                         console.warn(e);
                     }
-                    var contentShade = (type === "group" ? this.parentNode.parentNode : this.parentNode).querySelector(".layx-content-shade");
+                    var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
                     if (contentShade) {
                         if (type === "group") {
                             main.setAttribute("data-complete", "1");
