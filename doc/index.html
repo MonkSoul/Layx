@@ -317,7 +317,6 @@ setTimeout(function(){
             <h3 name="浮动窗口">浮动窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个吸附浮动窗口">打开一个吸附浮动窗口</h4>
-                <button id="floatThat">打开的窗口会吸附到这里</button>
                 <pre>var btnTarget= document.getElementById('floatThat');
 var winform = layx.iframe('float-target','打开一个吸附浮动窗口','./iframe.html',{
     floatTarget:btnTarget,  // 被吸附的DOM对象
@@ -341,7 +340,7 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
     layx.updateFloatTargetPosition(winform.id);
 }
 </pre>
-                <button class="run">运行</button>
+                <button class="run">运行</button> <button id="floatThat">打开的窗口会吸附到这里</button>
             </div>
             <h2 name="窗口外观">窗口外观</h2>
             <h3 name="主窗口外观">主窗口外观</h3>
