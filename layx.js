@@ -6,7 +6,6 @@
  * create time : 2018.05.11
  * update time : 2018.05.25
  */
-"use strict";
 ;
 !(function (over, win, slf) {
     var Layx = {
