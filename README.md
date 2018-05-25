@@ -80,7 +80,9 @@ layx.html('str','字符串文本','Hello Layx!');
 - [更新] winform.windowId为winform.layxWindowId，winform.window为layxWindow
 - [更新] 恢复提示为：还原
 - [更新] 窗口组样式
-- [修正] 拖动、最大化滚动条 bug
+- [修复] 拖动、最大化滚动条 bug
+- [修复] IE10 bug
+
 
 # 2018.05.24 v2.1.6 发布
 

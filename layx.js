@@ -370,6 +370,7 @@
                             var frameTitle = document.createElement("div");
                             frameTitle.setAttribute("data-frameId", frameConfig.id);
                             frameTitle.classList.add("layx-group-title");
+                            frameTitle.style.maxWidth = (100 / config.frames.length) + "%";
                             if (i === config.frameIndex) {
                                 frameTitle.setAttribute("data-enable", "1");
                             }
