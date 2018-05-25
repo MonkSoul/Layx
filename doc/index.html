@@ -1219,7 +1219,7 @@ alert(JSON.stringify(winform2, null, 4));
             <div class="demo">
                 <h4 class="tip" name="设置窗口组页面窗口URL地址">设置窗口组页面窗口URL地址</h4>
                 <p><strong>第一步：先打开窗口组才能测试</strong></p>
-                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}]);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
                 <p><strong>第二步：设置窗口组二URL地址</strong></p>
                 <pre>layx.setGroupUrl('group-demo','group2','https://www.taobao.com');</pre>
                 <button class="run">运行</button>
@@ -1227,7 +1227,7 @@ alert(JSON.stringify(winform2, null, 4));
             <div class="demo">
                 <h4 class="tip" name="设置窗口组页面窗口URL地址（自动获取标题）">设置窗口组页面窗口URL地址（自动获取标题）</h4>
                 <p><strong>第一步：先打开窗口组才能测试</strong></p>
-                <button onclick="layx.group('group-demo2', [{ id: 'group1', title: '窗口组一', content: 'Layx 网页弹窗最佳选择' }, { id: 'group2', type: 'url', url: './iframe.html', useFrameTitle: true }]); var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <button onclick="layx.group('group-demo2', [{ id: 'group1', title: '窗口组一', content: 'Layx 网页弹窗最佳选择' }, { id: 'group2', type: 'url', url: './iframe.html', useFrameTitle: true }],1); var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
                 <p><strong>第二步：设置窗口组二URL地址</strong></p>
                 <pre>layx.setGroupUrl('group-demo2','group2','./child.html');</pre>
                 <p style="color:#f00;">窗口组二必须设置 useFrameTitle:true </p>

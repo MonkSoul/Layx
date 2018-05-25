@@ -549,7 +549,7 @@
                 } else {
                     contentShade.innerHTML = config.loaddingText;
                     var dotCount = 0;
-                    var loadTimer = setInterval(function () {
+                    winform.loaddingTextTimer = setInterval(function () {
                         if (dotCount === 5) {
                             dotCount = 0;
                         }
@@ -574,6 +574,10 @@
                     }
                     that.createHtmlBody(main, config, config.content);
                     main.removeChild(contentShade);
+                    if (winform.loaddingTextTimer) {
+                        clearInterval(winform.loaddingTextTimer);
+                        delete winform.loaddingTextTimer;
+                    }
                     if (Utils.isFunction(config.event.onload.after)) {
                         config.event.onload.after(layxWindow, winform);
                     }
@@ -701,13 +705,13 @@
                     autodestroyTip.innerHTML = config.autodestroyText.replace("{second}", second);
                     layxWindow.appendChild(autodestroyTip);
                 }
-                var destroyTimer = setInterval(function () {
+                winform.destroyTimer = setInterval(function () {
                     --second;
                     if (config.autodestroyText !== false) {
                         autodestroyTip.innerHTML = config.autodestroyText.replace("{second}", second);
                     }
                     if (second <= 0) {
-                        clearInterval(destroyTimer);
+                        clearInterval(winform.destroyTimer);
                         that.destroy(config.id, null, true);
                     }
                 }, 1000);
@@ -846,12 +850,20 @@
                                 var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
                                 if (config.frames.length === loadComplteMains.length) {
                                     contentShade.parentNode.removeChild(contentShade);
+                                    if (winform.loaddingTextTimer) {
+                                        clearInterval(winform.loaddingTextTimer);
+                                        delete winform.loaddingTextTimer;
+                                    }
                                     if (Utils.isFunction(config.event.onload.after)) {
                                         config.event.onload.after(layxWindow, winform);
                                     }
                                 }
                             } else {
                                 contentShade.parentNode.removeChild(contentShade);
+                                if (winform.loaddingTextTimer) {
+                                    clearInterval(winform.loaddingTextTimer);
+                                    delete winform.loaddingTextTimer;
+                                }
                                 if (Utils.isFunction(config.event.onload.after)) {
                                     config.event.onload.after(layxWindow, winform);
                                 }
@@ -896,12 +908,20 @@
                             var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
                             if (config.frames.length === loadComplteMains.length) {
                                 contentShade.parentNode.removeChild(contentShade);
+                                if (winform.loaddingTextTimer) {
+                                    clearInterval(winform.loaddingTextTimer);
+                                    delete winform.loaddingTextTimer;
+                                }
                                 if (Utils.isFunction(config.event.onload.after)) {
                                     config.event.onload.after(layxWindow, winform);
                                 }
                             }
                         } else {
                             contentShade.parentNode.removeChild(contentShade);
+                            if (winform.loaddingTextTimer) {
+                                clearInterval(winform.loaddingTextTimer);
+                                delete winform.loaddingTextTimer;
+                            }
                             if (Utils.isFunction(config.event.onload.after)) {
                                 config.event.onload.after(layxWindow, winform);
                             }
@@ -1007,7 +1027,7 @@
                             } else {
                                 contentShade.innerHTML = winform.loaddingText;
                                 var dotCount = 0;
-                                var loadTimer = setInterval(function () {
+                                winform.loaddingTextTimer = setInterval(function () {
                                     if (dotCount === 5) {
                                         dotCount = 0;
                                     }
@@ -1048,7 +1068,7 @@
                             } else {
                                 contentShade.innerHTML = winform.loaddingText;
                                 var dotCount = 0;
-                                var loadTimer = setInterval(function () {
+                                winform.loaddingTextTimer = setInterval(function () {
                                     if (dotCount === 5) {
                                         dotCount = 0;
                                     }
@@ -1409,6 +1429,12 @@
                 if (Utils.isFunction(winform.event.ondestroy.after)) {
                     winform.event.ondestroy.after();
                 }
+                if (winform.destroyTimer)
+                    clearInterval(winform.destroyTimer);
+                if (winform.loadTimer)
+                    clearInterval(winform.loadTimer);
+                if (winform.loaddingTextTimer)
+                    clearInterval(winform.loaddingTextTimer);
                 for (var key in winform) {
                     delete winform[key];
                 }
@@ -1757,7 +1783,7 @@
             loadElement.classList.add("layx-flex-center");
             loadElement.innerHTML = msg;
             var dotCount = 0;
-            var loadTimer = setInterval(function () {
+            winform.loadTimer = setInterval(function () {
                 if (dotCount === 5) {
                     dotCount = 0;
                 }

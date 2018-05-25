@@ -125,6 +125,7 @@ window.onload = function () {
 - [更新] winform.windowId为winform.layxWindowId，winform.window为layxWindow
 - [更新] 恢复提示为：还原
 - [更新] 窗口组样式
+- [修复] 定时器 bug
 - [修复] 拖动、最大化滚动条 bug
 - [修复] IE10 bug
 
@@ -346,7 +347,22 @@ window.onload = function () {
         a.onclick = function (e) {
             e = e || window.event;
             var scrollDiv = code.querySelector("*[name='" + this.innerHTML + "']");
-            code.scrollTop = scrollDiv.offsetTop;
+            if (self != top && self.frameElement && self.frameElement.tagName == "IFRAME") {
+                if (navigator.userAgent.indexOf("Firefox") > 0) {
+                    document.documentElement.scrollTop = scrollDiv.offsetTop - window.innerHeight - 50;
+                }
+                else {
+                    document.documentElement.scrollTop = scrollDiv.offsetTop;
+                }
+            }
+            else {
+                if (navigator.userAgent.indexOf("Firefox") > 0) {
+                    code.scrollTop = scrollDiv.offsetTop - code.offsetHeight - 50;
+                }
+                else {
+                    code.scrollTop = scrollDiv.offsetTop;
+                }
+            }
             document.querySelector('#mulu').click();
             e.stopPropagation();
         };
