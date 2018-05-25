@@ -236,19 +236,17 @@
             } else {
                 that.removeStoreWindowAreaInfo(config.id);
             }
-            if (config.floatTarget) {
-                if (Utils.isDom(config.floatTarget)) {
-                    layxWindow.classList.add("layx-bubble-type");
-                    var bubble = document.createElement("div");
-                    bubble.classList.add("layx-bubble");
-                    layxWindow.appendChild(bubble);
-                    var bubbleInlay = document.createElement("div");
-                    bubbleInlay.classList.add("layx-bubble-inlay");
-                    bubble.appendChild(bubbleInlay);
-                    var floatTargetPos = Utils.getElementPos(config.floatTarget);
-                    _top = floatTargetPos.y + config.floatTarget.offsetHeight + 11;
-                    _left = floatTargetPos.x;
-                }
+            if (Utils.isDom(config.floatTarget)) {
+                layxWindow.classList.add("layx-bubble-type");
+                var bubble = document.createElement("div");
+                bubble.classList.add("layx-bubble");
+                layxWindow.appendChild(bubble);
+                var bubbleInlay = document.createElement("div");
+                bubbleInlay.classList.add("layx-bubble-inlay");
+                bubble.appendChild(bubbleInlay);
+                var floatTargetPos = Utils.getElementPos(config.floatTarget);
+                _top = floatTargetPos.y + config.floatTarget.offsetHeight + 11;
+                _left = floatTargetPos.x;
             }
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
@@ -526,7 +524,7 @@
                     }
                 }
             }
-            if (config.floatTarget) {
+            if (Utils.isDom(config.floatTarget)) {
                 var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
                 bubble.style.borderBottomColor = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
                 if (config.control === true) {
