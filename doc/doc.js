@@ -349,10 +349,10 @@ window.onload = function () {
             var scrollDiv = code.querySelector("*[name='" + this.innerHTML + "']");
             if (self != top && self.frameElement && self.frameElement.tagName == "IFRAME") {
                 if (navigator.userAgent.indexOf("Firefox") > 0) {
-                    document.documentElement.scrollTop = scrollDiv.offsetTop - window.innerHeight - 50;
+                    (document.documentElement || document.body).scrollTop = scrollDiv.offsetTop - window.innerHeight - 50;
                 }
                 else {
-                    document.documentElement.scrollTop = scrollDiv.offsetTop;
+                    (document.documentElement || document.body).scrollTop = scrollDiv.offsetTop;
                 }
             }
             else {
