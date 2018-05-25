@@ -1,11 +1,3 @@
-/*
- * file : layx.css
- * gitee : https://gitee.com/monksoul/LayX
- * author : 百小僧/MonkSoul
- * version : v2.1.8
- * create time : 2018.05.11
- * update time : 2018.05.25
- */
 
 *[class^="layx-"] {
     box-sizing: border-box;
@@ -168,7 +160,7 @@ body.ilayx-body {
     font-size: 14px;
 }
 
-.layx-title {
+.layx-title, .layx-group-tab {
     font-size: 14px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -179,7 +171,7 @@ body.ilayx-body {
     min-width: 0;
 }
 
-.layx-title label {
+.layx-title label, .layx-group-tab label {
     max-width: 100%;
     line-clamp: 1;
     -moz-line-clamp: 1;
@@ -200,10 +192,15 @@ body.ilayx-body {
     visibility: visible;
 }
 
+.layx-group-tab.layx-type-group {
+    overflow: visible;
+    margin-right: 0;
+    border-bottom: 1px solid #dfdfdf;
+}
+
 .layx-control-bar.layx-type-group {
     overflow: visible;
     border-bottom: 1px solid #dfdfdf;
-    background: #f5f5f5;
 }
 
 .layx-group-title {
@@ -219,6 +216,10 @@ body.ilayx-body {
     position: relative;
     color: #666;
     white-space: nowrap;
+}
+
+.layx-group-tab .layx-group-title {
+    margin-top: 0;
 }
 
 .layx-title.layx-type-group {

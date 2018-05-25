@@ -8,7 +8,7 @@ gzip压缩版仅 `13.5kb`，非常小巧。
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.1.8
+- `当前版本`：v2.2.0
 - `发布日期`：2018.05.25
 - `交流Q群`：18863883
 
@@ -66,16 +66,20 @@ layx.html('str','字符串文本','Hello Layx!');
 # 日志
 
 ```
-# 2018.05.25 v2.1.8 发布
+# 2018.05.25 v2.2.0 发布
 
-- [新增] 浮动窗口
+- [新增] 浮动窗口类型
 - [新增] 浮动窗口options.floatTarget参数，floatTarget 用来设置吸附到那个元素上
-- [新增] options.aliveClose 参数，表示是否关闭后还一直存内存中，也就是是否真的销毁窗口
+- [新增] options.mergeTitle 参数，表示窗口组标题是合并还是不合并
 - [新增] 窗口调试信息按钮，开发阶段非常方便调试工作
 - [新增] 窗口最小化状态下不显示置顶按钮、调试按钮
 - [新增] 更新浮动窗口位置方法 layx.updateFloatTargetPosition(id);
 - [新增] 设置窗口位置 layx.setPosition(id,position,isFloatTarget); isFloatTarget 参数，用来判断是否是浮动窗口
+- [新增] event.onvisual 事件，控制窗口显示隐藏，有区别于销毁
+- [新增] layx.visual(id, status, params) 方法，控制窗口显示隐藏
 - [更新] winform.windowId为winform.layxWindowId，winform.window为layxWindow
+- [更新] 恢复提示为：还原
+- [更新] 窗口组样式
 - [修正] 拖动、最大化滚动条 bug
 
 # 2018.05.24 v2.1.6 发布

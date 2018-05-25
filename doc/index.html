@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.1.8</title>
+    <title>Layx 演示示例 v2.2.0</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -60,7 +60,7 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.1.8&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.0&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.25&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                 &lt;/ul&gt;
@@ -254,6 +254,32 @@ setTimeout(function(){
 ],1);</pre>
                 <button class="run">运行</button>
             </div>
+            <div class="demo">
+                <h4 class="tip" name="打开一个窗口组窗口，不合并标题">打开一个窗口组窗口，不合并标题</h4>
+                <pre>layx.group('group-nomerge',[
+    {
+        id:'group1',
+        title:'文本窗口',
+        content:'Layx 网页弹窗最佳选择.'
+    },
+    {
+        id:'group2',
+        title:'网页窗口',
+        type:'url',
+        url:'./iframe.html'
+    },
+    {
+        id:'taobao',
+        title:'淘宝网',
+        type:'url',
+        url:'https://www.taobao.com'
+    }
+],1,{
+    mergeTitle:false,
+    title:'我是不合并的标题'
+});</pre>
+                <button class="run">运行</button>
+            </div>
             <h3 name="倒计时窗口">倒计时窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个倒计时关闭窗口">打开一个倒计时关闭窗口</h4>
@@ -294,11 +320,21 @@ setTimeout(function(){
                 <button id="floatThat">打开的窗口会吸附到这里</button>
                 <pre>var btnTarget= document.getElementById('floatThat');
 var winform = layx.iframe('float-target','打开一个吸附浮动窗口','./iframe.html',{
-    floatTarget:btnTarget,
+    floatTarget:btnTarget,  // 被吸附的DOM对象
     width:357,
     height:200,
-    aliveClose:true,    // 表示关闭还一直存活，并不会销毁
-    alwaysOnTop:true
+    alwaysOnTop:true,
+     event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    layx.visual(winform.id,false);  // 隐藏窗口
+                    return false;
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        }
+    }
 });
 // 监听滚动条事件、更新浮动窗口位置
 document.getElementById("layx-layx-demo-html").onscroll=function(){
@@ -807,9 +843,58 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
                 console.log(winform);
                 console.log("=============分割线===============");
             },
-            after: function (layxWindow, winform) {
+            after: function () {
                 alert("关闭之后");
                 console.log(new Date()+"关闭之后~")
+                console.log("=============分割线===============");
+            }
+        }
+    }
+});</pre>
+                <p style="color:#f00;">请打开控制台查看</p>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="显示/隐藏事件">显示/隐藏事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="显示/隐藏事件">显示/隐藏事件</h4>
+                <pre>layx.iframe('event-onvisual','显示/隐藏前后控制','./iframe.html',{
+    event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    if(params.ok===true){
+                        // 彻底销毁
+                    }
+                    else{
+                         layx.visual(winform.id,false);  // 隐藏窗口
+                         return false;
+                    }
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        },
+        onvisual:{
+            before:function(layxWindow, winform, params, inside, status){
+                if(status===true){
+                     alert("显示之前");
+                    console.log(new Date()+"显示之前~");
+                }
+                else{
+                     alert("隐藏之前");
+                     console.log(new Date()+"隐藏之前~");
+                }
+                console.log(winform);
+                console.log("=============分割线===============");
+            },
+            after: function (layxWindow, winform,status) {
+                if(status===true){
+                     alert("显示之后");
+                    console.log(new Date()+"显示之后~");
+                }
+                else{
+                     alert("隐藏之后");
+                     console.log(new Date()+"隐藏之后~");
+                }
                 console.log(winform);
                 console.log("=============分割线===============");
             }
@@ -818,6 +903,7 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
 });</pre>
                 <p style="color:#f00;">请打开控制台查看</p>
                 <button class="run">运行</button>
+                <button class="destroy-visual" onclick="layx.destroy('event-onvisual', { ok: true });">销毁窗口</button>
             </div>
             <h3 name="拖动事件">拖动事件</h3>
             <div class="demo">

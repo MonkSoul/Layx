@@ -210,15 +210,6 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
-            <p><label>aliveClose：是否真的销毁</label></p>
-            <div class="doc-des">
-                <span>类型</span>：Boolean<br />
-                <span>必需</span>：否<br />
-                <span>默认值</span>：false<br />
-                <span>说明</span>：设置true时，关闭后还一直存活，也就是窗口只是隐藏起来
-            </div>
-        </div>
-        <div class="doc-item">
             <p><label>frames：窗口组子窗口数组</label></p>
             <div class="doc-des">
                 <span>类型</span>：Array<br />
@@ -234,6 +225,15 @@ group：窗口组类型
                 <span>必需</span>：否<br />
                 <span>默认值</span>：0<br />
                 <span>说明</span>：设置 type:group 有效，设置窗口组默认初始化显示索引
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>mergeTitle：是否合并窗口组标题</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：默认合并，设置false不合并
             </div>
         </div>
         <div class="doc-item">
@@ -580,6 +580,11 @@ group：窗口组类型
         after: function () {
         }
     },
+    // 隐藏/显示窗口时间，return false不执行
+    onvisual: {
+         before: function (layxWindow, winform, params, inside, status) { },
+         after: function (layxWindow, winform, status) { }
+     },
     // 移动事件
     onmove: {
         // 移动之前，return false 不执行
@@ -754,6 +759,7 @@ winform.area // 位置大小 { width , height , minWidth , minHeight , top , lef
 winform.loaddingText // 加载文本
 winform.focusable // 焦点状态
 winform.isFloatTarget // 是否浮动窗口
+winform.floatTarget // 吸附的DOM对象
 winform.url // 窗口url地址
 winform.content // 窗口内容
 winform.isStick // 置顶状态
@@ -786,6 +792,8 @@ winform.event // 窗口事件
         <pre>var winform = layx.getWindow(id);</pre>
         <h3 name="关闭窗口">关闭窗口</h3>
         <pre>layx.destroy(id,params);   // 设置了params参数，可以在event.ondestroy.before中监听</pre>
+        <h3 name="显示/隐藏窗口">显示/隐藏窗口</h3>
+        <pre>layx.visual(id, status, params);   // status:true显示，false隐藏。设置了params参数，可以在event.onvisual.before中监听</pre>
         <h3 name="窗口最小化">窗口最小化</h3>
         <pre>layx.min(id);</pre>
         <h3 name="窗口最大化">窗口最大化</h3>

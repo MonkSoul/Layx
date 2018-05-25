@@ -2,7 +2,7 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.1.8
+ * version : v2.2.0
  * create time : 2018.05.11
  * update time : 2018.05.25
  */
@@ -10,7 +10,7 @@
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.1.8',
+        version: '2.2.0',
         defaults: {
             id: '',
             icon: true,
@@ -30,13 +30,13 @@
             type: 'html',
             frames: [],
             frameIndex: 0,
+            mergeTitle: true,
             content: '',
             cloneElementContent: true,
             url: '',
             useFrameTitle: false,
             opacity: 1,
             floatTarget: false,
-            aliveClose: false,
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
             isOverToMax: true,
@@ -100,6 +100,10 @@
                     before: function (layxWindow, winform, params, inside) { },
                     after: function () { }
                 },
+                onvisual: {
+                    before: function (layxWindow, winform, params, inside, status) { },
+                    after: function (layxWindow, winform, status) { }
+                },
                 onmove: {
                     before: function (layxWindow, winform) { },
                     progress: function (layxWindow, winform) { },
@@ -147,9 +151,6 @@
                     that.restore(_winform.id);
                 }
                 that.flicker(config.id);
-                if (_winform.aliveClose === true) {
-                    _winform.layxWindow.classList.remove("layx-hide-statu");
-                }
                 if (Utils.isFunction(config.event.onexist)) {
                     config.event.onexist(_winform.layxWindow, _winform);
                 }
@@ -292,7 +293,6 @@
             };
             winform.isFloatTarget = Utils.isDom(config.floatTarget);
             winform.floatTarget = config.floatTarget;
-            winform.aliveClose = config.aliveClose;
             winform.loaddingText = config.loaddingText;
             winform.focusable = config.focusable;
             winform.isStick = config.alwaysOnTop === true;
@@ -312,7 +312,7 @@
                 controlBar.classList.add("layx-control-bar");
                 controlBar.classList.add("layx-flexbox");
                 config.controlStyle && controlBar.setAttribute("style", config.controlStyle);
-                if (config.type === "group") {
+                if (config.type === "group" && config.mergeTitle === true) {
                     controlBar.classList.add("layx-type-group");
                 }
                 layxWindow.appendChild(controlBar);
@@ -332,7 +332,7 @@
                 title.classList.add("layx-title");
                 title.classList.add("layx-flexauto");
                 title.classList.add("layx-flexbox");
-                if (config.type === "group") {
+                if (config.type === "group" && config.mergeTitle === true) {
                     title.classList.add("layx-type-group");
                 }
                 if (config.allowControlDbclick === true) {
@@ -355,6 +355,17 @@
                     title.appendChild(label);
                 } else {
                     if (Utils.isArray(config.frames)) {
+                        if (config.mergeTitle === false) {
+                            var groupTab = document.createElement("div");
+                            groupTab.classList.add("layx-group-tab");
+                            groupTab.classList.add("layx-flexbox");
+                            groupTab.classList.add("layx-type-group");
+                            layxWindow.appendChild(groupTab);
+                            var label = document.createElement("label");
+                            label.innerHTML = config.title;
+                            title.setAttribute("title", label.innerText);
+                            title.appendChild(label);
+                        }
                         for (var i = 0; i < config.frames.length; i++) {
                             var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
                             var frameTitle = document.createElement("div");
@@ -373,7 +384,11 @@
                                 }
                                 e.stopPropagation();
                             };
-                            title.appendChild(frameTitle);
+                            if (config.mergeTitle === false) {
+                                groupTab.appendChild(frameTitle);
+                            } else {
+                                title.appendChild(frameTitle);
+                            }
                             var groupLabel = document.createElement("label");
                             groupLabel.innerHTML = frameConfig.title;
                             frameTitle.setAttribute("title", groupLabel.innerText);
@@ -1215,7 +1230,7 @@
                 if (minMenu) {
                     minMenu.classList.remove("layx-max-menu");
                     minMenu.classList.add("layx-restore-menu");
-                    minMenu.setAttribute("title", "恢复");
+                    minMenu.setAttribute("title", "还原");
                     minMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-restore"></use></svg>';
                 }
                 var resizePanel = layxWindow.querySelector(".layx-resizes");
@@ -1308,7 +1323,7 @@
                 if (maxMenu) {
                     maxMenu.classList.remove("layx-max-menu");
                     maxMenu.classList.add("layx-restore-menu");
-                    maxMenu.setAttribute("title", "恢复");
+                    maxMenu.setAttribute("title", "还原");
                     maxMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-restore"></use></svg>';
                 }
                 var resizePanel = layxWindow.querySelector(".layx-resizes");
@@ -1334,6 +1349,30 @@
                 }
             }
         },
+        visual: function (id, status, params, inside) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                layxShade = document.getElementById(windowId + '-shade'),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                if (Utils.isFunction(winform.event.onvisual.before)) {
+                    var revel = winform.event.onvisual.before(layxWindow, winform, params || {}, inside === true, status !== false);
+                    if (revel === false) {
+                        return;
+                    }
+                }
+                if (status !== false) {
+                    layxWindow.classList.remove("layx-hide-statu");
+                } else {
+                    layxWindow.classList.add("layx-hide-statu");
+                }
+                that.updateMinLayout();
+                if (Utils.isFunction(winform.event.onvisual.after)) {
+                    winform.event.onvisual.after(layxWindow, winform, status !== false);
+                }
+            }
+        },
         destroy: function (id, params, inside) {
             var that = this,
                 windowId = "layx-" + id,
@@ -1350,28 +1389,19 @@
                 }
                 if (winform.closable !== true)
                     return;
-                if (winform.aliveClose !== true) {
-                    delete that.windows[id];
-                    layxWindow.parentNode.removeChild(layxWindow);
-                    if (layxShade) {
-                        layxShade.parentNode.removeChild(layxShade);
-                    }
-                    that.updateMinLayout();
-                    if (Utils.isFunction(winform.event.ondestroy.after)) {
-                        winform.event.ondestroy.after();
-                    }
-                    for (var key in winform) {
-                        delete winform[key];
-                    }
-                    winform = undefined;
+                delete that.windows[id];
+                layxWindow.parentNode.removeChild(layxWindow);
+                if (layxShade) {
+                    layxShade.parentNode.removeChild(layxShade);
                 }
-                else {
-                    layxWindow.classList.add("layx-hide-statu");
-                    that.updateMinLayout();
-                    if (Utils.isFunction(winform.event.ondestroy.after)) {
-                        winform.event.ondestroy.after();
-                    }
+                that.updateMinLayout();
+                if (Utils.isFunction(winform.event.ondestroy.after)) {
+                    winform.event.ondestroy.after();
                 }
+                for (var key in winform) {
+                    delete winform[key];
+                }
+                winform = undefined;
             }
         },
         destroyAll: function () {
@@ -2301,6 +2331,9 @@
         },
         destroy: function (id, params) {
             Layx.destroy(id, params);
+        },
+        visual: function (id, status, params) {
+            Layx.visual(id, status, params);
         },
         min: function (id) {
             Layx.min(id);
