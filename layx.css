@@ -533,7 +533,7 @@ body.ilayx-body {
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 11px solid #3baced;
+    border-bottom: 11px solid transparent;
     position: absolute;
     top: -11px;
     left: 5px;
@@ -545,7 +545,7 @@ body.ilayx-body {
     height: 0;
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
-    border-bottom: 9px solid #fff;
+    border-bottom: 9px solid transparent;
     top: 2px;
     left: -9px;
 }

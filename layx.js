@@ -235,6 +235,8 @@
                 }
             } else {
                 that.removeStoreWindowAreaInfo(config.id);
+            }
+            if (config.floatTarget) {
                 if (Utils.isDom(config.floatTarget)) {
                     layxWindow.classList.add("layx-bubble-type");
                     var bubble = document.createElement("div");
@@ -522,6 +524,17 @@
                         };
                         inlayMenu.appendChild(destroyMenu);
                     }
+                }
+            }
+            if (config.floatTarget) {
+                var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
+                bubble.style.borderBottomColor = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
+                if (config.control === true) {
+                    var _controlBar = layxWindow.querySelector(".layx-control-bar");
+                    var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : window.getComputedStyle(_controlBar, null);
+                    bubbleInlay.style.borderBottomColor = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
+                } else {
+                    bubbleInlay.style.borderBottomColor = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
                 }
             }
             var main = document.createElement("div");
