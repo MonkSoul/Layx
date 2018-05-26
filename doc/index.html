@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.2.2</title>
+    <title>Layx 演示示例 v2.2.3</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -60,7 +60,7 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.2&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.3&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.26&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                 &lt;/ul&gt;
@@ -316,17 +316,19 @@ setTimeout(function(){
             </div>
             <h3 name="浮动窗口">浮动窗口</h3>
             <div class="demo">
-                <h4 class="tip" name="打开一个吸附浮动窗口">打开一个吸附浮动窗口</h4>
-                <pre>var btnTarget= document.getElementById('floatThat');
-var winform = layx.iframe('float-target','打开一个吸附浮动窗口','./iframe.html',{
+                <h4 class="tip" name="打开一个下边浮动窗口">打开一个下边浮动窗口</h4>
+                <pre>var btnTarget= document.getElementById('floatThat-bottom');
+var winform = layx.iframe('float-bottom','打开一个下边浮动窗口','./iframe.html',{
     floatTarget:btnTarget,  // 被吸附的DOM对象
     width:357,
     height:200,
     alwaysOnTop:true,
+    floatDirection: 'bottom',   // 设置方向
      event:{
         ondestroy: {
              before: function (layxWindow, winform, params, inside) { 
                     layx.visual(winform.id,false);  // 隐藏窗口
+                    layx.updateFloatWinPosition(winform.id);
                     return false;
              }
         },
@@ -337,10 +339,127 @@ var winform = layx.iframe('float-target','打开一个吸附浮动窗口','./ifr
 });
 // 监听滚动条事件、更新浮动窗口位置
 document.getElementById("layx-layx-demo-html").onscroll=function(){
-    layx.updateFloatTargetPosition(winform.id);
+    layx.updateFloatWinPosition(winform.id);
 }
 </pre>
-                <button class="run">运行</button> <button id="floatThat">打开的窗口会吸附到这里</button>
+                <button class="run">运行</button> <button id="floatThat-bottom">打开的窗口会吸附到这里</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="打开一个上边浮动窗口">打开一个上边浮动窗口</h4>
+                <pre>var btnTarget= document.getElementById('floatThat-top');
+var winform = layx.iframe('float-top','打开一个上边浮动窗口','./iframe.html',{
+    floatTarget:btnTarget,  // 被吸附的DOM对象
+    width:357,
+    height:200,
+    alwaysOnTop:true,
+    floatDirection: 'top',   // 设置方向
+     event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    layx.visual(winform.id,false);  // 隐藏窗口
+                    layx.updateFloatWinPosition(winform.id);
+                    return false;
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        }
+    }
+});
+// 监听滚动条事件、更新浮动窗口位置
+document.getElementById("layx-layx-demo-html").onscroll=function(){
+    layx.updateFloatWinPosition(winform.id);
+}
+</pre>
+                <button class="run">运行</button> <button id="floatThat-top">打开的窗口会吸附到这里</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="打开一个右边浮动窗口">打开一个右边浮动窗口</h4>
+                <pre>var btnTarget= document.getElementById('floatThat-right');
+var winform = layx.iframe('float-right','打开一个右边浮动窗口','./iframe.html',{
+    floatTarget:btnTarget,  // 被吸附的DOM对象
+    width:357,
+    height:200,
+    alwaysOnTop:true,
+    floatDirection: 'right',   // 设置方向
+     event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    layx.visual(winform.id,false);  // 隐藏窗口 
+                    layx.updateFloatWinPosition(winform.id);
+                    return false;
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        }
+    }
+});
+// 监听滚动条事件、更新浮动窗口位置
+document.getElementById("layx-layx-demo-html").onscroll=function(){
+    layx.updateFloatWinPosition(winform.id);
+}
+</pre>
+                <button class="run">运行</button> <button id="floatThat-right">打开的窗口会吸附到这里</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="打开一个左边浮动窗口">打开一个左边浮动窗口</h4>
+                <pre>var btnTarget= document.getElementById('floatThat-left');
+var winform = layx.iframe('float-left','打开一个左边浮动窗口','./iframe.html',{
+    floatTarget:btnTarget,  // 被吸附的DOM对象
+    width:357,
+    height:200,
+    alwaysOnTop:true,
+    floatDirection: 'left',   // 设置方向
+     event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    layx.visual(winform.id,false);  // 隐藏窗口
+                    layx.updateFloatWinPosition(winform.id);
+                    return false;
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        }
+    }
+});
+// 监听滚动条事件、更新浮动窗口位置
+document.getElementById("layx-layx-demo-html").onscroll=function(){
+    layx.updateFloatWinPosition(winform.id);
+}
+</pre>
+                <button class="run">运行</button> <button id="floatThat-left">打开的窗口会吸附到这里</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="玩个游戏，滚动页面或拖动当前窗口组试试">玩个游戏，滚动页面或拖动当前窗口组试试</h4>
+                <pre>var btnTarget= document.getElementById('floatThat-auto');
+var directions = ['top', 'bottom', 'left', 'right'];
+var winform = layx.iframe('float-auto','我位置实时变化哦~~~','./iframe.html',{
+    floatTarget:btnTarget,  // 被吸附的DOM对象
+    width:357,
+    height:200,
+    alwaysOnTop:true,
+    floatDirection: directions[Math.floor(Math.random()*4)],   // 设置方向
+     event:{
+        ondestroy: {
+             before: function (layxWindow, winform, params, inside) { 
+                    layx.visual(winform.id,false);  // 隐藏窗口
+                    layx.updateFloatWinPosition(winform.id,directions[Math.floor(Math.random()*4)]);
+                    return false;
+             }
+        },
+        onexist: function (layxWindow, winform) { 
+            layx.visual(winform.id,true);   // 显示窗口
+        }
+    }
+});
+// 监听滚动条事件、更新浮动窗口位置
+document.getElementById("layx-layx-demo-html").onscroll=function(){
+     layx.updateFloatWinPosition(winform.id,directions[Math.floor(Math.random()*4)]);
+}
+</pre>
+                <button class="run">运行</button> <button id="floatThat-auto">打开的窗口会吸附到这里</button>
             </div>
             <h2 name="窗口外观">窗口外观</h2>
             <h3 name="主窗口外观">主窗口外观</h3>

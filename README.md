@@ -66,10 +66,14 @@ layx.html('str','字符串文本','Hello Layx!');
 # 日志
 
 ```
-# 2018.05.26 v2.2.2 发布
+# 2018.05.26 v2.2.3 发布
 
+- [新增] 浮动窗口方向控制（上、下、左、右）
 - [新增] 窗口组切换前后事件 event.onswitch
-- [优化] 窗口组切换代码
+- [更新] 拖曳容器代码
+- [更新] layx.updateFloatTargetPosition(id) 为 layx.updateFloatWinPosition(id,direction);
+- [更新] 窗口组切换代码
+- [更新] 拖曳容器样式
 - [修复] layx.prompt 默认值 bug
 
 # 2018.05.25 v2.2.0 发布

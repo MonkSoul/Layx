@@ -209,6 +209,20 @@ group：窗口组类型
             </div>
         </div>
         <div class="doc-item">
+            <p><label>floatDirection：浮动方向</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Enum<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：'ct'<br />
+                <span>说明</span>：内置Enum参数：<br />
+                <pre>top：上边
+left：左边
+right：游标
+bottom：下边
+</pre>
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>frames：窗口组子窗口数组</label></p>
             <div class="doc-des">
                 <span>类型</span>：Array<br />
@@ -819,7 +833,7 @@ winform.event // 窗口事件
         <h3 name="设置窗口位置">设置窗口位置</h3>
         <pre>layx.setPosition(id, position,isFloatTarget); // ,isFloatTarget 是否是浮动窗口</pre>
         <h3 name="更新浮动窗口位置">更新浮动窗口位置</h3>
-        <pre>layx.updateFloatTargetPosition(id);</pre>
+        <pre>layx.updateFloatWinPosition(id,direction); // direction，浮动方向</pre>
         <h3 name="获取页面窗口window对象">获取页面窗口window对象</h3>
         <pre>var contentWindow = layx.getFrameContext(id);</pre>
         <h3 name="获取窗口组页面窗口window对象">获取窗口组页面窗口window对象</h3>

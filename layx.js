@@ -2,14 +2,14 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.2.2
+ * version : v2.2.3
  * create time : 2018.05.11
  * update time : 2018.05.26
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.2',
+        version: '2.2.3',
         defaults: {
             id: '',
             icon: true,
@@ -36,6 +36,7 @@
             useFrameTitle: false,
             opacity: 1,
             floatTarget: false,
+            floatDirection: 'bottom',
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
             isOverToMax: true,
@@ -240,16 +241,20 @@
                 that.removeStoreWindowAreaInfo(config.id);
             }
             if (Utils.isDom(config.floatTarget)) {
+                var bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'];
+                config.floatDirection = bubbleDirectionOptions.indexOf(config.floatDirection) > -1 ? config.floatDirection : 'bottom';
                 layxWindow.classList.add("layx-bubble-type");
                 var bubble = document.createElement("div");
                 bubble.classList.add("layx-bubble");
+                bubble.classList.add("layx-bubble-" + config.floatDirection);
                 layxWindow.appendChild(bubble);
                 var bubbleInlay = document.createElement("div");
                 bubbleInlay.classList.add("layx-bubble-inlay");
+                bubbleInlay.classList.add("layx-bubble-inlay-" + config.floatDirection);
                 bubble.appendChild(bubbleInlay);
-                var floatTargetPos = Utils.getElementPos(config.floatTarget);
-                _top = floatTargetPos.y + config.floatTarget.offsetHeight + 11;
-                _left = floatTargetPos.x;
+                var bubblePosition = Utils.compilebubbleDirection(config.floatDirection, config.floatTarget, _width, _height);
+                _top = bubblePosition.top;
+                _left = bubblePosition.left;
             }
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
@@ -296,6 +301,7 @@
             };
             winform.isFloatTarget = Utils.isDom(config.floatTarget);
             winform.floatTarget = config.floatTarget;
+            winform.floatDirection = config.floatDirection;
             winform.loaddingText = config.loaddingText;
             winform.focusable = config.focusable;
             winform.isStick = config.alwaysOnTop === true;
@@ -525,13 +531,13 @@
             }
             if (Utils.isDom(config.floatTarget)) {
                 var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
-                bubble.style.borderBottomColor = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
+                bubble.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
                 if (config.control === true) {
                     var _controlBar = layxWindow.querySelector(".layx-control-bar");
                     var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : window.getComputedStyle(_controlBar, null);
-                    bubbleInlay.style.borderBottomColor = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
+                    bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
                 } else {
-                    bubbleInlay.style.borderBottomColor = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
+                    bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
                 }
             }
             var main = document.createElement("div");
@@ -625,77 +631,6 @@
                     }
                     break;
             }
-            if (config.resizable === true) {
-                var resize = document.createElement("div");
-                resize.classList.add("layx-resizes");
-                layxWindow.appendChild(resize);
-                if (!Utils.isDom(config.floatTarget)) {
-                    if (config.resizeLimit.t === false) {
-                        var resizeTop = document.createElement("div");
-                        resizeTop.classList.add("layx-resize-top");
-                        new LayxResize(resizeTop, true, false, true, false);
-                        resize.appendChild(resizeTop);
-                    }
-                    if (config.resizeLimit.l === false) {
-                        var resizeLeft = document.createElement("div");
-                        resizeLeft.classList.add("layx-resize-left");
-                        new LayxResize(resizeLeft, false, true, false, true);
-                        resize.appendChild(resizeLeft);
-                    }
-                    if (config.resizeLimit.lt === false) {
-                        var resizeLeftTop = document.createElement("div");
-                        resizeLeftTop.classList.add("layx-resize-left-top");
-                        new LayxResize(resizeLeftTop, true, true, false, false);
-                        resize.appendChild(resizeLeftTop);
-                    }
-                    if (config.resizeLimit.rt === false) {
-                        var resizeRightTop = document.createElement("div");
-                        resizeRightTop.classList.add("layx-resize-right-top");
-                        new LayxResize(resizeRightTop, true, false, false, false);
-                        resize.appendChild(resizeRightTop);
-                    }
-                    if (config.resizeLimit.lb === false) {
-                        var resizeLeftBottom = document.createElement("div");
-                        resizeLeftBottom.classList.add("layx-resize-left-bottom");
-                        new LayxResize(resizeLeftBottom, false, true, false, false);
-                        resize.appendChild(resizeLeftBottom);
-                    }
-                }
-                if (config.resizeLimit.r === false) {
-                    var resizeRight = document.createElement("div");
-                    resizeRight.classList.add("layx-resize-right");
-                    new LayxResize(resizeRight, false, false, false, true);
-                    resize.appendChild(resizeRight);
-                }
-                if (config.resizeLimit.b === false) {
-                    var resizeBottom = document.createElement("div");
-                    resizeBottom.classList.add("layx-resize-bottom");
-                    new LayxResize(resizeBottom, false, false, true, false);
-                    resize.appendChild(resizeBottom);
-                }
-                if (config.resizeLimit.rb === false) {
-                    var resizeRightBottom = document.createElement("div");
-                    resizeRightBottom.classList.add("layx-resize-right-bottom");
-                    new LayxResize(resizeRightBottom, false, false, false, false);
-                    resize.appendChild(resizeRightBottom);
-                }
-            }
-            if (config.statusBar) {
-                var statusBar = document.createElement("div");
-                statusBar.classList.add("layx-statu-bar");
-                config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
-                if (config.statusBar === true && Utils.isArray(config.buttons)) {
-                    var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
-                    statusBar.appendChild(btnElement);
-                } else {
-                    if (Utils.isDom(config.statusBar)) {
-                        statusBar.appendChild(config.statusBar);
-                    } else {
-                        statusBar.innerHTML = config.statusBar;
-                    }
-                }
-                layxWindow.appendChild(statusBar);
-            }
             if (/(^[1-9]\d*$)/.test(config.autodestroy)) {
                 var second = config.autodestroy / 1000;
                 if (config.autodestroyText !== false) {
@@ -715,7 +650,88 @@
                     }
                 }, 1000);
             }
+            var resize = document.createElement("div");
+            resize.classList.add("layx-resizes");
+            if (config.resizable === false) {
+                resize.setAttribute("data-enable", "0");
+            }
+            layxWindow.appendChild(resize);
+            var resizeTop = document.createElement("div");
+            resizeTop.classList.add("layx-resize-top");
+            if (config.resizeLimit.t === true) {
+                resizeTop.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeTop, true, false, true, false);
+            resize.appendChild(resizeTop);
+            var resizeLeft = document.createElement("div");
+            resizeLeft.classList.add("layx-resize-left");
+            if (config.resizeLimit.l === true) {
+                resizeLeft.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeLeft, false, true, false, true);
+            resize.appendChild(resizeLeft);
+            var resizeLeftTop = document.createElement("div");
+            resizeLeftTop.classList.add("layx-resize-left-top");
+            if (config.resizeLimit.lt === true) {
+                resizeLeftTop.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeLeftTop, true, true, false, false);
+            resize.appendChild(resizeLeftTop);
+            var resizeRightTop = document.createElement("div");
+            resizeRightTop.classList.add("layx-resize-right-top");
+            if (config.resizeLimit.rt === true) {
+                resizeRightTop.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeRightTop, true, false, false, false);
+            resize.appendChild(resizeRightTop);
+            var resizeLeftBottom = document.createElement("div");
+            resizeLeftBottom.classList.add("layx-resize-left-bottom");
+            if (config.resizeLimit.lb === true) {
+                resizeLeftBottom.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeLeftBottom, false, true, false, false);
+            resize.appendChild(resizeLeftBottom);
+            var resizeRight = document.createElement("div");
+            resizeRight.classList.add("layx-resize-right");
+            if (config.resizeLimit.r === true) {
+                resizeRight.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeRight, false, false, false, true);
+            resize.appendChild(resizeRight);
+            var resizeBottom = document.createElement("div");
+            resizeBottom.classList.add("layx-resize-bottom");
+            if (config.resizeLimit.b === true) {
+                resizeBottom.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeBottom, false, false, true, false);
+            resize.appendChild(resizeBottom);
+            var resizeRightBottom = document.createElement("div");
+            resizeRightBottom.classList.add("layx-resize-right-bottom");
+            if (config.resizeLimit.rb === true) {
+                resizeRightBottom.setAttribute("data-enable", "0");
+            }
+            new LayxResize(resizeRightBottom, false, false, false, false);
+            resize.appendChild(resizeRightBottom);
+            if (config.statusBar) {
+                var statusBar = document.createElement("div");
+                statusBar.classList.add("layx-statu-bar");
+                config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
+                if (config.statusBar === true && Utils.isArray(config.buttons)) {
+                    var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
+                    statusBar.appendChild(btnElement);
+                } else {
+                    if (Utils.isDom(config.statusBar)) {
+                        statusBar.appendChild(config.statusBar);
+                    } else {
+                        statusBar.innerHTML = config.statusBar;
+                    }
+                }
+                layxWindow.appendChild(statusBar);
+            }
             that.windows[config.id] = winform;
+            if (Utils.isDom(config.floatTarget)) {
+                that.updateFloatWinResize(config.id);
+            }
             if (config.isOverToMax === true) {
                 if (_width > window.innerWidth || _height > window.innerHeight) {
                     that.max(config.id);
@@ -723,19 +739,116 @@
             }
             return winform;
         },
-        updateFloatTargetPosition: function (id) {
+        updateFloatWinPosition: function (id, direction) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
-                winform = that.windows[id];
+                winform = that.windows[id],
+                bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'];
             if (layxWindow && winform && winform.isFloatTarget === true) {
-                var floatTargetPos = Utils.getElementPos(winform.floatTarget);
-                var top = floatTargetPos.y + winform.floatTarget.offsetHeight + 11;
-                var left = floatTargetPos.x;
+                direction = bubbleDirectionOptions.indexOf(direction) > -1 ? direction : winform.floatDirection;
+                var bubble = layxWindow.querySelector(".layx-bubble");
+                var bubbleInlay = layxWindow.querySelector(".layx-bubble-inlay");
+                if (bubble && bubbleInlay) {
+                    bubble.classList.remove("layx-bubble-" + winform.floatDirection);
+                    bubble.style["border" + winform.floatDirection.toFirstUpperCase() + "Color"] = "transparent";
+                    bubbleInlay.classList.remove("layx-bubble-inlay-" + winform.floatDirection);
+                    bubbleInlay.style["border" + winform.floatDirection.toFirstUpperCase() + "Color"] = "transparent";
+                    bubble.classList.add("layx-bubble-" + direction);
+                    bubbleInlay.classList.add("layx-bubble-inlay-" + direction);
+                    var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
+                    bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
+                    if (winform.control === true) {
+                        var _controlBar = layxWindow.querySelector(".layx-control-bar");
+                        var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : window.getComputedStyle(_controlBar, null);
+                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
+                    } else {
+                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
+                    }
+                }
+                var bubblePosition = Utils.compilebubbleDirection(direction, winform.floatTarget, winform.area.width, winform.area.height);
                 that.setPosition(id, {
-                    top: top,
-                    left: left
+                    top: bubblePosition.top,
+                    left: bubblePosition.left
                 }, true);
+                winform.floatDirection = direction;
+                that.updateFloatWinResize(id, direction);
+            }
+        },
+        updateFloatWinResize: function (id, direction) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id],
+                bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'];
+            if (layxWindow && winform && winform.isFloatTarget === true) {
+                direction = bubbleDirectionOptions.indexOf(direction) > -1 ? direction : winform.floatDirection;
+                switch (direction) {
+                    case "bottom":
+                        layxWindow.querySelector(".layx-resize-left").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-bottom").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right-top").setAttribute("data-enable", "0");
+                        if (winform.resizeLimit.r === false) {
+                            layxWindow.querySelector(".layx-resize-right").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.b === false) {
+                            layxWindow.querySelector(".layx-resize-bottom").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.rb === false) {
+                            layxWindow.querySelector(".layx-resize-right-bottom").removeAttribute("data-enable");
+                        }
+                        break;
+                    case "top":
+                        layxWindow.querySelector(".layx-resize-left").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-bottom").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-bottom").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right-bottom").setAttribute("data-enable", "0");
+                        if (winform.resizeLimit.r === false) {
+                            layxWindow.querySelector(".layx-resize-right").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.t === false) {
+                            layxWindow.querySelector(".layx-resize-top").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.rt === false) {
+                            layxWindow.querySelector(".layx-resize-right-top").removeAttribute("data-enable");
+                        }
+                        break;
+                    case "right":
+                        layxWindow.querySelector(".layx-resize-left").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-bottom").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right-top").setAttribute("data-enable", "0");
+                        if (winform.resizeLimit.r === false) {
+                            layxWindow.querySelector(".layx-resize-right").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.b === false) {
+                            layxWindow.querySelector(".layx-resize-bottom").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.rb === false) {
+                            layxWindow.querySelector(".layx-resize-right-bottom").removeAttribute("data-enable");
+                        }
+                        break;
+                    case "left":
+                        layxWindow.querySelector(".layx-resize-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-left-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right-top").setAttribute("data-enable", "0");
+                        layxWindow.querySelector(".layx-resize-right-bottom").setAttribute("data-enable", "0");
+                        if (winform.resizeLimit.l === false) {
+                            layxWindow.querySelector(".layx-resize-left").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.b === false) {
+                            layxWindow.querySelector(".layx-resize-bottom").removeAttribute("data-enable");
+                        }
+                        if (winform.resizeLimit.lb === false) {
+                            layxWindow.querySelector(".layx-resize-left-bottom").removeAttribute("data-enable");
+                        }
+                        break;
+                }
             }
         },
         removeStoreWindowAreaInfo: function (id) {
@@ -1832,6 +1945,11 @@
             return winform;
         }
     };
+    String.prototype.toFirstUpperCase = function () {
+        return this.replace(/^\S/, function (s) {
+            return s.toUpperCase();
+        });
+    };
     if (!("classList" in document.documentElement)) {
         Object.defineProperty(HTMLElement.prototype, 'classList', {
             get: function () {
@@ -1927,6 +2045,36 @@
                 width: window.innerWidth,
                 height: window.innerHeight
             };
+        },
+        compilebubbleDirection: function (direction, target, width, height) {
+            var that = this,
+                bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'],
+                targetPos = that.getElementPos(target),
+                bubbleSize = 11,
+                pos = {
+                    top: 0,
+                    left: 0
+                };
+            direction = bubbleDirectionOptions.indexOf(direction) > -1 ? direction : 'bottom';
+            switch (direction) {
+                case "bottom":
+                    pos.top = targetPos.y + target.offsetHeight + bubbleSize;
+                    pos.left = targetPos.x;
+                    break;
+                case "top":
+                    pos.top = targetPos.y - (height + bubbleSize);
+                    pos.left = targetPos.x;
+                    break;
+                case "right":
+                    pos.top = targetPos.y;
+                    pos.left = targetPos.x + target.offsetWidth + bubbleSize;
+                    break;
+                case "left":
+                    pos.top = targetPos.y;
+                    pos.left = targetPos.x - (width + bubbleSize);
+                    break;
+            }
+            return pos;
         },
         compileLayxPosition: function (width, height, position) {
             var that = this,
@@ -2509,8 +2657,8 @@
         setButtonStatus: function (id, buttonId, isEnable) {
             Layx.setButtonStatus(id, buttonId, isEnable);
         },
-        updateFloatTargetPosition: function (id) {
-            Layx.updateFloatTargetPosition(id);
+        updateFloatWinPosition: function (id, direction) {
+            Layx.updateFloatWinPosition(id, direction);
         }
     };
 })(top, window, self);

@@ -85,13 +85,13 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.2.2</li>
+                    <li><label>当前版本</label>：v2.2.3</li>
                     <li><label>发布日期</label>：2018.05.26</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
                 <ul>
-                    <li>纯原生Javascript实现，不依赖任何第三方框架</li>
+                    <li>纯原生Javascript实现，不依赖任何第三方框架</li> 
                     <li>支持IE10+（含IE10）、Chrome、Firefox、Opera、Edge等主流浏览器</li>
                     <li>支持多种窗口类型：文本窗口，页面窗口，窗口组，提示窗口，消息窗口，询问窗口，输入窗口，加载窗口、浮动窗口、置顶窗口、倒计时窗口</li>
                     <li>支持窗口最大化、最小化、恢复、置顶、关闭控制及事件监听</li>
@@ -115,10 +115,14 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
-# 2018.05.26 v2.2.2 发布
+# 2018.05.26 v2.2.3 发布
 
+- [新增] 浮动窗口方向控制（上、下、左、右）
 - [新增] 窗口组切换前后事件 event.onswitch
-- [优化] 窗口组切换代码
+- [更新] 拖曳容器代码
+- [更新] layx.updateFloatTargetPosition(id) 为 layx.updateFloatWinPosition(id,direction);
+- [更新] 窗口组切换代码
+- [更新] 拖曳容器样式
 - [修复] layx.prompt 默认值 bug
 
 # 2018.05.25 v2.2.0 发布
@@ -271,6 +275,18 @@ window.onload = function () {
                     rightOut: false,
                     topOut: false,
                     bottomOut: false
+                },
+                event: {
+                    onmove: {
+                        progress: function (layxWindow, winform) {
+                            layx.updateFloatWinPosition("float-right");
+                            layx.updateFloatWinPosition("float-left");
+                            layx.updateFloatWinPosition("float-top");
+                            layx.updateFloatWinPosition("float-bottom");
+                            var directions = ['top', 'bottom', 'left', 'right'];
+                            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+                        }
+                    }
                 },
                 statusBar: true,
                 buttons: [
