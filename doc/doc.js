@@ -359,6 +359,7 @@ window.onload = function () {
                 }
                 else {
                     (document.documentElement || document.body).scrollTop = scrollDiv.offsetTop;
+                    code.scrollTop = scrollDiv.offsetTop;
                 }
             }
             else {
