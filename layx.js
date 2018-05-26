@@ -2,14 +2,14 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.2.0
+ * version : v2.2.1
  * create time : 2018.05.11
- * update time : 2018.05.25
+ * update time : 2018.05.26
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.0',
+        version: '2.2.1',
         defaults: {
             id: '',
             icon: true,
@@ -2478,8 +2478,8 @@
         getPromptTextArea: function (id) {
             return Layx.getPromptTextArea(id);
         },
-        prompt: function (title, msg, yes, options) {
-            return Layx.prompt(title, msg, yes, options);
+        prompt: function (title, msg, yes, defaultValue, options) {
+            return Layx.prompt(title, msg, yes, defaultValue, options);
         },
         load: function (id, msg, options) {
             return Layx.load(id, msg, options);
