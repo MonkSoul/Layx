@@ -1909,7 +1909,7 @@
             loadElement.classList.add("layx-flex-center");
             loadElement.innerHTML = msg;
             var dotCount = 0;
-            winform.loadTimer = setInterval(function () {
+            var loadTimer = setInterval(function () {
                 if (dotCount === 5) {
                     dotCount = 0;
                 }
