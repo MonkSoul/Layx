@@ -533,7 +533,7 @@ group：窗口组类型
                 <span>类型</span>：Object<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：<br />
-                <pre>{
+                                 <pre>{
     // 加载事件
     onload: {
         // 加载之前，return false 不执行
@@ -613,7 +613,16 @@ group：窗口组类型
      },
     // 窗口存在事件
     onexist: function (layxWindow, winform) {
-     }
+     },
+    // 窗口组切换事件
+    onswitch: {
+        // 切换之前，return false 不执行操作
+        before: function (layxWindow, winform, frameId) { 
+        },
+        // 切换之后
+        after: function (layxWindow, winform, frameId) { 
+        }
+    }
 }</pre>
                 <span>说明</span>：监听窗口事件
             </div>
