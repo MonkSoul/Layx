@@ -1942,6 +1942,7 @@
                 loaddingText: false,
                 storeStatus: false
             }, options));
+            winform.loadTimer = loadTimer;
             return winform;
         }
     };
