@@ -2,14 +2,14 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.2.1
+ * version : v2.2.2
  * create time : 2018.05.11
  * update time : 2018.05.26
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.1',
+        version: '2.2.2',
         defaults: {
             id: '',
             icon: true,
@@ -114,7 +114,11 @@
                     after: function (layxWindow, winform) { }
                 },
                 onfocus: function (layxWindow, winform) { },
-                onexist: function (layxWindow, winform) { }
+                onexist: function (layxWindow, winform) { },
+                onswitch: {
+                    before: function (layxWindow, winform, frameId) { },
+                    after: function (layxWindow, winform, frameId) { }
+                }
             }
         },
         defaultButtons: {
@@ -376,12 +380,7 @@
                             }
                             frameTitle.onclick = function (e) {
                                 e = e || window.event;
-                                var prevSelectTitle = layxWindow.querySelector(".layx-group-title[data-enable='1']");
-                                if (prevSelectTitle !== this) {
-                                    prevSelectTitle.removeAttribute("data-enable");
-                                    this.setAttribute("data-enable", "1");
-                                    that._setGroupIndex(config.id, this);
-                                }
+                                that._setGroupIndex(config.id, this);
                                 e.stopPropagation();
                             };
                             if (config.mergeTitle === false) {
@@ -767,13 +766,27 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform && winform.type === "group") {
-                var frameId = target.getAttribute("data-frameId");
-                var prevGroupMain = layxWindow.querySelector(".layx-group-main[data-enable='1']");
-                var currentGroupMain = layxWindow.querySelector(".layx-group-main[data-frameId='" + frameId + "']");
-                if (currentGroupMain !== prevGroupMain) {
-                    prevGroupMain.removeAttribute("data-enable");
-                    currentGroupMain.setAttribute("data-enable", "1");
-                    winform.groupCurrentId = frameId;
+                var prevSelectTitle = layxWindow.querySelector(".layx-group-title[data-enable='1']");
+                if (prevSelectTitle !== target) {
+                    if (Utils.isFunction(winform.event.onswitch.before)) {
+                        var revel = winform.event.onswitch.before(layxWindow, winform, prevSelectTitle.getAttribute("data-frameId"));
+                        if (revel === false) {
+                            return;
+                        }
+                    }
+                    prevSelectTitle.removeAttribute("data-enable");
+                    target.setAttribute("data-enable", "1");
+                    var frameId = target.getAttribute("data-frameId");
+                    var prevGroupMain = layxWindow.querySelector(".layx-group-main[data-enable='1']");
+                    var currentGroupMain = layxWindow.querySelector(".layx-group-main[data-frameId='" + frameId + "']");
+                    if (currentGroupMain !== prevGroupMain) {
+                        prevGroupMain.removeAttribute("data-enable");
+                        currentGroupMain.setAttribute("data-enable", "1");
+                        winform.groupCurrentId = frameId;
+                    }
+                    if (Utils.isFunction(winform.event.onswitch.after)) {
+                        winform.event.onswitch.after(layxWindow, winform, target.getAttribute("data-frameId"));
+                    }
                 }
             }
         },

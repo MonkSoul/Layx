@@ -68,6 +68,8 @@ layx.html('str','字符串文本','Hello Layx!');
 ```
 # 2018.05.26 v2.2.1 发布
 
+- [新增] 窗口组切换前后事件 event.onswitch
+- [优化] 窗口组切换代码
 - [修复] layx.prompt 默认值 bug
 
 # 2018.05.25 v2.2.0 发布

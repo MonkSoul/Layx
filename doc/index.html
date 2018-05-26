@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Layx 演示示例 v2.2.1</title>
+    <title>Layx 演示示例 v2.2.2</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -60,7 +60,7 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.1&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.2&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.26&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                 &lt;/ul&gt;
@@ -978,6 +978,41 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
         onexist:function(layxWindow,winform){
     alert("我已经打开啦");
 }
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
+            <h3 name="切换事件">切换事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="切换窗口时触发切换事件">切换窗口时触发切换事件</h4>
+                <pre>layx.group('group-switch',[
+    {
+        id:'group1',
+        title:'文本窗口',
+        content:'Layx 网页弹窗最佳选择.'
+    },
+    {
+        id:'group2',
+        title:'网页窗口',
+        type:'url',
+        url:'./iframe.html'
+    },
+    {
+        id:'taobao',
+        title:'淘宝网',
+        type:'url',
+        url:'https://www.taobao.com'
+    }
+],1,{
+    event:{
+                onswitch: {
+                    before: function (layxWindow, winform, frameId) {
+                        alert("切换之前");
+                     },
+                    after: function (layxWindow, winform, frameId) { 
+                        alert("切换之后");
+                    }
+                }
     }
 });</pre>
                 <button class="run">运行</button>

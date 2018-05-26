@@ -76,7 +76,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.2.1</li>
+                    <li><label>当前版本</label>：v2.2.2</li>
                     <li><label>发布日期</label>：2018.05.26</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -111,8 +111,10 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
-# 2018.05.26 v2.2.1 发布
+# 2018.05.26 v2.2.2 发布
 
+- [新增] 窗口组切换前后事件 event.onswitch
+- [优化] 窗口组切换代码
 - [修复] layx.prompt 默认值 bug
 
 # 2018.05.25 v2.2.0 发布
