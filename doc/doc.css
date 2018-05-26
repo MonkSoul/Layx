@@ -18,6 +18,10 @@
     background-color: #f1f1f1;
 }
 
+ul {
+    padding-left: 20px;
+}
+
 #demo {
     display: none;
 }

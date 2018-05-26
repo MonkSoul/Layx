@@ -72,6 +72,15 @@ window.onload = function () {
                 <h2>序言</h2>
                 <p>Layx 一款熟悉但又不太一样的Web弹窗插件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
+                <h2>项目</h2>
+                <ul>
+                    <li>Gitee：
+                    <p style="margin:5px 0"><a href='https://gitee.com/monksoul/LayX/stargazers'><img src='https://gitee.com/monksoul/LayX/badge/star.svg?theme=dark' alt='star'></img></a> <a href='https://gitee.com/monksoul/LayX/members'><img src='https://gitee.com/monksoul/LayX/badge/fork.svg?theme=dark' alt='fork'></img></a></p>
+                    </li>
+                    <li>Github：
+                    <p style="margin:5px 0"><iframe src="https://ghbtns.com/github-btn.html?user=MonkSoul&repo=Layx&type=star&count=true" frameborder="0" scrolling="0" width="85px" height="20px"></iframe> <iframe src="https://ghbtns.com/github-btn.html?user=MonkSoul&repo=Layx&type=fork&count=true" frameborder="0" scrolling="0" width="85px" height="20px"></iframe></p>
+                    </li>
+                </ul>
                 <h2>信息</h2>
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
@@ -103,11 +112,6 @@ window.onload = function () {
                     <li>支持窗口最小化统一管理</li>
                     <li>支持滚动条智能判断</li>
                     <li>支持窗口位置记录保存</li>
-                </ul>
-                <h2>项目</h2>
-                <ul>
-                    <li>Gitee：<a href="https://gitee.com/monksoul/LayX" target="_blank">https://gitee.com/monksoul/LayX</a></li>
-                    <li>Github：<a href="https://github.com/MonkSoul/Layx"  target="_blank">https://github.com/MonkSoul/Layx</a></li>
                 </ul>
                 <h2>日志</h2>
                 <pre>
