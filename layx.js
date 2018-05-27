@@ -2419,6 +2419,7 @@
                 document.ontouchend = null;
                 document.ontouchmove = null;
                 if (Utils.IsPC()) {
+                    var button = e.button || e.which;
                     if (button == 1 && e.shiftKey == false) {
                         var resizeList = handle.layxWindow.querySelectorAll(".layx-resizes > div");
                         for (var i = 0; i < resizeList.length; i++) {
