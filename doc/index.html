@@ -107,8 +107,8 @@
                 <button class="run">运行</button>
             </div>
             <div class="demo">
-                <h4 class="tip" name="打开淘宝网">打开淘宝网</h4>
-                <pre>layx.iframe('taobaosite','淘宝网','https://www.taobao.com');</pre>
+                <h4 class="tip" name="打开百度官网">打开百度官网</h4>
+                <pre>layx.iframe('taobaosite','百度官网','https://www.baidu.com');</pre>
                 <button class="run">运行</button>
             </div>
             <h3 name="消息窗口">消息窗口</h3>
@@ -247,9 +247,9 @@ setTimeout(function(){
     },
     {
         id:'taobao',
-        title:'淘宝网',
+        title:'百度官网',
         type:'url',
-        url:'https://www.taobao.com'
+        url:'https://www.baidu.com'
     }
 ],1);</pre>
                 <button class="run">运行</button>
@@ -270,9 +270,9 @@ setTimeout(function(){
     },
     {
         id:'taobao',
-        title:'淘宝网',
+        title:'百度官网',
         type:'url',
-        url:'https://www.taobao.com'
+        url:'https://www.baidu.com'
     }
 ],1,{
     mergeTitle:false,
@@ -1118,9 +1118,9 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
     },
     {
         id:'taobao',
-        title:'淘宝网',
+        title:'百度官网',
         type:'url',
-        url:'https://www.taobao.com'
+        url:'https://www.baidu.com'
     }
 ],1,{
     event:{
@@ -1176,8 +1176,8 @@ document.getElementById("layx-layx-demo-html").onscroll=function(){
             <h3 name="其他示例">其他示例</h3>
             <div class="demo">
                 <h4 class="tip" name="定制加载提示文本">定制加载提示文本</h4>
-                <pre>layx.iframe('loadtext','定制加载提示文本','https://www.taobao.com',{
-    loaddingText: '正在加载淘宝网官方网站，请稍后哦'
+                <pre>layx.iframe('loadtext','定制加载提示文本','https://www.baidu.com',{
+    loaddingText: '正在加载百度官网官方网站，请稍后哦'
 });</pre>
                 <button class="run">运行</button>
             </div>
@@ -1284,8 +1284,8 @@ alert(JSON.stringify(winform2, null, 4));
                 <h4 class="tip" name="设置网页窗口地址">设置网页窗口地址</h4>
                 <p><strong>第一步：先打开窗口才能测试</strong></p>
                 <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
-                <p><strong>第二步：设置网页窗口地址为 https://www.taobao.com/</strong></p>
-                <pre>layx.setUrl('iframe-demo','https://www.taobao.com/');</pre>
+                <p><strong>第二步：设置网页窗口地址为 https://www.baidu.com/</strong></p>
+                <pre>layx.setUrl('iframe-demo','https://www.baidu.com/');</pre>
                 <button class="run">运行</button>
             </div>
             <div class="demo">
@@ -1375,7 +1375,7 @@ alert(JSON.stringify(winform2, null, 4));
                 <p><strong>第一步：先打开窗口组才能测试</strong></p>
                 <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 网页弹窗最佳选择'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}],1);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
                 <p><strong>第二步：设置窗口组二URL地址</strong></p>
-                <pre>layx.setGroupUrl('group-demo','group2','https://www.taobao.com');</pre>
+                <pre>layx.setGroupUrl('group-demo','group2','https://www.baidu.com');</pre>
                 <button class="run">运行</button>
             </div>
             <div class="demo">
