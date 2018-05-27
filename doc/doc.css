@@ -161,7 +161,8 @@ pre {
     display: block;
     /*white-space: pre-wrap;
     word-wrap: break-word;*/
-    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0,0,0);
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

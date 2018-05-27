@@ -49,7 +49,7 @@ window.onload = function () {
              
              <style type="text/css">
              #about-layx{
-                    padding:10px;
+                    padding:0 10px 10px 10px;
                     line-height:1.5;
             }
 
@@ -70,7 +70,7 @@ window.onload = function () {
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 一款熟悉但又不太一样的Web弹窗插件。</p>
+                <p>Layx 一款再熟悉不过的Web弹窗插件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>项目</h2>
                 <ul>
@@ -85,7 +85,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.2.5</li>
+                    <li><label>当前版本</label>：<strong>v2.2.5</strong></li>
                     <li><label>发布日期</label>：2018.05.28</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -163,7 +163,7 @@ window.onload = function () {
                 buttons: [
                     {
                         id: 'donate',
-                        label: '支持作者',
+                        label: '捐赠',
                         classes: 'custom-button1',
                         callback: function (id, button, event) {
                             event.stopPropagation();
@@ -172,7 +172,7 @@ window.onload = function () {
                     },
                     {
                         id: 'log',
-                        label: '更新日志',
+                        label: '日志',
                         classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
@@ -321,7 +321,7 @@ window.onload = function () {
                     },
                     {
                         id: 'open-run',
-                        label: '在线调试',
+                        label: '调试',
                         classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
