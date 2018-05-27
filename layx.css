@@ -292,6 +292,7 @@ body.ilayx-body {
     position: relative;
     clear: both;
     -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0,0,0);
     overflow: auto;
 }
 
@@ -306,6 +307,7 @@ body.ilayx-body {
     z-index: 0;
     visibility: hidden;
     -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0,0,0);
     overflow: auto;
 }
 
@@ -354,6 +356,7 @@ body.ilayx-body {
     left: 0;
     z-index: 1;
     -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0,0,0);
 }
 
 .layx-msg, .layx-load {
@@ -608,6 +611,7 @@ body.ilayx-body {
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0,0,0);
     background: #f5f5f5;
 }
 
