@@ -291,6 +291,8 @@ body.ilayx-body {
     overflow: hidden;
     position: relative;
     clear: both;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
 }
 
 .layx-group-main {
@@ -303,6 +305,8 @@ body.ilayx-body {
     width: 100%;
     z-index: 0;
     visibility: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
 }
 
 .layx-group-main[data-enable="1"] {
@@ -420,7 +424,9 @@ body.ilayx-body {
 }
 
 .layx-iframe {
-    width: 100%;
+    width: 1px;
+    min-width: 100%;
+    *width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
