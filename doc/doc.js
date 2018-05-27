@@ -86,7 +86,7 @@ window.onload = function () {
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
                     <li><label>当前版本</label>：v2.2.5</li>
-                    <li><label>发布日期</label>：2018.05.27</li>
+                    <li><label>发布日期</label>：2018.05.28</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
@@ -178,10 +178,10 @@ window.onload = function () {
                             event.stopPropagation();
                             layx.html('log', 'Layx 更新日志', layx.multiLine(function () {/* 
 <div style="padding:10px">
-<pre style="margin-top:0"># 2018.05.27 v2.2.5 发布
+<pre style="margin-top:0"># 2018.05.28 v2.2.5 发布
 
 - [更新] 触摸代码、新增触摸电脑的支持（同时支持鼠标、触摸）
-- [修复] ios safari iframe bug
+- [修复] IOS系统Safari不支持iFrame bug
 
 # 2018.05.27 v2.2.4 发布
 
@@ -438,4 +438,15 @@ window.onload = function () {
             toc.style.display = "none";
         }
     };
+    var demoHtml = document.getElementById("layx-layx-demo-html");
+    if (demoHtml) {
+        demoHtml.onscroll = function () {
+            layx.updateFloatWinPosition("float-right");
+            layx.updateFloatWinPosition("float-left");
+            layx.updateFloatWinPosition("float-top");
+            layx.updateFloatWinPosition("float-bottom");
+            var directions = ['top', 'bottom', 'left', 'right'];
+            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+        }
+    }
 };

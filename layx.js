@@ -4,7 +4,7 @@
  * author : 百小僧/MonkSoul
  * version : v2.2.5
  * create time : 2018.05.11
- * update time : 2018.05.27
+ * update time : 2018.05.28
  */
 ;
 !(function (over, win, slf) {
