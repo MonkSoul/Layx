@@ -2460,7 +2460,6 @@
         };
         var dragstart = function (e) {
             e = e || window.event;
-            var button = e.button || e.which;
             var layxWindow = Utils.getNodeByClassName(handle, 'layx-window', win);
             if (layxWindow) {
                 var id = layxWindow.getAttribute("id").substr(5),
@@ -2494,6 +2493,7 @@
                             document.ontouchend = dragend;
                             document.ontouchmove = drag;
                             if (Utils.IsPC()) {
+                                var button = e.button || e.which;
                                 if (button == 1 && e.shiftKey == false) {
                                     var resizeList = layxWindow.querySelectorAll(".layx-resizes > div");
                                     for (var i = 0; i < resizeList.length; i++) {
@@ -2610,11 +2610,11 @@
         };
         var dragend = function (e) {
             e = e || window.event;
-            var button = e.button || e.which;
             if (Utils.isSupportTouch) {
                 document.ontouchend = null;
                 document.ontouchmove = null;
                 if (Utils.IsPC()) {
+                    var button = e.button || e.which;
                     if (button == 1 && e.shiftKey == false) {
                         var resizeList = handle.layxWindow.querySelectorAll(".layx-resizes > div");
                         for (var i = 0; i < resizeList.length; i++) {
@@ -2665,7 +2665,6 @@
         };
         var dragstart = function (e) {
             e = e || window.event;
-            var button = e.button || e.which;
             var layxWindow = Utils.getNodeByClassName(handle, 'layx-window', win);
             if (layxWindow) {
                 var id = layxWindow.getAttribute("id").substr(5),
@@ -2700,6 +2699,7 @@
                             document.ontouchend = dragend;
                             document.ontouchmove = drag;
                             if (Utils.IsPC()) {
+                                var button = e.button || e.which;
                                 if (button == 1 && e.shiftKey == false) {
                                     var resizeList = layxWindow.querySelectorAll(".layx-resizes > div");
                                     for (var i = 0; i < resizeList.length; i++) {
