@@ -388,10 +388,8 @@
                                 frameTitle.ontouchstart = function (e) {
                                     e = e || window.event;
                                     that._setGroupIndex(config.id, this);
-                                    e.stopPropagation();
                                 };
-                            }
-                            else {
+                            } else {
                                 frameTitle.onclick = function (e) {
                                     e = e || window.event;
                                     that._setGroupIndex(config.id, this);
