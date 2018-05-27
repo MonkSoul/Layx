@@ -1,4 +1,4 @@
-﻿/*::-webkit-input-placeholder {
+﻿::-webkit-input-placeholder {
     text-overflow: ellipsis
 }
 
@@ -16,14 +16,14 @@
 
 ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-}*/
+}
 
 ul {
     padding-left: 20px;
 }
 
 #demo {
-    display: none; 
+    display: none;
 }
 
 #mulu {
@@ -119,7 +119,8 @@ ul {
     border: 1px solid #999;
 }
 
-#code, #code * {
+#code,
+#code * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -127,8 +128,7 @@ ul {
     -o-box-sizing: border-box;
 }
 
-.demo {
-}
+.demo {}
 
 #code {
     padding: 10px;
@@ -209,7 +209,7 @@ pre {
 }
 
 .custom-button:hover {
-    background: rgba(0, 148, 255,0.8) !important;
+    background: rgba(0, 148, 255, 0.8) !important;
     border: none !important;
     color: #fff !important;
 }
