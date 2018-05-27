@@ -1,7 +1,8 @@
-/*
+/*!
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
- * author : ��Сɮ/MonkSoul
+ * github : https://github.com/MonkSoul/Layx/
+ * author : 百小僧/MonkSoul
  * version : v2.2.5
  * create time : 2018.05.11
  * update time : 2018.05.28
@@ -67,7 +68,8 @@
     -ms-flex: 1;
 }
 
-.layx-shade, #layx-window-move {
+.layx-shade,
+#layx-window-move {
     position: fixed;
     top: 0;
     right: 0;
@@ -123,7 +125,8 @@ body.ilayx-body {
     overflow: hidden !important;
 }
 
-.layx-window.layx-min-statu .layx-inlay-menus .layx-stick-menu, .layx-window.layx-min-statu .layx-inlay-menus .layx-debug-menu {
+.layx-window.layx-min-statu .layx-inlay-menus .layx-stick-menu,
+.layx-window.layx-min-statu .layx-inlay-menus .layx-debug-menu {
     display: none;
 }
 
@@ -168,7 +171,8 @@ body.ilayx-body {
     font-size: 14px;
 }
 
-.layx-title, .layx-group-tab {
+.layx-title,
+.layx-group-tab {
     font-size: 14px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -181,7 +185,8 @@ body.ilayx-body {
     touch-action: none;
 }
 
-.layx-title label, .layx-group-tab label {
+.layx-title label,
+.layx-group-tab label {
     max-width: 100%;
     line-clamp: 1;
     -moz-line-clamp: 1;
@@ -292,7 +297,7 @@ body.ilayx-body {
     position: relative;
     clear: both;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
     overflow: auto;
 }
 
@@ -307,7 +312,7 @@ body.ilayx-body {
     z-index: 0;
     visibility: hidden;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
     overflow: auto;
 }
 
@@ -356,17 +361,20 @@ body.ilayx-body {
     left: 0;
     z-index: 1;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
 }
 
-.layx-msg, .layx-load {
+.layx-msg,
+.layx-load {
     color: #000;
     font-size: 15px;
     padding: 10px;
     word-break: break-all;
 }
 
-.layx-alert, .layx-confirm, .layx-prompt {
+.layx-alert,
+.layx-confirm,
+.layx-prompt {
     font-size: 15px;
     padding: 10px;
     color: #039;
@@ -450,7 +458,7 @@ body.ilayx-body {
     visibility: hidden;
 }
 
-.layx-resizes > div {
+.layx-resizes>div {
     position: absolute;
     z-index: 3;
     -ms-touch-action: none;
@@ -463,8 +471,6 @@ body.ilayx-body {
     left: 3px;
     right: 3px;
 }
-
-
 
 .layx-resize-top {
     top: 0;
@@ -482,7 +488,6 @@ body.ilayx-body {
     top: 3px;
     bottom: 3px;
 }
-
 
 .layx-resize-left {
     left: 0;
@@ -584,7 +589,14 @@ body.ilayx-body {
     bottom: -8px;
 }
 
-.layx-resize-left[data-enable='0'], .layx-resize-top[data-enable='0'], .layx-resize-right[data-enable='0'], .layx-resize-bottom[data-enable='0'], .layx-resize-left-top[data-enable='0'], .layx-resize-left-bottom[data-enable='0'], .layx-resize-right-top[data-enable='0'], .layx-resize-right-bottom[data-enable='0'] {
+.layx-resize-left[data-enable='0'],
+.layx-resize-top[data-enable='0'],
+.layx-resize-right[data-enable='0'],
+.layx-resize-bottom[data-enable='0'],
+.layx-resize-left-top[data-enable='0'],
+.layx-resize-left-bottom[data-enable='0'],
+.layx-resize-right-top[data-enable='0'],
+.layx-resize-right-bottom[data-enable='0'] {
     visibility: hidden;
 }
 
@@ -611,11 +623,12 @@ body.ilayx-body {
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
     background: #f5f5f5;
 }
 
-.layx-bubble, .layx-bubble-inlay {
+.layx-bubble,
+.layx-bubble-inlay {
     position: absolute;
     width: 0;
     height: 0;
@@ -700,7 +713,6 @@ body.ilayx-body {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
     }
-
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
@@ -713,7 +725,6 @@ body.ilayx-body {
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         opacity: 1;
     }
-
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);

@@ -1,6 +1,7 @@
-/*
+/*!
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
+ * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
  * version : v2.2.5
  * create time : 2018.05.11
