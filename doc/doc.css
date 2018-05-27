@@ -219,6 +219,7 @@ pre {
     background: #FFB800;
     border: none;
     float: left;
+    margin-left: 0;
 }
 
 .custom-button1:hover {
