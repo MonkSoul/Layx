@@ -2,14 +2,14 @@
  * file : layx.js
  * gitee : https://gitee.com/monksoul/LayX
  * author : 百小僧/MonkSoul
- * version : v2.2.4
+ * version : v2.2.5
  * create time : 2018.05.11
  * update time : 2018.05.27
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.4',
+        version: '2.2.5',
         defaults: {
             id: '',
             icon: true,
@@ -389,6 +389,13 @@
                                     e = e || window.event;
                                     that._setGroupIndex(config.id, this);
                                 };
+                                if (Utils.IsPC()) {
+                                    frameTitle.onclick = function (e) {
+                                        e = e || window.event;
+                                        that._setGroupIndex(config.id, this);
+                                        e.stopPropagation();
+                                    };
+                                }
                             } else {
                                 frameTitle.onclick = function (e) {
                                     e = e || window.event;
@@ -2055,6 +2062,19 @@
     };
     var Utils = {
         isSupportTouch: "ontouchstart" in document ? true : false,
+        isSupportMouse: "onmouseup" in document ? true : false,
+        IsPC: function () {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+            var flag = true;
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        },
         isBoolean: function (obj) {
             return typeof obj === "boolean";
         },
@@ -2202,6 +2222,19 @@
         getMousePosition: function (e) {
             e = e || window.event;
             if (e.touches) {
+                if (Utils.IsPC()) {
+                    var button = e.button || e.which;
+                    if (button == 1 && e.shiftKey == false) {
+                        var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+                        var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+                        var x = e.pageX || e.clientX + scrollX;
+                        var y = e.pageY || e.clientY + scrollY;
+                        return {
+                            x: x,
+                            y: y
+                        };
+                    }
+                }
                 return {
                     x: e.touches[0].clientX,
                     y: e.touches[0].clientY
@@ -2291,6 +2324,16 @@
                 }
                 if (((distX !== 0 || distY !== 0) && (new Date() - handle.touchDate > 100)) === false)
                     return;
+                if (Utils.IsPC()) {
+                    var button = e.button || e.which;
+                    if ((button == 1 && e.shiftKey == false) === false)
+                        return;
+                    if (!e.defaultPrevented) {
+                        e.preventDefault();
+                    }
+                    if ((distX !== 0 || distY !== 0) === false)
+                        return;
+                }
             } else {
                 var button = e.button || e.which;
                 if ((button == 1 && e.shiftKey == false) === false)
@@ -2316,6 +2359,10 @@
                         if (Utils.isSupportTouch) {
                             document.ontouchend = null;
                             document.ontouchmove = null;
+                            if (Utils.IsPC()) {
+                                document.onmouseup = null;
+                                document.onmousemove = null;
+                            }
                         } else {
                             document.onmouseup = null;
                             document.onmousemove = null;
@@ -2367,6 +2414,16 @@
             if (Utils.isSupportTouch) {
                 document.ontouchend = null;
                 document.ontouchmove = null;
+                if (Utils.IsPC()) {
+                    if (button == 1 && e.shiftKey == false) {
+                        var resizeList = handle.layxWindow.querySelectorAll(".layx-resizes > div");
+                        for (var i = 0; i < resizeList.length; i++) {
+                            resizeList[i].classList.add("layx-reisize-touch");
+                        }
+                    }
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
             } else {
                 document.onmouseup = null;
                 document.onmousemove = null;
@@ -2399,6 +2456,7 @@
         };
         var dragstart = function (e) {
             e = e || window.event;
+            var button = e.button || e.which;
             var layxWindow = Utils.getNodeByClassName(handle, 'layx-window', win);
             if (layxWindow) {
                 var id = layxWindow.getAttribute("id").substr(5),
@@ -2431,6 +2489,16 @@
                         if (Utils.isSupportTouch) {
                             document.ontouchend = dragend;
                             document.ontouchmove = drag;
+                            if (Utils.IsPC()) {
+                                if (button == 1 && e.shiftKey == false) {
+                                    var resizeList = layxWindow.querySelectorAll(".layx-resizes > div");
+                                    for (var i = 0; i < resizeList.length; i++) {
+                                        resizeList[i].classList.remove("layx-reisize-touch");
+                                    }
+                                }
+                                document.onmouseup = dragend;
+                                document.onmousemove = drag;
+                            }
                         } else {
                             document.onmouseup = dragend;
                             document.onmousemove = drag;
@@ -2444,6 +2512,9 @@
         };
         if (Utils.isSupportTouch) {
             handle.ontouchstart = dragstart;
+            if (Utils.IsPC()) {
+                handle.onmousedown = dragstart;
+            }
         } else {
             handle.onmousedown = dragstart;
         }
@@ -2464,6 +2535,16 @@
                 }
                 if (((distX !== 0 || distY !== 0) && (new Date() - handle.touchDate > 100)) === false)
                     return;
+                if (Utils.IsPC()) {
+                    var button = e.button || e.which;
+                    if ((button == 1 && e.shiftKey == false) === false)
+                        return;
+                    if (!e.defaultPrevented) {
+                        e.preventDefault();
+                    }
+                    if ((distX !== 0 || distY !== 0) === false)
+                        return;
+                }
             } else {
                 var button = e.button || e.which;
                 if ((button == 1 && e.shiftKey == false) === false)
@@ -2525,9 +2606,20 @@
         };
         var dragend = function (e) {
             e = e || window.event;
+            var button = e.button || e.which;
             if (Utils.isSupportTouch) {
                 document.ontouchend = null;
                 document.ontouchmove = null;
+                if (Utils.IsPC()) {
+                    if (button == 1 && e.shiftKey == false) {
+                        var resizeList = handle.layxWindow.querySelectorAll(".layx-resizes > div");
+                        for (var i = 0; i < resizeList.length; i++) {
+                            resizeList[i].classList.add("layx-reisize-touch");
+                        }
+                    }
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
             } else {
                 document.onmouseup = null;
                 document.onmousemove = null;
@@ -2569,6 +2661,7 @@
         };
         var dragstart = function (e) {
             e = e || window.event;
+            var button = e.button || e.which;
             var layxWindow = Utils.getNodeByClassName(handle, 'layx-window', win);
             if (layxWindow) {
                 var id = layxWindow.getAttribute("id").substr(5),
@@ -2602,6 +2695,16 @@
                         if (Utils.isSupportTouch) {
                             document.ontouchend = dragend;
                             document.ontouchmove = drag;
+                            if (Utils.IsPC()) {
+                                if (button == 1 && e.shiftKey == false) {
+                                    var resizeList = layxWindow.querySelectorAll(".layx-resizes > div");
+                                    for (var i = 0; i < resizeList.length; i++) {
+                                        resizeList[i].classList.remove("layx-reisize-touch");
+                                    }
+                                }
+                                document.onmouseup = dragend;
+                                document.onmousemove = drag;
+                            }
                         } else {
                             document.onmouseup = dragend;
                             document.onmousemove = drag;
@@ -2615,6 +2718,9 @@
         };
         if (Utils.isSupportTouch) {
             handle.ontouchstart = dragstart;
+            if (Utils.IsPC()) {
+                handle.onmousedown = dragstart;
+            }
         } else {
             handle.onmousedown = dragstart;
         }

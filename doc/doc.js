@@ -85,7 +85,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.2.4</li>
+                    <li><label>当前版本</label>：v2.2.5</li>
                     <li><label>发布日期</label>：2018.05.27</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -179,7 +179,11 @@ window.onload = function () {
                             event.stopPropagation();
                             layx.html('log', 'Layx 更新日志', layx.multiLine(function () {/* 
 <div style="padding:10px">
-<pre style="margin-top:0"># 2018.05.27 v2.2.4 发布
+<pre style="margin-top:0"># 2018.05.27 v2.2.5 发布
+
+- [更新] 触摸代码、新增触摸电脑的支持（同时支持鼠标、触摸）
+
+# 2018.05.27 v2.2.4 发布
 
 - [新增] 移动端拖动窗口、拖曳大小支持，划时代的更新！！！！
 - [更新] 样式表支持移动端处理
