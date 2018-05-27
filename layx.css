@@ -2,9 +2,9 @@
  * file : layx.css
  * gitee : https://gitee.com/monksoul/LayX
  * author : °ÙÐ¡É®/MonkSoul
- * version : v2.2.3
+ * version : v2.2.4
  * create time : 2018.05.11
- * update time : 2018.05.26
+ * update time : 2018.05.27
  */
 
 *[class^="layx-"] {
@@ -84,7 +84,7 @@ body.ilayx-body {
 
 .layx-window {
     position: fixed;
-    overflow: hidden;
+    overflow: visible !important;
     box-orient: vertical;
     -webkit-box-orient: vertical;
     -o-box-orient: vertical;
@@ -177,6 +177,8 @@ body.ilayx-body {
     user-select: none;
     margin-right: 8px;
     min-width: 0;
+    -ms-touch-action: none;
+    touch-action: none;
 }
 
 .layx-title label, .layx-group-tab label {
@@ -442,6 +444,8 @@ body.ilayx-body {
 .layx-resizes > div {
     position: absolute;
     z-index: 3;
+    -ms-touch-action: none;
+    touch-action: none;
 }
 
 .layx-resize-top,
@@ -450,6 +454,8 @@ body.ilayx-body {
     left: 3px;
     right: 3px;
 }
+
+
 
 .layx-resize-top {
     top: 0;
@@ -467,6 +473,7 @@ body.ilayx-body {
     top: 3px;
     bottom: 3px;
 }
+
 
 .layx-resize-left {
     left: 0;
@@ -508,6 +515,64 @@ body.ilayx-body {
     right: 0;
     bottom: 0;
     cursor: se-resize;
+}
+
+.layx-resize-top.layx-reisize-touch,
+.layx-resize-bottom.layx-reisize-touch {
+    height: 16px;
+    left: 16px;
+    right: 16px;
+}
+
+.layx-resize-left.layx-reisize-touch,
+.layx-resize-right.layx-reisize-touch {
+    width: 16px;
+    top: 16px;
+    bottom: 16px;
+}
+
+.layx-resize-left-top.layx-reisize-touch,
+.layx-resize-right-top.layx-reisize-touch,
+.layx-resize-left-bottom.layx-reisize-touch,
+.layx-resize-right-bottom.layx-reisize-touch {
+    width: 16px;
+    height: 16px;
+}
+
+.layx-resize-top.layx-reisize-touch {
+    top: -8px;
+}
+
+.layx-resize-bottom.layx-reisize-touch {
+    bottom: -8px;
+}
+
+.layx-resize-left.layx-reisize-touch {
+    left: -8px;
+}
+
+.layx-resize-right.layx-reisize-touch {
+    right: -8px;
+}
+
+.layx-resize-left-top.layx-reisize-touch {
+    left: -8px;
+    top: -8px;
+}
+
+.layx-resize-right-top.layx-reisize-touch {
+    right: -8px;
+    top: -8px;
+}
+
+.layx-resize-left-bottom.layx-reisize-touch {
+    left: -8px;
+    bottom: -8px;
+}
+
+.layx-resize-right-bottom.layx-reisize-touch {
+    right: -8px;
+    bottom: -8px;
 }
 
 .layx-resize-left[data-enable='0'], .layx-resize-top[data-enable='0'], .layx-resize-right[data-enable='0'], .layx-resize-bottom[data-enable='0'], .layx-resize-left-top[data-enable='0'], .layx-resize-left-bottom[data-enable='0'], .layx-resize-right-top[data-enable='0'], .layx-resize-right-bottom[data-enable='0'] {

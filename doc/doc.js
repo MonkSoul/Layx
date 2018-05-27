@@ -85,8 +85,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：v2.2.3</li>
-                    <li><label>发布日期</label>：2018.05.26</li>
+                    <li><label>当前版本</label>：v2.2.4</li>
+                    <li><label>发布日期</label>：2018.05.27</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
@@ -115,6 +115,11 @@ window.onload = function () {
                 </ul>
                 <h2>日志</h2>
                 <pre>
+# 2018.05.27 v2.2.4 发布
+
+- [新增] 移动端拖动窗口、拖曳大小支持，划时代的更新！！！！
+- [更新] 样式表支持移动端处理
+
 # 2018.05.26 v2.2.3 发布
 
 - [新增] 浮动窗口方向控制（上、下、左、右）
