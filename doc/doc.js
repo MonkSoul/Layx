@@ -438,6 +438,8 @@ window.onload = function () {
             toc.style.display = "none";
         }
     };
+    var timeout = false;
+    var directions = ['top', 'bottom', 'left', 'right'];
     var demoHtml = document.getElementById("layx-layx-demo-html");
     if (demoHtml) {
         demoHtml.onscroll = function () {
@@ -445,8 +447,10 @@ window.onload = function () {
             layx.updateFloatWinPosition("float-left");
             layx.updateFloatWinPosition("float-top");
             layx.updateFloatWinPosition("float-bottom");
-            var directions = ['top', 'bottom', 'left', 'right'];
-            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+            if (timeout) { clearTimeout(timeout); }
+            timeout = setTimeout(function () {
+                layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+            }, 100);
         }
     }
 };
