@@ -300,6 +300,15 @@ window.onload = function () {
                 statusBar: true,
                 buttons: [
                     {
+                        id: 'donate',
+                        label: '支持作者',
+                        classes: 'custom-button1',
+                        callback: function (id, button, event) {
+                            event.stopPropagation();
+                            layx.html('donate', '请作者喝杯咖啡', '<div style="padding:10px"><img src="./code.jpg" style="width:100%;display:block;" /></div>', { width: 300, height: 385 });
+                        },
+                    },
+                    {
                         id: 'open-run',
                         label: '在线调试',
                         classes: 'custom-button',

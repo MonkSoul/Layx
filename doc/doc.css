@@ -119,8 +119,7 @@ ul {
     border: 1px solid #999;
 }
 
-#code,
-#code * {
+#code, #code * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -128,7 +127,8 @@ ul {
     -o-box-sizing: border-box;
 }
 
-.demo {}
+.demo {
+}
 
 #code {
     padding: 10px;
@@ -209,7 +209,20 @@ pre {
 }
 
 .custom-button:hover {
-    background: rgba(0, 148, 255, 0.8) !important;
+    background: rgba(0, 148, 255,0.8) !important;
+    border: none !important;
+    color: #fff !important;
+}
+
+.custom-button1 {
+    color: #fff;
+    background: #FFB800;
+    border: none;
+    float: left;
+}
+
+.custom-button1:hover {
+    background: rgba(255, 184, 0,0.8) !important;
     border: none !important;
     color: #fff !important;
 }
