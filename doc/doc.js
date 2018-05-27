@@ -114,9 +114,72 @@ window.onload = function () {
                     <li>支持窗口位置记录保存</li>
                     <li><strong>支持移动端手势拖曳、拖动</strong>
                 </ul>
-                <h2>日志</h2>
-                <pre>
-# 2018.05.27 v2.2.4 发布
+             </div>
+
+            */ })
+        }, {
+            id: 'demo',
+            title: '示例',
+            cloneElementContent: false,
+            content: document.getElementById('code')
+        }, {
+            id: 'doc',
+            title: '文档',
+            type: 'url',
+            url: './doc.html'
+        }], 0, {
+                mergeTitle: false,
+                title: 'Layx v' + layx.v,
+                width: 320,
+                height: 568,
+                minWidth: 320,
+                minHeight: 568,
+                position: [20, 20],
+                closable: false,
+                closeMenu: false,
+                debugMenu: true,
+                minable: false,
+                minMenu: false,
+                maxMenu: false,
+                stickMenu: true,
+                moveLimit: {
+                    leftOut: false,
+                    rightOut: false,
+                    topOut: false,
+                    bottomOut: false
+                },
+                event: {
+                    onmove: {
+                        progress: function (layxWindow, winform) {
+                            layx.updateFloatWinPosition("float-right");
+                            layx.updateFloatWinPosition("float-left");
+                            layx.updateFloatWinPosition("float-top");
+                            layx.updateFloatWinPosition("float-bottom");
+                            var directions = ['top', 'bottom', 'left', 'right'];
+                            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+                        }
+                    }
+                },
+                statusBar: true,
+                buttons: [
+                    {
+                        id: 'donate',
+                        label: '支持作者',
+                        classes: 'custom-button1',
+                        callback: function (id, button, event) {
+                            event.stopPropagation();
+                            layx.html('donate', '请作者喝杯咖啡', '<div style="padding:10px"><img src="./code.jpg" style="width:100%;display:block;" /></div>', { width: 300, height: 385 });
+                        },
+                    },
+                    {
+                        id: 'log',
+                        label: '更新日志',
+                        classes: 'custom-button',
+                        callback: function (id, button, event) {
+                            event.stopPropagation();
+                            layx.html('log', 'Layx 更新日志', layx.multiLine(function () {/* 
+<div style="padding:10px">
+<pre style="margin-top:0"># 2018.05.27 v2.2.4 发布
 
 - [新增] 移动端拖动窗口、拖曳大小支持，划时代的更新！！！！
 - [更新] 样式表支持移动端处理
@@ -248,64 +311,8 @@ window.onload = function () {
 
 - [新增] v1.0.0 正式发布
 </pre>
-                <h2>捐赠</h2>
-                <p>如果 Layx 对您有帮助，可以请 作者 喝杯咖啡</p>
-                <img src="./code.jpg" style="width:100%;display:block;" />
-             </div>
-
-            */ })
-        }, {
-            id: 'demo',
-            title: '示例',
-            cloneElementContent: false,
-            content: document.getElementById('code')
-        }, {
-            id: 'doc',
-            title: '文档',
-            type: 'url',
-            url: './doc.html'
-        }], 0, {
-                mergeTitle: false,
-                title: 'Layx v' + layx.v,
-                width: 320,
-                height: 568,
-                minWidth: 320,
-                minHeight: 568,
-                position: [20, 20],
-                closable: false,
-                closeMenu: false,
-                debugMenu: true,
-                minable: false,
-                minMenu: false,
-                maxMenu: false,
-                stickMenu: true,
-                moveLimit: {
-                    leftOut: false,
-                    rightOut: false,
-                    topOut: false,
-                    bottomOut: false
-                },
-                event: {
-                    onmove: {
-                        progress: function (layxWindow, winform) {
-                            layx.updateFloatWinPosition("float-right");
-                            layx.updateFloatWinPosition("float-left");
-                            layx.updateFloatWinPosition("float-top");
-                            layx.updateFloatWinPosition("float-bottom");
-                            var directions = ['top', 'bottom', 'left', 'right'];
-                            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
-                        }
-                    }
-                },
-                statusBar: true,
-                buttons: [
-                    {
-                        id: 'donate',
-                        label: '支持作者',
-                        classes: 'custom-button1',
-                        callback: function (id, button, event) {
-                            event.stopPropagation();
-                            layx.html('donate', '请作者喝杯咖啡', '<div style="padding:10px"><img src="./code.jpg" style="width:100%;display:block;" /></div>', { width: 300, height: 385 });
+</div>
+*/ }), { width: 400, height: 400 });
                         },
                     },
                     {
