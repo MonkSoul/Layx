@@ -1698,6 +1698,7 @@
                 var buttonItem = document.createElement("button");
                 var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
                 buttonItem.classList.add("layx-button-item");
+                buttonItem.setAttribute("title", buttonConfig.label);
                 buttonItem.innerText = buttonConfig.label;
                 buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
                 if (Utils.isArray(buttonConfig.classes)) {

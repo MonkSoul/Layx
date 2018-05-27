@@ -176,22 +176,21 @@ window.onload = function () {
                         classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
-                            layx.html('log', 'Layx 更新日志', layx.multiLine(function () {/* 
-<div style="padding:10px">
-<pre style="margin-top:0"># 2018.05.28 v2.2.5 发布
-
+                            layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
+<div style="padding:0 10px 10px 10px">
+<h3># 2018.05.28 v2.2.5 发布</h3>
+<pre style="margin-top:0">
+- [新增] 按钮title提示
 - [更新] 触摸代码、新增触摸电脑的支持（同时支持鼠标、触摸）
-- [修复] IOS系统Safari不支持iFrame bug
-
-# 2018.05.27 v2.2.4 发布
-
+- [修复] IOS系统Safari不支持iFrame bug</pre>
+<h3># 2018.05.27 v2.2.4 发布</h3>
+<pre style="margin-top:0">
 - [新增] 移动端拖动窗口、拖曳大小支持，划时代的更新！！！！
 - [更新] 样式表支持移动端处理
 - [更新] 取消拖曳窗口、拖动窗口屏蔽滚动条事件
-- [更新] 控制栏点击事件代码、新增移动端事件判断处理
-
-# 2018.05.26 v2.2.3 发布
-
+- [更新] 控制栏点击事件代码、新增移动端事件判断处理</pre>
+<h3># 2018.05.26 v2.2.3 发布</h3>
+<pre style="margin-top:0">
 - [新增] 浮动窗口方向控制（上、下、左、右）
 - [新增] 窗口组切换前后事件 event.onswitch
 - [更新] 拖曳容器代码
@@ -199,10 +198,9 @@ window.onload = function () {
 - [更新] 窗口组切换代码
 - [更新] 拖曳容器样式
 - [修复] layx.prompt 默认值 bug
-- [修复] layx.load 加载 bug
-
-# 2018.05.25 v2.2.0 发布
-
+- [修复] layx.load 加载 bug</pre>
+<h3># 2018.05.25 v2.2.0 发布</h3>
+<pre style="margin-top:0">
 - [新增] 浮动窗口类型
 - [新增] 浮动窗口options.floatTarget参数，floatTarget 用来设置吸附到那个元素上
 - [新增] options.mergeTitle 参数，表示窗口组标题是合并还是不合并
@@ -217,10 +215,9 @@ window.onload = function () {
 - [更新] 窗口组样式
 - [修复] 定时器 bug
 - [修复] 拖动、最大化滚动条 bug
-- [修复] IE10 bug
-
-# 2018.05.24 v2.1.6 发布
-
+- [修复] IE10 bug</pre>
+<h3># 2018.05.24 v2.1.6 发布</h3>
+<pre style="margin-top:0">
 - [新增] 窗口冒泡默认处理方法
 - [新增] 输入框prompt 默认值设置
 - [新增] 窗口存在事件event.onexist,常用于窗口已经打开刷新URL操作
@@ -235,10 +232,9 @@ window.onload = function () {
 - [更新] 提示框、消息框、询问框、输入框、加载框生成代码
 - [更新] 窗口最小宽度、最小高度为200
 - [修复] 手机IOS自带浏览器滚动条bug
-- [修复] 按钮冒泡事件 bug
-
-# 2018.05.23 v2.1.3 发布
-
+- [修复] 按钮冒泡事件 bug</pre>
+<h3># 2018.05.23 v2.1.3 发布</h3>
+<pre style="margin-top:0">
 - [新增] storeStatus 配置参数，记录窗口位置信息，即使刷新页面还能保存（基于sessionStorage存储）
 - [新增] isOverToMax 配置参数、控制初始化窗口时 超出可视区域自动最大化
 - [新增] 支持跨域网站获取焦点事件
@@ -246,10 +242,9 @@ window.onload = function () {
 - [更新] 拖动窗口、拖曳窗口流畅度
 - [更新] layx.css样式，添加各个浏览器兼容性处理
 - [更新] layx.js 代码
-- [修复] Firefox Developer Edition 版本关闭 bug
-
-# 2018.05.20 v2.1.0 发布
-
+- [修复] Firefox Developer Edition 版本关闭 bug</pre>
+<h3># 2018.05.20 v2.1.0 发布</h3>
+<pre style="margin-top:0">
 - [新增] cloneElementContent 参数，可配置 HTMLElement 是拷贝模式还是取用模式
 - [新增] 多行字符串处理方法
 - [新增] 内容正在加载中动态提示
@@ -268,36 +263,31 @@ window.onload = function () {
 - [修复] 设置窗口位置 bug
 - [修复] 设置页面窗口地址时不显示 加载遮罩层 bug
 - [修复] frames、buttons 不能深度复制对象 bug
-- [修复] 设置窗口组文本内容、URL内容 bug
-
-# 2018.05.18 v2.0.5 发布
-
+- [修复] 设置窗口组文本内容、URL内容 bug</pre>
+<h3># 2018.05.18 v2.0.5 发布</h3>
+<pre style="margin-top:0">
 - [新增] 窗口组类型
 - [新增] frames,frameIndex 配置参数
 - [新增] setGroupContent，setGroupTitle，setGroupUrl，setGroupIndex，group方法
 - [更新] layx.css 样式表
 - [修复] 最小化样式
-- [修复] 窗口组加载完成bug
-
-# 2018.05.17 v2.0.4 发布
-
+- [修复] 窗口组加载完成bug</pre>
+<h3># 2018.05.17 v2.0.4 发布</h3>
+<pre style="margin-top:0">
 - [新增] buttons 配置属性
-- [更新] 提示框、询问框、输入框代码
-
-# 2018.05.16 v2.0.3 发布
-
+- [更新] 提示框、询问框、输入框代码</pre>
+<h3># 2018.05.16 v2.0.3 发布</h3>
+<pre style="margin-top:0">
 - [新增] style 参数，可以嵌入css样式表
 - [新增] 打开新窗口时如果可视区域小于窗口初始化宽高度，默认最大化
 - [修复] 拖动层、拖曳层调整大小多窗口冲突bug
 - [修复] 部分浏览器页面窗口不能自适应 bug
-- [修复] 文本窗口样式被全局应用 bug
-
-# 2018.05.15 v2.0.2 发布
-
-- [修复] 低版本Chrome 浏览器bug
-
-# 2018.05.15 v2.0.1 发布
-
+- [修复] 文本窗口样式被全局应用 bug</pre>
+<h3># 2018.05.15 v2.0.2 发布</h3>
+<pre style="margin-top:0">
+- [修复] 低版本Chrome 浏览器bug</pre>
+<h3># 2018.05.15 v2.0.1 发布</h3>
+<pre style="margin-top:0">
 - [新增] var winform = layx.html(id,title,content,options) 快捷打开文本窗口方法
 - [新增] var winform = layx.iframe(id,title,url,options) 快捷打开网页窗口方法
 - [新增] 窗口自动关闭文本可自定义功能：autodestroyText
@@ -305,16 +295,13 @@ window.onload = function () {
 - [更新] 调整最小化后显示宽度为：240px
 - [修复] 点击文本窗口内容无法置顶 bug
 - [修复] 置顶按钮点击切换 title 提示 bug
-- [修复] 置顶层带有阻隔层时没有阻隔的bug
-
-# 2018.05.12 v2.0.0 发布
-
-- [新增] v2.0.0 正式发布
-
-# 2018.05.06 v1.0.0 发布
-
-- [新增] v1.0.0 正式发布
-</pre>
+- [修复] 置顶层带有阻隔层时没有阻隔的bug</pre>
+<h3># 2018.05.12 v2.0.0 发布</h3>
+<pre style="margin-top:0">
+- [新增] v2.0.0 正式发布</pre>
+<h3># 2018.05.06 v1.0.0 发布</h3>
+<pre style="margin-top:0">
+- [新增] v1.0.0 正式发布</pre>
 </div>
 */ }), { width: 400, height: 400 });
                         },
@@ -356,7 +343,7 @@ window.onload = function () {
                                     buttons: [
                                         {
                                             id: 'run',
-                                            label: '运行调试',
+                                            label: '运行',
                                             classes: 'custom-button',
                                             callback: function (id, button, event) {
                                                 try {
