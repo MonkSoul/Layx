@@ -403,9 +403,9 @@ window.onload = function () {
             e = e || window.event;
             var scrollDiv = code.querySelector("*[name='" + this.innerHTML + "']");
             if (self != top && self.frameElement && self.frameElement.tagName == "IFRAME") {
-                if (navigator.userAgent.indexOf("Firefox") > 0 || window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+                if (navigator.userAgent.indexOf("Firefox") > 0 || window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1 || !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
                     (document.documentElement || document.body).scrollTop = scrollDiv.offsetTop - window.innerHeight - 50;
-                    if (window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+                    if (window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1 || !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
                         code.style["-webkit-overflow-scrolling"] = "auto";
                         code.scrollTop = scrollDiv.offsetTop - window.innerHeight - 50;
                         code.style["-webkit-overflow-scrolling"] = "none";
@@ -417,7 +417,7 @@ window.onload = function () {
                 }
             }
             else {
-                if (navigator.userAgent.indexOf("Firefox") > 0 || window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+                if (navigator.userAgent.indexOf("Firefox") > 0 || window.navigator.userAgent.toLowerCase().indexOf('iphone') > -1 || !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
                     code.scrollTop = scrollDiv.offsetTop - code.offsetHeight - 50;
                 }
                 else {
