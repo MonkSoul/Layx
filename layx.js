@@ -2306,7 +2306,7 @@
                 _height = isTop ? handle.winform.area.height - distY : handle.winform.area.height + distY,
                 _width = isLeft ? handle.winform.area.width - distX : handle.winform.area.width + distX;
             LayxResize.isResizing = true;
-            document.body.classList.add('ilayx-body');
+            //document.body.classList.add('ilayx-body');
             if (LayxResize.isFirstResizing === true) {
                 LayxResize.isFirstResizing = false;
                 if (Utils.isFunction(handle.winform.event.onresize.before)) {
@@ -2393,9 +2393,9 @@
                     width: handle.winform.area.width,
                     height: handle.winform.area.height
                 });
-                if (document.body.classList.contains("ilayx-body")) {
-                    document.body.classList.remove('ilayx-body');
-                }
+                //if (document.body.classList.contains("ilayx-body")) {
+                //    document.body.classList.remove('ilayx-body');
+                //}
                 if (Utils.isFunction(handle.winform.event.onresize.after)) {
                     handle.winform.event.onresize.after(handle.layxWindow, handle.winform);
                 }
@@ -2479,7 +2479,7 @@
                     return;
             }
             LayxDrag.isMoveing = true;
-            document.body.classList.add('ilayx-body');
+            //document.body.classList.add('ilayx-body');
             if (LayxDrag.isFirstMoveing === true) {
                 LayxDrag.isFirstMoveing = false;
                 if (Utils.isFunction(handle.winform.event.onmove.before)) {
@@ -2556,9 +2556,9 @@
                     width: handle.winform.area.width,
                     height: handle.winform.area.height
                 });
-                if (document.body.classList.contains("ilayx-body")) {
-                    document.body.classList.remove('ilayx-body');
-                }
+                //if (document.body.classList.contains("ilayx-body")) {
+                //    document.body.classList.remove('ilayx-body');
+                //}
                 if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true) {
                     handle.winform.area.top = handle.defaultArea.top;
                     handle.winform.area.left = handle.defaultArea.left;
