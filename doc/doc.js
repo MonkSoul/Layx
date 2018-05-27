@@ -140,7 +140,6 @@ window.onload = function () {
                 debugMenu: true,
                 minable: false,
                 minMenu: false,
-                maxMenu: false,
                 stickMenu: true,
                 moveLimit: {
                     leftOut: false,
