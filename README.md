@@ -59,7 +59,4 @@ layx.html('str','字符串文本','Hello Layx!');
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0512/233004_05e32570_974299.png "helloworld.png")
 
-
-# 文档
-
-[查看文档、示例](http://monksoul.gitee.io/layx/doc/)
+[查看更多示例](http://monksoul.gitee.io/layx/doc/)
