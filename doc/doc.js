@@ -112,7 +112,7 @@ window.onload = function () {
                     <li>支持窗口最小化统一管理</li>
                     <li>支持滚动条智能判断</li>
                     <li>支持窗口位置记录保存</li>
-                    <li><strong>支持移动端手势拖曳、拖动</strong>
+                    <li><strong>支持触摸屏手势拖曳、拖动</strong>
                 </ul>
              </div>
 
