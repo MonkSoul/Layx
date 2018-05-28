@@ -235,7 +235,7 @@
 },{
     event:{
         ondestroy:{
-            before:function(layxWindow,winform,params,inside){
+            before:function(layxWindow,winform,params,inside,escKey){
                 if(params.noTip===true){
                         // 不需要提示
                 }
@@ -399,7 +399,7 @@ var winform = layx.iframe('float-bottom','打开一个下边浮动窗口','./ifr
     floatDirection: 'bottom',   // 设置方向
      event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     layx.visual(winform.id,false);  // 隐藏窗口
                     layx.updateFloatWinPosition(winform.id);
                     return false;
@@ -424,7 +424,7 @@ var winform = layx.iframe('float-top','打开一个上边浮动窗口','./iframe
     floatDirection: 'top',   // 设置方向
      event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     layx.visual(winform.id,false);  // 隐藏窗口
                     layx.updateFloatWinPosition(winform.id);
                     return false;
@@ -449,7 +449,7 @@ var winform = layx.iframe('float-right','打开一个右边浮动窗口','./ifra
     floatDirection: 'right',   // 设置方向
      event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     layx.visual(winform.id,false);  // 隐藏窗口 
                     layx.updateFloatWinPosition(winform.id);
                     return false;
@@ -474,7 +474,7 @@ var winform = layx.iframe('float-left','打开一个左边浮动窗口','./ifram
     floatDirection: 'left',   // 设置方向
      event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     layx.visual(winform.id,false);  // 隐藏窗口
                     layx.updateFloatWinPosition(winform.id);
                     return false;
@@ -500,7 +500,7 @@ var winform = layx.iframe('float-auto','我位置实时变化哦~~~','./iframe.h
     floatDirection: directions[Math.floor(Math.random()*4)],   // 设置方向
      event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     layx.visual(winform.id,false);  // 隐藏窗口
                     layx.updateFloatWinPosition(winform.id,directions[Math.floor(Math.random()*4)]);
                     return false;
@@ -1008,7 +1008,7 @@ var winform = layx.iframe('float-auto','我位置实时变化哦~~~','./iframe.h
                 <pre>layx.iframe('event-ondestroy','关闭前后控制','./iframe.html',{
     event:{
         ondestroy:{
-            before:function(layxWindow,winform,inside){
+            before:function(layxWindow,winform,inside,escKey){
                 alert("关闭之前");
                 console.log(new Date()+"关闭之前~")
                 console.log(winform);
@@ -1031,7 +1031,7 @@ var winform = layx.iframe('float-auto','我位置实时变化哦~~~','./iframe.h
                 <pre>layx.iframe('event-onvisual','显示/隐藏前后控制','./iframe.html',{
     event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) { 
+             before: function (layxWindow, winform, params, inside,escKey) { 
                     if(params.ok===true){
                         // 彻底销毁
                     }
@@ -1211,7 +1211,7 @@ var winform = layx.iframe('float-auto','我位置实时变化哦~~~','./iframe.h
 },'Layx',{
     event:{
         ondestroy: {
-             before: function (layxWindow, winform, params, inside) {
+             before: function (layxWindow, winform, params, inside,escKey) {
                 var textarea=layx.getPromptTextArea(winform.id);
                 if(textarea.value==="Layx"){
                     alert("你正确输入了 Layx");

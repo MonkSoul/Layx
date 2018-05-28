@@ -37,6 +37,7 @@
             url: '',
             useFrameTitle: false,
             opacity: 1,
+            escKey: true,
             floatTarget: false,
             floatDirection: 'bottom',
             shadable: false,
@@ -99,7 +100,7 @@
                     after: function (layxWindow, winform) { }
                 },
                 ondestroy: {
-                    before: function (layxWindow, winform, params, inside) { },
+                    before: function (layxWindow, winform, params, inside, escKey) { },
                     after: function () { }
                 },
                 onvisual: {
@@ -116,8 +117,7 @@
                     progress: function (layxWindow, winform) { },
                     after: function (layxWindow, winform) { }
                 },
-                onfocus: function (layxWindow, winform) {
-                },
+                onfocus: function (layxWindow, winform) { },
                 onexist: function (layxWindow, winform) { },
                 onswitch: {
                     before: function (layxWindow, winform, frameId) { },
@@ -302,6 +302,7 @@
             winform.storeStatus = config.storeStatus;
             winform.url = config.url;
             winform.content = Utils.isDom(config.content) ? config.content.outerHTML : config.content;
+            winform.escKey = config.escKey;
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             winform.area = {
                 width: _width,
@@ -1589,16 +1590,18 @@
                 }
             }
         },
-        destroy: function (id, params, inside) {
+        destroy: function (id, params, inside, escKey) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
                 layxShade = document.getElementById(windowId + '-shade'),
                 winform = that.windows[id];
             if (layxWindow && winform) {
+                if (winform.escKey === false && escKey === true)
+                    return;
                 that.updateZIndex(id);
                 if (Utils.isFunction(winform.event.ondestroy.before)) {
-                    var revel = winform.event.ondestroy.before(layxWindow, winform, params || {}, inside === true);
+                    var revel = winform.event.ondestroy.before(layxWindow, winform, params || {}, inside === true, escKey === true);
                     if (revel === false) {
                         return;
                     }
@@ -2924,9 +2927,12 @@
     win.document.onkeydown = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode == 27) {
-            layx.destroy(Layx.focusId);
+            var focusWindow = Layx.windows[Layx.focusId];
+            if (focusWindow) {
+                Layx.destroy(Layx.focusId, {}, false, true);
+            }
         }
-    }
+    };
 })(top, window, self);
 ;
 !(function (global) {
