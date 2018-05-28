@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.7
+ * version : v2.2.8
  * create time : 2018.05.11
  * update time : 2018.05.28
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.7',
+        version: '2.2.8',
         defaults: {
             id: '',
             icon: true,
@@ -769,7 +769,7 @@
                 config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
                 if (config.statusBar === true && Utils.isArray(config.buttons)) {
                     var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
-                    statusBar.appendChild(btnElement);
+                    btnElement && statusBar.appendChild(btnElement);
                 } else {
                     if (Utils.isDom(config.statusBar)) {
                         statusBar.appendChild(config.statusBar);
@@ -964,12 +964,34 @@
                 title.click();
             }
         },
+        cloneStore: {},
         createHtmlBody: function (main, config, content, type, frameConfig) {
+            var that = this;
             var html = document.createElement("div");
             html.classList.add("layx-html");
             html.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "html");
             var newContent;
             if (Utils.isDom(content)) {
+                var _ctStyle = content.currentStyle ? content.currentStyle : window.getComputedStyle(content, null);
+                if (type !== "group" && config.cloneElementContent === false) {
+                    Layx.cloneStore[config.id] = {
+                        prev: content.previousSibling,
+                        parent: content.parentNode,
+                        next: content.nextSibling,
+                        display: _ctStyle.display
+                    };
+                }
+                if (type === "group" && frameConfig.cloneElementContent === false) {
+                    if (!Layx.cloneStore[config.id]) {
+                        Layx.cloneStore[config.id] = { frames: {} };
+                    }
+                    Layx.cloneStore[config.id].frames[frameConfig.id] = {
+                        prev: content.previousSibling,
+                        parent: content.parentNode,
+                        next: content.nextSibling,
+                        display: _ctStyle.display
+                    };
+                }
                 newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
             } else {
                 html.innerHTML = content;
@@ -1611,6 +1633,45 @@
                 }
                 if (winform.closable !== true)
                     return;
+                var oldNodeInfo = that.cloneStore[id];
+                if (winform.type === "html" && winform.cloneElementContent === false) {
+                    var html = layxWindow.querySelector("#layx-" + id + "-html");
+                    if (html) {
+                        var child = html.children[0];
+                        child.style.display = oldNodeInfo.display;
+                        if (oldNodeInfo.prev) {
+                            setTimeout(function () {
+                                Utils.insertAfter(child, oldNodeInfo.prev);
+                            }, 0);
+                        } else {
+                            setTimeout(function () {
+                                oldNodeInfo.parent.insertBefore(child, oldNodeInfo.next);
+                            }, 0);
+                        }
+                    }
+                }
+                if (winform.type === "group") {
+                    if (oldNodeInfo && oldNodeInfo.frames) {
+                        for (var frameId in oldNodeInfo.frames) {
+                            var frameInfo = oldNodeInfo.frames[frameId];
+                            var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-html");
+                            if (html) {
+                                var child = html.children[0];
+                                child.style.display = frameInfo.display;
+                                if (frameInfo.prev) {
+                                    setTimeout(function () {
+                                        Utils.insertAfter(child, frameInfo.prev);
+                                    }, 0);
+                                } else {
+                                    setTimeout(function () {
+                                        frameInfo.parent.insertBefore(child, frameInfo.next);
+                                    }, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+                delete that.cloneStore[id];
                 delete that.windows[id];
                 layxWindow.parentNode.removeChild(layxWindow);
                 if (layxShade) {
@@ -1715,41 +1776,45 @@
         },
         createLayxButtons: function (buttons, id, isPrompt) {
             var that = this;
-            var buttonPanel = document.createElement("div");
-            buttonPanel.classList.add("layx-buttons");
-            for (var i = 0; i < buttons.length; i++) {
-                var buttonItem = document.createElement("button");
-                var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
-                buttonItem.classList.add("layx-button-item");
-                buttonItem.setAttribute("title", buttonConfig.label);
-                buttonItem.innerText = buttonConfig.label;
-                buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
-                if (Utils.isArray(buttonConfig.classes)) {
-                    for (var n = 0; n < buttonConfig.classes.length; n++) {
-                        buttonItem.classList.add(buttonConfig.classes[n]);
-                    }
-                } else {
-                    buttonConfig.classes && buttonItem.classList.add(buttonConfig.classes.toString());
-                }
-                buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
-                buttonItem.callback = buttons[i].callback;
-                buttonItem.onclick = function (e) {
-                    e = e || window.event;
-                    e.stopPropagation();
-                    if (Utils.isFunction(this.callback)) {
-                        if (isPrompt === true) {
-                            var textarea = that.getPromptTextArea(id);
-                            that.updateZIndex(id);
-                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
-                        } else {
-                            that.updateZIndex(id);
-                            this.callback(id, this, e);
+            windowId = "layx-" + id, layxWindow = document.getElementById(windowId), winform = that.windows[id];
+            if (layxWindow && winform) {
+                var buttonPanel = document.createElement("div");
+                buttonPanel.classList.add("layx-buttons");
+                for (var i = 0; i < buttons.length; i++) {
+                    var buttonItem = document.createElement("button");
+                    var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
+                    buttonItem.classList.add("layx-button-item");
+                    buttonItem.setAttribute("title", buttonConfig.label);
+                    buttonItem.innerText = buttonConfig.label;
+                    buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
+                    if (Utils.isArray(buttonConfig.classes)) {
+                        for (var n = 0; n < buttonConfig.classes.length; n++) {
+                            buttonItem.classList.add(buttonConfig.classes[n]);
                         }
+                    } else {
+                        buttonConfig.classes && buttonItem.classList.add(buttonConfig.classes.toString());
                     }
-                };
-                buttonPanel.appendChild(buttonItem);
+                    buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
+                    buttonItem.callback = buttons[i].callback;
+                    buttonItem.onclick = function (e) {
+                        e = e || window.event;
+                        e.stopPropagation();
+                        if (Utils.isFunction(this.callback)) {
+                            if (isPrompt === true) {
+                                var textarea = that.getPromptTextArea(id);
+                                that.updateZIndex(id);
+                                this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
+                            } else {
+                                that.updateZIndex(id);
+                                this.callback(id, this, e);
+                            }
+                        }
+                    };
+                    buttonPanel.appendChild(buttonItem);
+                }
+                return buttonPanel;
             }
-            return buttonPanel;
+            return null;
         },
         setButtonStatus: function (id, buttonId, isEnable) {
             var that = this,
@@ -2157,6 +2222,14 @@
         },
         isDom: function (obj) {
             return !!(obj && typeof window !== 'undefined' && (obj === window || obj.nodeType));
+        },
+        insertAfter: function (newEl, targetEl) {
+            var parentEl = targetEl.parentNode;
+            if (parentEl.lastChild == targetEl) {
+                parentEl.appendChild(newEl);
+            } else {
+                parentEl.insertBefore(newEl, targetEl.nextSibling);
+            }
         },
         innerArea: function () {
             return {

@@ -85,7 +85,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.2.7</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.2.8</strong></li>
                     <li><label>发布日期</label>：2018.05.28</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -172,6 +172,9 @@ window.onload = function () {
                             event.stopPropagation();
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.05.28 v2.2.8 发布</h3>
+<pre style="margin-top:0">
+- [修复] cloneElementContent:false bug</pre>
 <h3># 2018.05.28 v2.2.7 发布</h3>
 <pre style="margin-top:0">
 - [新增] ESC关闭获取焦点的窗口
