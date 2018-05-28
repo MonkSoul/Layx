@@ -968,16 +968,19 @@
             var html = document.createElement("div");
             html.classList.add("layx-html");
             html.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "html");
+            var newContent;
             if (Utils.isDom(content)) {
-                var newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
-                var contentStyle = content.currentStyle ? content.currentStyle : window.getComputedStyle(content, null);
-                if (contentStyle.display === "none") {
-                    newContent.style.display = "";
-                }
+                newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
             } else {
                 html.innerHTML = content;
             }
             main.appendChild(html);
+            if (Utils.isDom(newContent)) {
+                var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                if (contentStyle.display === "none") {
+                    newContent.style.display = "";
+                }
+            }
         },
         createFrameBody: function (main, config, layxWindow, winform, type, frameConfig) {
             var that = this;
