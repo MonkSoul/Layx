@@ -1776,45 +1776,41 @@
         },
         createLayxButtons: function (buttons, id, isPrompt) {
             var that = this;
-            windowId = "layx-" + id, layxWindow = document.getElementById(windowId), winform = that.windows[id];
-            if (layxWindow && winform) {
-                var buttonPanel = document.createElement("div");
-                buttonPanel.classList.add("layx-buttons");
-                for (var i = 0; i < buttons.length; i++) {
-                    var buttonItem = document.createElement("button");
-                    var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
-                    buttonItem.classList.add("layx-button-item");
-                    buttonItem.setAttribute("title", buttonConfig.label);
-                    buttonItem.innerText = buttonConfig.label;
-                    buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
-                    if (Utils.isArray(buttonConfig.classes)) {
-                        for (var n = 0; n < buttonConfig.classes.length; n++) {
-                            buttonItem.classList.add(buttonConfig.classes[n]);
-                        }
-                    } else {
-                        buttonConfig.classes && buttonItem.classList.add(buttonConfig.classes.toString());
+            var buttonPanel = document.createElement("div");
+            buttonPanel.classList.add("layx-buttons");
+            for (var i = 0; i < buttons.length; i++) {
+                var buttonItem = document.createElement("button");
+                var buttonConfig = layxDeepClone({}, that.defaultButtons, buttons[i]);
+                buttonItem.classList.add("layx-button-item");
+                buttonItem.setAttribute("title", buttonConfig.label);
+                buttonItem.innerText = buttonConfig.label;
+                buttonConfig.id && buttonItem.setAttribute("id", "layx-" + id + "-button-" + buttonConfig.id);
+                if (Utils.isArray(buttonConfig.classes)) {
+                    for (var n = 0; n < buttonConfig.classes.length; n++) {
+                        buttonItem.classList.add(buttonConfig.classes[n]);
                     }
-                    buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
-                    buttonItem.callback = buttons[i].callback;
-                    buttonItem.onclick = function (e) {
-                        e = e || window.event;
-                        e.stopPropagation();
-                        if (Utils.isFunction(this.callback)) {
-                            if (isPrompt === true) {
-                                var textarea = that.getPromptTextArea(id);
-                                that.updateZIndex(id);
-                                this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
-                            } else {
-                                that.updateZIndex(id);
-                                this.callback(id, this, e);
-                            }
-                        }
-                    };
-                    buttonPanel.appendChild(buttonItem);
+                } else {
+                    buttonConfig.classes && buttonItem.classList.add(buttonConfig.classes.toString());
                 }
-                return buttonPanel;
+                buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
+                buttonItem.callback = buttons[i].callback;
+                buttonItem.onclick = function (e) {
+                    e = e || window.event;
+                    e.stopPropagation();
+                    if (Utils.isFunction(this.callback)) {
+                        if (isPrompt === true) {
+                            var textarea = that.getPromptTextArea(id);
+                            that.updateZIndex(id);
+                            this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
+                        } else {
+                            that.updateZIndex(id);
+                            this.callback(id, this, e);
+                        }
+                    }
+                };
+                buttonPanel.appendChild(buttonItem);
             }
-            return null;
+            return buttonPanel;
         },
         setButtonStatus: function (id, buttonId, isEnable) {
             var that = this,
