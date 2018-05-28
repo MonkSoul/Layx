@@ -42,7 +42,7 @@
             floatDirection: 'bottom',
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
-            isOverToMax: false,
+            isOverToMax: true,
             stickMenu: false,
             stickable: true,
             minMenu: true,
