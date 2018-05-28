@@ -141,12 +141,6 @@ window.onload = function () {
                 minable: false,
                 minMenu: false,
                 stickMenu: true,
-                moveLimit: {
-                    leftOut: false,
-                    rightOut: false,
-                    topOut: false,
-                    bottomOut: false
-                },
                 event: {
                     onmove: {
                         progress: function (layxWindow, winform) {
