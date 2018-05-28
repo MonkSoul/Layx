@@ -1736,8 +1736,10 @@
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
+                            that.updateZIndex(id);
                             this.callback(id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, this, e);
                         } else {
+                            that.updateZIndex(id);
                             this.callback(id, this, e);
                         }
                     }
@@ -2922,6 +2924,9 @@
         },
         updateFloatWinPosition: function (id, direction) {
             Layx.updateFloatWinPosition(id, direction);
+        },
+        getElementPos: function (ele) {
+            return Utils.getElementPos(ele);
         }
     };
     win.document.onkeydown = function (event) {

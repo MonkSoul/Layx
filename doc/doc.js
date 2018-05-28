@@ -178,7 +178,8 @@ window.onload = function () {
 - [新增] options.escKey 开关，设置是否启用esc关闭窗口功能
 - [新增] event.ondestroy.before参数 escKey，表示是否按下esc键
 - [新增] 自动判断拷贝DOM元素如果display:none自动设置为显示
-- [修复] 文本窗口不触发焦点事件 bug</pre>
+- [修复] 文本窗口不触发焦点事件 bug
+- [修复] 点击状态栏按钮层不能置顶bug</pre>
 <h3># 2018.05.28 v2.2.6 发布</h3>
 <pre style="margin-top:0">
 - [新增] 提示框图标设置
