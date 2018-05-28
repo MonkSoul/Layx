@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.6
+ * version : v2.2.7
  * create time : 2018.05.11
  * update time : 2018.05.28
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.6',
+        version: '2.2.7',
         defaults: {
             id: '',
             icon: true,
@@ -116,7 +116,8 @@
                     progress: function (layxWindow, winform) { },
                     after: function (layxWindow, winform) { }
                 },
-                onfocus: function (layxWindow, winform) { },
+                onfocus: function (layxWindow, winform) {
+                },
                 onexist: function (layxWindow, winform) { },
                 onswitch: {
                     before: function (layxWindow, winform, frameId) { },
@@ -143,6 +144,7 @@
         zIndex: 10000000,
         windows: {},
         stickZIndex: 20000000,
+        focusId: null,
         create: function (options) {
             var that = this,
                 config = layxDeepClone({}, that.defaults, options || {}),
@@ -151,6 +153,7 @@
                 console.error("窗口id不能为空且唯一");
                 return;
             }
+            Layx.focusId = config.id;
             var _winform = that.windows[config.id];
             if (_winform) {
                 if (_winform.status === "min") {
@@ -273,6 +276,13 @@
             if (config.type === "html" || config.type === "group") {
                 layxWindow.onclick = function (e) {
                     e = e || window.event;
+                    if (Utils.isFunction(config.event.onfocus)) {
+                        var revel = Utils.isFunction(config.event.onfocus);
+                        if (revel === false) {
+                            return;
+                        }
+                        config.event.onfocus(layxWindow, winform);
+                    }
                     that.updateZIndex(config.id);
                     e.stopPropagation();
                 };
@@ -958,7 +968,11 @@
             html.classList.add("layx-html");
             html.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "html");
             if (Utils.isDom(content)) {
-                html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
+                var newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
+                var contentStyle = content.currentStyle ? content.currentStyle : window.getComputedStyle(content, null);
+                if (contentStyle.display === "none") {
+                    newContent.style.display = "";
+                }
             } else {
                 html.innerHTML = content;
             }
@@ -1470,6 +1484,7 @@
                     winform.zIndex = (++that.zIndex) + 1;
                 }
                 layxWindow.style.zIndex = winform.zIndex;
+                Layx.focusId = id;
             }
         },
         updateMinLayout: function () {
@@ -2906,6 +2921,12 @@
             Layx.updateFloatWinPosition(id, direction);
         }
     };
+    win.document.onkeydown = function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 27) {
+            layx.destroy(Layx.focusId);
+        }
+    }
 })(top, window, self);
 ;
 !(function (global) {

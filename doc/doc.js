@@ -85,7 +85,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.2.6</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.2.7</strong></li>
                     <li><label>发布日期</label>：2018.05.28</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
@@ -172,6 +172,11 @@ window.onload = function () {
                             event.stopPropagation();
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.05.28 v2.2.7 发布</h3>
+<pre style="margin-top:0">
+- [新增] ESC关闭获取焦点的窗口
+- [新增] 自动判断拷贝DOM元素如果display:none自动设置为显示
+- [修复] 文本窗口不触发焦点事件 bug</pre>
 <h3># 2018.05.28 v2.2.6 发布</h3>
 <pre style="margin-top:0">
 - [新增] 提示框图标设置
