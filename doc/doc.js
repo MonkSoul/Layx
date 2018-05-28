@@ -178,7 +178,8 @@ window.onload = function () {
 - [新增] options.dialogIcon，设置提示框图标，支持alert,confirm,msg
 - [新增] 按钮title提示
 - [更新] 触摸代码、新增触摸电脑的支持（同时支持鼠标、触摸）
-- [修复] IOS系统Safari不支持iFrame bug</pre>
+- [修复] IOS系统Safari不支持iFrame bug
+- [修复] 最小化样式超出 bug</pre>
 <h3># 2018.05.27 v2.2.4 发布</h3>
 <pre style="margin-top:0">
 - [新增] 移动端拖动窗口、拖曳大小支持，划时代的更新！！！！
