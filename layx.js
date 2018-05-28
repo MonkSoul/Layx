@@ -1940,7 +1940,7 @@
                 title: title || "请输入信息",
                 icon: false,
                 type: 'html',
-                content: that.createDialogContent("confirm", "<label>" + msg + "</label><textarea class='layx-textarea'>" + (defaultValue ? defaultValue.toString() : '') + "</textarea>"),
+                content: that.createDialogContent("prompt", "<label>" + msg + "</label><textarea class='layx-textarea'>" + (defaultValue ? defaultValue.toString() : '') + "</textarea>"),
                 width: msgSizeRange.width,
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
