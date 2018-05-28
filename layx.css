@@ -3,7 +3,7 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.5
+ * version : v2.2.6
  * create time : 2018.05.11
  * update time : 2018.05.28
  */
@@ -364,24 +364,63 @@ body.ilayx-body {
     -webkit-transform: translate3d(0, 0, 0);
 }
 
-.layx-msg,
-.layx-load {
+.layx-dialog-icon {
+    margin-right: 10px;
+    position: relative;
+    top: -5px;
+}
+
+.layx-dialog-icon .layx-iconfont {
+    font-size: 40px !important;
+}
+
+.layx-dialog-msg .layx-dialog-icon .layx-iconfont {
+    font-size: 25px !important;
+}
+
+.layx-dialog-msg .layx-dialog-icon {
+    top: 0;
+}
+
+.layx-dialog-icon-success {
+    color: #01AAED;
+}
+
+.layx-dialog-icon-warn {
+    color: #FFB800;
+}
+
+.layx-dialog-icon-error {
+    color: #f00;
+}
+
+.layx-dialog-icon-help {
+    color: #009688;
+}
+
+.layx-dialog-msg,
+.layx-dialog-load {
     color: #000;
     font-size: 15px;
     padding: 10px;
     word-break: break-all;
 }
 
-.layx-alert,
-.layx-confirm,
-.layx-prompt {
+.layx-dialog-alert,
+.layx-dialog-confirm,
+.layx-dialog-prompt {
     font-size: 15px;
     padding: 10px;
     color: #039;
 }
 
-.layx-prompt {
+.layx-dialog-prompt {
     width: 100%;
+}
+
+.layx-dialog-msg {
+    height: 100%;
+    overflow: auto;
 }
 
 .layx-textarea {
@@ -458,7 +497,7 @@ body.ilayx-body {
     visibility: hidden;
 }
 
-.layx-resizes>div {
+.layx-resizes > div {
     position: absolute;
     z-index: 3;
     -ms-touch-action: none;
@@ -713,6 +752,7 @@ body.ilayx-body {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
     }
+
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
@@ -725,6 +765,7 @@ body.ilayx-body {
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         opacity: 1;
     }
+
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);

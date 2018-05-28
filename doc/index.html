@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,minimum-scale=1,user-scalable=no" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <title>Layx 演示示例 v2.2.5</title>
+    <title>Layx 演示示例 v2.2.6</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -61,7 +61,7 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.5&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.2.6&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.28&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                 &lt;/ul&gt;
@@ -118,10 +118,50 @@
                 <pre>layx.msg('Layx 网页弹窗最佳选择.');</pre>
                 <button class="run">运行</button>
             </div>
+            <div class="demo">
+                <h4 class="tip" name="带成功图标消息窗口">带成功图标消息窗口</h4>
+                <pre>layx.msg('Layx 网页弹窗最佳选择.',{dialogIcon:'success'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带警告图标消息窗口">带警告图标消息窗口</h4>
+                <pre>layx.msg('Layx 网页弹窗最佳选择.',{dialogIcon:'warn'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带错误图标消息窗口">带错误图标消息窗口</h4>
+                <pre>layx.msg('Layx 网页弹窗最佳选择.',{dialogIcon:'error'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带帮助图标消息窗口">带帮助图标消息窗口</h4>
+                <pre>layx.msg('Layx 网页弹窗最佳选择.',{dialogIcon:'help'});</pre>
+                <button class="run">运行</button>
+            </div>
             <h3 name="提示窗口">提示窗口</h3>
             <div class="demo">
                 <h4 class="tip" name="打开一个提示窗口">打开一个提示窗口</h4>
                 <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带成功图标提示窗口">带成功图标提示窗口</h4>
+                <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！',null,{dialogIcon:'success'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带警告图标提示窗口">带警告图标提示窗口</h4>
+                <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！',null,{dialogIcon:'warn'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带错误图标提示窗口">带错误图标提示窗口</h4>
+                <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！',null,{dialogIcon:'error'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带帮助图标提示窗口">带帮助图标提示窗口</h4>
+                <pre>layx.alert('版本更新','Layx v'+layx.v+' 版本发布啦！',null,{dialogIcon:'help'});</pre>
                 <button class="run">运行</button>
             </div>
             <h3 name="询问窗口">询问窗口</h3>
@@ -131,6 +171,38 @@
     alert('您的支持是Layx发展的动力！');
     layx.destroy(id);
 });</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带成功图标询问窗口">带成功图标询问窗口</h4>
+                <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('您的支持是Layx发展的动力！');
+    layx.destroy(id);
+},{dialogIcon:'success'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带警告图标询问窗口">带警告图标询问窗口</h4>
+                <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('您的支持是Layx发展的动力！');
+    layx.destroy(id);
+},{dialogIcon:'warn'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带错误图标询问窗口">带错误图标询问窗口</h4>
+                <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('您的支持是Layx发展的动力！');
+    layx.destroy(id);
+},{dialogIcon:'error'});</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="带帮助图标询问窗口">带帮助图标询问窗口</h4>
+                <pre>layx.confirm('作何选择','你会在下一个系统使用 Layx 吗？',function(id){
+    alert('您的支持是Layx发展的动力！');
+    layx.destroy(id);
+},{dialogIcon:'help'});</pre>
                 <button class="run">运行</button>
             </div>
             <div class="demo">
