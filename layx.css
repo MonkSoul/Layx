@@ -119,6 +119,7 @@ body.ilayx-body {
 
 .layx-window.layx-min-statu {
     min-height: 0 !important;
+    overflow: hidden !important;
 }
 
 .layx-window.layx-min-statu .layx-title {
@@ -279,10 +280,10 @@ body.ilayx-body {
 
 .layx-inlay-menus {
     height: 100%;
-    height: 28px;
+    height: 30px;
     line-height: 30px;
     position: relative;
-    max-height: 28px;
+    max-height: 30px;
     z-index: 2;
 }
 
