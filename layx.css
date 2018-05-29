@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.8
+ * version : v2.2.9
  * create time : 2018.05.11
- * update time : 2018.05.28
+ * update time : 2018.05.29
  */
 
 *[class^="layx-"] {
@@ -171,6 +171,8 @@ body.ilayx-body {
     font-size: 14px;
 }
 
+
+
 .layx-title,
 .layx-group-tab {
     font-size: 14px;
@@ -183,6 +185,14 @@ body.ilayx-body {
     min-width: 0;
     -ms-touch-action: none;
     touch-action: none;
+}
+
+.layx-title {
+    -webkit-app-region: drag;
+}
+
+.layx-group-tab {
+    -webkit-app-region: no-drag;
 }
 
 .layx-title label,
@@ -299,6 +309,7 @@ body.ilayx-body {
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
     overflow: auto;
+    -webkit-app-region: no-drag;
 }
 
 .layx-group-main {

@@ -39,6 +39,36 @@
         }
     });
 }
+function updateFloat(triggerEle) {
+    if (layx.checkVisual(triggerEle, document.getElementById("floatThat-bottom"), false)) {
+        layx.visual("float-bottom");
+        layx.updateFloatWinPosition("float-bottom");
+    }
+    else {
+        layx.destroy("float-bottom");
+    }
+    if (layx.checkVisual(triggerEle, document.getElementById("floatThat-left"), false)) {
+        layx.visual("float-left");
+        layx.updateFloatWinPosition("float-left");
+    }
+    else {
+        layx.destroy("float-left");
+    }
+    if (layx.checkVisual(triggerEle, document.getElementById("floatThat-right"), false)) {
+        layx.visual("float-right");
+        layx.updateFloatWinPosition("float-right");
+    }
+    else {
+        layx.destroy("float-right");
+    }
+    if (layx.checkVisual(triggerEle, document.getElementById("floatThat-top"), false)) {
+        layx.visual("float-top");
+        layx.updateFloatWinPosition("float-top");
+    }
+    else {
+        layx.destroy("float-top");
+    }
+}
 window.onload = function () {
     if (window.layx) {
         layx.group('layx', [{
@@ -85,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.2.8</strong></li>
-                    <li><label>发布日期</label>：2018.05.28</li>
+                    <li><label>当前版本</label>：<strong>v2.2.9</strong></li>
+                    <li><label>发布日期</label>：2018.05.29</li>
                     <li><label>交流Q群</label>：18863883</li>
                 </ul>
                 <h2>特性</h2>
@@ -112,6 +142,7 @@ window.onload = function () {
                     <li>支持窗口最小化统一管理</li>
                     <li>支持滚动条智能判断</li>
                     <li>支持窗口位置记录保存</li>
+                    <li>支持 ESC 快捷键退出窗口</li>
                     <li><strong>支持触摸屏手势拖曳、拖动</strong>
                 </ul>
              </div>
@@ -142,14 +173,52 @@ window.onload = function () {
                 minMenu: false,
                 stickMenu: true,
                 event: {
+                    onmax: {
+                        after: function (layxWindow, winform) {
+                            updateFloat(layxWindow.querySelector("#layx-layx-demo-html"));
+                            if (layx.checkVisual(layxWindow, layx.getButton(winform.id, 'log'), false)) {
+                                layx.visual("float-log");
+                                layx.updateFloatWinPosition("float-log");
+                            }
+                            else {
+                                layx.destroy("float-log");
+                            }
+                        }
+                    },
+                    onrestore: {
+                        after: function (layxWindow, winform) {
+                            updateFloat(layxWindow.querySelector("#layx-layx-demo-html"));
+                            if (layx.checkVisual(layxWindow, layx.getButton(winform.id, 'log'), false)) {
+                                layx.visual("float-log");
+                                layx.updateFloatWinPosition("float-log");
+                            }
+                            else {
+                                layx.destroy("float-log");
+                            }
+                        }
+                    },
                     onmove: {
                         progress: function (layxWindow, winform) {
-                            layx.updateFloatWinPosition("float-right");
-                            layx.updateFloatWinPosition("float-left");
-                            layx.updateFloatWinPosition("float-top");
-                            layx.updateFloatWinPosition("float-bottom");
-                            var directions = ['top', 'bottom', 'left', 'right'];
-                            layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
+                            updateFloat(layxWindow.querySelector("#layx-layx-demo-html"));
+                            if (layx.checkVisual(layxWindow, layx.getButton(winform.id, 'log'), false)) {
+                                layx.visual("float-log");
+                                layx.updateFloatWinPosition("float-log");
+                            }
+                            else {
+                                layx.destroy("float-log");
+                            }
+                        }
+                    },
+                    onresize: {
+                        progress: function (layxWindow, winform) {
+                            updateFloat(layxWindow.querySelector("#layx-layx-demo-html"));
+                            if (layx.checkVisual(layxWindow, layx.getButton(winform.id, 'log'), false)) {
+                                layx.visual("float-log");
+                                layx.updateFloatWinPosition("float-log");
+                            }
+                            else {
+                                layx.destroy("float-log");
+                            }
                         }
                     }
                 },
@@ -170,10 +239,17 @@ window.onload = function () {
                         classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
+                            layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.05.28 v2.2.8 发布</h3>
+<h3># 2018.05.29 v2.2.9 发布</h3>
 <pre style="margin-top:0">
+- [新增] layx.getElementPos(el) 方法，获取元素绝对坐标 
+- [新增] layx.destroyInlay(id); 内部关闭窗口方法，相当于点击了 关闭按钮 关闭
+- [新增] layx.checkVisual(pEle, ele, isAllCheck); 方法，判断元素是否在某个元素内部并且可见！（也就是屏幕能够看到它）
+- [新增] layx.getButton(id,buttonId); 方法，用来获取状态栏按钮Element对象
+- [更新] layx.css 样式，支持Electron无边框窗口拖曳
+- [更新] 浮动窗窗口示例、支持浮动窗口屏幕不可见时隐藏，可见时显示
 - [修复] cloneElementContent:false bug</pre>
 <h3># 2018.05.28 v2.2.7 发布</h3>
 <pre style="margin-top:0">
@@ -374,7 +450,38 @@ window.onload = function () {
                 ]
             });
 
-
+        var logBtn = layx.getButton("layx", "log");
+        var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
+<div style="padding:0 10px 0 10px">
+<pre style="margin-top:0">
+- [新增] layx.getElementPos(el) 方法，获取元素绝对坐标 
+- [新增] layx.destroyInlay(id); 内部关闭窗口方法，相当于点击了 关闭按钮 关闭
+- [新增] layx.checkVisual(pEle, ele, isAllCheck); 方法，判断元素是否在某个元素内部并且可见！（也就是屏幕能够看到它）
+- [新增] layx.getButton(id,buttonId); 方法，用来获取状态栏按钮Element对象
+- [更新] layx.css 样式，支持Electron无边框窗口拖曳
+- [更新] 浮动窗窗口示例、支持浮动窗口屏幕不可见时隐藏，可见时显示
+- [修复] cloneElementContent:false bug</pre>
+*/ }), {
+                floatTarget: logBtn,
+                width: 357,
+                height: 215,
+                alwaysOnTop: true,
+                floatDirection: 'top',
+                event: {
+                    ondestroy: {
+                        before: function (layxWindow, winform, params, inside, escKey) {
+                            if (inside === false) {
+                                layx.visual(winform.id, false);
+                                layx.updateFloatWinPosition(winform.id);
+                                return false;
+                            }
+                        }
+                    },
+                    onexist: function (layxWindow, winform) {
+                        layx.visual(winform.id, true);
+                    }
+                }
+            });
     }
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {
@@ -433,19 +540,11 @@ window.onload = function () {
             toc.style.display = "none";
         }
     };
-    var timeout = false;
-    var directions = ['top', 'bottom', 'left', 'right'];
+
     var demoHtml = document.getElementById("layx-layx-demo-html");
     if (demoHtml) {
         demoHtml.onscroll = function () {
-            layx.updateFloatWinPosition("float-right");
-            layx.updateFloatWinPosition("float-left");
-            layx.updateFloatWinPosition("float-top");
-            layx.updateFloatWinPosition("float-bottom");
-            if (timeout) { clearTimeout(timeout); }
-            timeout = setTimeout(function () {
-                layx.updateFloatWinPosition("float-auto", directions[Math.floor(Math.random() * 4)]);
-            }, 100);
+            updateFloat(this);
         }
     }
 };

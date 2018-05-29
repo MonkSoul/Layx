@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.8
+ * version : v2.2.9
  * create time : 2018.05.11
- * update time : 2018.05.28
+ * update time : 2018.05.29
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.8',
+        version: '2.2.9',
         defaults: {
             id: '',
             icon: true,
@@ -783,7 +783,7 @@
             if (Utils.isDom(config.floatTarget)) {
                 that.updateFloatWinResize(config.id);
             }
-            if (config.isOverToMax === true) {
+            if (config.isOverToMax === true && (Utils.isDom(config.floatTarget) === false)) {
                 if (_width > window.innerWidth || _height > window.innerHeight) {
                     that.max(config.id);
                 }
@@ -1615,6 +1615,10 @@
                 }
             }
         },
+        destroyInlay: function (id) {
+            var that = this;
+            that.destroy(id, null, true);
+        },
         destroy: function (id, params, inside, escKey) {
             var that = this,
                 windowId = "layx-" + id,
@@ -1854,6 +1858,16 @@
                 width: width + (dialogIcon === true ? 45 : 0),
                 height: height
             };
+        },
+        getButton: function (id, buttonId) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                return layxWindow.querySelector("#layx-" + id + "-button-" + buttonId);
+            }
+            return null;
         },
         msg: function (msg, options) {
             var that = this;
@@ -2232,6 +2246,103 @@
                 width: window.innerWidth,
                 height: window.innerHeight
             };
+        },
+        getCross: function (p1, p2, p) {
+            return (p2.x - p1.x) * (p.y - p1.y) - (p.x - p1.x) * (p2.y - p1.y);
+        },
+        IsPointInMatrix: function (area, p) {
+            var that = this;
+            var p1 = area.p1;
+            var p2 = area.p2;
+            var p3 = area.p3;
+            var p4 = area.p4;
+            return that.getCross(p1, p2, p) * that.getCross(p3, p4, p) >= 0 && that.getCross(p2, p3, p) * that.getCross(p4, p1, p) >= 0;
+        },
+        checkElementIsVisual: function (pEle, ele, allContain) {
+            var that = this;
+            var innerArea = that.innerArea();
+            var pEleStartPos = that.getElementPos(pEle);
+            var pEleEndPos = {
+                x: pEleStartPos.x + pEle.offsetWidth,
+                y: pEleStartPos.y + pEle.offsetHeight
+            };
+            var eleStartPos = that.getElementPos(ele);
+            var eleEndPos = {
+                x: eleStartPos.x + ele.offsetWidth,
+                y: eleStartPos.y + ele.offsetHeight
+            };
+            if (allContain === false) {
+                var pleArea = {
+                    p1: {
+                        x: pEleStartPos.x,
+                        y: pEleEndPos.y
+                    },
+                    p2: {
+                        x: pEleStartPos.x,
+                        y: pEleStartPos.y
+                    },
+                    p3: {
+                        x: pEleEndPos.x,
+                        y: pEleStartPos.y
+                    },
+                    p4: {
+                        x: pEleEndPos.x,
+                        y: pEleEndPos.y
+                    }
+                };
+                var winArea = {
+                    p1: {
+                        x: 0,
+                        y: innerArea.height
+                    },
+                    p2: {
+                        x: 0,
+                        y: 0
+                    },
+                    p3: {
+                        x: innerArea.width,
+                        y: 0
+                    },
+                    p4: {
+                        x: innerArea.width,
+                        y: innerArea.height
+                    }
+                };
+                var ltPoint = that.IsPointInMatrix(pleArea, {
+                    x: eleStartPos.x,
+                    y: eleStartPos.y
+                });
+                var rtPoint = that.IsPointInMatrix(pleArea, {
+                    x: eleEndPos.x,
+                    y: eleStartPos.y
+                });
+                var lbPoint = that.IsPointInMatrix(pleArea, {
+                    x: eleStartPos.x,
+                    y: eleEndPos.y
+                });
+                var rbPoint = that.IsPointInMatrix(pleArea, {
+                    x: eleEndPos.x,
+                    y: eleEndPos.y
+                });
+                var wltPoint = that.IsPointInMatrix(winArea, {
+                    x: eleStartPos.x,
+                    y: eleStartPos.y
+                });
+                var wrtPoint = that.IsPointInMatrix(winArea, {
+                    x: eleEndPos.x,
+                    y: eleStartPos.y
+                });
+                var wlbPoint = that.IsPointInMatrix(winArea, {
+                    x: eleStartPos.x,
+                    y: eleEndPos.y
+                });
+                var wrbPoint = that.IsPointInMatrix(winArea, {
+                    x: eleEndPos.x,
+                    y: eleEndPos.y
+                });
+                return (ltPoint || rtPoint || lbPoint || rbPoint) && (wltPoint || wrtPoint || wlbPoint || wrbPoint);
+            }
+            return (eleStartPos.x >= pEleStartPos.x) && (eleEndPos.x <= pEleEndPos.x) && (eleStartPos.y >= pEleStartPos.y) && (eleEndPos.y <= pEleEndPos.y) && (eleStartPos.x >= 0) && (eleEndPos.x <= innerArea.width) && (eleStartPos.y >= 0) && (eleEndPos.y <= innerArea.height);
         },
         compilebubbleDirection: function (direction, target, width, height) {
             var that = this,
@@ -2999,6 +3110,15 @@
         },
         getElementPos: function (ele) {
             return Utils.getElementPos(ele);
+        },
+        destroyInlay: function (id) {
+            Layx.destroyInlay(id);
+        },
+        checkVisual: function (pEle, ele, allContain) {
+            return Utils.checkElementIsVisual(pEle, ele, allContain);
+        },
+        getButton: function (id, buttonId) {
+            return Layx.getButton(id, buttonId);
         }
     };
     win.document.onkeydown = function (event) {

@@ -572,7 +572,7 @@ bottom：下边
                 <span>类型</span>：Object<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：<br />
-                                 <pre>{
+                <pre>{
     // 加载事件
     onload: {
         // 加载之前，return false 不执行
@@ -899,6 +899,14 @@ winform.event // 窗口事件
         <pre>layx.reloadGroupFrame(id,frameId); // frameId：窗口组窗口id</pre>
         <h3 name="设置按钮状态">设置按钮状态</h3>
         <pre>layx.setButtonStatus(id, buttonId, isEnable) // buttonId：按钮Id</pre>
+        <h3 name="获取元素的绝对坐标">获取元素的绝对坐标</h3>
+        <pre>var pos = layx.getElementPos(el);   // { x:'',y:''}</pre>
+        <h3 name="调用关闭按钮关闭窗口">调用关闭按钮关闭窗口</h3>
+        <pre>layx.destroyInlay(id);</pre>
+        <h3 name="检查元素是否在某个元素区域内，并且屏幕可见">检查元素是否在某个元素区域内，并且屏幕可见</h3>
+        <pre>layx.checkVisual(pEle, ele, allContain);   // pEle：区域；ele：元素；allContain 表示是否完全包含，设置false时，只要元素在区域有任何可见都返回true</pre>
+        <h3 name="获取状态栏按钮对象">获取状态栏按钮对象</h3>
+        <pre>var btn = layx.getButton(id,buttonId); // 按钮Id</pre>
         <h2 name="窗口冒泡">窗口冒泡</h2>
         <h3 name="解决打开新窗口层索引冲突">解决打开新窗口层索引冲突</h3>
         由于默认窗口带有点击事件，如果窗口内部包含其他事件打开新窗口，该事件需要取消向上冒泡：
