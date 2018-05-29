@@ -118,6 +118,7 @@ window.onload = function () {
                     <li><label>当前版本</label>：<strong>v2.2.9</strong></li>
                     <li><label>发布日期</label>：2018.05.29</li>
                     <li><label>交流Q群</label>：18863883</li>
+                    <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
                 <h2>特性</h2>
                 <ul>
