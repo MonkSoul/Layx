@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.2.9
+ * version : v2.3.0
  * create time : 2018.05.11
- * update time : 2018.05.29
+ * update time : 2018.05.30
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.2.9',
+        version: '2.3.0',
         defaults: {
             id: '',
             icon: true,
@@ -352,6 +352,13 @@
                     windowIcon.classList.add("layx-icon");
                     windowIcon.classList.add("layx-window-icon");
                     windowIcon.innerHTML = config.icon === true ? '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-default-icon"></use></svg>' : config.icon;
+                    if (config.icon === true) {
+                        windowIcon.ondblclick = function (e) {
+                            e = e || window.event;
+                            that.destroy(config.id, null, true);
+                            e.stopPropagation();
+                        };
+                    }
                     leftBar.appendChild(windowIcon);
                 }
                 var title = document.createElement("div");

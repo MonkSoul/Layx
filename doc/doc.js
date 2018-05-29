@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.2.9</strong></li>
-                    <li><label>发布日期</label>：2018.05.29</li>
+                    <li><label>当前版本</label>：<strong>v2.3.0</strong></li>
+                    <li><label>发布日期</label>：2018.05.30</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -243,6 +243,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.05.30 v2.3.0 发布</h3>
+<pre style="margin-top:0">
+- [新增] 双击窗口图标关闭窗口
+- [更新] layx.css 样式表
+</pre>
 <h3># 2018.05.29 v2.2.9 发布</h3>
 <pre style="margin-top:0">
 - [新增] layx.getElementPos(el) 方法，获取元素绝对坐标 
@@ -453,17 +458,13 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0">
-- [新增] layx.getElementPos(el) 方法，获取元素绝对坐标 
-- [新增] layx.destroyInlay(id); 内部关闭窗口方法，相当于点击了 关闭按钮 关闭
-- [新增] layx.checkVisual(pEle, ele, isAllCheck); 方法，判断元素是否在某个元素内部并且可见！（也就是屏幕能够看到它）
-- [新增] layx.getButton(id,buttonId); 方法，用来获取状态栏按钮Element对象
-- [更新] layx.css 样式，支持Electron无边框窗口拖曳
-- [更新] 浮动窗窗口示例、支持浮动窗口屏幕不可见时隐藏，可见时显示
-- [修复] cloneElementContent:false bug</pre>
+- [新增] 双击窗口图标关闭窗口
+- [更新] layx.css 样式表</pre>
 */ }), {
                 floatTarget: logBtn,
-                width: 357,
-                height: 230,
+                width: 250,
+                height: 110,
+                minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 event: {
