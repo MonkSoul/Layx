@@ -122,6 +122,10 @@
                 onswitch: {
                     before: function (layxWindow, winform, frameId) { },
                     after: function (layxWindow, winform, frameId) { }
+                },
+                onstick: {
+                    before: function (layxWindow, winform) { },
+                    after: function (layxWindow, winform) { }
                 }
             }
         },
@@ -1351,6 +1355,12 @@
                 winform = that.windows[id];
             if (layxWindow && winform) {
                 that.updateZIndex(id);
+                if (Utils.isFunction(winform.event.onstick.before)) {
+                    var revel = winform.event.onstick.before(layxWindow, winform);
+                    if (revel === false) {
+                        return;
+                    }
+                }
                 winform.isStick = !winform.isStick;
                 var stickMenu = layxWindow.querySelector(".layx-stick-menu");
                 if (stickMenu) {
@@ -1358,6 +1368,9 @@
                     winform.isStick ? stickMenu.setAttribute("title", "取消置顶") : stickMenu.setAttribute("title", "置顶");
                 }
                 that.updateZIndex(id);
+                if (Utils.isFunction(winform.event.onstick.after)) {
+                    winform.event.onstick.after(layxWindow, winform);
+                }
             }
         },
         reloadFrame: function (id) {

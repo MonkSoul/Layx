@@ -1189,6 +1189,25 @@ var winform = layx.iframe('float-left','打开一个左边浮动窗口','./ifram
 });</pre>
                 <button class="run">运行</button>
             </div>
+            <h3 name="置顶事件">置顶事件</h3>
+            <div class="demo">
+                <h4 class="tip" name="点击置顶按钮触发事件">点击置顶按钮触发事件</h4>
+                <pre>layx.iframe('stick-event','打开一个置顶窗口，再打开另外的窗口试试','./iframe.html',{
+    alwaysOnTop:true,
+    stickMenu:true,
+    event:{
+                onstick: {
+                    before: function (layxWindow, winform, frameId) {
+                        alert("置顶之前");
+                     },
+                    after: function (layxWindow, winform, frameId) { 
+                        alert("置顶之后");
+                    }
+                }
+    }
+});</pre>
+                <button class="run">运行</button>
+            </div>
             <h2 name="更多示例">更多示例</h2>
             <h3 name="事件组合">事件组合</h3>
             <div class="demo">

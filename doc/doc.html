@@ -572,7 +572,7 @@ bottom：下边
                 <span>类型</span>：Object<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：<br />
-                <pre>{
+                                 <pre>{
     // 加载事件
     onload: {
         // 加载之前，return false 不执行
@@ -660,6 +660,15 @@ bottom：下边
         },
         // 切换之后
         after: function (layxWindow, winform, frameId) { 
+        }
+    },
+    // 置顶事件
+    onstick: {
+         // 置顶之前，return false 不执行操作
+        before: function (layxWindow, winform) { 
+        },
+        // 置顶之后
+        after: function (layxWindow, winform) { 
         }
     }
 }</pre>

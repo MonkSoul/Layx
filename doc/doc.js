@@ -463,7 +463,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 357,
-                height: 215,
+                height: 230,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 event: {
