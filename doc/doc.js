@@ -246,6 +246,7 @@ window.onload = function () {
 <h3># 2018.05.30 v2.3.0 发布</h3>
 <pre style="margin-top:0">
 - [新增] 双击窗口图标关闭窗口
+- [新增] 浮动窗自适应功能
 - [更新] layx.css 样式表
 </pre>
 <h3># 2018.05.29 v2.2.9 发布</h3>
@@ -459,12 +460,13 @@ window.onload = function () {
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0">
 - [新增] 双击窗口图标关闭窗口
+- [新增] 浮动窗自适应功能
 - [更新] layx.css 样式表</pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 250,
                 height: 110,
-                minHeight: 110,
+                minHeight: 140,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 event: {

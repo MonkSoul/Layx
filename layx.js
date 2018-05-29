@@ -264,6 +264,13 @@
                 var bubblePosition = Utils.compilebubbleDirection(config.floatDirection, config.floatTarget, _width, _height);
                 _top = bubblePosition.top;
                 _left = bubblePosition.left;
+                var floatPos = Utils.getElementPos(config.floatTarget);
+                if (config.floatDirection === "top" || config.floatDirection === "bottom") {
+                    bubble.style.left = Math.abs(floatPos.x + config.floatTarget.offsetWidth / 2 - _left - 9) + "px";
+                }
+                if (config.floatDirection === "left" || config.floatDirection === "right") {
+                    bubble.style.top = Math.abs(floatPos.y + config.floatTarget.offsetHeight / 2 - _top - 9) + "px";
+                }
             }
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
@@ -833,6 +840,13 @@
                     top: bubblePosition.top,
                     left: bubblePosition.left
                 }, true);
+                var floatPos = Utils.getElementPos(winform.floatTarget);
+                if (direction === "top" || direction === "bottom") {
+                    bubble.style.left = Math.abs(floatPos.x + winform.floatTarget.offsetWidth / 2 - winform.layxWindow.offsetLeft - 9) + "px";
+                }
+                if (direction === "left" || direction === "right") {
+                    bubble.style.top = Math.abs(floatPos.y + winform.floatTarget.offsetHeight / 2 - winform.layxWindow.offsetTop - 9) + "px";
+                }
                 winform.floatDirection = direction;
                 that.updateFloatWinResize(id, direction);
             }
@@ -2368,6 +2382,7 @@
             var that = this,
                 bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'],
                 targetPos = that.getElementPos(target),
+                innerArea = that.innerArea(),
                 bubbleSize = 11,
                 pos = {
                     top: 0,
@@ -2378,18 +2393,30 @@
                 case "bottom":
                     pos.top = targetPos.y + target.offsetHeight + bubbleSize;
                     pos.left = targetPos.x;
+                    if (targetPos.x + width >= innerArea.width) {
+                        pos.left = innerArea.width - width;
+                    }
                     break;
                 case "top":
                     pos.top = targetPos.y - (height + bubbleSize);
                     pos.left = targetPos.x;
+                    if (targetPos.x + width >= innerArea.width) {
+                        pos.left = innerArea.width - width;
+                    }
                     break;
                 case "right":
                     pos.top = targetPos.y;
                     pos.left = targetPos.x + target.offsetWidth + bubbleSize;
+                    if (targetPos.y + height >= innerArea.height) {
+                        pos.top = innerArea.height - height;
+                    }
                     break;
                 case "left":
                     pos.top = targetPos.y;
                     pos.left = targetPos.x - (width + bubbleSize);
+                    if (targetPos.y + height >= innerArea.height) {
+                        pos.top = innerArea.height - height;
+                    }
                     break;
             }
             return pos;
