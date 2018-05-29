@@ -241,6 +241,7 @@ body.ilayx-body {
     position: relative;
     color: #666;
     white-space: nowrap;
+    min-width: 0;
 }
 
 .layx-group-tab .layx-group-title {
