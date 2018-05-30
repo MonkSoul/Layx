@@ -433,7 +433,6 @@ body.ilayx-body {
 
 .layx-dialog-msg {
     height: 100%;
-    overflow: auto;
 }
 
 .layx-textarea {
