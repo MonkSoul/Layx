@@ -1683,7 +1683,7 @@
                             }, 0);
                         } else {
                             setTimeout(function () {
-                                oldNodeInfo.parent.insertBefore(child, oldNodeInfo.next);
+                                oldNodeInfo.parent && oldNodeInfo.parent.insertBefore(child, oldNodeInfo.next);
                             }, 0);
                         }
                     }
@@ -1702,7 +1702,7 @@
                                     }, 0);
                                 } else {
                                     setTimeout(function () {
-                                        frameInfo.parent.insertBefore(child, frameInfo.next);
+                                        frameInfo.parent && frameInfo.parent.insertBefore(child, frameInfo.next);
                                     }, 0);
                                 }
                             }
@@ -2112,14 +2112,42 @@
             }, options));
             return winform;
         },
+        createLoadAnimate: function () {
+            var animate = document.createElement("div");
+            animate.classList.add("layx-load-animate");
+            var inner = document.createElement("div");
+            inner.classList.add("layx-load-inner");
+            var spiner = document.createElement("div");
+            spiner.classList.add("layx-load-spiner");
+            inner.appendChild(spiner);
+            var filler = document.createElement("div");
+            filler.classList.add("layx-load-filler");
+            inner.appendChild(filler);
+            var masker = document.createElement("div");
+            masker.classList.add("layx-load-masker");
+            inner.appendChild(masker);
+            animate.appendChild(inner);
+            var inner2 = inner.cloneNode(true);
+            inner2.classList.remove("layx-load-inner");
+            inner2.classList.add("layx-load-inner2");
+            animate.appendChild(inner2);
+            return animate;
+        },
         load: function (id, msg, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 200, 20, 320, 90);
+            var msgSizeRange = that.getStrSizeRange(msg, 120, 33, 320, 90);
             var loadElement = document.createElement("div");
             loadElement.classList.add("layx-dialog-load");
             loadElement.classList.add("layx-flexbox");
             loadElement.classList.add("layx-flex-center");
-            loadElement.innerHTML = msg;
+            loadElement.appendChild(that.createLoadAnimate());
+            var msgContent = document.createElement("div");
+            msgContent.classList.add("layx-load-msg");
+            msgContent.innerHTML = msg;
+            loadElement.appendChild(msgContent);
+            var span = document.createElement("span");
+            span.classList.add("layx-dot");
+            msgContent.appendChild(span);
             var dotCount = 0;
             var loadTimer = setInterval(function () {
                 if (dotCount === 5) {
@@ -2130,7 +2158,7 @@
                 for (var i = 0; i < dotCount; i++) {
                     dotHtml += ".";
                 }
-                loadElement.innerHTML = msg + dotHtml;
+                span.innerHTML = dotHtml;
             }, 200);
             var winform = that.create(layxDeepClone({}, {
                 id: id ? id : 'layx-dialog-load-' + Utils.rndNum(8),
@@ -2139,7 +2167,7 @@
                 shadable: true,
                 content: loadElement,
                 cloneElementContent: false,
-                width: msgSizeRange.width,
+                width: msgSizeRange.width + 70,
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
                 stickMenu: false,

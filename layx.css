@@ -760,6 +760,88 @@ body.ilayx-body {
     font-family: Arial;
 }
 
+.layx-dot {
+    display: inline-block;
+    width: 25px;
+}
+
+.layx-load-animate {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    margin-right: 10px;
+}
+
+.layx-load-inner, .layx-load-inner2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+}
+
+.layx-load-inner {
+    opacity: 1;
+    background-color: #89abdd;
+    -webkit-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
+    animation: layx-second-half-hide 1.6s steps(1, end) infinite;
+}
+
+.layx-load-inner2 {
+    opacity: 0;
+    background-color: #4b86db;
+    -webkit-animation: second-half-show 1.6s steps(1, end) infinite;
+    animation: second-half-show 1.6s steps(1, end) infinite;
+}
+
+.layx-load-spiner, .layx-load-filler, .layx-load-masker {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+}
+
+.layx-load-spiner {
+    border-radius: 40px 0 0 40px;
+    background-color: #4b86db;
+    -webkit-transform-origin: right center;
+    -ms-transform-origin: right center;
+    transform-origin: right center;
+    -webkit-animation: layx-spin 800ms infinite linear;
+    animation: layx-spin 800ms infinite linear;
+    left: 0;
+    top: 0;
+}
+
+.layx-load-filler {
+    border-radius: 0 40px 40px 0;
+    background-color: #4b86db;
+    -webkit-animation: layx-second-half-hide 800ms steps(1, end) infinite;
+    animation: layx-second-half-hide 800ms steps(1, end) infinite;
+    left: 50%;
+    top: 0;
+    opacity: 1;
+}
+
+.layx-load-masker {
+    border-radius: 40px 0 0 40px;
+    background-color: #89abdd;
+    -webkit-animation: second-half-show 800ms steps(1, end) infinite;
+    animation: second-half-show 800ms steps(1, end) infinite;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.layx-load-inner2 .layx-load-spiner, .layx-load-inner2 .layx-load-filler {
+    background-color: #89abdd;
+}
+
+.layx-load-inner2 .layx-load-masker {
+    background-color: #4b86db;
+}
+
 @keyframes layx-flicker {
     from {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
@@ -783,5 +865,69 @@ body.ilayx-body {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         opacity: 0.5;
+    }
+}
+
+@-webkit-keyframes layx-spin {
+    0% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes layx-spin {
+    0% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@-webkit-keyframes layx-second-half-hide {
+    0% {
+        opacity: 1;
+    }
+
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes layx-second-half-hide {
+    0% {
+        opacity: 1;
+    }
+
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes second-half-show {
+    0% {
+        opacity: 0;
+    }
+
+    50%, 100% {
+        opacity: 1;
+    }
+}
+
+@keyframes second-half-show {
+    0% {
+        opacity: 0;
+    }
+
+    50%, 100% {
+        opacity: 1;
     }
 }
