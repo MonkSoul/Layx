@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.0
+ * version : v2.3.1
  * create time : 2018.05.11
  * update time : 2018.05.30
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.0',
+        version: '2.3.1',
         defaults: {
             id: '',
             icon: true,
@@ -42,6 +42,7 @@
             floatDirection: 'bottom',
             shadable: false,
             loaddingText: '内容正在加载中，请稍后',
+            dragInTopToMax: true,
             isOverToMax: true,
             stickMenu: false,
             stickable: true,
@@ -231,6 +232,10 @@
             _left = _position.left;
             _width = Math.max(_width, _minWidth);
             _height = Math.max(_height, _minHeight);
+            _top = Math.max(_top, 0);
+            _top = Math.min(win.innerHeight - 15, _top);
+            _left = Math.max(_left, -(_width - 15));
+            _left = Math.min(_left, win.innerWidth - 15);
             if (config.storeStatus === true && config.floatTarget === false) {
                 var _areaInfo = that.getStoreWindowAreaInfo(config.id);
                 if (_areaInfo) {
@@ -340,6 +345,7 @@
             winform.restorable = config.restorable;
             winform.closable = config.closable;
             winform.event = config.event;
+            winform.dragInTopToMax = config.dragInTopToMax;
             if (config.control === true) {
                 var controlBar = document.createElement("div");
                 controlBar.classList.add("layx-control-bar");
@@ -589,30 +595,7 @@
             main.classList.add("layx-main");
             main.classList.add("layx-flexauto");
             layxWindow.appendChild(main);
-            var contentShade = document.createElement("div");
-            contentShade.classList.add("layx-content-shade");
-            contentShade.classList.add("layx-flexbox");
-            contentShade.classList.add("layx-flex-center");
-            if (config.loaddingText !== false) {
-                if (Utils.isDom(config.loaddingText)) {
-                    contentShade.appendChild(config.loaddingText);
-                } else {
-                    contentShade.innerHTML = config.loaddingText;
-                    var dotCount = 0;
-                    winform.loaddingTextTimer = setInterval(function () {
-                        if (dotCount === 5) {
-                            dotCount = 0;
-                        }
-                        ++dotCount;
-                        var dotHtml = "";
-                        for (var i = 0; i < dotCount; i++) {
-                            dotHtml += ".";
-                        }
-                        contentShade.innerHTML = config.loaddingText + dotHtml;
-                    }, 200);
-                }
-            }
-            main.appendChild(contentShade);
+            var contentShade = that.createContenLoadAnimate(main, config.loaddingText, winform);
             switch (config.type) {
                 case "html":
                 default:
@@ -1175,11 +1158,7 @@
                 if (winform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
-                        var contentShade = document.createElement("div");
-                        contentShade.classList.add("layx-content-shade");
-                        contentShade.classList.add("layx-flexbox");
-                        contentShade.classList.add("layx-flex-center");
-                        html.parentNode.appendChild(contentShade);
+                        var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loaddingText, winform);
                         if (Utils.isDom(content)) {
                             html.appendChild(winform.cloneElementContent === true ? content.cloneNode(true) : content);
                         } else {
@@ -1226,11 +1205,7 @@
                 if (frameform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
-                        var contentShade = document.createElement("div");
-                        contentShade.classList.add("layx-content-shade");
-                        contentShade.classList.add("layx-flexbox");
-                        contentShade.classList.add("layx-flex-center");
-                        html.parentNode.parentNode.appendChild(contentShade);
+                        var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loaddingText, winform);
                         if (Utils.isDom(content)) {
                             html.appendChild(frameform.cloneElementContent === true ? content.cloneNode(true) : content);
                         } else {
@@ -1242,6 +1217,41 @@
                 }
             }
         },
+        createContenLoadAnimate: function (pEle, loaddingText, winform) {
+            var that = this;
+            var contentShade = document.createElement("div");
+            contentShade.classList.add("layx-content-shade");
+            contentShade.classList.add("layx-flexbox");
+            contentShade.classList.add("layx-flex-center");
+            if (loaddingText !== false) {
+                if (Utils.isDom(loaddingText)) {
+                    contentShade.appendChild(loaddingText);
+                } else {
+                    contentShade.appendChild(that.createLoadAnimate());
+                    var msgContent = document.createElement("div");
+                    msgContent.classList.add("layx-load-content-msg");
+                    msgContent.innerHTML = loaddingText;
+                    contentShade.appendChild(msgContent);
+                    var span = document.createElement("span");
+                    span.classList.add("layx-dot");
+                    msgContent.appendChild(span);
+                    var dotCount = 0;
+                    winform.loaddingTextTimer = setInterval(function () {
+                        if (dotCount === 5) {
+                            dotCount = 0;
+                        }
+                        ++dotCount;
+                        var dotHtml = "";
+                        for (var i = 0; i < dotCount; i++) {
+                            dotHtml += ".";
+                        }
+                        span.innerHTML = dotHtml;
+                    }, 200);
+                }
+            }
+            pEle.appendChild(contentShade);
+            return contentShade;
+        },
         setUrl: function (id, url) {
             url = url || 'about:blank';
             var that = this,
@@ -1252,30 +1262,7 @@
                 if (winform.type === "url") {
                     var iframe = layxWindow.querySelector("#layx-" + id + "-iframe");
                     if (iframe) {
-                        var contentShade = document.createElement("div");
-                        contentShade.classList.add("layx-content-shade");
-                        contentShade.classList.add("layx-flexbox");
-                        contentShade.classList.add("layx-flex-center");
-                        if (winform.loaddingText !== false) {
-                            if (Utils.isDom(winform.loaddingText)) {
-                                contentShade.appendChild(winform.loaddingText);
-                            } else {
-                                contentShade.innerHTML = winform.loaddingText;
-                                var dotCount = 0;
-                                winform.loaddingTextTimer = setInterval(function () {
-                                    if (dotCount === 5) {
-                                        dotCount = 0;
-                                    }
-                                    ++dotCount;
-                                    var dotHtml = "";
-                                    for (var i = 0; i < dotCount; i++) {
-                                        dotHtml += ".";
-                                    }
-                                    contentShade.innerHTML = winform.loaddingText + dotHtml;
-                                }, 200);
-                            }
-                        }
-                        iframe.parentNode.appendChild(contentShade);
+                        var contentShade = that.createContenLoadAnimate(iframe.parentNode, winform.loaddingText, winform);
                         iframe.setAttribute("src", url);
                     }
                 }
@@ -1293,30 +1280,7 @@
                     var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
                     if (iframe) {
                         iframe.parentNode.removeAttribute("data-complete");
-                        var contentShade = document.createElement("div");
-                        contentShade.classList.add("layx-content-shade");
-                        contentShade.classList.add("layx-flexbox");
-                        contentShade.classList.add("layx-flex-center");
-                        if (winform.loaddingText !== false) {
-                            if (Utils.isDom(winform.loaddingText)) {
-                                contentShade.appendChild(winform.loaddingText);
-                            } else {
-                                contentShade.innerHTML = winform.loaddingText;
-                                var dotCount = 0;
-                                winform.loaddingTextTimer = setInterval(function () {
-                                    if (dotCount === 5) {
-                                        dotCount = 0;
-                                    }
-                                    ++dotCount;
-                                    var dotHtml = "";
-                                    for (var i = 0; i < dotCount; i++) {
-                                        dotHtml += ".";
-                                    }
-                                    contentShade.innerHTML = winform.loaddingText + dotHtml;
-                                }, 200);
-                            }
-                        }
-                        iframe.parentNode.parentNode.appendChild(contentShade);
+                        var contentShade = that.createContenLoadAnimate(iframe.parentNode.parentNode, winform.loaddingText, winform);
                         iframe.setAttribute("src", url);
                     }
                 }
@@ -2920,6 +2884,8 @@
             handle.winform.moveLimit.bottomOut === false && (_top = Math.min(_top, handle.innerArea.height - handle.winform.area.height));
             _top = Math.max(_top, 0);
             _top = Math.min(handle.innerArea.height - 15, _top);
+            _left = Math.max(_left, -(handle.winform.area.width - 15));
+            _left = Math.min(_left, handle.innerArea.width - 15);
             handle.layxWindow.style.left = _left + "px";
             handle.layxWindow.style.top = _top + "px";
             if (Utils.isFunction(handle.winform.event.onmove.progress)) {
@@ -2965,7 +2931,7 @@
                     width: handle.winform.area.width,
                     height: handle.winform.area.height
                 });
-                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true) {
+                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true && handle.winform.dragInTopToMax === true) {
                     handle.winform.area.top = handle.defaultArea.top;
                     handle.winform.area.left = handle.defaultArea.left;
                     Layx.storeWindowAreaInfo(handle.winform.id, {

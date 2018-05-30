@@ -1,24 +1,4 @@
-﻿::-webkit-input-placeholder {
-    text-overflow: ellipsis
-}
-
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-    overflow: auto
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #dedede;
-    min-height: 25px;
-    min-width: 25px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-}
-
-ul {
+﻿ul {
     padding-left: 20px;
 }
 

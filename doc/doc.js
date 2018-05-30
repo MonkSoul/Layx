@@ -115,7 +115,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.0</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.3.1</strong></li>
                     <li><label>发布日期</label>：2018.05.30</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
@@ -243,12 +243,16 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.05.30 v2.3.0 发布</h3>
+<h3># 2018.05.30 v2.3.1 发布</h3>
 <pre style="margin-top:0">
 - [新增] 双击窗口图标关闭窗口
 - [新增] 浮动窗自适应功能
+- [新增] 窗口拖动方向为左、右、下边时最大拖动都必须留15px位置
+- [新增] options.dragInTopToMax 用来设置是否拖动到顶部自动最大化
 - [更新] 加载窗口代码、新增加载动画
 - [更新] layx.css 样式表
+- [更新] 加载内容特效
+- [修复] 窗口拖出可视窗口顶部 bug
 </pre>
 <h3># 2018.05.29 v2.2.9 发布</h3>
 <pre style="margin-top:0">
@@ -462,12 +466,16 @@ window.onload = function () {
 <pre style="margin-top:0">
 - [新增] 双击窗口图标关闭窗口
 - [新增] 浮动窗自适应功能
+- [新增] 窗口拖动方向为左、右、下边时最大拖动都必须留15px位置
+- [新增] options.dragInTopToMax 用来设置是否拖动到顶部自动最大化
 - [更新] 加载窗口代码、新增加载动画
-- [更新] layx.css 样式表</pre>
+- [更新] layx.css 样式表
+- [更新] 加载内容特效
+- [修复] 窗口拖出可视窗口顶部 bug</pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 290,
-                height: 160,
+                height: 255,
                 minHeight: 140,
                 alwaysOnTop: true,
                 floatDirection: 'top',
