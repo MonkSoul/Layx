@@ -100,6 +100,7 @@ body.ilayx-body {
     color: #000;
     font-size: 12px;
     line-height: 1.5;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .layx-window.layx-flicker {
@@ -860,13 +861,11 @@ body.ilayx-body {
     from {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
-        opacity: 1;
     }
 
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
-        opacity: 0.5;
     }
 }
 

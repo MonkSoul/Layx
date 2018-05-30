@@ -253,6 +253,7 @@ window.onload = function () {
 - [更新] layx.css 样式表
 - [更新] 加载内容特效
 - [修复] 窗口拖出可视窗口顶部 bug
+- [修复] IOS系统safari浏览器点击屏幕闪动 bug
 </pre>
 <h3># 2018.05.29 v2.2.9 发布</h3>
 <pre style="margin-top:0">
@@ -471,11 +472,13 @@ window.onload = function () {
 - [更新] 加载窗口代码、新增加载动画
 - [更新] layx.css 样式表
 - [更新] 加载内容特效
-- [修复] 窗口拖出可视窗口顶部 bug</pre>
+- [修复] 窗口拖出可视窗口顶部 bug
+- [修复] IOS系统safari浏览器点击屏幕闪动 bug
+</pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 290,
-                height: 255,
+                height: 280,
                 minHeight: 140,
                 alwaysOnTop: true,
                 floatDirection: 'top',
