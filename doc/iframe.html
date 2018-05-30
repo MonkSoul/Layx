@@ -38,11 +38,22 @@
             color: #444;
             margin-top: -30px;
         }
+
+        .effect {
+            background-color: #111;
+            background-image: -webkit-linear-gradient( 45deg, transparent 45%, hsla(48,20%,90%,1) 45%, hsla(48,20%,90%,1) 55%, transparent 0 );
+            background-image: -o-linear-gradient( 45deg, transparent 45%, hsla(48,20%,90%,1) 45%, hsla(48,20%,90%,1) 55%, transparent 0 );
+            background-image: linear-gradient( 45deg, transparent 45%, hsla(48,20%,90%,1) 45%, hsla(48,20%,90%,1) 55%, transparent 0 );
+            background-size: .05em .05em;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 2px #000;
+        }
     </style>
 </head>
 
 <body>
-    <label>Layx</label>
+    <label class="effect">Layx</label>
     <script type="text/javascript">
         function iframeFunc() {
             alert("我是iframe.html 页面的 iframeFunc 方法");
