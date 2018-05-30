@@ -41,7 +41,7 @@
             floatTarget: false,
             floatDirection: 'bottom',
             shadable: false,
-            loaddingText: '内容正在加载中，请稍后',
+            loadingText: '内容正在加载中，请稍后',
             dragInTopToMax: true,
             isOverToMax: true,
             stickMenu: false,
