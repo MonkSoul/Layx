@@ -464,7 +464,7 @@ window.onload = function () {
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
-<pre style="margin-top:0">
+<pre style="margin-top:0;margin-bottom: 0;">
 - [新增] 双击窗口图标关闭窗口
 - [新增] 浮动窗自适应功能
 - [新增] 窗口拖动方向为左、右、下边时最大拖动都必须留15px位置
@@ -478,7 +478,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 290,
-                height: 280,
+                height: 270,
                 minHeight: 140,
                 alwaysOnTop: true,
                 floatDirection: 'top',
