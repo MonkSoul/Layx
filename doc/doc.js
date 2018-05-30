@@ -116,7 +116,7 @@ window.onload = function () {
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
                     <li><label>当前版本</label>：<strong>v2.3.1</strong></li>
-                    <li><label>发布日期</label>：2018.05.30</li>
+                    <li><label>发布日期</label>：2018.05.31</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -243,7 +243,7 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.05.30 v2.3.1 发布</h3>
+<h3># 2018.05.31 v2.3.1 发布</h3>
 <pre style="margin-top:0">
 - [新增] 双击窗口图标关闭窗口
 - [新增] 浮动窗自适应功能

@@ -3163,7 +3163,7 @@
             return Layx.getButton(id, buttonId);
         }
     };
-    win.document.onkeydown = function (event) {
+    win.document.addEventListener("keydown", function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode == 27) {
             var focusWindow = Layx.windows[Layx.focusId];
@@ -3171,7 +3171,7 @@
                 Layx.destroy(Layx.focusId, {}, false, true);
             }
         }
-    };
+    }, false);
 })(top, window, self);
 ;
 !(function (global) {
