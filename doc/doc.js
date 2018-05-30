@@ -100,7 +100,7 @@ window.onload = function () {
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 一款再熟悉不过的Web弹窗插件。</p>
+                <p>Layx 企业级弹窗组件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>项目</h2>
                 <ul>
