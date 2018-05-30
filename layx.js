@@ -2174,6 +2174,7 @@
                 minMenu: false,
                 maxMenu: false,
                 closeMenu: false,
+                escKey: false,
                 alwaysOnTop: true,
                 resizable: false,
                 movable: false,
