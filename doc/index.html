@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,minimum-scale=1,user-scalable=no" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <title>Layx 演示示例 v2.3.1</title>
+    <title>Layx 演示示例 v2.3.2</title>
     <link href="../layx.min.css" rel="stylesheet" />
     <link href="doc.css" rel="stylesheet" />
 </head>
@@ -72,7 +72,7 @@
                 &lt;ul&gt;
                     &lt;li&gt;&lt;label&gt;原创作者&lt;/label&gt;：百小僧&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;开源协议&lt;/label&gt;：MIT&lt;/li&gt;
-                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.3.1&lt;/li&gt;
+                    &lt;li&gt;&lt;label&gt;当前版本&lt;/label&gt;：v2.3.2&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;发布日期&lt;/label&gt;：2018.05.31&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;交流Q群&lt;/label&gt;：18863883&lt;/li&gt;
                     &lt;li&gt;&lt;label&gt;版权所有&lt;/label&gt;：百签软件（中山）有限公司&lt;/li&gt;
@@ -1353,6 +1353,14 @@ alert(JSON.stringify(winform2, null, 4));
                 <button class="run">运行</button>
             </div>
             <div class="demo">
+                <h4 class="tip" name="设置文本窗口内容，取用模式">设置文本窗口内容，取用模式</h4>
+                <p><strong>第一步：先打开窗口才能测试</strong></p>
+                <button onclick="layx.html('text-demo', '窗口操作方法测试、通讯窗口', 'Layx 企业级弹窗组件.');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
+                <p><strong>第二步：设置文本窗口内容、取用模式</strong></p>
+                <pre>layx.setContent('text-demo',document.getElementById('dom-get'),false);</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
                 <h4 class="tip" name="设置网页窗口地址">设置网页窗口地址</h4>
                 <p><strong>第一步：先打开窗口才能测试</strong></p>
                 <button onclick="layx.iframe('iframe-demo', '窗口操作方法测试、通讯窗口', './iframe.html');var e = e || window.event; e.stopPropagation();">先打开一个窗口再操作，点击打开</button>
@@ -1440,6 +1448,14 @@ alert(JSON.stringify(winform2, null, 4));
                 <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 企业级弹窗组件'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}]);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
                 <p><strong>第二步：设置窗口组一内容</strong></p>
                 <pre>layx.setGroupContent('group-demo','group1','我是新设置的内容');</pre>
+                <button class="run">运行</button>
+            </div>
+            <div class="demo">
+                <h4 class="tip" name="设置窗口组文本内容、取用模式">设置窗口组文本内容、取用模式</h4>
+                <p><strong>第一步：先打开窗口组才能测试</strong></p>
+                <button onclick="layx.group('group-demo', [{id:'group1',title:'窗口组一',content:'Layx 企业级弹窗组件'},{id:'group2',title:'窗口组二',type:'url',url:'./iframe.html'}]);var e = e || window.event; e.stopPropagation();">先打开一个窗口组再操作，点击打开</button>
+                <p><strong>第二步：设置窗口组一内容、取用模式</strong></p>
+                <pre>layx.setGroupContent('group-demo','group1',document.getElementById('dom-get'),false);</pre>
                 <button class="run">运行</button>
             </div>
             <div class="demo">

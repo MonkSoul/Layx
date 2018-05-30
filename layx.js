@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.1
+ * version : v2.3.2
  * create time : 2018.05.11
- * update time : 2018.05.30
+ * update time : 2018.05.31
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.1',
+        version: '2.3.2',
         defaults: {
             id: '',
             icon: true,
@@ -30,6 +30,7 @@
             type: 'html',
             frames: [],
             frameIndex: 0,
+            preload: 1,
             mergeTitle: true,
             content: '',
             dialogIcon: false,
@@ -317,7 +318,7 @@
             winform.cloneElementContent = config.cloneElementContent;
             winform.storeStatus = config.storeStatus;
             winform.url = config.url;
-            winform.content = Utils.isDom(config.content) ? config.content.outerHTML : config.content;
+            winform.content = config.content;
             winform.escKey = config.escKey;
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             winform.area = {
@@ -581,11 +582,11 @@
                 }
             }
             if (Utils.isDom(config.floatTarget)) {
-                var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
+                var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : win.getComputedStyle(layxWindow, null);
                 bubble.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
                 if (config.control === true) {
                     var _controlBar = layxWindow.querySelector(".layx-control-bar");
-                    var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : window.getComputedStyle(_controlBar, null);
+                    var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null);
                     bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
                 } else {
                     bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
@@ -632,6 +633,7 @@
                                 return;
                             }
                         }
+                        config.preload = (/(^[1-9]\d*$)/.test(config.preload) === false) ? true : Math.min(config.preload, config.frames.length);
                         var groupLoadCount = 0;
                         for (var i = 0; i < config.frames.length; i++) {
                             var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
@@ -643,7 +645,7 @@
                             }
                             main.appendChild(frameBody);
                             if (frameConfig.type === "html") {
-                                that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig);
+                                that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig, (i === config.frameIndex) ? true : (Utils.isBoolean(config.preload) ? true : (i + 1 <= config.preload)));
                                 frameBody.setAttribute("data-complete", "1");
                                 var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
                                 if (loadComplteMains.length === config.frames.length) {
@@ -653,7 +655,7 @@
                                     }
                                 }
                             } else if (frameConfig.type === "url") {
-                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig);
+                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig, (i === config.frameIndex) ? true : (Utils.isBoolean(config.preload) ? true : (i + 1 <= config.preload)));
                             }
                         }
                     }
@@ -808,11 +810,11 @@
                     bubbleInlay.style["border" + winform.floatDirection.toFirstUpperCase() + "Color"] = "transparent";
                     bubble.classList.add("layx-bubble-" + direction);
                     bubbleInlay.classList.add("layx-bubble-inlay-" + direction);
-                    var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : window.getComputedStyle(layxWindow, null);
+                    var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : win.getComputedStyle(layxWindow, null);
                     bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
                     if (winform.control === true) {
                         var _controlBar = layxWindow.querySelector(".layx-control-bar");
-                        var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : window.getComputedStyle(_controlBar, null);
+                        var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null);
                         bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
                     } else {
                         bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
@@ -955,6 +957,17 @@
                         prevGroupMain.removeAttribute("data-enable");
                         currentGroupMain.setAttribute("data-enable", "1");
                         winform.groupCurrentId = frameId;
+                        if (currentGroupMain.getAttribute("data-preload") === "1") {
+                            var frameform = that.getGroupFrame(winform.frames, frameId);
+                            if (frameform.type === "url") {
+                                that.setGroupUrl(id, frameId, frameform.url);
+                                currentGroupMain.removeAttribute("data-preload");
+                            }
+                            if (frameform.type === "html") {
+                                that.setGroupContent(id, frameId, frameform.content, frameform.cloneElementContent);
+                                currentGroupMain.removeAttribute("data-preload");
+                            }
+                        }
                     }
                     if (Utils.isFunction(winform.event.onswitch.after)) {
                         winform.event.onswitch.after(layxWindow, winform, target.getAttribute("data-frameId"));
@@ -973,46 +986,50 @@
             }
         },
         cloneStore: {},
-        createHtmlBody: function (main, config, content, type, frameConfig) {
+        createHtmlBody: function (main, config, content, type, frameConfig, isLoad) {
             var that = this;
             var html = document.createElement("div");
             html.classList.add("layx-html");
             html.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "html");
             var newContent;
-            if (Utils.isDom(content)) {
-                var _ctStyle = content.currentStyle ? content.currentStyle : window.getComputedStyle(content, null);
-                if (type !== "group" && config.cloneElementContent === false) {
-                    Layx.cloneStore[config.id] = {
-                        prev: content.previousSibling,
-                        parent: content.parentNode,
-                        next: content.nextSibling,
-                        display: _ctStyle.display
-                    };
-                }
-                if (type === "group" && frameConfig.cloneElementContent === false) {
-                    if (!Layx.cloneStore[config.id]) {
-                        Layx.cloneStore[config.id] = { frames: {} };
+            if (isLoad !== false) {
+                if (Utils.isDom(content)) {
+                    var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
+                    if (type !== "group" && config.cloneElementContent === false) {
+                        Layx.cloneStore[config.id] = {
+                            prev: content.previousSibling,
+                            parent: content.parentNode,
+                            next: content.nextSibling,
+                            display: _ctStyle.display
+                        };
                     }
-                    Layx.cloneStore[config.id].frames[frameConfig.id] = {
-                        prev: content.previousSibling,
-                        parent: content.parentNode,
-                        next: content.nextSibling,
-                        display: _ctStyle.display
-                    };
+                    if (type === "group" && frameConfig.cloneElementContent === false) {
+                        if (!Layx.cloneStore[config.id]) {
+                            Layx.cloneStore[config.id] = { frames: {} };
+                        }
+                        Layx.cloneStore[config.id].frames[frameConfig.id] = {
+                            prev: content.previousSibling,
+                            parent: content.parentNode,
+                            next: content.nextSibling,
+                            display: _ctStyle.display
+                        };
+                    }
+                    newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
+                } else {
+                    html.innerHTML = content;
                 }
-                newContent = html.appendChild((type === "group" ? frameConfig : config).cloneElementContent === true ? content.cloneNode(true) : content);
             } else {
-                html.innerHTML = content;
+                main.setAttribute("data-preload", "1");
             }
             main.appendChild(html);
             if (Utils.isDom(newContent)) {
-                var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                var contentStyle = newContent.currentStyle ? newContent.currentStyle : win.getComputedStyle(newContent, null);
                 if (contentStyle.display === "none") {
                     newContent.style.display = "";
                 }
             }
         },
-        createFrameBody: function (main, config, layxWindow, winform, type, frameConfig) {
+        createFrameBody: function (main, config, layxWindow, winform, type, frameConfig, isLoad) {
             var that = this;
             var iframe = document.createElement("iframe");
             iframe.setAttribute("id", "layx-" + config.id + (type === "group" ? "-" + frameConfig.id + "-" : "-") + "iframe");
@@ -1028,7 +1045,7 @@
             iframe.setAttribute("allowfullscreen", "");
             iframe.setAttribute("mozallowfullscreen", "");
             iframe.setAttribute("webkitallowfullscreen", "");
-            iframe.src = (type === "group" ? frameConfig.url : config.url) || 'about:blank';
+            iframe.src = isLoad !== false ? ((type === "group" ? frameConfig.url : config.url) || 'about:blank') : 'about:blank';
             var iframeTitle = config.title;
             if (iframe.attachEvent) {
                 iframe.attachEvent("onreadystatechange", function () {
@@ -1147,9 +1164,12 @@
                     }
                 }, false);
             }
+            if (isLoad === false) {
+                main.setAttribute("data-preload", "1");
+            }
             main.appendChild(iframe);
         },
-        setContent: function (id, content) {
+        setContent: function (id, content, cloneElementContent) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
@@ -1159,11 +1179,30 @@
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
                         var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loaddingText, winform);
+                        cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : winform.cloneElementContent;
+                        var newContent;
                         if (Utils.isDom(content)) {
-                            html.appendChild(winform.cloneElementContent === true ? content.cloneNode(true) : content);
+                            var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
+                            if (cloneElementContent === false) {
+                                Layx.cloneStore[id] = {
+                                    prev: content.previousSibling,
+                                    parent: content.parentNode,
+                                    next: content.nextSibling,
+                                    display: _ctStyle.display
+                                };
+                            }
+                            html.innerHTML = "";
+                            newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
                         } else {
                             html.innerHTML = content;
                         }
+                        if (Utils.isDom(newContent)) {
+                            var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                            if (contentStyle.display === "none") {
+                                newContent.style.display = "";
+                            }
+                        }
+                        winform.content = content;
                         html.parentNode.removeChild(contentShade);
                     }
                 }
@@ -1195,7 +1234,7 @@
                 }
             }
         },
-        setGroupContent: function (id, frameId, content) {
+        setGroupContent: function (id, frameId, content, cloneElementContent) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
@@ -1206,10 +1245,31 @@
                     var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
                         var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loaddingText, winform);
+                        cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : frameform.cloneElementContent;
+                        var newContent;
                         if (Utils.isDom(content)) {
-                            html.appendChild(frameform.cloneElementContent === true ? content.cloneNode(true) : content);
+                            var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
+                            if (cloneElementContent === false) {
+                                if (!Layx.cloneStore[id]) {
+                                    Layx.cloneStore[id] = { frames: {} };
+                                }
+                                Layx.cloneStore[id].frames[frameId] = {
+                                    prev: content.previousSibling,
+                                    parent: content.parentNode,
+                                    next: content.nextSibling,
+                                    display: _ctStyle.display
+                                };
+                            }
+                            html.innerHTML = "";
+                            newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
                         } else {
                             html.innerHTML = content;
+                        }
+                        if (Utils.isDom(newContent)) {
+                            var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                            if (contentStyle.display === "none") {
+                                newContent.style.display = "";
+                            }
                         }
                         frameform.content = content;
                         html.parentNode.parentNode.removeChild(contentShade);
@@ -1636,7 +1696,7 @@
                 if (winform.closable !== true)
                     return;
                 var oldNodeInfo = that.cloneStore[id];
-                if (winform.type === "html" && winform.cloneElementContent === false) {
+                if (winform.type === "html" && oldNodeInfo) {
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
                         var child = html.children[0];
@@ -1652,7 +1712,7 @@
                         }
                     }
                 }
-                if (winform.type === "group") {
+                if (winform.type === "group" && oldNodeInfo) {
                     if (oldNodeInfo && oldNodeInfo.frames) {
                         for (var frameId in oldNodeInfo.frames) {
                             var frameInfo = oldNodeInfo.frames[frameId];
@@ -3093,14 +3153,14 @@
         getParentContext: function (id) {
             return Layx.getParentContext(id);
         },
-        setContent: function (id, content) {
-            Layx.setContent(id, content);
+        setContent: function (id, content, cloneElementContent) {
+            Layx.setContent(id, content, cloneElementContent);
         },
         setUrl: function (id, url) {
             Layx.setUrl(id, url);
         },
-        setGroupContent: function (id, frameId, content) {
-            Layx.setGroupContent(id, frameId, content);
+        setGroupContent: function (id, frameId, content, cloneElementContent) {
+            Layx.setGroupContent(id, frameId, content, cloneElementContent);
         },
         setGroupTitle: function (id, frameId, title, useFrameTitle) {
             Layx.setGroupTitle(id, frameId, title, useFrameTitle);

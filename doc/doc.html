@@ -275,6 +275,15 @@ bottom：下边
             </div>
         </div>
         <div class="doc-item">
+            <p><label>preload：设置窗口组默认预加载个数</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Number/Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：1<br />
+                <span>说明</span>：设置 type:group 有效，设置窗口组默认加载个数。设置false将全部加载
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>mergeTitle：是否合并窗口组标题</label></p>
             <div class="doc-des">
                 <span>类型</span>：Boolean<br />
@@ -884,11 +893,11 @@ winform.event // 窗口事件
         <h3 name="获取页面窗口parent对象">获取页面窗口parent对象</h3>
         <pre>var parentContentWindow = layx.getParentContext(id);</pre>
         <h3 name="设置文本窗口内容">设置文本窗口内容</h3>
-        <pre>layx.setContent(id,content);</pre>
+        <pre>layx.setContent(id,content, cloneElementContent);</pre>
         <h3 name="设置页面窗口地址">设置页面窗口地址</h3>
         <pre>layx.setUrl(id,url);</pre>
         <h3 name="设置窗口组文本窗口内容">设置窗口组文本窗口内容</h3>
-        <pre>layx.setGroupContent(id,frameId,content); // frameId：窗口组窗口id</pre>
+        <pre>layx.setGroupContent(id,frameId,content, cloneElementContent); // frameId：窗口组窗口id</pre>
         <h3 name="设置窗口组标题">设置窗口组标题</h3>
         <pre>layx.setGroupTitle(id, frameId, title, useFrameTitle); // frameId：窗口组窗口id</pre>
         <h3 name="设置窗口组页面窗口地址">设置窗口组页面窗口地址</h3>
