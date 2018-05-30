@@ -170,6 +170,7 @@ body.ilayx-body {
 
 .layx-window-icon {
     font-size: 14px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -243,6 +244,7 @@ body.ilayx-body {
     color: #666;
     white-space: nowrap;
     min-width: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .layx-group-tab .layx-group-title {
@@ -289,6 +291,7 @@ body.ilayx-body {
 
 .layx-inlay-menus .layx-icon {
     width: 45px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .layx-inlay-menus .layx-icon:hover {
@@ -468,6 +471,7 @@ body.ilayx-body {
     margin-left: 8px;
     display: inline-block;
     background-color: #e1e1e1;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .layx-buttons .layx-button-item:hover {
