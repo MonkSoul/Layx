@@ -551,4 +551,8 @@ window.onload = function () {
             updateFloat(this);
         }
     }
+
+    window.onscroll = function () {
+        layx.updateFloatWinPosition("float-log");
+    }
 };
