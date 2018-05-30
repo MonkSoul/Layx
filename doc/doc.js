@@ -105,7 +105,7 @@ window.onload = function () {
                 <h2>项目</h2>
                 <ul>
                     <li>Gitee：
-                    <p style="margin:5px 0"><a href='https://gitee.com/monksoul/LayX/stargazers'><img src='https://gitee.com/monksoul/LayX/badge/star.svg?theme=dark' alt='star'></img></a> <a href='https://gitee.com/monksoul/LayX/members'><img src='https://gitee.com/monksoul/LayX/badge/fork.svg?theme=dark' alt='fork'></img></a></p>
+                    <p style="margin:5px 0"><a href='https://gitee.com/monksoul/LayX/stargazers' target='_blank'><img src='https://gitee.com/monksoul/LayX/badge/star.svg?theme=dark' alt='star'></img></a> <a href='https://gitee.com/monksoul/LayX/members'  target='_blank'><img src='https://gitee.com/monksoul/LayX/badge/fork.svg?theme=dark' alt='fork'></img></a></p>
                     </li>
                     <li>Github：
                     <p style="margin:5px 0"><iframe src="https://ghbtns.com/github-btn.html?user=MonkSoul&repo=Layx&type=star&count=true" frameborder="0" scrolling="0" width="85px" height="20px"></iframe> <iframe src="https://ghbtns.com/github-btn.html?user=MonkSoul&repo=Layx&type=fork&count=true" frameborder="0" scrolling="0" width="85px" height="20px"></iframe></p>
