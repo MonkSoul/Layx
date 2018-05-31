@@ -352,10 +352,10 @@ bottom：下边
         <div class="doc-item">
             <p><label>loadingText：窗口内容加载时显示文本</label></p>
             <div class="doc-des">
-                <span>类型</span>：String/Boolean/HTMLString/HTMLElement<br />
+                <span>类型</span>：String/Boolean/HTMLString/HTMLElement/Array[Boolean,String/HTMLString/HTMLElement]<br />
                 <span>必需</span>：否<br />
                 <span>默认值</span>：内容正在加载中，请稍后<br />
-                <span>说明</span>：设置false将不启用加载提示。如果设置为String/HtmlString类型，将自动追加 ... 加载效果，支持传入DOM对象
+                <span>说明</span>：设置false将不启用加载提示。如果设置为String/HtmlString类型，将自动追加 ... 加载效果，支持传入DOM对象，如果需要自定义需传入数组，数组格式：[true,自定义字符串/对象]，必须设置第一个参数为true
             </div>
         </div>
         <div class="doc-item">

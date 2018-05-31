@@ -115,7 +115,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.2</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.3.3</strong></li>
                     <li><label>发布日期</label>：2018.05.31</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
@@ -243,6 +243,13 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.05.31 v2.3.3 发布</h3>
+<pre style="margin-top:0">
+- [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
+- [更新] layx.css 兼容处理
+- [修复] 网页窗口加载失败后加载提示不能隐藏 bug
+- [修复] 自定义loadingText bug
+</pre>
 <h3># 2018.05.31 v2.3.2 发布</h3>
 <pre style="margin-top:0">
 - [新增] 窗口组 options.preload参数，可以设置窗口组预加载个数
@@ -467,22 +474,15 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] 窗口组 options.preload参数，可以设置窗口组预加载个数
-- [新增] 双击窗口图标关闭窗口
-- [新增] 浮动窗自适应功能
-- [新增] 窗口拖动方向为左、右、下边时最大拖动都必须留15px位置
-- [新增] options.dragInTopToMax 用来设置是否拖动到顶部自动最大化
-- [更新] 加载窗口代码、新增加载动画
-- [更新] layx.css 样式表
-- [更新] 加载内容特效
-- [修复] 窗口拖出可视窗口顶部 bug
-- [修复] IOS系统safari浏览器点击屏幕闪动 bug
-- [修复] 设置文本窗口内容、窗口组文本窗口内容 取用模式 bug
+- [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
+- [更新] layx.css 兼容处理
+- [修复] 网页窗口加载失败后加载提示不能隐藏 bug
+- [修复] 自定义loadingText bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 310,
+                height: 170,
                 minHeight: 140,
                 alwaysOnTop: true,
                 floatDirection: 'top',

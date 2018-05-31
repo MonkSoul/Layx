@@ -3,7 +3,7 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.2
+ * version : v2.3.3
  * create time : 2018.05.11
  * update time : 2018.05.31
  */
@@ -790,6 +790,9 @@ body.ilayx-body {
     background-color: #89abdd;
     -webkit-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
     animation: layx-second-half-hide 1.6s steps(1, end) infinite;
+    -moz-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
+    -o-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
+    -ms-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
 }
 
 .layx-load-inner2 {
@@ -797,6 +800,9 @@ body.ilayx-body {
     background-color: #4b86db;
     -webkit-animation: second-half-show 1.6s steps(1, end) infinite;
     animation: second-half-show 1.6s steps(1, end) infinite;
+    -moz-animation: second-half-show 1.6s steps(1, end) infinite;
+    -o-animation: second-half-show 1.6s steps(1, end) infinite;
+    -ms-animation: second-half-show 1.6s steps(1, end) infinite;
 }
 
 .layx-load-spiner, .layx-load-filler, .layx-load-masker {
@@ -811,8 +817,13 @@ body.ilayx-body {
     -webkit-transform-origin: right center;
     -ms-transform-origin: right center;
     transform-origin: right center;
+    -o-transform-origin: right center;
+    -moz-transform-origin: right center;
     -webkit-animation: layx-spin 800ms infinite linear;
     animation: layx-spin 800ms infinite linear;
+    -moz-animation: layx-spin 800ms infinite linear;
+    -o-animation: layx-spin 800ms infinite linear;
+    -ms-animation: layx-spin 800ms infinite linear;
     left: 0;
     top: 0;
 }
@@ -822,6 +833,9 @@ body.ilayx-body {
     background-color: #4b86db;
     -webkit-animation: layx-second-half-hide 800ms steps(1, end) infinite;
     animation: layx-second-half-hide 800ms steps(1, end) infinite;
+    -moz-animation: layx-second-half-hide 800ms steps(1, end) infinite;
+    -ms-animation: layx-second-half-hide 800ms steps(1, end) infinite;
+    -o-animation: layx-second-half-hide 800ms steps(1, end) infinite;
     left: 50%;
     top: 0;
     opacity: 1;
@@ -832,6 +846,9 @@ body.ilayx-body {
     background-color: #89abdd;
     -webkit-animation: second-half-show 800ms steps(1, end) infinite;
     animation: second-half-show 800ms steps(1, end) infinite;
+    -moz-animation: second-half-show 800ms steps(1, end) infinite;
+    -o-animation: second-half-show 800ms steps(1, end) infinite;
+    -ms-animation: second-half-show 800ms steps(1, end) infinite;
     left: 0;
     top: 0;
     opacity: 0;
@@ -873,11 +890,17 @@ body.ilayx-body {
     0% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
     }
 
     100% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
     }
 }
 
@@ -885,11 +908,17 @@ body.ilayx-body {
     0% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
     }
 
     100% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
     }
 }
 
