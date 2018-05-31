@@ -145,7 +145,8 @@
             url: '',
             content: '',
             useFrameTitle: false,
-            cloneElementContent: true
+            cloneElementContent: true,
+            bgColor: "#fff"
         },
         zIndex: 10000000,
         windows: {},
@@ -639,6 +640,7 @@
                             var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
                             var frameBody = document.createElement("div");
                             frameBody.classList.add("layx-group-main");
+                            frameBody.style.backgroundColor = frameConfig.bgColor;
                             frameBody.setAttribute("data-frameId", frameConfig.id);
                             if (i === config.frameIndex) {
                                 frameBody.setAttribute("data-enable", "1");
