@@ -42,7 +42,7 @@
             floatTarget: false,
             floatDirection: 'bottom',
             shadable: false,
-            loaddingText: '内容正在加载中，请稍后',
+            loadingText: '内容正在加载中，请稍后',
             dragInTopToMax: true,
             isOverToMax: true,
             stickMenu: false,
@@ -333,7 +333,7 @@
             winform.isFloatTarget = Utils.isDom(config.floatTarget);
             winform.floatTarget = config.floatTarget;
             winform.floatDirection = config.floatDirection;
-            winform.loaddingText = config.loaddingText;
+            winform.loadingText = config.loadingText;
             winform.focusable = config.focusable;
             winform.isStick = config.alwaysOnTop === true;
             winform.zIndex = config.alwaysOnTop === true ? that.stickZIndex : that.zIndex;
@@ -597,7 +597,7 @@
             main.classList.add("layx-main");
             main.classList.add("layx-flexauto");
             layxWindow.appendChild(main);
-            var contentShade = that.createContenLoadAnimate(main, config.loaddingText, winform);
+            var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
             switch (config.type) {
                 case "html":
                 default:
@@ -609,9 +609,9 @@
                     }
                     that.createHtmlBody(main, config, config.content);
                     main.removeChild(contentShade);
-                    if (winform.loaddingTextTimer) {
-                        clearInterval(winform.loaddingTextTimer);
-                        delete winform.loaddingTextTimer;
+                    if (winform.loadingTextTimer) {
+                        clearInterval(winform.loadingTextTimer);
+                        delete winform.loadingTextTimer;
                     }
                     if (Utils.isFunction(config.event.onload.after)) {
                         config.event.onload.after(layxWindow, winform);
@@ -1087,9 +1087,9 @@
                                 var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
                                 if (config.frames.length === loadComplteMains.length) {
                                     contentShade.parentNode.removeChild(contentShade);
-                                    if (winform.loaddingTextTimer) {
-                                        clearInterval(winform.loaddingTextTimer);
-                                        delete winform.loaddingTextTimer;
+                                    if (winform.loadingTextTimer) {
+                                        clearInterval(winform.loadingTextTimer);
+                                        delete winform.loadingTextTimer;
                                     }
                                     if (Utils.isFunction(config.event.onload.after)) {
                                         config.event.onload.after(layxWindow, winform);
@@ -1097,9 +1097,9 @@
                                 }
                             } else {
                                 contentShade.parentNode.removeChild(contentShade);
-                                if (winform.loaddingTextTimer) {
-                                    clearInterval(winform.loaddingTextTimer);
-                                    delete winform.loaddingTextTimer;
+                                if (winform.loadingTextTimer) {
+                                    clearInterval(winform.loadingTextTimer);
+                                    delete winform.loadingTextTimer;
                                 }
                                 if (Utils.isFunction(config.event.onload.after)) {
                                     config.event.onload.after(layxWindow, winform);
@@ -1145,9 +1145,9 @@
                             var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
                             if (config.frames.length === loadComplteMains.length) {
                                 contentShade.parentNode.removeChild(contentShade);
-                                if (winform.loaddingTextTimer) {
-                                    clearInterval(winform.loaddingTextTimer);
-                                    delete winform.loaddingTextTimer;
+                                if (winform.loadingTextTimer) {
+                                    clearInterval(winform.loadingTextTimer);
+                                    delete winform.loadingTextTimer;
                                 }
                                 if (Utils.isFunction(config.event.onload.after)) {
                                     config.event.onload.after(layxWindow, winform);
@@ -1155,9 +1155,9 @@
                             }
                         } else {
                             contentShade.parentNode.removeChild(contentShade);
-                            if (winform.loaddingTextTimer) {
-                                clearInterval(winform.loaddingTextTimer);
-                                delete winform.loaddingTextTimer;
+                            if (winform.loadingTextTimer) {
+                                clearInterval(winform.loadingTextTimer);
+                                delete winform.loadingTextTimer;
                             }
                             if (Utils.isFunction(config.event.onload.after)) {
                                 config.event.onload.after(layxWindow, winform);
@@ -1180,7 +1180,7 @@
                 if (winform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
-                        var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loaddingText, winform);
+                        var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loadingText, winform);
                         cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : winform.cloneElementContent;
                         var newContent;
                         if (Utils.isDom(content)) {
@@ -1246,7 +1246,7 @@
                 if (frameform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
-                        var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loaddingText, winform);
+                        var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loadingText, winform);
                         cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : frameform.cloneElementContent;
                         var newContent;
                         if (Utils.isDom(content)) {
@@ -1279,26 +1279,26 @@
                 }
             }
         },
-        createContenLoadAnimate: function (pEle, loaddingText, winform) {
+        createContenLoadAnimate: function (pEle, loadingText, winform) {
             var that = this;
             var contentShade = document.createElement("div");
             contentShade.classList.add("layx-content-shade");
             contentShade.classList.add("layx-flexbox");
             contentShade.classList.add("layx-flex-center");
-            if (loaddingText !== false) {
-                if (Utils.isDom(loaddingText)) {
-                    contentShade.appendChild(loaddingText);
+            if (loadingText !== false) {
+                if (Utils.isDom(loadingText)) {
+                    contentShade.appendChild(loadingText);
                 } else {
                     contentShade.appendChild(that.createLoadAnimate());
                     var msgContent = document.createElement("div");
                     msgContent.classList.add("layx-load-content-msg");
-                    msgContent.innerHTML = loaddingText;
+                    msgContent.innerHTML = loadingText;
                     contentShade.appendChild(msgContent);
                     var span = document.createElement("span");
                     span.classList.add("layx-dot");
                     msgContent.appendChild(span);
                     var dotCount = 0;
-                    winform.loaddingTextTimer = setInterval(function () {
+                    winform.loadingTextTimer = setInterval(function () {
                         if (dotCount === 5) {
                             dotCount = 0;
                         }
@@ -1324,7 +1324,7 @@
                 if (winform.type === "url") {
                     var iframe = layxWindow.querySelector("#layx-" + id + "-iframe");
                     if (iframe) {
-                        var contentShade = that.createContenLoadAnimate(iframe.parentNode, winform.loaddingText, winform);
+                        var contentShade = that.createContenLoadAnimate(iframe.parentNode, winform.loadingText, winform);
                         iframe.setAttribute("src", url);
                     }
                 }
@@ -1342,7 +1342,7 @@
                     var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
                     if (iframe) {
                         iframe.parentNode.removeAttribute("data-complete");
-                        var contentShade = that.createContenLoadAnimate(iframe.parentNode.parentNode, winform.loaddingText, winform);
+                        var contentShade = that.createContenLoadAnimate(iframe.parentNode.parentNode, winform.loadingText, winform);
                         iframe.setAttribute("src", url);
                     }
                 }
@@ -1749,8 +1749,8 @@
                     clearInterval(winform.destroyTimer);
                 if (winform.loadTimer)
                     clearInterval(winform.loadTimer);
-                if (winform.loaddingTextTimer)
-                    clearInterval(winform.loaddingTextTimer);
+                if (winform.loadingTextTimer)
+                    clearInterval(winform.loadingTextTimer);
                 for (var key in winform) {
                     delete winform[key];
                 }
@@ -1951,7 +1951,7 @@
                 allowControlDbclick: false,
                 position: [10, 'tc'],
                 autodestroyText: false,
-                loaddingText: false,
+                loadingText: false,
                 storeStatus: false
             }, options));
             that.flicker(winform.id);
@@ -2026,7 +2026,7 @@
                     }
                 }],
                 position: 'ct',
-                loaddingText: false,
+                loadingText: false,
                 storeStatus: false
             }, options));
             return winform;
@@ -2069,7 +2069,7 @@
                 }],
                 statusBar: true,
                 position: 'ct',
-                loaddingText: false,
+                loadingText: false,
                 storeStatus: false
             }, options));
             return winform;
@@ -2133,7 +2133,7 @@
                     }
                 }],
                 position: 'ct',
-                loaddingText: false,
+                loadingText: false,
                 storeStatus: false
             }, options));
             return winform;
@@ -2206,7 +2206,7 @@
                 movable: false,
                 allowControlDbclick: false,
                 position: 'ct',
-                loaddingText: false,
+                loadingText: false,
                 storeStatus: false
             }, options));
             winform.loadTimer = loadTimer;
