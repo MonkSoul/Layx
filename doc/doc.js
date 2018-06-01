@@ -251,7 +251,7 @@ window.onload = function () {
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
 - [修复] 自定义loadingText bug
-- <span style="color:#f00">[修复] file:协议 bug</span>
+- [修复] file:协议 bug
 </pre>
 <h3># 2018.05.31 v2.3.2 发布</h3>
 <pre style="margin-top:0">
@@ -483,7 +483,7 @@ window.onload = function () {
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
 - [修复] 自定义loadingText bug
-- <span style="color:#f00">[修复] file:协议 bug</span>
+- [修复] file:协议 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
