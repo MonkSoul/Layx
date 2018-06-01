@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.3
+ * version : v2.3.4
  * create time : 2018.05.11
- * update time : 2018.05.31
+ * update time : 2018.06.01
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.3',
+        version: '2.3.4',
         defaults: {
             id: '',
             icon: true,
@@ -917,20 +917,20 @@
         removeStoreWindowAreaInfo: function (id) {
             var that = this,
                 windowId = "layx-" + id,
-                storeAreaInfo = sessionStorage.getItem(windowId);
+                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.getItem(windowId);
             if (storeAreaInfo) {
-                sessionStorage.removeItem(windowId);
+                (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.removeItem(windowId);
             }
         },
         storeWindowAreaInfo: function (id, area) {
             var that = this,
                 windowId = "layx-" + id;
-            sessionStorage.setItem(windowId, JSON.stringify(area));
+            (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.setItem(windowId, JSON.stringify(area));
         },
         getStoreWindowAreaInfo: function (id) {
             var that = this,
                 windowId = "layx-" + id,
-                storeAreaInfo = sessionStorage.getItem(windowId);
+                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.getItem(windowId);
             if (storeAreaInfo) {
                 return JSON.parse(storeAreaInfo);
             }

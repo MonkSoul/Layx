@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.3</strong></li>
-                    <li><label>发布日期</label>：2018.05.31</li>
+                    <li><label>当前版本</label>：<strong>v2.3.4</strong></li>
+                    <li><label>发布日期</label>：2018.06.01</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -243,12 +243,13 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.05.31 v2.3.3 发布</h3>
+<h3># 2018.05.31 v2.3.4 发布</h3>
 <pre style="margin-top:0">
 - [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
 - [修复] 自定义loadingText bug
+- [修复] file:协议 bug
 </pre>
 <h3># 2018.05.31 v2.3.2 发布</h3>
 <pre style="margin-top:0">
@@ -478,12 +479,13 @@ window.onload = function () {
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
 - [修复] 自定义loadingText bug
+- [修复] file:协议 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
                 height: 170,
-                minHeight: 140,
+                minHeight: 190,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 event: {
