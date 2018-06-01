@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.4
+ * version : v2.3.5
  * create time : 2018.05.11
  * update time : 2018.06.01
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.4',
+        version: '2.3.5',
         defaults: {
             id: '',
             icon: true,
@@ -42,6 +42,7 @@
             floatTarget: false,
             floatDirection: 'bottom',
             shadable: false,
+            shadeDestroy: false,
             loadingText: '内容正在加载中，请稍后',
             dragInTopToMax: true,
             isOverToMax: true,
@@ -186,15 +187,22 @@
                     config.buttons[i] = layxDeepClone({}, that.defaultButtons, config.buttons[i]);
                 }
             }
-            if (config.shadable === true) {
+            if (config.shadable === true || /^(0(\.[0-9])?$)|(1)$/.test(config.shadable)) {
                 var layxShade = document.createElement("div");
                 layxShade.setAttribute("id", "layx-" + config.id + "-shade");
                 layxShade.classList.add("layx-shade");
                 layxShade.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
+                if (/^(0(\.[0-9])?$)|(1)$/.test(config.shadable)) {
+                    layxShade.style.backgroundColor = "rgba(0,0,0," + config.shadable + ")";
+                }
                 document.body.appendChild(layxShade);
                 layxShade.onclick = function (e) {
                     e = e || window.event;
-                    that.flicker(config.id);
+                    if (config.shadeDestroy === true) {
+                        that.destroy(config.id, null, true);
+                    } else {
+                        that.flicker(config.id);
+                    }
                     e.stopPropagation();
                 };
             }
@@ -290,7 +298,7 @@
                 layxWindow.style.setProperty("border", config.border === true ? '1px solid #3baced' : config.border);
             }
             layxWindow.style.backgroundColor = config.bgColor;
-            layxWindow.style.opacity = Utils.isNumber(config.opacity) ? config.opacity : 1;
+            layxWindow.style.opacity = /^(0(\.[0-9])?$)|(1)$/.test(config.opacity) ? config.opacity : 1;
             if (config.type === "html" || config.type === "group") {
                 layxWindow.onclick = function (e) {
                     e = e || window.event;

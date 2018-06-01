@@ -115,7 +115,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.4</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.3.5</strong></li>
                     <li><label>发布日期</label>：2018.06.01</li>
                     <li><label>交流Q群</label>：18863883</li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
@@ -243,8 +243,10 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.06.01 v2.3.4 发布</h3>
+<h3># 2018.06.01 v2.3.5 发布</h3>
 <pre style="margin-top:0">
+- [新增] options.shadeDestroy参数，用来设置点击阻隔空白区域关闭窗口
+- [新增] options.shadable 支持背景透明度设置，取值范围：0-1
 - [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
@@ -475,6 +477,8 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [新增] options.shadeDestroy参数，用来设置点击阻隔空白区域关闭窗口
+- [新增] options.shadable 支持背景透明度设置，取值范围：0-1
 - [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
 - [更新] layx.css 兼容处理
 - [修复] 网页窗口加载失败后加载提示不能隐藏 bug
@@ -484,10 +488,11 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 170,
+                height: 230,
                 minHeight: 190,
                 alwaysOnTop: true,
                 floatDirection: 'top',
+                autodestroy: 10000,
                 event: {
                     ondestroy: {
                         before: function (layxWindow, winform, params, inside, escKey) {
