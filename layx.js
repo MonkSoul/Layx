@@ -43,6 +43,7 @@
             floatDirection: 'bottom',
             shadable: false,
             shadeDestroy: false,
+            readonly: false,
             loadingText: '内容正在加载中，请稍后',
             dragInTopToMax: true,
             isOverToMax: true,
@@ -605,6 +606,15 @@
             main.classList.add("layx-main");
             main.classList.add("layx-flexauto");
             layxWindow.appendChild(main);
+            if (config.readonly === true) {
+                var readonlyPanel = document.createElement("div");
+                readonlyPanel.classList.add("layx-readonly");
+                readonlyPanel.oncontextmenu = function (e) {
+                    e = e || window.event;
+                    e.returnValue = false;
+                };
+                main.appendChild(readonlyPanel);
+            }
             var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
             switch (config.type) {
                 case "html":

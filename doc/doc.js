@@ -245,6 +245,7 @@ window.onload = function () {
 <div style="padding:0 10px 10px 10px">
 <h3># 2018.06.01 v2.3.5 发布</h3>
 <pre style="margin-top:0">
+- [新增] options.readonly 参数，设置窗口为只读类型
 - [新增] options.shadeDestroy参数，用来设置点击阻隔空白区域关闭窗口
 - [新增] options.shadable 支持背景透明度设置，取值范围：0-1
 - [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
@@ -477,6 +478,7 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [新增] options.readonly 参数，设置窗口为只读类型
 - [新增] options.shadeDestroy参数，用来设置点击阻隔空白区域关闭窗口
 - [新增] options.shadable 支持背景透明度设置，取值范围：0-1
 - [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
@@ -488,7 +490,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 230,
+                height: 260,
                 minHeight: 190,
                 alwaysOnTop: true,
                 floatDirection: 'top',
