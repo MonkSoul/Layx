@@ -101,6 +101,7 @@ body.ilayx-body {
     font-size: 12px;
     line-height: 1.5;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    visibility: visible;
 }
 
 .layx-window.layx-flicker {
