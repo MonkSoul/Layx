@@ -117,7 +117,7 @@ window.onload = function () {
                     <li><label>开源协议</label>：MIT</li>
                     <li><label>当前版本</label>：<strong>v2.3.5</strong></li>
                     <li><label>发布日期</label>：2018.06.01</li>
-                    <li><label>交流Q群</label>：18863883</li>
+                    <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
                 <h2>特性</h2>
