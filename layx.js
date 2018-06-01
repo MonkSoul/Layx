@@ -919,7 +919,7 @@
                 windowId = "layx-" + id,
                 storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.getItem(windowId);
             if (storeAreaInfo) {
-                (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.removeItem(windowId);
+                sessionStorage.removeItem(windowId);
             }
         },
         storeWindowAreaInfo: function (id, area) {
