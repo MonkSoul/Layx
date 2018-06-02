@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.6</strong></li>
-                    <li><label>发布日期</label>：2018.06.02</li>
+                    <li><label>当前版本</label>：<strong>v2.3.7</strong></li>
+                    <li><label>发布日期</label>：2018.06.03</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -243,8 +243,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.06.02 v2.3.6 发布</h3>
+<h3># 2018.06.03 v2.3.7 发布</h3>
 <pre style="margin-top:0">
+- [修复] ios 微信加载不能隐藏 bug
+- [修复] 只读窗口不能获取焦点 bug
+- [修复] 窗口禁止获取焦点后还能触发置顶和事件 bug
 - [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
@@ -482,6 +485,9 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [修复] ios 微信加载不能隐藏 bug
+- [修复] 只读窗口不能获取焦点 bug
+- [修复] 窗口禁止获取焦点后还能触发置顶和事件 bug
 - [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
@@ -489,8 +495,8 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 160,
-                minHeight: 160,
+                height: 210,
+                minHeight: 210,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 autodestroy: 10000,

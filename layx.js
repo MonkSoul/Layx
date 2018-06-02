@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.6
+ * version : v2.3.7
  * create time : 2018.05.11
- * update time : 2018.06.02
+ * update time : 2018.06.03
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.6',
+        version: '2.3.7',
         defaults: {
             id: '',
             icon: true,
@@ -301,18 +301,20 @@
             layxWindow.style.backgroundColor = config.bgColor;
             layxWindow.style.opacity = /^(0(\.[0-9])?$)|(1)$/.test(config.opacity) ? config.opacity : 1;
             if (config.type === "html" || config.type === "group") {
-                layxWindow.onclick = function (e) {
-                    e = e || window.event;
-                    if (Utils.isFunction(config.event.onfocus)) {
-                        var revel = Utils.isFunction(config.event.onfocus);
-                        if (revel === false) {
-                            return;
+                if (config.focusable === true) {
+                    layxWindow.onclick = function (e) {
+                        e = e || window.event;
+                        if (Utils.isFunction(config.event.onfocus)) {
+                            var revel = Utils.isFunction(config.event.onfocus);
+                            if (revel === false) {
+                                return;
+                            }
+                            config.event.onfocus(layxWindow, winform);
                         }
-                        config.event.onfocus(layxWindow, winform);
-                    }
-                    that.updateZIndex(config.id);
-                    e.stopPropagation();
-                };
+                        that.updateZIndex(config.id);
+                        e.stopPropagation();
+                    };
+                }
             }
             document.body.appendChild(layxWindow);
             winform.id = config.id;
@@ -618,6 +620,20 @@
                     e = e || window.event;
                     e.returnValue = false;
                 };
+                if (config.focusable === true) {
+                    readonlyPanel.onclick = function (e) {
+                        e = e || window.event;
+                        if (Utils.isFunction(config.event.onfocus)) {
+                            var revel = Utils.isFunction(config.event.onfocus);
+                            if (revel === false) {
+                                return;
+                            }
+                            config.event.onfocus(layxWindow, winform);
+                        }
+                        that.updateZIndex(config.id);
+                        e.stopPropagation();
+                    };
+                }
                 main.appendChild(readonlyPanel);
             }
             var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
@@ -1205,35 +1221,38 @@
                 if (winform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
-                        var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loadingText, winform);
-                        cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : winform.cloneElementContent;
-                        var newContent;
-                        if (Utils.isDom(content)) {
-                            var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
-                            if (cloneElementContent === false) {
-                                Layx.cloneStore[id] = {
-                                    prev: content.previousSibling,
-                                    parent: content.parentNode,
-                                    next: content.nextSibling,
-                                    display: _ctStyle.display
-                                };
+                        try {
+                            var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loadingText, winform);
+                            cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : winform.cloneElementContent;
+                            var newContent;
+                            if (Utils.isDom(content)) {
+                                var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
+                                if (cloneElementContent === false) {
+                                    Layx.cloneStore[id] = {
+                                        prev: content.previousSibling,
+                                        parent: content.parentNode,
+                                        next: content.nextSibling,
+                                        display: _ctStyle.display
+                                    };
+                                }
+                                html.innerHTML = "";
+                                newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
+                            } else {
+                                html.innerHTML = content;
                             }
-                            html.innerHTML = "";
-                            newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
-                        } else {
-                            html.innerHTML = content;
-                        }
-                        if (Utils.isDom(newContent)) {
-                            var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
-                            if (contentStyle.display === "none") {
-                                newContent.style.display = "";
+                            if (Utils.isDom(newContent)) {
+                                var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                                if (contentStyle.display === "none") {
+                                    newContent.style.display = "";
+                                }
                             }
-                        }
-                        winform.content = content;
-                        contentShade && html.parentNode.removeChild(contentShade);
-                        if (winform.loadingTextTimer) {
-                            clearInterval(winform.loadingTextTimer);
-                            delete winform.loadingTextTimer;
+                            winform.content = content;
+                        } finally {
+                            contentShade && html.parentNode.removeChild(contentShade);
+                            if (winform.loadingTextTimer) {
+                                clearInterval(winform.loadingTextTimer);
+                                delete winform.loadingTextTimer;
+                            }
                         }
                     }
                 }
@@ -1275,38 +1294,41 @@
                 if (frameform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
-                        var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loadingText, winform);
-                        cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : frameform.cloneElementContent;
-                        var newContent;
-                        if (Utils.isDom(content)) {
-                            var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
-                            if (cloneElementContent === false) {
-                                if (!Layx.cloneStore[id]) {
-                                    Layx.cloneStore[id] = { frames: {} };
+                        try {
+                            var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loadingText, winform);
+                            cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : frameform.cloneElementContent;
+                            var newContent;
+                            if (Utils.isDom(content)) {
+                                var _ctStyle = content.currentStyle ? content.currentStyle : win.getComputedStyle(content, null);
+                                if (cloneElementContent === false) {
+                                    if (!Layx.cloneStore[id]) {
+                                        Layx.cloneStore[id] = { frames: {} };
+                                    }
+                                    Layx.cloneStore[id].frames[frameId] = {
+                                        prev: content.previousSibling,
+                                        parent: content.parentNode,
+                                        next: content.nextSibling,
+                                        display: _ctStyle.display
+                                    };
                                 }
-                                Layx.cloneStore[id].frames[frameId] = {
-                                    prev: content.previousSibling,
-                                    parent: content.parentNode,
-                                    next: content.nextSibling,
-                                    display: _ctStyle.display
-                                };
+                                html.innerHTML = "";
+                                newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
+                            } else {
+                                html.innerHTML = content;
                             }
-                            html.innerHTML = "";
-                            newContent = html.appendChild(cloneElementContent === true ? content.cloneNode(true) : content);
-                        } else {
-                            html.innerHTML = content;
-                        }
-                        if (Utils.isDom(newContent)) {
-                            var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
-                            if (contentStyle.display === "none") {
-                                newContent.style.display = "";
+                            if (Utils.isDom(newContent)) {
+                                var contentStyle = newContent.currentStyle ? newContent.currentStyle : window.getComputedStyle(newContent, null);
+                                if (contentStyle.display === "none") {
+                                    newContent.style.display = "";
+                                }
                             }
-                        }
-                        frameform.content = content;
-                        contentShade && html.parentNode.parentNode.removeChild(contentShade);
-                        if (winform.loadingTextTimer) {
-                            clearInterval(winform.loadingTextTimer);
-                            delete winform.loadingTextTimer;
+                            frameform.content = content;
+                        } finally {
+                            contentShade && html.parentNode.parentNode.removeChild(contentShade);
+                            if (winform.loadingTextTimer) {
+                                clearInterval(winform.loadingTextTimer);
+                                delete winform.loadingTextTimer;
+                            }
                         }
                     }
                 }
