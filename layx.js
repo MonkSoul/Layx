@@ -499,7 +499,7 @@
                             debugMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-debug"></use></svg>';
                             debugMenu.onclick = function (e) {
                                 e = e || window.event;
-                                var jsonStr = JSON.stringify(winform, null, 4).replace(/</g, "&lt;").replace("/>/g", "&gt;");
+                                var jsonStr = JSON.stringify(winform, null, 4).replace(/</g, "&lt;").replace(/>/g, "&gt;");
                                 that.create({
                                     id: 'layx-' + config.id + '-debug',
                                     title: "窗口调试信息",

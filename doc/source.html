@@ -52,7 +52,7 @@
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "../layx.js", false);
         xhr.send();
-        textarea.value = xhr.responseText.replace(/</g, "&lt;").replace("/>/g", "&gt;");
+        textarea.value = xhr.responseText;
     </script>
 </body>
 
