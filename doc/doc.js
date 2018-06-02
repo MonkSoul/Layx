@@ -235,6 +235,15 @@ window.onload = function () {
                         },
                     },
                     {
+                        id: 'source',
+                        label: '源码',
+                        classes: 'custom-button',
+                        callback: function (id, button, event) {
+                            event.stopPropagation();
+                            layx.iframe('source', 'Layx v' + layx.v + " 源代码鉴赏", "./source.html");
+                        },
+                    },
+                    {
                         id: 'log',
                         label: '日志',
                         classes: 'custom-button',
