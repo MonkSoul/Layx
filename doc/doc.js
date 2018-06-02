@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.5</strong></li>
-                    <li><label>发布日期</label>：2018.06.01</li>
+                    <li><label>当前版本</label>：<strong>v2.3.6</strong></li>
+                    <li><label>发布日期</label>：2018.06.02</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -243,6 +243,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.06.02 v2.3.6 发布</h3>
+<pre style="margin-top:0">
+- [修复] 加载动画 火狐、Safari旧浏览器样式 bug
+- [修复] bootstrap、Element UI等第三方UI样式冲突 bug
+</pre>
 <h3># 2018.06.01 v2.3.5 发布</h3>
 <pre style="margin-top:0">
 - [新增] options.readonly 参数，设置窗口为只读类型
@@ -393,9 +398,6 @@ window.onload = function () {
 - [修复] 文本窗口样式被全局应用 bug</pre>
 <h3># 2018.05.15 v2.0.2 发布</h3>
 <pre style="margin-top:0">
-- [修复] 低版本Chrome 浏览器bug</pre>
-<h3># 2018.05.15 v2.0.1 发布</h3>
-<pre style="margin-top:0">
 - [新增] var winform = layx.html(id,title,content,options) 快捷打开文本窗口方法
 - [新增] var winform = layx.iframe(id,title,url,options) 快捷打开网页窗口方法
 - [新增] 窗口自动关闭文本可自定义功能：autodestroyText
@@ -403,7 +405,8 @@ window.onload = function () {
 - [更新] 调整最小化后显示宽度为：240px
 - [修复] 点击文本窗口内容无法置顶 bug
 - [修复] 置顶按钮点击切换 title 提示 bug
-- [修复] 置顶层带有阻隔层时没有阻隔的bug</pre>
+- [修复] 置顶层带有阻隔层时没有阻隔的bug
+- [修复] 低版本Chrome 浏览器bug</pre>
 <h3># 2018.05.12 v2.0.0 发布</h3>
 <pre style="margin-top:0">
 - [新增] v2.0.0 正式发布</pre>
@@ -478,20 +481,14 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] options.readonly 参数，设置窗口为只读类型
-- [新增] options.shadeDestroy参数，用来设置点击阻隔空白区域关闭窗口
-- [新增] options.shadable 支持背景透明度设置，取值范围：0-1
-- [新增] css3 vh、vw单位支持，特用于width，height，minWidth，minHeight使用
-- [更新] layx.css 兼容处理
-- [修复] 网页窗口加载失败后加载提示不能隐藏 bug
-- [修复] 自定义loadingText bug
-- [修复] file:协议 bug
+- [修复] 加载动画 火狐、Safari旧浏览器样式 bug
+- [修复] bootstrap、Element UI等第三方UI样式冲突 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 260,
-                minHeight: 190,
+                height: 150,
+                minHeight: 150,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 autodestroy: 10000,

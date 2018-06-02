@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.5
+ * version : v2.3.6
  * create time : 2018.05.11
- * update time : 2018.06.01
+ * update time : 2018.06.02
  */
 
 *[class^="layx-"] {
@@ -156,6 +156,7 @@ body.ilayx-body {
     fill: currentColor;
     overflow: hidden;
     font-size: 14px;
+    line-height: normal;
 }
 
 .layx-icon {
@@ -198,8 +199,8 @@ body.ilayx-body {
     -webkit-app-region: no-drag;
 }
 
-.layx-title label,
-.layx-group-tab label {
+.layx-title .layx-label,
+.layx-group-tab .layx-label {
     max-width: 100%;
     line-clamp: 1;
     -moz-line-clamp: 1;
@@ -277,7 +278,7 @@ body.ilayx-body {
     border-bottom: 1px solid #fff;
 }
 
-.layx-title label {
+.layx-title .layx-label {
     pointer-events: none;
 }
 
@@ -811,11 +812,11 @@ body.ilayx-body {
 .layx-load-inner2 {
     opacity: 0;
     background-color: #4b86db;
-    -webkit-animation: second-half-show 1.6s steps(1, end) infinite;
-    animation: second-half-show 1.6s steps(1, end) infinite;
-    -moz-animation: second-half-show 1.6s steps(1, end) infinite;
-    -o-animation: second-half-show 1.6s steps(1, end) infinite;
-    -ms-animation: second-half-show 1.6s steps(1, end) infinite;
+    -webkit-animation: layx-second-half-show 1.6s steps(1, end) infinite;
+    animation: layx-second-half-show 1.6s steps(1, end) infinite;
+    -moz-animation: layx-second-half-show 1.6s steps(1, end) infinite;
+    -o-animation: layx-second-half-show 1.6s steps(1, end) infinite;
+    -ms-animation: layx-second-half-show 1.6s steps(1, end) infinite;
 }
 
 .layx-load-spiner, .layx-load-filler, .layx-load-masker {
@@ -857,11 +858,11 @@ body.ilayx-body {
 .layx-load-masker {
     border-radius: 40px 0 0 40px;
     background-color: #89abdd;
-    -webkit-animation: second-half-show 800ms steps(1, end) infinite;
-    animation: second-half-show 800ms steps(1, end) infinite;
-    -moz-animation: second-half-show 800ms steps(1, end) infinite;
-    -o-animation: second-half-show 800ms steps(1, end) infinite;
-    -ms-animation: second-half-show 800ms steps(1, end) infinite;
+    -webkit-animation: layx-second-half-show 800ms steps(1, end) infinite;
+    animation: layx-second-half-show 800ms steps(1, end) infinite;
+    -moz-animation: layx-second-half-show 800ms steps(1, end) infinite;
+    -o-animation: layx-second-half-show 800ms steps(1, end) infinite;
+    -ms-animation: layx-second-half-show 800ms steps(1, end) infinite;
     left: 0;
     top: 0;
     opacity: 0;
@@ -955,7 +956,7 @@ body.ilayx-body {
     }
 }
 
-@-webkit-keyframes second-half-show {
+@-webkit-keyframes layx-second-half-show {
     0% {
         opacity: 0;
     }
@@ -965,7 +966,7 @@ body.ilayx-body {
     }
 }
 
-@keyframes second-half-show {
+@keyframes layx-second-half-show {
     0% {
         opacity: 0;
     }

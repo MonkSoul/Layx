@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.5
+ * version : v2.3.6
  * create time : 2018.05.11
- * update time : 2018.06.01
+ * update time : 2018.06.02
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.5',
+        version: '2.3.6',
         defaults: {
             id: '',
             icon: true,
@@ -407,6 +407,7 @@
                 controlBar.appendChild(title);
                 if (config.type !== "group") {
                     var label = document.createElement("label");
+                    label.classList.add("layx-label");
                     label.innerHTML = config.title;
                     title.setAttribute("title", label.innerText);
                     title.appendChild(label);
@@ -419,6 +420,7 @@
                             groupTab.classList.add("layx-type-group");
                             layxWindow.appendChild(groupTab);
                             var label = document.createElement("label");
+                            label.classList.add("layx-label");
                             label.innerHTML = config.title;
                             title.setAttribute("title", label.innerText);
                             title.appendChild(label);
@@ -457,6 +459,7 @@
                                 title.appendChild(frameTitle);
                             }
                             var groupLabel = document.createElement("label");
+                            groupLabel.classList.add("layx-label");
                             groupLabel.innerHTML = frameConfig.title;
                             frameTitle.setAttribute("title", groupLabel.innerText);
                             frameTitle.appendChild(groupLabel);
@@ -1396,7 +1399,7 @@
                             content = iframe.contentDocument.querySelector("title").innerText;
                         } catch (e) { }
                     }
-                    var label = title.querySelector("label");
+                    var label = title.querySelector(".layx-label");
                     if (label) {
                         label.innerHTML = content;
                         title.setAttribute("title", label.innerHTML);
@@ -1419,7 +1422,7 @@
                             content = iframe.contentDocument.querySelector("title").innerText;
                         } catch (e) { }
                     }
-                    var label = title.querySelector("label");
+                    var label = title.querySelector("layx-label");
                     if (label) {
                         label.innerHTML = content;
                         title.setAttribute("title", label.innerHTML);
