@@ -1305,7 +1305,7 @@ var winform = layx.iframe('float-left','打开一个左边浮动窗口','./ifram
         },
         {
             label:'关闭',
-            callback:function(id, button){
+            callback:function(id, button, event){
                 alert("你点击了关闭");
                 layx.destroy(id);
             }
