@@ -1422,7 +1422,7 @@
                             content = iframe.contentDocument.querySelector("title").innerText;
                         } catch (e) { }
                     }
-                    var label = title.querySelector("layx-label");
+                    var label = title.querySelector(".layx-label");
                     if (label) {
                         label.innerHTML = content;
                         title.setAttribute("title", label.innerHTML);
