@@ -246,7 +246,7 @@ window.onload = function () {
 <h3># 2018.06.03 v2.3.7 发布</h3>
 <pre style="margin-top:0">
 - [新增] 阻隔层禁止右键，避免恶意修改
-- [修复] ios 微信加载不能隐藏 bug
+- [修复] 只读窗口、阻隔层右键不兼容 bug
 - [修复] 只读窗口不能获取焦点 bug
 - [修复] 窗口禁止获取焦点后还能触发置顶和事件 bug
 - [修复] 窗口图标不对齐 bug
@@ -487,7 +487,7 @@ window.onload = function () {
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
 - [新增] 阻隔层禁止右键，避免恶意修改
-- [修复] ios 微信加载不能隐藏 bug
+- [修复] 只读窗口、阻隔层右键不兼容 bug
 - [修复] 只读窗口不能获取焦点 bug
 - [修复] 窗口禁止获取焦点后还能触发置顶和事件 bug
 - [修复] 窗口图标不对齐 bug

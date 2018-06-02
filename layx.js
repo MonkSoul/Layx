@@ -199,6 +199,7 @@
                 layxShade.oncontextmenu = function (e) {
                     e = e || window.event;
                     e.returnValue = false;
+                    return false;
                 };
                 layxShade.onclick = function (e) {
                     e = e || window.event;
@@ -623,6 +624,7 @@
                 readonlyPanel.oncontextmenu = function (e) {
                     e = e || window.event;
                     e.returnValue = false;
+                    return false;
                 };
                 if (config.focusable === true) {
                     readonlyPanel.onclick = function (e) {
