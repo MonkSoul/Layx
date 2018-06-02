@@ -236,11 +236,24 @@ window.onload = function () {
                     },
                     {
                         id: 'source',
-                        label: '源码',
+                        label: '鉴赏',
                         classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
-                            layx.iframe('source', 'Layx v' + layx.v + " 源代码鉴赏", "./source.html");
+                            layx.group('source', [
+                                {
+                                    id: 'layxss',
+                                    title: 'layx.css',
+                                    type: "url",
+                                    url: "./layxcss.html"
+                                },
+                                {
+                                    id: 'layxjs',
+                                    title: 'layx.js',
+                                    type: "url",
+                                    url: "./layxjs.html"
+                                }
+                            ]);
                         },
                     },
                     {
