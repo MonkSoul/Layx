@@ -196,7 +196,10 @@
                 if (/^(0(\.[0-9])?$)|(1)$/.test(config.shadable)) {
                     layxShade.style.backgroundColor = "rgba(0,0,0," + config.shadable + ")";
                 }
-                document.body.appendChild(layxShade);
+                layxShade.oncontextmenu = function (e) {
+                    e = e || window.event;
+                    e.returnValue = false;
+                };
                 layxShade.onclick = function (e) {
                     e = e || window.event;
                     if (config.shadeDestroy === true) {
@@ -206,6 +209,7 @@
                     }
                     e.stopPropagation();
                 };
+                document.body.appendChild(layxShade);
             }
             if (config.style) {
                 var style = document.getElementById("layx-style");
