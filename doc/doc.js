@@ -245,6 +245,7 @@ window.onload = function () {
 <div style="padding:0 10px 10px 10px">
 <h3># 2018.06.02 v2.3.6 发布</h3>
 <pre style="margin-top:0">
+- [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
 </pre>
@@ -481,14 +482,15 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 150,
-                minHeight: 150,
+                height: 160,
+                minHeight: 160,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 autodestroy: 10000,

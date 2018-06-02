@@ -389,6 +389,7 @@
                 title.classList.add("layx-title");
                 title.classList.add("layx-flexauto");
                 title.classList.add("layx-flexbox");
+                title.classList.add("layx-flex-vertical");
                 if (config.type === "group" && config.mergeTitle === true) {
                     title.classList.add("layx-type-group");
                 }
@@ -431,6 +432,7 @@
                             frameTitle.setAttribute("data-frameId", frameConfig.id);
                             frameTitle.classList.add("layx-group-title");
                             frameTitle.classList.add("layx-flexauto");
+                            frameTitle.classList.add("layx-flex-vertical");
                             if (i === config.frameIndex) {
                                 frameTitle.setAttribute("data-enable", "1");
                             }

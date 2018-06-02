@@ -157,6 +157,7 @@ body.ilayx-body {
     overflow: hidden;
     font-size: 14px;
     line-height: normal;
+    display: block;
 }
 
 .layx-icon {
@@ -172,8 +173,11 @@ body.ilayx-body {
 }
 
 .layx-window-icon {
-    font-size: 14px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.layx-window-icon .layx-iconfont {
+    font-size: 15px;
 }
 
 .layx-title,
@@ -209,7 +213,6 @@ body.ilayx-body {
     -ms-line-clamp: 1;
     box-orient: vertical;
     -webkit-box-orient: vertical;
-    line-height: 28px;
     word-wrap: break-word;
     overflow: hidden;
     -o-text-overflow: ellipsis;
@@ -219,6 +222,13 @@ body.ilayx-body {
     display: inline-block;
     pointer-events: none;
     visibility: visible;
+    position: relative;
+    top: -1px;
+    top: 0px\0;
+}
+
+.layx-group-tab .layx-label {
+    line-height: 28px;
 }
 
 .layx-group-tab.layx-type-group {
@@ -276,10 +286,6 @@ body.ilayx-body {
     width: 100%;
     content: '';
     border-bottom: 1px solid #fff;
-}
-
-.layx-title .layx-label {
-    pointer-events: none;
 }
 
 .layx-inlay-menus {
