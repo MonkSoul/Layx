@@ -268,7 +268,9 @@ window.onload = function () {
 <h3># 2018.06.03 v2.3.8 发布</h3>
 <pre style="margin-top:0">
 - [新增] 阻隔层禁止右键，避免恶意修改
+- [更新] 网页窗口加载代码
 - [修复] 窗口焦点事件触发多次 bug
+- [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
 - [修复] 只读窗口、阻隔层右键不兼容 bug
 - [修复] 只读窗口不能获取焦点 bug
@@ -511,7 +513,9 @@ window.onload = function () {
 <div style="padding:0 10px 0 10px">
 <pre style="margin-top:0;margin-bottom: 0;">
 - [新增] 阻隔层禁止右键，避免恶意修改
+- [更新] 网页窗口加载代码
 - [修复] 窗口焦点事件触发多次 bug
+- [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
 - [修复] 只读窗口、阻隔层右键不兼容 bug
 - [修复] 只读窗口不能获取焦点 bug
@@ -523,7 +527,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 280,
+                height: 310,
                 minHeight: 200,
                 alwaysOnTop: true,
                 floatDirection: 'top',

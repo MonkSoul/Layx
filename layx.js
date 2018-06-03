@@ -1075,6 +1075,75 @@
                 }
             }
         },
+        frameLoadHandle: function (iframe, main, config, layxWindow, winform, type, frameConfig) {
+            var that = this;
+            try {
+                if (config.focusable === true) {
+                    if (!iframe.getAttribute("data-focus")) {
+                        IframeOnClick.track(iframe, function () {
+                            if (Utils.isFunction(config.event.onfocus)) {
+                                var revel = Utils.isFunction(config.event.onfocus);
+                                if (revel === false) {
+                                    return;
+                                }
+                                config.event.onfocus(layxWindow, winform);
+                            }
+                            that.updateZIndex(config.id);
+                        });
+                        iframe.setAttribute("data-focus", "true");
+                    }
+                }
+                if (type === "group") {
+                    if (frameConfig.useFrameTitle === true) {
+                        iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                        that.setGroupTitle(config.id, frameConfig.id, iframeTitle);
+                    }
+                } else {
+                    if (config.useFrameTitle === true) {
+                        iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
+                        that.setTitle(config.id, iframeTitle);
+                    }
+                }
+                iframe.contentWindow.document.addEventListener("keydown", function (event) {
+                    var e = event || window.event || arguments.callee.caller.arguments[0];
+                    if (e && e.keyCode == 27) {
+                        var focusWindow = Layx.windows[Layx.focusId];
+                        if (focusWindow) {
+                            Layx.destroy(Layx.focusId, {}, false, true);
+                        }
+                    }
+                }, false);
+            } catch (e) {
+                console.warn(e);
+            } finally {
+                var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
+                if (contentShade) {
+                    if (type === "group") {
+                        main.setAttribute("data-complete", "1");
+                        var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
+                        if (config.frames.length === loadComplteMains.length) {
+                            contentShade && contentShade.parentNode.removeChild(contentShade);
+                            if (winform.loadingTextTimer) {
+                                clearInterval(winform.loadingTextTimer);
+                                delete winform.loadingTextTimer;
+                            }
+                            if (Utils.isFunction(config.event.onload.after)) {
+                                config.event.onload.after(layxWindow, winform);
+                            }
+                        }
+                    } else {
+                        contentShade && contentShade.parentNode.removeChild(contentShade);
+                        if (winform.loadingTextTimer) {
+                            clearInterval(winform.loadingTextTimer);
+                            delete winform.loadingTextTimer;
+                        }
+                        if (Utils.isFunction(config.event.onload.after)) {
+                            config.event.onload.after(layxWindow, winform);
+                        }
+                    }
+                }
+            }
+        },
         createFrameBody: function (main, config, layxWindow, winform, type, frameConfig, isLoad) {
             var that = this;
             var iframe = document.createElement("iframe");
@@ -1097,125 +1166,13 @@
                 iframe.attachEvent("onreadystatechange", function () {
                     if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
                         iframe.detachEvent("onreadystatechange", arguments.callee);
-                        try {
-                            if (type === "group") {
-                                if (frameConfig.useFrameTitle === true) {
-                                    iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                    that.setGroupTitle(config.id, frameConfig.id, iframeTitle);
-                                }
-                            } else {
-                                if (config.useFrameTitle === true) {
-                                    iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                    that.setTitle(config.id, iframeTitle);
-                                }
-                            }
-                            if (config.focusable === true) {
-                                if (!iframe.getAttribute("data-focus")) {
-                                    IframeOnClick.track(iframe, function () {
-                                        if (Utils.isFunction(config.event.onfocus)) {
-                                            var revel = Utils.isFunction(config.event.onfocus);
-                                            if (revel === false) {
-                                                return;
-                                            }
-                                            config.event.onfocus(layxWindow, winform);
-                                        }
-                                        that.updateZIndex(config.id);
-                                    });
-                                    iframe.setAttribute("data-focus", "true");
-                                }
-                            }
-                        } catch (e) {
-                            console.warn(e);
-                        } finally {
-                            var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
-                            if (contentShade) {
-                                if (type === "group") {
-                                    main.setAttribute("data-complete", "1");
-                                    var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
-                                    if (config.frames.length === loadComplteMains.length) {
-                                        contentShade && contentShade.parentNode.removeChild(contentShade);
-                                        if (winform.loadingTextTimer) {
-                                            clearInterval(winform.loadingTextTimer);
-                                            delete winform.loadingTextTimer;
-                                        }
-                                        if (Utils.isFunction(config.event.onload.after)) {
-                                            config.event.onload.after(layxWindow, winform);
-                                        }
-                                    }
-                                } else {
-                                    contentShade && contentShade.parentNode.removeChild(contentShade);
-                                    if (winform.loadingTextTimer) {
-                                        clearInterval(winform.loadingTextTimer);
-                                        delete winform.loadingTextTimer;
-                                    }
-                                    if (Utils.isFunction(config.event.onload.after)) {
-                                        config.event.onload.after(layxWindow, winform);
-                                    }
-                                }
-                            }
-                        }
+                        that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig);
                     }
                 });
             } else {
                 iframe.addEventListener("load", function () {
                     this.removeEventListener("load", arguments.call, false);
-                    try {
-                        if (type === "group") {
-                            if (frameConfig.useFrameTitle === true) {
-                                iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                that.setGroupTitle(config.id, frameConfig.id, iframeTitle);
-                            }
-                        } else {
-                            if (config.useFrameTitle === true) {
-                                iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
-                                that.setTitle(config.id, iframeTitle);
-                            }
-                        }
-                        if (config.focusable === true) {
-                            if (!iframe.getAttribute("data-focus")) {
-                                IframeOnClick.track(iframe, function () {
-                                    if (Utils.isFunction(config.event.onfocus)) {
-                                        var revel = Utils.isFunction(config.event.onfocus);
-                                        if (revel === false) {
-                                            return;
-                                        }
-                                        config.event.onfocus(layxWindow, winform);
-                                    }
-                                    that.updateZIndex(config.id);
-                                });
-                                iframe.setAttribute("data-focus", "true");
-                            }
-                        }
-                    } catch (e) {
-                        console.warn(e);
-                    } finally {
-                        var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
-                        if (contentShade) {
-                            if (type === "group") {
-                                main.setAttribute("data-complete", "1");
-                                var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
-                                if (config.frames.length === loadComplteMains.length) {
-                                    contentShade && contentShade.parentNode.removeChild(contentShade);
-                                    if (winform.loadingTextTimer) {
-                                        clearInterval(winform.loadingTextTimer);
-                                        delete winform.loadingTextTimer;
-                                    }
-                                    if (Utils.isFunction(config.event.onload.after)) {
-                                        config.event.onload.after(layxWindow, winform);
-                                    }
-                                }
-                            } else {
-                                contentShade && contentShade.parentNode.removeChild(contentShade);
-                                if (winform.loadingTextTimer) {
-                                    clearInterval(winform.loadingTextTimer);
-                                    delete winform.loadingTextTimer;
-                                }
-                                if (Utils.isFunction(config.event.onload.after)) {
-                                    config.event.onload.after(layxWindow, winform);
-                                }
-                            }
-                        }
-                    }
+                    that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig);
                 }, false);
             }
             if (isLoad === false) {
