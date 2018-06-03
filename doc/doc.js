@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.9</strong></li>
-                    <li><label>发布日期</label>：2018.06.03</li>
+                    <li><label>当前版本</label>：<strong>v2.4.0</strong></li>
+                    <li><label>发布日期</label>：2018.06.04</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -265,7 +265,7 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.06.03 v2.3.9 发布</h3>
+<h3># 2018.06.04 v2.4.0 发布</h3>
 <pre style="margin-top:0">
 - [新增] 阻隔层禁止右键，避免恶意修改
 - [更新] 网页窗口加载代码
