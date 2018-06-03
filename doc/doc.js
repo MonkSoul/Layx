@@ -115,7 +115,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.3.8</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.3.9</strong></li>
                     <li><label>发布日期</label>：2018.06.03</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
@@ -253,7 +253,7 @@ window.onload = function () {
                                     type: "url",
                                     url: "./layxjs.html"
                                 }
-                            ]);
+                            ], 0, { mergeTitle: false, title: 'Layx v' + layx.v + " 源代码鉴赏" });
                         },
                     },
                     {
@@ -265,10 +265,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.06.03 v2.3.8 发布</h3>
+<h3># 2018.06.03 v2.3.9 发布</h3>
 <pre style="margin-top:0">
 - [新增] 阻隔层禁止右键，避免恶意修改
 - [更新] 网页窗口加载代码
+- [修复] <span style="color: #00f;">top.layx打开新窗口被遮盖 bug</span>
 - [修复] 窗口焦点事件触发多次 bug
 - [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
@@ -514,6 +515,7 @@ window.onload = function () {
 <pre style="margin-top:0;margin-bottom: 0;">
 - [新增] 阻隔层禁止右键，避免恶意修改
 - [更新] 网页窗口加载代码
+- [修复] <span style="color: #00f;">top.layx打开新窗口被遮盖 bug</span>
 - [修复] 窗口焦点事件触发多次 bug
 - [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
@@ -527,7 +529,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 310,
+                height: 340,
                 minHeight: 200,
                 alwaysOnTop: true,
                 floatDirection: 'top',

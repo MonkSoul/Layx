@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.8
+ * version : v2.3.9
  * create time : 2018.05.11
  * update time : 2018.06.03
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.8',
+        version: '2.3.9',
         defaults: {
             id: '',
             icon: true,
@@ -165,9 +165,6 @@
             Layx.focusId = config.id;
             var _winform = that.windows[config.id];
             if (_winform) {
-                setTimeout(function () {
-                    that.updateZIndex(config.id);
-                }, 0);
                 if (_winform.status === "min") {
                     that.restore(_winform.id);
                 }
@@ -655,9 +652,6 @@
                         delete winform.loadingTextTimer;
                     }
                     if (Utils.isFunction(config.event.onload.after)) {
-                        setTimeout(function () {
-                            that.updateZIndex(config.id);
-                        }, 0);
                         config.event.onload.after(layxWindow, winform);
                     }
                     break;
@@ -837,6 +831,13 @@
                     that.max(config.id);
                 }
             }
+            var fixFocus = setInterval(function () {
+                if (config.id !== Layx.focusId) {
+                    that.updateZIndex(config.id);
+                } else {
+                    clearInterval(fixFocus);
+                }
+            }, 0);
             return winform;
         },
         updateFloatWinPosition: function (id, direction) {
