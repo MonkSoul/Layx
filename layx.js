@@ -172,6 +172,13 @@
                 if (Utils.isFunction(config.event.onexist)) {
                     config.event.onexist(_winform.layxWindow, _winform);
                 }
+                var fixFocus = setInterval(function () {
+                    if (config.id !== Layx.focusId) {
+                        that.updateZIndex(config.id);
+                    } else {
+                        clearInterval(fixFocus);
+                    }
+                }, 0);
                 return _winform;
             }
             if (Utils.isArray(config.frames)) {
