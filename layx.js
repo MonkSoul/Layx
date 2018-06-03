@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.3.7
+ * version : v2.3.8
  * create time : 2018.05.11
  * update time : 2018.06.03
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.3.7',
+        version: '2.3.8',
         defaults: {
             id: '',
             icon: true,
@@ -165,6 +165,9 @@
             Layx.focusId = config.id;
             var _winform = that.windows[config.id];
             if (_winform) {
+                setTimeout(function () {
+                    that.updateZIndex(config.id);
+                }, 0);
                 if (_winform.status === "min") {
                     that.restore(_winform.id);
                 }
@@ -305,21 +308,19 @@
             }
             layxWindow.style.backgroundColor = config.bgColor;
             layxWindow.style.opacity = /^(0(\.[0-9])?$)|(1)$/.test(config.opacity) ? config.opacity : 1;
-            if (config.type === "html" || config.type === "group") {
-                if (config.focusable === true) {
-                    layxWindow.onclick = function (e) {
-                        e = e || window.event;
-                        if (Utils.isFunction(config.event.onfocus)) {
-                            var revel = Utils.isFunction(config.event.onfocus);
-                            if (revel === false) {
-                                return;
-                            }
-                            config.event.onfocus(layxWindow, winform);
+            if (config.focusable === true) {
+                layxWindow.onclick = function (e) {
+                    e = e || window.event;
+                    if (Utils.isFunction(config.event.onfocus)) {
+                        var revel = Utils.isFunction(config.event.onfocus);
+                        if (revel === false) {
+                            return;
                         }
-                        that.updateZIndex(config.id);
-                        e.stopPropagation();
-                    };
-                }
+                        config.event.onfocus(layxWindow, winform);
+                    }
+                    that.updateZIndex(config.id);
+                    e.stopPropagation();
+                };
             }
             document.body.appendChild(layxWindow);
             winform.id = config.id;
@@ -513,7 +514,6 @@
                                     position: [layxWindow.offsetTop + 10, layxWindow.offsetLeft + 10],
                                     storeStatus: false
                                 });
-                                e.stopPropagation();
                             };
                             inlayMenu.appendChild(debugMenu);
                         }
@@ -530,7 +530,6 @@
                                 stickMenu.onclick = function (e) {
                                     e = e || window.event;
                                     that.stickToggle(config.id);
-                                    e.stopPropagation();
                                 };
                             }
                             inlayMenu.appendChild(stickMenu);
@@ -555,7 +554,6 @@
                                         that.restore(config.id);
                                     }
                                 }
-                                e.stopPropagation();
                             };
                             inlayMenu.appendChild(minMenu);
                         }
@@ -579,7 +577,6 @@
                                         that.restore(config.id);
                                     }
                                 }
-                                e.stopPropagation();
                             };
                             inlayMenu.appendChild(maxMenu);
                         }
@@ -597,7 +594,6 @@
                             if (config.closable === true) {
                                 that.destroy(config.id, null, true);
                             }
-                            e.stopPropagation();
                         };
                         inlayMenu.appendChild(destroyMenu);
                     }
@@ -659,6 +655,9 @@
                         delete winform.loadingTextTimer;
                     }
                     if (Utils.isFunction(config.event.onload.after)) {
+                        setTimeout(function () {
+                            that.updateZIndex(config.id);
+                        }, 0);
                         config.event.onload.after(layxWindow, winform);
                     }
                     break;
@@ -1111,16 +1110,19 @@
                                 }
                             }
                             if (config.focusable === true) {
-                                IframeOnClick.track(iframe, function () {
-                                    if (Utils.isFunction(config.event.onfocus)) {
-                                        var revel = Utils.isFunction(config.event.onfocus);
-                                        if (revel === false) {
-                                            return;
+                                if (!iframe.getAttribute("data-focus")) {
+                                    IframeOnClick.track(iframe, function () {
+                                        if (Utils.isFunction(config.event.onfocus)) {
+                                            var revel = Utils.isFunction(config.event.onfocus);
+                                            if (revel === false) {
+                                                return;
+                                            }
+                                            config.event.onfocus(layxWindow, winform);
                                         }
-                                        config.event.onfocus(layxWindow, winform);
-                                    }
-                                    that.updateZIndex(config.id);
-                                });
+                                        that.updateZIndex(config.id);
+                                    });
+                                    iframe.setAttribute("data-focus", "true");
+                                }
                             }
                         } catch (e) {
                             console.warn(e);
@@ -1170,16 +1172,19 @@
                             }
                         }
                         if (config.focusable === true) {
-                            IframeOnClick.track(iframe, function () {
-                                if (Utils.isFunction(config.event.onfocus)) {
-                                    var revel = Utils.isFunction(config.event.onfocus);
-                                    if (revel === false) {
-                                        return;
+                            if (!iframe.getAttribute("data-focus")) {
+                                IframeOnClick.track(iframe, function () {
+                                    if (Utils.isFunction(config.event.onfocus)) {
+                                        var revel = Utils.isFunction(config.event.onfocus);
+                                        if (revel === false) {
+                                            return;
+                                        }
+                                        config.event.onfocus(layxWindow, winform);
                                     }
-                                    config.event.onfocus(layxWindow, winform);
-                                }
-                                that.updateZIndex(config.id);
-                            });
+                                    that.updateZIndex(config.id);
+                                });
+                                iframe.setAttribute("data-focus", "true");
+                            }
                         }
                     } catch (e) {
                         console.warn(e);
@@ -1926,7 +1931,6 @@
                 buttonItem.callback = buttons[i].callback;
                 buttonItem.onclick = function (e) {
                     e = e || window.event;
-                    e.stopPropagation();
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
@@ -2322,7 +2326,7 @@
         });
     }
     var IframeOnClick = {
-        resolution: 200,
+        resolution: 0,
         iframes: [],
         interval: null,
         Iframe: function () {
@@ -2345,7 +2349,7 @@
                 for (var i in this.iframes) {
                     if (activeElement === this.iframes[i].element) {
                         if (this.iframes[i].hasTracked == false) {
-                            this.iframes[i].cb.apply(window, []);
+                            this.iframes[i].cb.apply(win, []);
                             this.iframes[i].hasTracked = true;
                         }
                     } else {

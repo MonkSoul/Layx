@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,minimum-scale=1,user-scalable=no" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <title>Layx 企业级弹窗组件 v2.3.8</title>
+    <title>Layx 企业级弹窗组件 v2.3.7</title>
     <style>
         html,
         body {
@@ -42,12 +42,12 @@
 </head>
 
 <body>
-    <label>Layx</label>
+    <button onclick="javascript: top.layx.iframe('top_oschina', '开源中国', 'https://www.oschina.net/', {
+        width: 500, height: 500
+    }); ">
+        在顶级页面打开新窗口
+    </button>
     <script type="text/javascript">
-        function iframeFunc() {
-            alert("我是iframe.html 页面的 iframeFunc 方法");
-        }
     </script>
 </body>
-
 </html>
