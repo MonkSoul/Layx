@@ -561,6 +561,17 @@ window.onload = function () {
                     }
                 }
             });
+
+        var demoHtml = document.getElementById("layx-layx-demo-html");
+        if (demoHtml) {
+            demoHtml.onscroll = function () {
+                updateFloat(this);
+            }
+        }
+
+        window.onscroll = function () {
+            layx.updateFloatWinPosition("float-log");
+        }
     }
     var runs = document.querySelectorAll(".run");
     for (var i = 0; i < runs.length; i++) {
@@ -619,15 +630,4 @@ window.onload = function () {
             toc.style.display = "none";
         }
     };
-
-    var demoHtml = document.getElementById("layx-layx-demo-html");
-    if (demoHtml) {
-        demoHtml.onscroll = function () {
-            updateFloat(this);
-        }
-    }
-
-    window.onscroll = function () {
-        layx.updateFloatWinPosition("float-log");
-    }
 };
