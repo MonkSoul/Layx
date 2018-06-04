@@ -264,6 +264,7 @@ window.onload = function () {
 <div style="padding:0 10px 10px 10px">
 <h3># 2018.06.04 v2.4.0 发布</h3>
 <pre style="margin-top:0">
+- [新增] <span style="color: #3498db;">新增 tip 提示窗口</span>
 - [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
 - [新增] <span style="color: #3498db;">自定义皮肤功能</span>
 - [新增] <span style="color: #3498db;">options.borderRadius 圆角设置</span>
@@ -508,10 +509,16 @@ window.onload = function () {
                 ]
             });
 
+        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-top'), 'top');
+        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
+        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-left'), 'left');
+        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-right'), 'right');
+
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [新增] <span style="color: #3498db;">新增 tip 提示窗口</span>
 - [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
 - [新增] <span style="color: #3498db;">自定义皮肤功能</span>
 - [新增] <span style="color: #3498db;">options.borderRadius 圆角设置</span>
@@ -532,7 +539,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 430,
+                height: 450,
                 minHeight: 200,
                 alwaysOnTop: true,
                 floatDirection: 'top',

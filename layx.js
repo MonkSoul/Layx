@@ -1965,6 +1965,41 @@
             }
             return null;
         },
+        tip: function (msg, target, direction, options) {
+            var that = this;
+            if (Utils.isDom(target)) {
+                var _id = (options && options.id) ? options.id : 'layx-dialog-tip-' + Utils.rndNum(8);
+                target.addEventListener("mouseover", function (e) {
+                    var msgSizeRange = that.getStrSizeRange(msg, 20, 20, 320, 90, ((options && options.dialogIcon) ? true : false));
+                    that.create(layxDeepClone({}, {
+                        id: _id,
+                        type: 'html',
+                        control: false,
+                        content: that.createDialogContent("tip", msg, ((options && options.dialogIcon) ? options.dialogIcon : false)),
+                        width: msgSizeRange.width,
+                        height: msgSizeRange.height,
+                        minHeight: msgSizeRange.height,
+                        minWidth: msgSizeRange.width,
+                        stickMenu: false,
+                        minMenu: false,
+                        floatTarget: target,
+                        floatDirection: direction || 'bottom',
+                        maxMenu: false,
+                        closeMenu: false,
+                        alwaysOnTop: true,
+                        resizable: false,
+                        movable: false,
+                        allowControlDbclick: false,
+                        autodestroyText: false,
+                        loadingText: false,
+                        storeStatus: false
+                    }, options));
+                }, false);
+                target.addEventListener("mouseout", function (e) {
+                    that.destroy(_id, null, true);
+                }, false);
+            }
+        },
         msg: function (msg, options) {
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 120, 20, 320, 90, ((options && options.dialogIcon) ? true : false));
@@ -3222,6 +3257,9 @@
         },
         destroyAll: function () {
             Layx.destroyAll();
+        },
+        tip: function (msg, target, direction, options) {
+            Layx.tip(msg, target, direction, options);
         },
         msg: function (msg, options) {
             return Layx.msg(msg, options);

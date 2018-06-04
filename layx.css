@@ -411,11 +411,11 @@ body.ilayx-body {
     font-size: 40px !important;
 }
 
-.layx-dialog-msg .layx-dialog-icon .layx-iconfont {
+.layx-dialog-msg .layx-dialog-icon .layx-iconfont, .layx-dialog-tip .layx-dialog-icon .layx-iconfont {
     font-size: 25px !important;
 }
 
-.layx-dialog-msg .layx-dialog-icon {
+.layx-dialog-msg .layx-dialog-icon, .layx-dialog-tip .layx-dialog-icon {
     top: 0;
 }
 
@@ -436,6 +436,7 @@ body.ilayx-body {
 }
 
 .layx-dialog-msg,
+.layx-dialog-tip,
 .layx-dialog-load {
     color: #000;
     font-size: 15px;
@@ -455,7 +456,7 @@ body.ilayx-body {
     width: 100%;
 }
 
-.layx-dialog-msg {
+.layx-dialog-msg, .layx-dialog-tip {
     height: 100%;
 }
 
@@ -977,9 +978,11 @@ body.ilayx-body {
     background-color: #34495e;
     color: #fff;
 }
+
 .layx-window.layx-skin-asphalt .layx-inlay-menus .layx-icon:hover {
     background-color: #2c3e50;
 }
+
 .layx-window.layx-skin-asphalt .layx-button-item {
     background-color: #34495e;
     color: #fff;
