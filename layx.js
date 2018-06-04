@@ -864,10 +864,10 @@
                     var _controlBar = layxWindow.querySelector(".layx-control-bar");
                     var controlStyle = _controlBar && (_controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null));
                     if (winform.control === true && _controlBar && controlStyle) {
-                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? controlStyle.backgroundColor : layxWindowStyle.borderColor;
+                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? ((winform.skin === "default") ? "#3baced" : controlStyle.backgroundColor) : layxWindowStyle.borderColor;
                         bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = controlStyle.backgroundColor;
                     } else {
-                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? "#fff" : layxWindowStyle.borderColor;
+                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? ((winform.skin === "default") ? "#3baced" : "#fff") : layxWindowStyle.borderColor;
                         bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = layxWindowStyle.backgroundColor;
                     }
                     var bubblePosition = Utils.compilebubbleDirection(direction, winform.floatTarget, winform.area.width, winform.area.height);
