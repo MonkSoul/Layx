@@ -228,7 +228,6 @@ window.onload = function () {
                     {
                         id: 'donate',
                         label: '捐赠',
-                        classes: 'custom-button1',
                         callback: function (id, button, event) {
                             event.stopPropagation();
                             layx.html('donate', '请作者喝杯咖啡', '<div style="padding:10px"><img src="./code.jpg" style="width:100%;display:block;" /></div>', { width: 300, height: 385 });
@@ -237,7 +236,6 @@ window.onload = function () {
                     {
                         id: 'source',
                         label: '鉴赏',
-                        classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
                             layx.group('source', [
@@ -259,7 +257,6 @@ window.onload = function () {
                     {
                         id: 'log',
                         label: '日志',
-                        classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
                             layx.destroyInlay("float-log");
@@ -267,9 +264,13 @@ window.onload = function () {
 <div style="padding:0 10px 10px 10px">
 <h3># 2018.06.04 v2.4.0 发布</h3>
 <pre style="margin-top:0">
+- [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
+- [新增] <span style="color: #3498db;">自定义皮肤功能</span>
+- [新增] <span style="color: #3498db;">options.borderRadius 圆角设置</span>
 - [新增] 阻隔层禁止右键，避免恶意修改
 - [更新] 网页窗口加载代码
-- [修复] <span style="color: #00f;">top.layx打开新窗口被遮盖 bug</span>
+- [更新] <span style="color: ##3498db;">浮动窗口气泡自适应主题功能</span>
+- [修复] top.layx打开新窗口被遮盖 bug
 - [修复] 窗口焦点事件触发多次 bug
 - [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
@@ -452,7 +453,6 @@ window.onload = function () {
                     {
                         id: 'open-run',
                         label: '调试',
-                        classes: 'custom-button',
                         callback: function (id, button, event) {
                             event.stopPropagation();
                             layx.html('eval', 'Layx 在线调试', layx.multiLine(function () { /*
@@ -487,7 +487,6 @@ window.onload = function () {
                                         {
                                             id: 'run',
                                             label: '运行',
-                                            classes: 'custom-button',
                                             callback: function (id, button, event) {
                                                 try {
                                                     var codeStr = document.querySelector("#eval-textarea");
@@ -511,11 +510,15 @@ window.onload = function () {
 
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
-<div style="padding:0 10px 0 10px">
+<div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
+- [新增] <span style="color: #3498db;">自定义皮肤功能</span>
+- [新增] <span style="color: #3498db;">options.borderRadius 圆角设置</span>
 - [新增] 阻隔层禁止右键，避免恶意修改
 - [更新] 网页窗口加载代码
-- [修复] <span style="color: #00f;">top.layx打开新窗口被遮盖 bug</span>
+- [更新] <span style="color: ##3498db;">浮动窗口气泡自适应主题功能</span>
+- [修复] top.layx打开新窗口被遮盖 bug
 - [修复] 窗口焦点事件触发多次 bug
 - [修复] 同域网页窗口ESC快捷键无作用 bug
 - [修复] 窗口禁止冒泡触发焦点事件 bug
@@ -529,7 +532,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 340,
+                height: 430,
                 minHeight: 200,
                 alwaysOnTop: true,
                 floatDirection: 'top',

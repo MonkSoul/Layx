@@ -26,7 +26,9 @@
             controlStyle: '',
             bgColor: "#fff",
             shadow: true,
-            border: "1px solid #3baced",
+            border: true,
+            borderRadius: '3px',
+            skin: 'default',
             type: 'html',
             frames: [],
             frameIndex: 0,
@@ -235,6 +237,7 @@
             layxWindow.setAttribute("id", "layx-" + config.id);
             layxWindow.classList.add("layx-window");
             layxWindow.classList.add("layx-flexbox");
+            layxWindow.classList.add("layx-skin-" + config.skin);
             if (config.shadow === true) {
                 layxWindow.style.setProperty("box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
                 layxWindow.style.setProperty("-moz-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
@@ -278,8 +281,6 @@
                 that.removeStoreWindowAreaInfo(config.id);
             }
             if (Utils.isDom(config.floatTarget)) {
-                var bubbleDirectionOptions = ['top', 'bottom', 'left', 'right'];
-                config.floatDirection = bubbleDirectionOptions.indexOf(config.floatDirection) > -1 ? config.floatDirection : 'bottom';
                 layxWindow.classList.add("layx-bubble-type");
                 var bubble = document.createElement("div");
                 bubble.classList.add("layx-bubble");
@@ -289,16 +290,6 @@
                 bubbleInlay.classList.add("layx-bubble-inlay");
                 bubbleInlay.classList.add("layx-bubble-inlay-" + config.floatDirection);
                 bubble.appendChild(bubbleInlay);
-                var bubblePosition = Utils.compilebubbleDirection(config.floatDirection, config.floatTarget, _width, _height);
-                _top = bubblePosition.top;
-                _left = bubblePosition.left;
-                var floatPos = Utils.getElementPos(config.floatTarget);
-                if (config.floatDirection === "top" || config.floatDirection === "bottom") {
-                    bubble.style.left = Math.abs(floatPos.x + config.floatTarget.offsetWidth / 2 - _left - 9) + "px";
-                }
-                if (config.floatDirection === "left" || config.floatDirection === "right") {
-                    bubble.style.top = Math.abs(floatPos.y + config.floatTarget.offsetHeight / 2 - _top - 9) + "px";
-                }
             }
             layxWindow.style.zIndex = config.alwaysOnTop === true ? (++that.stickZIndex) : (++that.zIndex);
             layxWindow.style.width = _width + "px";
@@ -307,10 +298,11 @@
             layxWindow.style.minHeight = _minHeight + "px";
             layxWindow.style.top = _top + "px";
             layxWindow.style.left = _left + "px";
-            if (config.border !== false) {
-                layxWindow.style.setProperty("border", config.border === true ? '1px solid #3baced' : config.border);
-            }
+            layxWindow.style.setProperty("border", Utils.isBoolean(config.border) ? "" : config.border);
             layxWindow.style.backgroundColor = config.bgColor;
+            layxWindow.style.setProperty("border-radius", config.borderRadius);
+            layxWindow.style.setProperty("-moz-border-radius", config.borderRadius);
+            layxWindow.style.setProperty("-webkit-border-radius", config.borderRadius);
             layxWindow.style.opacity = /^(0(\.[0-9])?$)|(1)$/.test(config.opacity) ? config.opacity : 1;
             if (config.focusable === true) {
                 layxWindow.onclick = function (e) {
@@ -327,6 +319,7 @@
                 };
             }
             document.body.appendChild(layxWindow);
+            var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : win.getComputedStyle(layxWindow, null);
             winform.id = config.id;
             winform.title = config.title;
             winform.layxWindowId = layxWindow.getAttribute("id");
@@ -351,6 +344,8 @@
                 top: _top,
                 left: _left
             };
+            winform.border = config.border;
+            winform.control = config.control;
             winform.isFloatTarget = Utils.isDom(config.floatTarget);
             winform.floatTarget = config.floatTarget;
             winform.floatDirection = config.floatDirection;
@@ -367,12 +362,16 @@
             winform.maxable = config.maxable;
             winform.restorable = config.restorable;
             winform.closable = config.closable;
+            winform.skin = config.skin;
             winform.event = config.event;
             winform.dragInTopToMax = config.dragInTopToMax;
             if (config.control === true) {
                 var controlBar = document.createElement("div");
                 controlBar.classList.add("layx-control-bar");
                 controlBar.classList.add("layx-flexbox");
+                controlBar.style.setProperty("border-radius", layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius + " " + "0 0");
+                controlBar.style.setProperty("-moz-border-radius", layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius + " " + "0 0");
+                controlBar.style.setProperty("-webkit-border-radius", layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius + " " + "0 0");
                 config.controlStyle && controlBar.setAttribute("style", config.controlStyle);
                 if (config.type === "group" && config.mergeTitle === true) {
                     controlBar.classList.add("layx-type-group");
@@ -603,20 +602,14 @@
                     }
                 }
             }
-            if (Utils.isDom(config.floatTarget)) {
-                var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : win.getComputedStyle(layxWindow, null);
-                bubble.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
-                if (config.control === true) {
-                    var _controlBar = layxWindow.querySelector(".layx-control-bar");
-                    var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null);
-                    bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
-                } else {
-                    bubbleInlay.style["border" + config.floatDirection.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
-                }
-            }
             var main = document.createElement("div");
             main.classList.add("layx-main");
             main.classList.add("layx-flexauto");
+            if (!config.statusBar) {
+                main.style.setProperty("border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
+                main.style.setProperty("-moz-border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
+                main.style.setProperty("-webkit-border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
+            }
             layxWindow.appendChild(main);
             if (config.readonly === true) {
                 var readonlyPanel = document.createElement("div");
@@ -816,6 +809,9 @@
             if (config.statusBar) {
                 var statusBar = document.createElement("div");
                 statusBar.classList.add("layx-statu-bar");
+                statusBar.style.setProperty("border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
+                statusBar.style.setProperty("-moz-border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
+                statusBar.style.setProperty("-webkit-border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
                 config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
                 if (config.statusBar === true && Utils.isArray(config.buttons)) {
                     var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
@@ -831,7 +827,7 @@
             }
             that.windows[config.id] = winform;
             if (Utils.isDom(config.floatTarget)) {
-                that.updateFloatWinResize(config.id);
+                that.updateFloatWinPosition(config.id, config.floatDirection);
             }
             if (config.isOverToMax === true && (Utils.isDom(config.floatTarget) === false)) {
                 if (_width > window.innerWidth || _height > window.innerHeight) {
@@ -865,29 +861,34 @@
                     bubble.classList.add("layx-bubble-" + direction);
                     bubbleInlay.classList.add("layx-bubble-inlay-" + direction);
                     var layxWindowStyle = layxWindow.currentStyle ? layxWindow.currentStyle : win.getComputedStyle(layxWindow, null);
-                    bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor)) ? "#3baced" : layxWindowStyle.borderColor;
-                    if (winform.control === true) {
-                        var _controlBar = layxWindow.querySelector(".layx-control-bar");
-                        var controlStyle = _controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null);
-                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (controlStyle.backgroundColor === "rgba(0, 0, 0, 0)" || controlBar.backgroundColor === "transparent" || (!controlBar.backgroundColor)) ? "#fff" : controlStyle.backgroundColor;
+                    var _controlBar = layxWindow.querySelector(".layx-control-bar");
+                    var controlStyle = _controlBar && (_controlBar.currentStyle ? _controlBar.currentStyle : win.getComputedStyle(_controlBar, null));
+                    if (winform.control === true && _controlBar && controlStyle) {
+                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? controlStyle.backgroundColor : layxWindowStyle.borderColor;
+                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = controlStyle.backgroundColor;
                     } else {
-                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.backgroundColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.backgroundColor === "transparent" || (!layxWindowStyle.backgroundColor)) ? "#fff" : layxWindowStyle.backgroundColor;
+                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? "#fff" : layxWindowStyle.borderColor;
+                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = layxWindowStyle.backgroundColor;
                     }
+                    var bubblePosition = Utils.compilebubbleDirection(direction, winform.floatTarget, winform.area.width, winform.area.height);
+                    that.setPosition(id, {
+                        top: bubblePosition.top,
+                        left: bubblePosition.left
+                    }, true);
+                    var floatPos = Utils.getElementPos(winform.floatTarget);
+                    if (direction === "top" || direction === "bottom") {
+                        bubble.style.left = Math.abs(floatPos.x + winform.floatTarget.offsetWidth / 2 - winform.layxWindow.offsetLeft - 9) + "px";
+                    }
+                    if (direction === "left" || direction === "right") {
+                        bubble.style.top = Math.abs(floatPos.y + winform.floatTarget.offsetHeight / 2 - winform.layxWindow.offsetTop - 9) + "px";
+                    }
+                    if ((direction === "top") || ((direction === "right" || direction === "left") && (winform.control === true && _controlBar && controlStyle && bubble.offsetTop > _controlBar.offsetHeight))) {
+                        bubble.style["border" + direction.toFirstUpperCase() + "Color"] = (layxWindowStyle.borderColor === "rgba(0, 0, 0, 0)" || layxWindowStyle.borderColor === "transparent" || (!layxWindowStyle.borderColor) || (Utils.isBoolean(winform.border))) ? ((winform.skin === "default") ? "#3baced" : "#fff") : layxWindowStyle.borderColor;
+                        bubbleInlay.style["border" + direction.toFirstUpperCase() + "Color"] = layxWindowStyle.backgroundColor;
+                    }
+                    winform.floatDirection = direction;
+                    that.updateFloatWinResize(id, direction);
                 }
-                var bubblePosition = Utils.compilebubbleDirection(direction, winform.floatTarget, winform.area.width, winform.area.height);
-                that.setPosition(id, {
-                    top: bubblePosition.top,
-                    left: bubblePosition.left
-                }, true);
-                var floatPos = Utils.getElementPos(winform.floatTarget);
-                if (direction === "top" || direction === "bottom") {
-                    bubble.style.left = Math.abs(floatPos.x + winform.floatTarget.offsetWidth / 2 - winform.layxWindow.offsetLeft - 9) + "px";
-                }
-                if (direction === "left" || direction === "right") {
-                    bubble.style.top = Math.abs(floatPos.y + winform.floatTarget.offsetHeight / 2 - winform.layxWindow.offsetTop - 9) + "px";
-                }
-                winform.floatDirection = direction;
-                that.updateFloatWinResize(id, direction);
             }
         },
         updateFloatWinResize: function (id, direction) {

@@ -202,8 +202,32 @@ bc：下中间
             <div class="doc-des">
                 <span>类型</span>：Boolean/String<br />
                 <span>必需</span>：否<br />
-                <span>默认值</span>：1px solid #3baced<br />
+                <span>默认值</span>：true<br />
                 <span>说明</span>：设置false将不启用边框，支持css边框设置属性。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>borderRadius：设置圆角</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：3px<br />
+                <span>说明</span>：设置 0px将不启用圆角，圆角必须带 px单位<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>skin：窗口皮肤</label></p>
+            <div class="doc-des">
+                <span>类型</span>：String<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：'default'<br />
+                <span>说明</span>：内置皮肤：<br />
+                <pre>default
+cloud
+turquoise
+river
+asphalt
+</pre>
             </div>
         </div>
         <div class="doc-item">
@@ -973,6 +997,23 @@ winform.event // 窗口事件
     e.stopPropagation();
 }</pre>
         <h2 name="外观定制">外观定制</h2>
+        <h3 name="自定义皮肤">自定义皮肤</h3>
+        自定义皮肤建议写到一个单独的css文件中，且必须在layx.css后面引入，自定义皮肤规范：
+        <pre>/* 窗口 */
+.layx-window.layx-皮肤名称-river {
+}
+/* 标题栏 */
+.layx-window.layx-skin-皮肤名称 .layx-control-bar {
+}
+/* 内部按钮激活 */
+.layx-window.layx-skin-皮肤名称 .layx-inlay-menus .layx-icon:hover {
+}
+/* 底部工具栏按钮 */
+.layx-window.layx-skin-皮肤名称 .layx-button-item {
+}
+/* 底部工具栏激活 */
+.layx-window.layx-skin-皮肤名称 .layx-button-item:hover {
+}</pre>
         <h3 name="尽情写您的外观css样式吧">尽情写您的外观css样式吧</h3>
         通过窗口的 <strong>options. style </strong>属性可以定义窗口的外观，可以定制成任何您需要的样子，如：
         <pre>layx.iframe('radiu-style','自定义外观，比如圆角','./iframe.html',{
