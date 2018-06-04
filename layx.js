@@ -298,7 +298,7 @@
             layxWindow.style.minHeight = _minHeight + "px";
             layxWindow.style.top = _top + "px";
             layxWindow.style.left = _left + "px";
-            layxWindow.style.setProperty("border", Utils.isBoolean(config.border) ? "" : config.border);
+            layxWindow.style.setProperty("border", Utils.isBoolean(config.border) ? (config.skin === "default" && config.border === true ? "" : "none") : config.border);
             layxWindow.style.backgroundColor = config.bgColor;
             layxWindow.style.setProperty("border-radius", config.borderRadius);
             layxWindow.style.setProperty("-moz-border-radius", config.borderRadius);
