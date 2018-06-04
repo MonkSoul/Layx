@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.0
+ * version : v2.4.1
  * create time : 2018.05.11
  * update time : 2018.06.04
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.0',
+        version: '2.4.1',
         defaults: {
             id: '',
             icon: true,
@@ -365,6 +365,7 @@
             winform.skin = config.skin;
             winform.event = config.event;
             winform.dragInTopToMax = config.dragInTopToMax;
+            that.windows[config.id] = winform;
             if (config.control === true) {
                 var controlBar = document.createElement("div");
                 controlBar.classList.add("layx-control-bar");
@@ -635,7 +636,6 @@
                 }
                 main.appendChild(readonlyPanel);
             }
-            var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
             switch (config.type) {
                 case "html":
                 default:
@@ -645,6 +645,7 @@
                             return;
                         }
                     }
+                    var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
                     that.createHtmlBody(main, config, config.content);
                     contentShade && main.removeChild(contentShade);
                     if (winform.loadingTextTimer) {
@@ -662,6 +663,7 @@
                             return;
                         }
                     }
+                    var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
                     that.createFrameBody(main, config, layxWindow, winform);
                     break;
                 case "group":
@@ -672,8 +674,23 @@
                                 return;
                             }
                         }
+                        var contentShade = that.createContenLoadAnimate(main, config.loadingText, winform);
                         config.preload = (/(^[1-9]\d*$)/.test(config.preload) === false) ? true : Math.min(config.preload, config.frames.length);
-                        var groupLoadCount = 0;
+                        var groupLoadCompleteListener = setInterval(function () {
+                            var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
+                            if (loadComplteMains.length === Utils.isBoolean(config.preload) ? config.frames.length : config.preload) {
+                                clearInterval(groupLoadCompleteListener);
+                                if (winform.loadingTextTimer) {
+                                    clearInterval(winform.loadingTextTimer);
+                                    delete winform.loadingTextTimer;
+                                }
+                                layxWindow.setAttribute("data-group-init", "1");
+                                contentShade && main.removeChild(contentShade);
+                                if (Utils.isFunction(config.event.onload.after)) {
+                                    config.event.onload.after(layxWindow, winform);
+                                }
+                            }
+                        }, 100);
                         for (var i = 0; i < config.frames.length; i++) {
                             var frameConfig = layxDeepClone({}, that.defaultFrames, config.frames[i]);
                             var frameBody = document.createElement("div");
@@ -684,18 +701,14 @@
                                 frameBody.setAttribute("data-enable", "1");
                             }
                             main.appendChild(frameBody);
+                            var isNeedLoad = (i === config.frameIndex) ? true : (Utils.isBoolean(config.preload) ? true : (i + 1 <= config.preload));
                             if (frameConfig.type === "html") {
-                                that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig, (i === config.frameIndex) ? true : (Utils.isBoolean(config.preload) ? true : (i + 1 <= config.preload)));
-                                frameBody.setAttribute("data-complete", "1");
-                                var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
-                                if (loadComplteMains.length === config.frames.length) {
-                                    contentShade && main.removeChild(contentShade);
-                                    if (Utils.isFunction(config.event.onload.after)) {
-                                        config.event.onload.after(layxWindow, winform);
-                                    }
+                                that.createHtmlBody(frameBody, config, frameConfig.content, "group", frameConfig, isNeedLoad);
+                                if (isNeedLoad) {
+                                    frameBody.setAttribute("data-complete", "1");
                                 }
                             } else if (frameConfig.type === "url") {
-                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig, (i === config.frameIndex) ? true : (Utils.isBoolean(config.preload) ? true : (i + 1 <= config.preload)));
+                                that.createFrameBody(frameBody, config, layxWindow, winform, "group", frameConfig, isNeedLoad);
                             }
                         }
                     }
@@ -825,7 +838,6 @@
                 }
                 layxWindow.appendChild(statusBar);
             }
-            that.windows[config.id] = winform;
             if (Utils.isDom(config.floatTarget)) {
                 that.updateFloatWinPosition(config.id, config.floatDirection);
             }
@@ -1084,8 +1096,9 @@
                 }
             }
         },
-        frameLoadHandle: function (iframe, main, config, layxWindow, winform, type, frameConfig) {
+        frameLoadHandle: function (iframe, main, config, layxWindow, winform, type, frameConfig, isLoad) {
             var that = this;
+            var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
             try {
                 if (config.focusable === true) {
                     if (!iframe.getAttribute("data-focus")) {
@@ -1123,32 +1136,33 @@
                     }
                 }, false);
             } catch (e) {
+                if (type === "group") {
+                    contentShade && contentShade.parentNode.removeChild(contentShade);
+                }
                 console.warn(e);
             } finally {
-                var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
-                if (contentShade) {
-                    if (type === "group") {
+                if (type === "group") {
+                    if (isLoad) {
                         main.setAttribute("data-complete", "1");
-                        var loadComplteMains = layxWindow.querySelectorAll(".layx-group-main[data-complete='1']");
-                        if (config.frames.length === loadComplteMains.length) {
-                            contentShade && contentShade.parentNode.removeChild(contentShade);
-                            if (winform.loadingTextTimer) {
-                                clearInterval(winform.loadingTextTimer);
-                                delete winform.loadingTextTimer;
-                            }
-                            if (Utils.isFunction(config.event.onload.after)) {
-                                config.event.onload.after(layxWindow, winform);
-                            }
-                        }
-                    } else {
-                        contentShade && contentShade.parentNode.removeChild(contentShade);
+                    }
+                    if (layxWindow.getAttribute("data-group-init") === "1") {
                         if (winform.loadingTextTimer) {
                             clearInterval(winform.loadingTextTimer);
                             delete winform.loadingTextTimer;
                         }
+                        contentShade && contentShade.parentNode.removeChild(contentShade);
                         if (Utils.isFunction(config.event.onload.after)) {
                             config.event.onload.after(layxWindow, winform);
                         }
+                    }
+                } else {
+                    contentShade && contentShade.parentNode.removeChild(contentShade);
+                    if (winform.loadingTextTimer) {
+                        clearInterval(winform.loadingTextTimer);
+                        delete winform.loadingTextTimer;
+                    }
+                    if (Utils.isFunction(config.event.onload.after)) {
+                        config.event.onload.after(layxWindow, winform);
                     }
                 }
             }
@@ -1175,13 +1189,13 @@
                 iframe.attachEvent("onreadystatechange", function () {
                     if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
                         iframe.detachEvent("onreadystatechange", arguments.callee);
-                        that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig);
+                        that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig, isLoad);
                     }
                 });
             } else {
                 iframe.addEventListener("load", function () {
                     this.removeEventListener("load", arguments.call, false);
-                    that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig);
+                    that.frameLoadHandle(iframe, main, config, layxWindow, winform, type, frameConfig, isLoad);
                 }, false);
             }
             if (isLoad === false) {
@@ -1361,6 +1375,12 @@
                 if (winform.type === "url") {
                     var iframe = layxWindow.querySelector("#layx-" + id + "-iframe");
                     if (iframe) {
+                        if (Utils.isFunction(winform.event.onload.before)) {
+                            var revel = winform.event.onload.before(layxWindow, winform);
+                            if (revel === false) {
+                                return;
+                            }
+                        }
                         var contentShade = that.createContenLoadAnimate(iframe.parentNode, winform.loadingText, winform);
                         iframe.setAttribute("src", url);
                     }
@@ -1378,6 +1398,12 @@
                 if (frameform.type === "url") {
                     var iframe = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "iframe");
                     if (iframe) {
+                        if (Utils.isFunction(winform.event.onload.before)) {
+                            var revel = winform.event.onload.before(layxWindow, winform);
+                            if (revel === false) {
+                                return;
+                            }
+                        }
                         iframe.parentNode.removeAttribute("data-complete");
                         var contentShade = that.createContenLoadAnimate(iframe.parentNode.parentNode, winform.loadingText, winform);
                         iframe.setAttribute("src", url);

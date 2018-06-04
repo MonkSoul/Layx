@@ -115,7 +115,7 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.0</strong></li>
+                    <li><label>当前版本</label>：<strong>v2.4.1</strong></li>
                     <li><label>发布日期</label>：2018.06.04</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
@@ -262,7 +262,7 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
-<h3># 2018.06.04 v2.4.0 发布</h3>
+<h3># 2018.06.04 v2.4.1 发布</h3>
 <pre style="margin-top:0">
 - [新增] <span style="color: #3498db;">新增 tip 提示窗口</span>
 - [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
@@ -281,6 +281,7 @@ window.onload = function () {
 - [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
+- [修复] 文本窗口、页面窗口、窗口组窗口 onload事件 bug
 </pre>
 <h3># 2018.06.01 v2.3.5 发布</h3>
 <pre style="margin-top:0">
@@ -535,11 +536,12 @@ window.onload = function () {
 - [修复] 窗口图标不对齐 bug
 - [修复] 加载动画 火狐、Safari旧浏览器样式 bug
 - [修复] bootstrap、Element UI等第三方UI样式冲突 bug
+- [修复] 文本窗口、页面窗口、窗口组窗口 onload事件 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 450,
+                height: 470,
                 minHeight: 200,
                 alwaysOnTop: true,
                 floatDirection: 'top',
