@@ -1214,6 +1214,12 @@
                 if (winform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
+                        if (Utils.isFunction(winform.event.onload.before)) {
+                            var revel = winform.event.onload.before(layxWindow, winform);
+                            if (revel === false) {
+                                return;
+                            }
+                        }
                         try {
                             var contentShade = that.createContenLoadAnimate(html.parentNode, winform.loadingText, winform);
                             cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : winform.cloneElementContent;
@@ -1245,6 +1251,9 @@
                             if (winform.loadingTextTimer) {
                                 clearInterval(winform.loadingTextTimer);
                                 delete winform.loadingTextTimer;
+                            }
+                            if (Utils.isFunction(winform.event.onload.after)) {
+                                winform.event.onload.after(layxWindow, winform);
                             }
                         }
                     }
@@ -1287,6 +1296,12 @@
                 if (frameform.type === "html") {
                     var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-" + "html");
                     if (html) {
+                        if (Utils.isFunction(winform.event.onload.before)) {
+                            var revel = winform.event.onload.before(layxWindow, winform);
+                            if (revel === false) {
+                                return;
+                            }
+                        }
                         try {
                             var contentShade = that.createContenLoadAnimate(html.parentNode.parentNode, winform.loadingText, winform);
                             cloneElementContent = Utils.isBoolean(cloneElementContent) ? cloneElementContent : frameform.cloneElementContent;
@@ -1321,6 +1336,9 @@
                             if (winform.loadingTextTimer) {
                                 clearInterval(winform.loadingTextTimer);
                                 delete winform.loadingTextTimer;
+                            }
+                            if (Utils.isFunction(winform.event.onload.after)) {
+                                winform.event.onload.after(layxWindow, winform);
                             }
                         }
                     }
@@ -1363,8 +1381,7 @@
                         span.innerHTML = dotHtml;
                     }, 200);
                 }
-                pEle.appendChild(contentShade);
-                return contentShade;
+                return pEle.appendChild(contentShade);
             }
         },
         setUrl: function (id, url) {
