@@ -265,6 +265,7 @@ window.onload = function () {
 <h3># 2018.06.05 v2.4.2 发布</h3>
 <pre style="margin-top:0">
 - [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
+- [更新] 窗口组点击切换时有延迟
 </pre>
 <h3># 2018.06.04 v2.4.1 发布</h3>
 <pre style="margin-top:0">
@@ -524,11 +525,12 @@ window.onload = function () {
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
 - [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
+- [更新] 窗口组点击切换时有延迟
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 110,
+                height: 130,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
