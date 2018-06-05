@@ -1024,19 +1024,17 @@
                         prevGroupMain.removeAttribute("data-enable");
                         currentGroupMain.setAttribute("data-enable", "1");
                         winform.groupCurrentId = frameId;
-                        setTimeout(function () {
-                            if (currentGroupMain.getAttribute("data-preload") === "1") {
-                                var frameform = that.getGroupFrame(winform.frames, frameId);
-                                if (frameform.type === "url") {
-                                    that.setGroupUrl(id, frameId, frameform.url);
-                                    currentGroupMain.removeAttribute("data-preload");
-                                }
-                                if (frameform.type === "html") {
-                                    that.setGroupContent(id, frameId, frameform.content, frameform.cloneElementContent);
-                                    currentGroupMain.removeAttribute("data-preload");
-                                }
+                        if (currentGroupMain.getAttribute("data-preload") === "1") {
+                            var frameform = that.getGroupFrame(winform.frames, frameId);
+                            if (frameform.type === "url") {
+                                that.setGroupUrl(id, frameId, frameform.url);
+                                currentGroupMain.removeAttribute("data-preload");
                             }
-                        }, 0);
+                            if (frameform.type === "html") {
+                                that.setGroupContent(id, frameId, frameform.content, frameform.cloneElementContent);
+                                currentGroupMain.removeAttribute("data-preload");
+                            }
+                        }
                     }
                     if (Utils.isFunction(winform.event.onswitch.after)) {
                         winform.event.onswitch.after(layxWindow, winform, target.getAttribute("data-frameId"));
