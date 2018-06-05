@@ -115,8 +115,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.1</strong></li>
-                    <li><label>发布日期</label>：2018.06.04</li>
+                    <li><label>当前版本</label>：<strong>v2.4.2</strong></li>
+                    <li><label>发布日期</label>：2018.06.05</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -262,6 +262,10 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.06.05 v2.4.2 发布</h3>
+<pre style="margin-top:0">
+- [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
+</pre>
 <h3># 2018.06.04 v2.4.1 发布</h3>
 <pre style="margin-top:0">
 - [新增] <span style="color: #3498db;">新增 tip 提示窗口</span>
@@ -449,7 +453,7 @@ window.onload = function () {
 <pre style="margin-top:0">
 - [新增] v1.0.0 正式发布</pre>
 </div>
-*/ }), { width: 400, height: 400 });
+*/ }), { width: 500, height: 500 });
                         },
                     },
                     {
@@ -519,30 +523,13 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] <span style="color: #3498db;">新增 tip 提示窗口</span>
-- [新增] <span style="color: #3498db;">options.skin 内置皮肤设置，支持default、cloud、turquoise、river、asphalt</span>
-- [新增] <span style="color: #3498db;">自定义皮肤功能</span>
-- [新增] <span style="color: #3498db;">options.borderRadius 圆角设置</span>
-- [新增] 阻隔层禁止右键，避免恶意修改
-- [更新] 网页窗口加载代码
-- [更新] <span style="color: ##3498db;">浮动窗口气泡自适应主题功能</span>
-- [修复] top.layx打开新窗口被遮盖 bug
-- [修复] 窗口焦点事件触发多次 bug
-- [修复] 同域网页窗口ESC快捷键无作用 bug
-- [修复] 窗口禁止冒泡触发焦点事件 bug
-- [修复] 只读窗口、阻隔层右键不兼容 bug
-- [修复] 只读窗口不能获取焦点 bug
-- [修复] 窗口禁止获取焦点后还能触发置顶和事件 bug
-- [修复] 窗口图标不对齐 bug
-- [修复] 加载动画 火狐、Safari旧浏览器样式 bug
-- [修复] bootstrap、Element UI等第三方UI样式冲突 bug
-- [修复] 文本窗口、页面窗口、窗口组窗口 onload事件 bug
+- [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 470,
-                minHeight: 200,
+                height: 110,
+                minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
                 autodestroy: 10000,

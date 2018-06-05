@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.1
+ * version : v2.4.2
  * create time : 2018.05.11
- * update time : 2018.06.04
+ * update time : 2018.06.05
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.1',
+        version: '2.4.2',
         defaults: {
             id: '',
             icon: true,
@@ -1567,6 +1567,9 @@
                 if (layxWindow.classList.contains("layx-min-statu")) {
                     layxWindow.classList.remove("layx-min-statu");
                 }
+                if (layxWindow.classList.contains("layx-max-statu")) {
+                    layxWindow.classList.remove("layx-max-statu");
+                }
                 if (Utils.isFunction(winform.event.onrestore.after)) {
                     winform.event.onrestore.after(layxWindow, winform);
                 }
@@ -1607,6 +1610,9 @@
                     restoreMenu.classList.add("layx-max-menu");
                     restoreMenu.setAttribute("title", "最大化");
                     restoreMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-max"></use></svg>';
+                }
+                if (layxWindow.classList.contains("layx-max-statu")) {
+                    layxWindow.classList.remove("layx-max-statu");
                 }
                 var _winform = layxDeepClone({}, winform);
                 delete that.windows[id];
@@ -1683,6 +1689,7 @@
                 layxWindow.style.left = 0;
                 layxWindow.style.width = innertArea.width + "px";
                 layxWindow.style.height = innertArea.height + "px";
+                layxWindow.classList.add("layx-max-statu");
                 winform.status = "max";
                 var maxMenu = layxWindow.querySelector(".layx-max-menu");
                 if (maxMenu) {

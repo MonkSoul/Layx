@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.1
+ * version : v2.4.2
  * create time : 2018.05.11
- * update time : 2018.06.04
+ * update time : 2018.06.05
  */
 
 *[class^="layx-"] {
@@ -118,6 +118,14 @@ body.ilayx-body {
     -webkit-animation-iteration-count: 8;
     -moz-animation-iteration-count: 8;
     -o-animation-iteration-count: 8;
+}
+
+.layx-window.layx-max-statu, .layx-window.layx-max-statu .layx-control-bar, .layx-window.layx-max-statu .layx-main, .layx-window.layx-max-statu .layx-statu-bar {
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -o-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -ms-border-radius: 0px !important;
 }
 
 .layx-window.layx-min-statu {
