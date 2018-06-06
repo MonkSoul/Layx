@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.2
+ * version : v2.4.3
  * create time : 2018.05.11
- * update time : 2018.06.05
+ * update time : 2018.06.06
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.2',
+        version: '2.4.3',
         defaults: {
             id: '',
             icon: true,
@@ -61,7 +61,7 @@
             restorable: true,
             resizable: true,
             autodestroy: false,
-            autodestroyText: '<div style="padding: 0 8px; ">此窗口将在 <strong>{second}</strong> 秒内自动关闭.</div>',
+            autodestroyText: '此窗口将在 <strong>{second}</strong> 秒内自动关闭.',
             resizeLimit: {
                 t: false,
                 r: false,
@@ -2674,10 +2674,10 @@
             }
             if (/^[1-9]\d*v[hw]$/.test(widthOrHeight)) {
                 if (type === "width") {
-                    return innerArea.width * widthOrHeight / 100;
+                    return innerArea.width * parseFloat(widthOrHeight) / 100;
                 }
                 if (type === "height") {
-                    return innerArea.height * widthOrHeight / 100;
+                    return innerArea.height * parseFloat(widthOrHeight) / 100;
                 }
             }
             return errorValue;

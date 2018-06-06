@@ -3,16 +3,15 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.2
+ * version : v2.4.3
  * create time : 2018.05.11
- * update time : 2018.06.05
+ * update time : 2018.06.06
  */
 
 *[class^="layx-"] {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    -o-box-sizing: border-box;
     margin: 0;
     padding: 0;
     outline: none;
@@ -25,7 +24,6 @@
     display: -ms-flexbox;
     display: flex;
     display: -webkit-flex;
-    overflow: hidden;
 }
 
 .layx-flex-vertical {
@@ -33,15 +31,10 @@
     -ms-flex-align: center;
     align-items: center;
     -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items: center;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    -ms-justify-content: flex-start;
-    -moz-justify-content: flex-start;
-    -o-justify-content: flex-start;
+    -webkit-justify-content: flex-start;
 }
 
 .layx-flex-center {
@@ -49,15 +42,10 @@
     -ms-flex-align: center;
     align-items: center;
     -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items: center;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    -ms-justify-content: center;
-    -moz-justify-content: center;
-    -o-justify-content: center;
+    -webkit-justify-content: center;
 }
 
 .layx-flexauto {
@@ -87,19 +75,11 @@ body.ilayx-body {
 .layx-window {
     position: fixed;
     overflow: visible !important;
-    box-orient: vertical;
     -webkit-box-orient: vertical;
-    -o-box-orient: vertical;
-    box-direction: normal;
     -webkit-box-direction: normal;
-    -o-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    -moz-flex-direction: column;
-    -o-flex-direction: column;
     color: #000;
-    font-size: 12px;
-    line-height: 1.5;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     visibility: visible;
     border: none;
@@ -109,23 +89,18 @@ body.ilayx-body {
     animation-name: layx-flicker;
     -webkit-animation-name: layx-flicker;
     -moz-animation-name: layx-flicker;
-    -o-animation-name: layx-flicker;
     animation-duration: 0.12s;
     -webkit-animation-duration: 0.12s;
     -moz-animation-duration: 0.12s;
-    -o-animation-duration: 0.12s;
     animation-iteration-count: 8;
     -webkit-animation-iteration-count: 8;
     -moz-animation-iteration-count: 8;
-    -o-animation-iteration-count: 8;
 }
 
 .layx-window.layx-max-statu, .layx-window.layx-max-statu .layx-control-bar, .layx-window.layx-max-statu .layx-main, .layx-window.layx-max-statu .layx-statu-bar {
     border-radius: 0px !important;
     -webkit-border-radius: 0px !important;
-    -o-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
-    -ms-border-radius: 0px !important;
 }
 
 .layx-window.layx-min-statu {
@@ -167,6 +142,7 @@ body.ilayx-body {
     font-size: 14px;
     line-height: normal;
     display: block;
+    line-height: normal;
 }
 
 .layx-icon {
@@ -191,7 +167,6 @@ body.ilayx-body {
 
 .layx-title,
 .layx-group-tab {
-    font-size: 14px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -213,21 +188,17 @@ body.ilayx-body {
 }
 
 .layx-title .layx-label,
-.layx-group-tab .layx-label {
+.layx-group-title .layx-label {
+    line-height: normal;
+    font-size: 14px;
     max-width: 100%;
-    line-clamp: 1;
-    -moz-line-clamp: 1;
-    -o-line-clamp: 1;
     -webkit-line-clamp: 1;
-    -ms-line-clamp: 1;
-    box-orient: vertical;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
-    -webkit-white-space: nowrap;
     display: inline-block;
     pointer-events: none;
     visibility: visible;
@@ -254,7 +225,6 @@ body.ilayx-body {
 .layx-group-title {
     height: 27px;
     line-height: 25px;
-    margin-top: 3px;
     max-width: 150px;
     width: 150px;
     padding: 0 8px;
@@ -266,10 +236,6 @@ body.ilayx-body {
     white-space: nowrap;
     min-width: 0;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-.layx-group-tab .layx-group-title {
-    margin-top: 0;
 }
 
 .layx-title.layx-type-group {
@@ -325,12 +291,11 @@ body.ilayx-body {
 }
 
 .layx-main {
-    overflow: hidden;
+    overflow: auto;
     position: relative;
     clear: both;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
-    overflow: auto;
     -webkit-app-region: no-drag;
 }
 
@@ -356,9 +321,9 @@ body.ilayx-body {
     width: 100%;
     z-index: 0;
     visibility: hidden;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
-    overflow: auto;
 }
 
 .layx-group-main[data-enable="1"] {
@@ -390,13 +355,9 @@ body.ilayx-body {
     top: 0;
     overflow: hidden;
     background-color: #fff;
-    font-size: 14px;
 }
 
 .layx-html {
-    font-size: 14px;
-    word-break: break-all;
-    overflow: auto;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -407,6 +368,7 @@ body.ilayx-body {
     z-index: 1;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
+    overflow: auto;
 }
 
 .layx-dialog-icon {
@@ -447,15 +409,12 @@ body.ilayx-body {
 .layx-dialog-tip,
 .layx-dialog-load {
     color: #000;
-    font-size: 15px;
     padding: 10px;
-    word-break: break-all;
 }
 
 .layx-dialog-alert,
 .layx-dialog-confirm,
 .layx-dialog-prompt {
-    font-size: 15px;
     padding: 10px;
     color: #039;
 }
@@ -468,6 +427,10 @@ body.ilayx-body {
     height: 100%;
 }
 
+.layx-dialog-content {
+    font-size: 14px;
+}
+
 .layx-textarea {
     display: block;
     border: 1px solid #dfdfdf;
@@ -478,6 +441,7 @@ body.ilayx-body {
     padding: 8px;
     font-size: 15px;
     color: #000;
+    line-height: 1.5;
 }
 
 .layx-textarea:focus {
@@ -487,7 +451,6 @@ body.ilayx-body {
 .layx-buttons {
     padding: 8px 10px;
     text-align: right;
-    line-height: normal;
 }
 
 .layx-button-item {
@@ -535,7 +498,6 @@ body.ilayx-body {
 .layx-statu-bar {
     border-top: 1px solid #dfdfdf;
     min-height: 25px;
-    font-size: 12px;
     background-color: #f0f0f0;
 }
 
@@ -693,20 +655,19 @@ body.ilayx-body {
     line-height: 25px;
     z-index: 5;
     color: #444;
-    font-size: 13px;
     background-color: #f1f1f1;
+    padding: 0 8px;
+    font-size: 13px;
 }
 
 .layx-code {
     border: 1px solid #dedede;
+    border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
     padding: 10px;
     width: 100%;
     height: 100%;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
     background: #f5f5f5;
@@ -789,6 +750,8 @@ body.ilayx-body {
     font-size: 14px;
     font-family: Arial;
     border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
     display: block;
     font-family: Arial;
 }
@@ -810,6 +773,8 @@ body.ilayx-body {
     width: 100%;
     height: 100%;
     border-radius: 40px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
     overflow: hidden;
     left: 0;
     top: 0;
@@ -821,8 +786,6 @@ body.ilayx-body {
     -webkit-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
     animation: layx-second-half-hide 1.6s steps(1, end) infinite;
     -moz-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
-    -o-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
-    -ms-animation: layx-second-half-hide 1.6s steps(1, end) infinite;
 }
 
 .layx-load-inner2 {
@@ -831,8 +794,6 @@ body.ilayx-body {
     -webkit-animation: layx-second-half-show 1.6s steps(1, end) infinite;
     animation: layx-second-half-show 1.6s steps(1, end) infinite;
     -moz-animation: layx-second-half-show 1.6s steps(1, end) infinite;
-    -o-animation: layx-second-half-show 1.6s steps(1, end) infinite;
-    -ms-animation: layx-second-half-show 1.6s steps(1, end) infinite;
 }
 
 .layx-load-spiner, .layx-load-filler, .layx-load-masker {
@@ -843,29 +804,28 @@ body.ilayx-body {
 
 .layx-load-spiner {
     border-radius: 40px 0 0 40px;
+    -webkit-border-radius: 40px 0 0 40px;
+    -moz-border-radius: 40px 0 0 40px;
     background-color: #4b86db;
     -webkit-transform-origin: right center;
     -ms-transform-origin: right center;
     transform-origin: right center;
-    -o-transform-origin: right center;
     -moz-transform-origin: right center;
     -webkit-animation: layx-spin 800ms infinite linear;
     animation: layx-spin 800ms infinite linear;
     -moz-animation: layx-spin 800ms infinite linear;
-    -o-animation: layx-spin 800ms infinite linear;
-    -ms-animation: layx-spin 800ms infinite linear;
     left: 0;
     top: 0;
 }
 
 .layx-load-filler {
     border-radius: 0 40px 40px 0;
+    -webkit-border-radius: 0 40px 40px 0;
+    -moz-border-radius: 0 40px 40px 0;
     background-color: #4b86db;
     -webkit-animation: layx-second-half-hide 800ms steps(1, end) infinite;
     animation: layx-second-half-hide 800ms steps(1, end) infinite;
     -moz-animation: layx-second-half-hide 800ms steps(1, end) infinite;
-    -ms-animation: layx-second-half-hide 800ms steps(1, end) infinite;
-    -o-animation: layx-second-half-hide 800ms steps(1, end) infinite;
     left: 50%;
     top: 0;
     opacity: 1;
@@ -873,12 +833,12 @@ body.ilayx-body {
 
 .layx-load-masker {
     border-radius: 40px 0 0 40px;
+    -moz-border-radius: 40px 0 0 40px;
+    -webkit-border-radius: 40px 0 0 40px;
     background-color: #89abdd;
     -webkit-animation: layx-second-half-show 800ms steps(1, end) infinite;
     animation: layx-second-half-show 800ms steps(1, end) infinite;
     -moz-animation: layx-second-half-show 800ms steps(1, end) infinite;
-    -o-animation: layx-second-half-show 800ms steps(1, end) infinite;
-    -ms-animation: layx-second-half-show 800ms steps(1, end) infinite;
     left: 0;
     top: 0;
     opacity: 0;
@@ -1018,11 +978,13 @@ body.ilayx-body {
     from {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
     }
 
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
     }
 }
 
@@ -1031,16 +993,12 @@ body.ilayx-body {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
         -moz-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
     }
 
     100% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
         -moz-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
     }
 }
 
@@ -1049,16 +1007,12 @@ body.ilayx-body {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
         -moz-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
     }
 
     100% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
         -moz-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
     }
 }
 
