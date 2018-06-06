@@ -81,6 +81,7 @@ window.onload = function () {
              #about-layx{
                     padding:0 10px 10px 10px;
                     line-height:1.5;
+                    font-size: 14px;
             }
 
             #about-layx h2{
