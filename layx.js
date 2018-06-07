@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.3
+ * version : v2.4.4
  * create time : 2018.05.11
- * update time : 2018.06.06
+ * update time : 2018.06.07
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.3',
+        version: '2.4.4',
         defaults: {
             id: '',
             icon: true,
@@ -1877,6 +1877,7 @@
                 var _position = isFloatTarget === true ? position : Utils.compileLayxPosition(winform.area.width, winform.area.height, position);
                 winform.area.left = _position.left;
                 winform.area.top = _position.top;
+                that.storeWindowAreaInfo(id, winform.area);
                 layxWindow.style.left = _position.left + "px";
                 layxWindow.style.top = _position.top + "px";
             }
