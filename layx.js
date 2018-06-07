@@ -1877,7 +1877,9 @@
                 var _position = isFloatTarget === true ? position : Utils.compileLayxPosition(winform.area.width, winform.area.height, position);
                 winform.area.left = _position.left;
                 winform.area.top = _position.top;
-                that.storeWindowAreaInfo(id, winform.area);
+                if (winform.storeStatus === true) {
+                    that.storeWindowAreaInfo(id, winform.area);
+                }
                 layxWindow.style.left = _position.left + "px";
                 layxWindow.style.top = _position.top + "px";
             }
