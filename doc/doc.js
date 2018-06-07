@@ -268,6 +268,7 @@ window.onload = function () {
 - [更新] layx.css 去除无关代码，加强layx.css 样式内聚性
 - [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
 - [更新] 窗口组点击切换时有延迟
+- [更新] alert、msg、tip、confirm、prompt代码
 - [修复] css vh/vw 单位 转换bug
 - [修复] layx.setPosition之后刷新页面不能保存当前位置
 </pre>
@@ -531,13 +532,14 @@ window.onload = function () {
 - [更新] layx.css 去除无关代码，加强layx.css 样式内聚性
 - [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
 - [更新] 窗口组点击切换时有延迟
+- [更新] alert、msg、tip、confirm、prompt代码
 - [修复] css vh/vw 单位 转换bug
 - [修复] layx.setPosition之后刷新页面不能保存当前位置
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 190,
+                height: 210,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',

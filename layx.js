@@ -2057,7 +2057,7 @@
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 120, 20, 320, 90, ((options && options.dialogIcon) ? true : false));
             var winform = that.create(layxDeepClone({}, {
-                id: 'layx-dialog-msg-' + Utils.rndNum(8),
+                id: (options && options.id) ? options.id : 'layx-dialog-msg-' + Utils.rndNum(8),
                 type: 'html',
                 control: false,
                 content: that.createDialogContent("msg", msg, ((options && options.dialogIcon) ? options.dialogIcon : false)),
@@ -2120,7 +2120,7 @@
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 137, 137, 352, 157, ((options && options.dialogIcon) ? true : false));
             var winform = that.create(layxDeepClone({}, {
-                id: 'layx-dialog-alert-' + Utils.rndNum(8),
+                id: (options && options.id) ? options.id : 'layx-dialog-alert-' + Utils.rndNum(8),
                 title: title || "提示消息",
                 icon: false,
                 type: 'html',
@@ -2143,7 +2143,10 @@
                     callback: function (id, button, event) {
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
-                            yes(id, button, event);
+                            var reval = yes(id, button, event);
+                            if (reval !== false) {
+                                Layx.destroy(id);
+                            }
                         } else {
                             Layx.destroy(id);
                         }
@@ -2159,7 +2162,7 @@
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 180, 137, 352, 180, ((options && options.dialogIcon) ? true : false));
             var winform = that.create(layxDeepClone({}, {
-                id: 'layx-dialog-confirm-' + Utils.rndNum(8),
+                id: (options && options.id) ? options.id : 'layx-dialog-confirm-' + Utils.rndNum(8),
                 title: title || "询问消息",
                 icon: false,
                 type: 'html',
@@ -2181,7 +2184,10 @@
                     callback: function (id, button, event) {
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
-                            yes(id, button);
+                            var revel = yes(id, button);
+                            if (reval !== false) {
+                                Layx.destroy(id);
+                            }
                         }
                     }
                 }, {
@@ -2218,7 +2224,7 @@
             var that = this;
             var msgSizeRange = that.getStrSizeRange(msg, 200, 165, 352, 200);
             var winform = that.create(layxDeepClone({}, {
-                id: 'layx-dialog-prompt-' + Utils.rndNum(8),
+                id: (options && options.id) ? options.id : 'layx-dialog-prompt-' + Utils.rndNum(8),
                 title: title || "请输入信息",
                 icon: false,
                 type: 'html',
@@ -2245,7 +2251,10 @@
                             textarea.focus();
                         } else {
                             if (Utils.isFunction(yes)) {
-                                yes(id, value, textarea, button, event);
+                                var reval = yes(id, value, textarea, button, event);
+                                if (reval !== false) {
+                                    Layx.destroy(id);
+                                }
                             }
                         }
                     }
