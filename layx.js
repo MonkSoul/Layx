@@ -2294,7 +2294,7 @@
         },
         load: function (id, msg, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 120, 33, 320, 90);
+            var msgSizeRange = that.getStrSizeRange(msg, 120, 53, 320, 90);
             var loadElement = document.createElement("div");
             loadElement.classList.add("layx-dialog-load");
             loadElement.classList.add("layx-flexbox");
