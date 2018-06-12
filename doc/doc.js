@@ -550,7 +550,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 210,
+                height: 220,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
