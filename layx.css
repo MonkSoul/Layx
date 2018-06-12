@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.4
+ * version : v2.4.5
  * create time : 2018.05.11
- * update time : 2018.06.07
+ * update time : 2018.06.12
  */
 
 *[class^="layx-"] {
@@ -17,6 +17,13 @@
     outline: none;
     border: none;
     background-color: transparent;
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
 }
 
 .layx-flexbox {
@@ -106,6 +113,7 @@ body.ilayx-body {
 .layx-window.layx-min-statu {
     min-height: 0 !important;
     overflow: hidden !important;
+    min-width: 0 !important;
 }
 
 .layx-window.layx-min-statu .layx-title {
@@ -966,11 +974,13 @@ body.ilayx-body {
     from {
         -webkit-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 1px 1px 24px rgba(0, 0, 0, .3);
     }
 
     to {
         -webkit-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
         box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 1px 1px 12px rgba(0, 0, 0, .3);
     }
 }
 

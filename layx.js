@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.4
+ * version : v2.4.5
  * create time : 2018.05.11
- * update time : 2018.06.07
+ * update time : 2018.06.12
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.4',
+        version: '2.4.5',
         defaults: {
             id: '',
             icon: true,
@@ -30,6 +30,8 @@
             borderRadius: '3px',
             skin: 'default',
             type: 'html',
+            focusToReveal: true,
+            dialogType: '',
             frames: [],
             frameIndex: 0,
             preload: 1,
@@ -315,7 +317,6 @@
                         config.event.onfocus(layxWindow, winform);
                     }
                     that.updateZIndex(config.id);
-                    e.stopPropagation();
                 };
             }
             document.body.appendChild(layxWindow);
@@ -335,6 +336,8 @@
             winform.url = config.url;
             winform.content = config.content;
             winform.escKey = config.escKey;
+            winform.focusToReveal = config.focusToReveal;
+            winform.dialogType = config.dialogType;
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             winform.area = {
                 width: _width,
@@ -982,20 +985,20 @@
         removeStoreWindowAreaInfo: function (id) {
             var that = this,
                 windowId = "layx-" + id,
-                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.getItem(windowId);
+                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && localStorage.getItem(windowId);
             if (storeAreaInfo) {
-                sessionStorage.removeItem(windowId);
+                localStorage.removeItem(windowId);
             }
         },
         storeWindowAreaInfo: function (id, area) {
             var that = this,
                 windowId = "layx-" + id;
-            (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.setItem(windowId, JSON.stringify(area));
+            (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && localStorage.setItem(windowId, JSON.stringify(area));
         },
         getStoreWindowAreaInfo: function (id) {
             var that = this,
                 windowId = "layx-" + id,
-                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && sessionStorage.getItem(windowId);
+                storeAreaInfo = (typeof (Storage) !== "undefined") && !(win.location.protocol.indexOf("file:") > -1) && localStorage.getItem(windowId);
             if (storeAreaInfo) {
                 return JSON.parse(storeAreaInfo);
             }
@@ -1541,6 +1544,7 @@
                     layxWindow.style.left = area.left + "px";
                     layxWindow.style.width = area.width + "px";
                     layxWindow.style.height = area.height + "px";
+                    layxWindow.classList.remove("layx-max-statu");
                     winform.status = "normal";
                     var restoreMenu = layxWindow.querySelector(".layx-restore-menu[data-menu='max']");
                     if (restoreMenu) {
@@ -1584,9 +1588,6 @@
                 if (layxWindow.classList.contains("layx-min-statu")) {
                     layxWindow.classList.remove("layx-min-statu");
                 }
-                if (layxWindow.classList.contains("layx-max-statu")) {
-                    layxWindow.classList.remove("layx-max-statu");
-                }
                 if (Utils.isFunction(winform.event.onrestore.after)) {
                     winform.event.onrestore.after(layxWindow, winform);
                 }
@@ -1596,8 +1597,7 @@
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
-                winform = that.windows[id],
-                innertArea = Utils.innerArea();
+                winform = that.windows[id];
             if (layxWindow && winform && winform.isFloatTarget === false) {
                 if (winform.minable !== true || winform.status === "min")
                     return;
@@ -1608,6 +1608,7 @@
                         return;
                     }
                 }
+                var innertArea = Utils.innerArea();
                 winform.minBefore = winform.status;
                 winform.status = "min";
                 var minMenu = layxWindow.querySelector(".layx-min-menu");
@@ -1646,17 +1647,19 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform) {
-                var layxShade = document.getElementById("layx-" + id + "-shade");
-                if (layxShade) {
-                    layxShade.style.zIndex = (winform.isStick === true ? (++that.stickZIndex) : (++that.zIndex));
-                }
-                if (winform.isStick === true) {
-                    winform.zIndex = (++that.stickZIndex) + 1;
-                } else {
-                    winform.zIndex = (++that.zIndex) + 1;
-                }
-                layxWindow.style.zIndex = winform.zIndex;
                 Layx.focusId = id;
+                if (winform.focusToReveal === true) {
+                    var layxShade = document.getElementById("layx-" + id + "-shade");
+                    if (layxShade) {
+                        layxShade.style.zIndex = (winform.isStick === true ? (++that.stickZIndex) : (++that.zIndex));
+                    }
+                    if (winform.isStick === true) {
+                        winform.zIndex = (++that.stickZIndex) + 1;
+                    } else {
+                        winform.zIndex = (++that.zIndex) + 1;
+                    }
+                    layxWindow.style.zIndex = winform.zIndex;
+                }
             }
         },
         updateMinLayout: function () {
@@ -1692,49 +1695,57 @@
                 winform = that.windows[id],
                 innertArea = Utils.innerArea();
             if (layxWindow && winform && winform.isFloatTarget === false) {
-                if (winform.maxable !== true || winform.status === "max")
+                if (winform.maxable !== true)
                     return;
-                that.updateZIndex(id);
-                if (Utils.isFunction(winform.event.onmax.before)) {
-                    var revel = winform.event.onmax.before(layxWindow, winform);
-                    if (revel === false) {
-                        return;
+                if (winform.status === "max") {
+                    layxWindow.style.top = 0;
+                    layxWindow.style.left = 0;
+                    layxWindow.style.width = innertArea.width + "px";
+                    layxWindow.style.height = innertArea.height + "px";
+                }
+                else {
+                    that.updateZIndex(id);
+                    if (Utils.isFunction(winform.event.onmax.before)) {
+                        var revel = winform.event.onmax.before(layxWindow, winform);
+                        if (revel === false) {
+                            return;
+                        }
                     }
-                }
-                document.body.classList.add('ilayx-body');
-                layxWindow.style.top = 0;
-                layxWindow.style.left = 0;
-                layxWindow.style.width = innertArea.width + "px";
-                layxWindow.style.height = innertArea.height + "px";
-                layxWindow.classList.add("layx-max-statu");
-                winform.status = "max";
-                var maxMenu = layxWindow.querySelector(".layx-max-menu");
-                if (maxMenu) {
-                    maxMenu.classList.remove("layx-max-menu");
-                    maxMenu.classList.add("layx-restore-menu");
-                    maxMenu.setAttribute("title", "还原");
-                    maxMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-restore"></use></svg>';
-                }
-                var resizePanel = layxWindow.querySelector(".layx-resizes");
-                if (resizePanel) {
-                    resizePanel.setAttribute("data-enable", "0");
-                }
-                var restoreMenu = layxWindow.querySelector(".layx-restore-menu[data-menu='min']");
-                if (restoreMenu) {
-                    restoreMenu.classList.remove("layx-restore-menu");
-                    restoreMenu.classList.add("layx-min-menu");
-                    restoreMenu.setAttribute("title", "最小化");
-                    restoreMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-min"></use></svg>';
-                }
-                var _winform = layxDeepClone({}, winform);
-                delete that.windows[id];
-                that.windows[id] = _winform;
-                that.updateMinLayout();
-                if (layxWindow.classList.contains("layx-min-statu")) {
-                    layxWindow.classList.remove("layx-min-statu");
-                }
-                if (Utils.isFunction(winform.event.onmax.after)) {
-                    winform.event.onmax.after(layxWindow, winform);
+                    document.body.classList.add('ilayx-body');
+                    layxWindow.style.top = 0;
+                    layxWindow.style.left = 0;
+                    layxWindow.style.width = innertArea.width + "px";
+                    layxWindow.style.height = innertArea.height + "px";
+                    layxWindow.classList.add("layx-max-statu");
+                    winform.status = "max";
+                    var maxMenu = layxWindow.querySelector(".layx-max-menu");
+                    if (maxMenu) {
+                        maxMenu.classList.remove("layx-max-menu");
+                        maxMenu.classList.add("layx-restore-menu");
+                        maxMenu.setAttribute("title", "还原");
+                        maxMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-restore"></use></svg>';
+                    }
+                    var resizePanel = layxWindow.querySelector(".layx-resizes");
+                    if (resizePanel) {
+                        resizePanel.setAttribute("data-enable", "0");
+                    }
+                    var restoreMenu = layxWindow.querySelector(".layx-restore-menu[data-menu='min']");
+                    if (restoreMenu) {
+                        restoreMenu.classList.remove("layx-restore-menu");
+                        restoreMenu.classList.add("layx-min-menu");
+                        restoreMenu.setAttribute("title", "最小化");
+                        restoreMenu.innerHTML = '<svg class="layx-iconfont" aria-hidden="true"><use xlink:href="#layx-icon-min"></use></svg>';
+                    }
+                    var _winform = layxDeepClone({}, winform);
+                    delete that.windows[id];
+                    that.windows[id] = _winform;
+                    that.updateMinLayout();
+                    if (layxWindow.classList.contains("layx-min-statu")) {
+                        layxWindow.classList.remove("layx-min-statu");
+                    }
+                    if (Utils.isFunction(winform.event.onmax.after)) {
+                        winform.event.onmax.after(layxWindow, winform);
+                    }
                 }
             }
         },
@@ -2129,6 +2140,7 @@
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
                 stickMenu: false,
+                dialogType: "alert",
                 minMenu: false,
                 minable: false,
                 maxMenu: false,
@@ -2141,6 +2153,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
+                        event = event || window.event;
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             var reval = yes(id, button, event);
@@ -2171,6 +2184,7 @@
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
                 stickMenu: false,
+                dialogType: "confirm",
                 minMenu: false,
                 minable: false,
                 maxMenu: false,
@@ -2182,6 +2196,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
+                        event = event || window.event;
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             var revel = yes(id, button);
@@ -2193,6 +2208,7 @@
                 }, {
                     label: '取消',
                     callback: function (id, button, event) {
+                        event = event || window.event;
                         event.stopPropagation();
                         Layx.destroy(id);
                     }
@@ -2233,6 +2249,7 @@
                 height: msgSizeRange.height,
                 minHeight: msgSizeRange.height,
                 stickMenu: false,
+                dialogType: "prompt",
                 minMenu: false,
                 minable: false,
                 maxMenu: false,
@@ -2246,6 +2263,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, value, textarea, button, event) {
+                        event = event || window.event;
                         event.stopPropagation();
                         if (textarea && value.length === 0) {
                             textarea.focus();
@@ -2261,6 +2279,7 @@
                 }, {
                     label: '取消',
                     callback: function (id, value, textarea, button, event) {
+                        event = event || window.event;
                         event.stopPropagation();
                         Layx.destroy(id);
                     }
@@ -2465,8 +2484,8 @@
         },
         innerArea: function () {
             return {
-                width: window.innerWidth,
-                height: window.innerHeight
+                width: win.innerWidth,
+                height: win.innerHeight
             };
         },
         getCross: function (p1, p2, p) {
@@ -3375,6 +3394,12 @@
             var focusWindow = Layx.windows[Layx.focusId];
             if (focusWindow) {
                 Layx.destroy(Layx.focusId, {}, false, true);
+            }
+        }
+        if (e && e.keyCode === 13) {
+            var focusWindow = Layx.windows[Layx.focusId];
+            if (focusWindow && (focusWindow.dialogType === "alert" || focusWindow.dialogType === "confirm") || focusWindow.dialogType === "confirm") {
+                focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
             }
         }
     }, false);

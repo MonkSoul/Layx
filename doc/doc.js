@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.4</strong></li>
-                    <li><label>发布日期</label>：2018.06.07</li>
+                    <li><label>当前版本</label>：<strong>v2.4.5</strong></li>
+                    <li><label>发布日期</label>：2018.06.12</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -263,6 +263,16 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.06.12 v2.4.5 发布</h3>
+<pre style="margin-top:0">
+- [新增] options.focusToReveal 参数，设置是否获取焦点后前置
+- [新增] options.dialogType 内置参数，配置alert，prompt，confirm支持Enter回车键触发按钮
+- [更新] layx.max最大化机制，支持最大化后再次最大化，适应浏览器大小调整后自动自适应
+- [更新] 记录窗口位置采用localStorge存储，之前采用sessionStorge
+- [修复] layx窗口点击冒泡 bug
+- [修复] layx.setPosition不能记住当前位置 bug
+- [修复] 最大化还显示圆角bug
+</pre>
 <h3># 2018.06.07 v2.4.4 发布</h3>
 <pre style="margin-top:0">
 - [更新] layx.css 去除无关代码，加强layx.css 样式内聚性
@@ -529,12 +539,13 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [更新] layx.css 去除无关代码，加强layx.css 样式内聚性
-- [更新] 窗口最大化时应该禁止圆角，确保最大化覆盖页面
-- [更新] 窗口组点击切换时有延迟
-- [更新] alert、msg、tip、confirm、prompt代码
-- [修复] css vh/vw 单位 转换bug
-- [修复] layx.setPosition之后刷新页面不能保存当前位置
+- [新增] options.focusToReveal 参数，设置是否获取焦点后前置
+- [新增] options.dialogType 内置参数，配置alert，prompt，confirm支持Enter回车键触发按钮
+- [更新] layx.max最大化机制，支持最大化后再次最大化，适应浏览器大小调整后自动自适应
+- [更新] 记录窗口位置采用localStorge存储，之前采用sessionStorge
+- [修复] layx窗口点击冒泡 bug
+- [修复] layx.setPosition不能记住当前位置 bug
+- [修复] 最大化还显示圆角bug
 </pre>
 */ }), {
                 floatTarget: logBtn,

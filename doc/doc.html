@@ -231,6 +231,15 @@ asphalt
             </div>
         </div>
         <div class="doc-item">
+            <p><label>focusToReveal：设置窗口获取焦点前置</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Enum<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false后，窗口将不能前置
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>type：窗口类型</label></p>
             <div class="doc-des">
                 <span>类型</span>：Enum<br />
@@ -930,7 +939,7 @@ winform.event // 窗口事件
         <h3 name="恢复窗口">恢复窗口</h3>
         <pre>layx.restore(id);</pre>
         <h3 name="更新层级别">更新层级别</h3>
-        <pre>layx.updateMinLayout(id);</pre>
+        <pre>layx.updateMinLayout();</pre>
         <h3 name="置顶切换">置顶切换</h3>
         <pre>layx.stickToggle(id);</pre>
         <h3 name="设置窗口位置">设置窗口位置</h3>
