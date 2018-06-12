@@ -5,7 +5,7 @@
  * author : 百小僧/MonkSoul
  * version : v2.4.5
  * create time : 2018.05.11
- * update time : 2018.06.12
+ * update time : 2018.06.09
  */
 ;
 !(function (over, win, slf) {
@@ -240,6 +240,7 @@
             layxWindow.classList.add("layx-window");
             layxWindow.classList.add("layx-flexbox");
             layxWindow.classList.add("layx-skin-" + config.skin);
+            layxWindow.setAttribute("tabindex", "-1");
             if (config.shadow === true) {
                 layxWindow.style.setProperty("box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
                 layxWindow.style.setProperty("-moz-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
@@ -2199,7 +2200,7 @@
                         event = event || window.event;
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
-                            var revel = yes(id, button);
+                            var reval = yes(id, button);
                             if (reval !== false) {
                                 Layx.destroy(id);
                             }
