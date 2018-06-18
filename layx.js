@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.5
+ * version : v2.4.6
  * create time : 2018.05.11
- * update time : 2018.06.09
+ * update time : 2018.06.18
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.5',
+        version: '2.4.6',
         defaults: {
             id: '',
             icon: true,
@@ -2026,7 +2026,7 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform) {
-                return layxWindow.querySelector("#layx-" + id + "-button-" + buttonId);
+                return layxWindow.querySelector("#layx-" + id + "-button" + (buttonId ? "-" + buttonId : ""));
             }
             return null;
         },
@@ -3399,7 +3399,7 @@
         }
         if (e && e.keyCode === 13) {
             var focusWindow = Layx.windows[Layx.focusId];
-            if (focusWindow && (focusWindow.dialogType === "alert" || focusWindow.dialogType === "confirm") || focusWindow.dialogType === "confirm") {
+            if (focusWindow && focusWindow.buttons.length > 0) {
                 focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
             }
         }

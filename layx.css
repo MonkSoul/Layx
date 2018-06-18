@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.5
+ * version : v2.4.6
  * create time : 2018.05.11
- * update time : 2018.06.12
+ * update time : 2018.06.18
  */
 
 *[class^="layx-"] {
@@ -466,6 +466,10 @@ body.ilayx-body {
     display: inline-block;
     background-color: #e1e1e1;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .layx-buttons .layx-button-item:hover {
@@ -499,7 +503,7 @@ body.ilayx-body {
 .layx-statu-bar {
     border-top: 1px solid #dfdfdf;
     min-height: 25px;
-    background-color: #f0f0f0;
+    background-color: #eeeef2;
 }
 
 .layx-resizes[data-enable='0'] {

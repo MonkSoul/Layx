@@ -8,8 +8,8 @@ gzip压缩版仅 `13.5kb`，非常小巧。
 
 - `原创作者`：百小僧
 - `开源协议`：MIT
-- `当前版本`：v2.4.5
-- `发布日期`：2018.06.12
+- `当前版本`：v2.4.6
+- `发布日期`：2018.06.18
 - `交流Q群`：[18863883](//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e)
 - `版权所有`：百签软件（中山）有限公司
 
@@ -62,4 +62,4 @@ layx.html('str','字符串文本','Hello Layx!');
 
 ![Hello Layx](./doc/hello.png)
 
-[查看更多示例](http://monksoul.gitee.io/layx/doc/)
+[查看更多示例](http://layx.baiqian.ltd)
