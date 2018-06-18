@@ -266,6 +266,7 @@ window.onload = function () {
 <h3># 2018.06.18 v2.4.6 发布</h3>
 <pre style="margin-top:0">
 - [新增] 有操作按钮的窗口都能触发回车操作
+- [更新] 禁止操作按钮文本选中
 - [修复] 修复监听回车操作bug
 </pre>
 <h3># 2018.06.12 v2.4.5 发布</h3>
@@ -544,12 +545,13 @@ window.onload = function () {
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
 - [新增] 有操作按钮的窗口都能触发回车操作
+- [更新] 禁止操作按钮文本选中
 - [修复] 修复监听回车操作bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 110,
+                height: 130,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
