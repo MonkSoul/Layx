@@ -1132,10 +1132,15 @@
                 }
                 iframe.contentWindow.document.addEventListener("keydown", function (event) {
                     var e = event || window.event || arguments.callee.caller.arguments[0];
+                    var focusWindow = Layx.windows[Layx.focusId];
                     if (e && e.keyCode == 27) {
-                        var focusWindow = Layx.windows[Layx.focusId];
                         if (focusWindow) {
                             Layx.destroy(Layx.focusId, {}, false, true);
+                        }
+                    }
+                    if (e && e.keyCode === 13) {
+                        if (focusWindow && focusWindow.buttons.length > 0) {
+                            focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                         }
                     }
                 }, false);
@@ -3391,14 +3396,13 @@
     };
     win.document.addEventListener("keydown", function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
+        var focusWindow = Layx.windows[Layx.focusId];
         if (e && e.keyCode == 27) {
-            var focusWindow = Layx.windows[Layx.focusId];
             if (focusWindow) {
                 Layx.destroy(Layx.focusId, {}, false, true);
             }
         }
         if (e && e.keyCode === 13) {
-            var focusWindow = Layx.windows[Layx.focusId];
             if (focusWindow && focusWindow.buttons.length > 0) {
                 focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
             }
