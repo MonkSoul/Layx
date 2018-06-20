@@ -20,7 +20,7 @@
             minWidth: 200,
             minHeight: 200,
             position: 'ct',
-            storeStatus: false,
+            storeStatus: true,
             control: true,
             style: '',
             controlStyle: '',
