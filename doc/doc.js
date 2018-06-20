@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.6</strong></li>
-                    <li><label>发布日期</label>：2018.06.18</li>
+                    <li><label>当前版本</label>：<strong>v2.4.7</strong></li>
+                    <li><label>发布日期</label>：2018.06.20</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -263,6 +263,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.06.20 v2.4.7 发布</h3>
+<pre style="margin-top:0">
+- [修复] confirm，prompt 冒泡bug
+- [修复] 输入框prompt 回车值为null bug
+</pre>
 <h3># 2018.06.18 v2.4.6 发布</h3>
 <pre style="margin-top:0">
 - [新增] 有操作按钮的窗口都能触发回车操作
@@ -544,9 +549,8 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] 有操作按钮的窗口都能触发回车操作
-- [更新] 禁止操作按钮文本选中
-- [修复] 修复监听回车操作bug
+- [修复] confirm，prompt 冒泡bug
+- [修复] 输入框prompt 回车值为null bug
 </pre>
 */ }), {
                 floatTarget: logBtn,

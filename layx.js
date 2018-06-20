@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.6
+ * version : v2.4.7
  * create time : 2018.05.11
- * update time : 2018.06.18
+ * update time : 2018.06.20
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.6',
+        version: '2.4.7',
         defaults: {
             id: '',
             icon: true,
@@ -20,7 +20,7 @@
             minWidth: 200,
             minHeight: 200,
             position: 'ct',
-            storeStatus: true,
+            storeStatus: false,
             control: true,
             style: '',
             controlStyle: '',
@@ -75,7 +75,6 @@
                 rb: false
             },
             buttons: [],
-            isPrompt: false,
             movable: true,
             moveLimit: {
                 vertical: false,
@@ -157,6 +156,7 @@
         zIndex: 10000000,
         windows: {},
         stickZIndex: 20000000,
+        prevFocusId: null,
         focusId: null,
         create: function (options) {
             var that = this,
@@ -166,6 +166,7 @@
                 console.error("窗口id不能为空且唯一");
                 return;
             }
+            Layx.prevFocusId = Layx.focusId;
             Layx.focusId = config.id;
             var _winform = that.windows[config.id];
             if (_winform) {
@@ -831,7 +832,7 @@
                 statusBar.style.setProperty("-webkit-border-radius", "0 0 " + layxWindowStyle.borderRadius + " " + layxWindowStyle.borderRadius);
                 config.statusBarStyle && statusBar.setAttribute("style", config.statusBarStyle);
                 if (config.statusBar === true && Utils.isArray(config.buttons)) {
-                    var btnElement = that.createLayxButtons(config.buttons, config.id, config.isPrompt);
+                    var btnElement = that.createLayxButtons(config.buttons, config.id, config.dialogType === "prompt" ? true : false);
                     btnElement && statusBar.appendChild(btnElement);
                 } else {
                     if (Utils.isDom(config.statusBar)) {
@@ -1130,6 +1131,12 @@
                         that.setTitle(config.id, iframeTitle);
                     }
                 }
+                iframe.contentWindow.document.addEventListener("click", function (event) {
+                    var e = event || window.event || arguments.callee.caller.arguments[0];
+                    if (config.dialogType !== "load" && config.dialogType !== "msg") {
+                        Layx.focusId = config.id;
+                    }
+                }, false);
                 iframe.contentWindow.document.addEventListener("keydown", function (event) {
                     var e = event || window.event || arguments.callee.caller.arguments[0];
                     var focusWindow = Layx.windows[Layx.focusId];
@@ -1140,7 +1147,13 @@
                     }
                     if (e && e.keyCode === 13) {
                         if (focusWindow && focusWindow.buttons.length > 0) {
-                            focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                            if (focusWindow.dialogType !== "prompt") {
+                                focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                            }
+                            else {
+                                var textarea = Layx.getPromptTextArea(focusWindow.id);
+                                focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                            }
                         }
                     }
                 }, false);
@@ -1653,7 +1666,9 @@
                 layxWindow = document.getElementById(windowId),
                 winform = that.windows[id];
             if (layxWindow && winform) {
-                Layx.focusId = id;
+                if (winform.dialogType !== "load" && winform.dialogType !== "msg") {
+                    Layx.focusId = id;
+                }
                 if (winform.focusToReveal === true) {
                     var layxShade = document.getElementById("layx-" + id + "-shade");
                     if (layxShade) {
@@ -1839,6 +1854,7 @@
                         }
                     }
                 }
+                Layx.focusId = Layx.prevFocusId;
                 delete that.cloneStore[id];
                 delete that.windows[id];
                 layxWindow.parentNode.removeChild(layxWindow);
@@ -1966,7 +1982,7 @@
                 buttonConfig.style && buttonItem.setAttribute("style", buttonConfig.style);
                 buttonItem.callback = buttons[i].callback;
                 buttonItem.onclick = function (e) {
-                    e = e || window.event;
+                    e = e || window.event || arguments.callee.caller.arguments[0];
                     if (Utils.isFunction(this.callback)) {
                         if (isPrompt === true) {
                             var textarea = that.getPromptTextArea(id);
@@ -2093,7 +2109,8 @@
                 position: [10, 'tc'],
                 autodestroyText: false,
                 loadingText: false,
-                storeStatus: false
+                storeStatus: false,
+                dialogType: 'msg'
             }, options));
             that.flicker(winform.id);
             return winform;
@@ -2159,7 +2176,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
-                        event = event || window.event;
+                        event = event || window.event || arguments.callee.caller.arguments[0];
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             var reval = yes(id, button, event);
@@ -2202,7 +2219,7 @@
                 buttons: [{
                     label: '确定',
                     callback: function (id, button, event) {
-                        event = event || window.event;
+                        event = event || window.event || arguments.callee.caller.arguments[0];
                         event.stopPropagation();
                         if (Utils.isFunction(yes)) {
                             var reval = yes(id, button);
@@ -2265,11 +2282,10 @@
                 allowControlDbclick: false,
                 shadable: true,
                 statusBar: true,
-                isPrompt: true,
                 buttons: [{
                     label: '确定',
                     callback: function (id, value, textarea, button, event) {
-                        event = event || window.event;
+                        event = event || window.event || arguments.callee.caller.arguments[0];
                         event.stopPropagation();
                         if (textarea && value.length === 0) {
                             textarea.focus();
@@ -2365,7 +2381,8 @@
                 allowControlDbclick: false,
                 position: 'ct',
                 loadingText: false,
-                storeStatus: false
+                storeStatus: false,
+                dialogType: 'load'
             }, options));
             winform.loadTimer = loadTimer;
             return winform;
@@ -3404,7 +3421,13 @@
         }
         if (e && e.keyCode === 13) {
             if (focusWindow && focusWindow.buttons.length > 0) {
-                focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                if (focusWindow.dialogType !== "prompt") {
+                    focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                }
+                else {
+                    var textarea = Layx.getPromptTextArea(focusWindow.id);
+                    focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                }
             }
         }
     }, false);
