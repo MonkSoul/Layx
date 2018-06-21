@@ -74,6 +74,7 @@
                 lb: false,
                 rb: false
             },
+            buttonKey: 'enter',
             buttons: [],
             movable: true,
             moveLimit: {
@@ -340,6 +341,7 @@
             winform.escKey = config.escKey;
             winform.focusToReveal = config.focusToReveal;
             winform.dialogType = config.dialogType;
+            winform.buttonKey = config.buttonKey;
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             winform.area = {
                 width: _width,
@@ -1147,10 +1149,18 @@
                     }
                     if (e && e.keyCode === 13) {
                         if (focusWindow && focusWindow.buttons.length > 0) {
-                            if (focusWindow.dialogType !== "prompt") {
-                                focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
-                            } else {
-                                if (e.ctrlKey) {
+                            if (focusWindow.buttonKey.toLowerCase() === "enter" && !e.ctrlKey) {
+                                if (focusWindow.dialogType !== "prompt") {
+                                    focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                                } else {
+                                    var textarea = Layx.getPromptTextArea(focusWindow.id);
+                                    focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                                }
+                            }
+                            else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
+                                if (focusWindow.dialogType !== "prompt") {
+                                    focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                                } else {
                                     var textarea = Layx.getPromptTextArea(focusWindow.id);
                                     focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                                 }
@@ -2282,6 +2292,7 @@
                 allowControlDbclick: false,
                 shadable: true,
                 statusBar: true,
+                buttonKey: 'ctrl+enter',
                 buttons: [{
                     label: '确定',
                     callback: function (id, value, textarea, button, event) {
@@ -3421,10 +3432,18 @@
         }
         if (e && e.keyCode === 13) {
             if (focusWindow && focusWindow.buttons.length > 0) {
-                if (focusWindow.dialogType !== "prompt") {
-                    focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
-                } else {
-                    if (e.ctrlKey) {
+                if (focusWindow.buttonKey.toLowerCase() === "enter" && !e.ctrlKey) {
+                    if (focusWindow.dialogType !== "prompt") {
+                        focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                    } else {
+                        var textarea = Layx.getPromptTextArea(focusWindow.id);
+                        focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                    }
+                }
+                else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
+                    if (focusWindow.dialogType !== "prompt") {
+                        focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                    } else {
                         var textarea = Layx.getPromptTextArea(focusWindow.id);
                         focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                     }

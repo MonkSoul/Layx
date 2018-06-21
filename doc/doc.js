@@ -230,7 +230,6 @@ window.onload = function () {
                         id: 'donate',
                         label: '捐赠',
                         callback: function (id, button, event) {
-                            event.stopPropagation();
                             layx.html('donate', '请作者喝杯咖啡', '<div style="padding:10px"><img src="./code.jpg" style="width:100%;display:block;" /></div>', { width: 300, height: 385 });
                         },
                     },
@@ -265,6 +264,7 @@ window.onload = function () {
 <div style="padding:0 10px 10px 10px">
 <h3># 2018.06.21 v2.4.8 发布</h3>
 <pre style="margin-top:0">
+- [新增] options.buttonKey 配置按钮快捷键，支持enter和ctrl+enter
 - [更新] 输入框prompt快捷键为：Ctrl+Enter，避免和多行文本textarea换行冲突
 - [修复] confirm，prompt 冒泡bug
 - [修复] 输入框prompt 回车值为null bug
@@ -489,7 +489,7 @@ window.onload = function () {
                         label: '调试',
                         callback: function (id, button, event) {
                             event.stopPropagation();
-                            layx.html('eval', 'Layx 在线调试', layx.multiLine(function () { /*
+                            layx.html('eval', 'Layx 在线调试 <span style="color:#f00">支持Ctrl+Enter运行</span>', layx.multiLine(function () { /*
  
  <style type="text/css">
      #evel-panel,#evel-panel *{box-sizing: border-box;
@@ -507,7 +507,7 @@ window.onload = function () {
 });</textarea>
 </div>
 */}), {
-                                    width: 400, height: 400,
+                                    width: 450, height: 450,
                                     moveLimit: {
                                         leftOut: false,
                                         rightOut: false,
@@ -516,6 +516,7 @@ window.onload = function () {
                                     },
                                     stickMenu: true,
                                     statusBar: true,
+                                    buttonKey: 'ctrl+enter',
                                     buttons: [
                                         {
                                             id: 'run',
@@ -550,6 +551,7 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
+- [新增] options.buttonKey 配置按钮快捷键，支持enter和ctrl+enter
 - [更新] 输入框prompt快捷键为：Ctrl+Enter，避免和多行文本textarea换行冲突
 - [修复] confirm，prompt 冒泡bug
 - [修复] 输入框prompt 回车值为null bug
@@ -557,7 +559,7 @@ window.onload = function () {
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 150,
+                height: 170,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
