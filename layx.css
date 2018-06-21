@@ -676,6 +676,7 @@ body.ilayx-body {
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0);
     background: #f5f5f5;
+    overflow: auto;
 }
 
 .layx-bubble,
