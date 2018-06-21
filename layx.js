@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.7
+ * version : v2.4.8
  * create time : 2018.05.11
- * update time : 2018.06.20
+ * update time : 2018.06.21
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.7',
+        version: '2.4.8',
         defaults: {
             id: '',
             icon: true,
@@ -1149,10 +1149,11 @@
                         if (focusWindow && focusWindow.buttons.length > 0) {
                             if (focusWindow.dialogType !== "prompt") {
                                 focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
-                            }
-                            else {
-                                var textarea = Layx.getPromptTextArea(focusWindow.id);
-                                focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                            } else {
+                                if (e.ctrlKey) {
+                                    var textarea = Layx.getPromptTextArea(focusWindow.id);
+                                    focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                                }
                             }
                         }
                     }
@@ -1723,8 +1724,7 @@
                     layxWindow.style.left = 0;
                     layxWindow.style.width = innertArea.width + "px";
                     layxWindow.style.height = innertArea.height + "px";
-                }
-                else {
+                } else {
                     that.updateZIndex(id);
                     if (Utils.isFunction(winform.event.onmax.before)) {
                         var revel = winform.event.onmax.before(layxWindow, winform);
@@ -3423,10 +3423,11 @@
             if (focusWindow && focusWindow.buttons.length > 0) {
                 if (focusWindow.dialogType !== "prompt") {
                     focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
-                }
-                else {
-                    var textarea = Layx.getPromptTextArea(focusWindow.id);
-                    focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                } else {
+                    if (e.ctrlKey) {
+                        var textarea = Layx.getPromptTextArea(focusWindow.id);
+                        focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
+                    }
                 }
             }
         }
