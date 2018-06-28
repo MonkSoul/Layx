@@ -2029,6 +2029,7 @@
                 height = 0,
                 span = document.createElement("span");
             span.innerHTML = str;
+            span.classList.add("layx-calc-text");
             span.style.visibility = 'hidden';
             span.style.display = 'inline-block';
             span.style.minWidth = minWidth + "px";
