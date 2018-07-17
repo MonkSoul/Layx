@@ -3,9 +3,9 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.8
+ * version : v2.4.9
  * create time : 2018.05.11
- * update time : 2018.06.21
+ * update time : 2018.07.17
  */
 
 *[class^="layx-"] {
@@ -131,7 +131,7 @@ body.ilayx-body {
     min-height: 30px;
     overflow: hidden;
     width: 100%;
-    padding-left: 8px;
+    padding-left: 5px;
 }
 
 .layx-iconfont {
@@ -155,7 +155,7 @@ body.ilayx-body {
 }
 
 .layx-left-bar {
-    margin-right: 8px;
+    margin-right: 5px;
 }
 
 .layx-window-icon {
@@ -163,7 +163,7 @@ body.ilayx-body {
 }
 
 .layx-window-icon .layx-iconfont {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .layx-title,
@@ -173,7 +173,7 @@ body.ilayx-body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-right: 8px;
+    margin-right: 5px;
     min-width: 0;
     -ms-touch-action: none;
     touch-action: none;
@@ -237,6 +237,11 @@ body.ilayx-body {
     white-space: nowrap;
     min-width: 0;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.layx-title.layx-type-group .layx-group-title {
+    height: 30px;
+    line-height: 34px;
 }
 
 .layx-title.layx-type-group {

@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.8
+ * version : v2.4.9
  * create time : 2018.05.11
- * update time : 2018.06.21
+ * update time : 2018.07.17
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.8',
+        version: '2.4.9',
         defaults: {
             id: '',
             icon: true,
@@ -24,6 +24,7 @@
             control: true,
             style: '',
             controlStyle: '',
+            existFlicker: true,
             bgColor: "#fff",
             shadow: true,
             border: true,
@@ -31,6 +32,7 @@
             skin: 'default',
             type: 'html',
             focusToReveal: true,
+            enableDomainFocus: true,
             dialogType: '',
             frames: [],
             frameIndex: 0,
@@ -174,7 +176,9 @@
                 if (_winform.status === "min") {
                     that.restore(_winform.id);
                 }
-                that.flicker(config.id);
+                if (_winform.existFlicker === true) {
+                    that.flicker(config.id);
+                }
                 if (Utils.isFunction(config.event.onexist)) {
                     config.event.onexist(_winform.layxWindow, _winform);
                 }
@@ -219,7 +223,9 @@
                     if (config.shadeDestroy === true) {
                         that.destroy(config.id, null, true);
                     } else {
-                        that.flicker(config.id);
+                        if (config.existFlicker === true) {
+                            that.flicker(config.id);
+                        }
                     }
                     e.stopPropagation();
                 };
@@ -242,7 +248,6 @@
             layxWindow.classList.add("layx-window");
             layxWindow.classList.add("layx-flexbox");
             layxWindow.classList.add("layx-skin-" + config.skin);
-            layxWindow.setAttribute("tabindex", "-1");
             if (config.shadow === true) {
                 layxWindow.style.setProperty("box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
                 layxWindow.style.setProperty("-moz-box-shadow", "1px 1px 24px rgba(0, 0, 0, .3)");
@@ -341,7 +346,9 @@
             winform.escKey = config.escKey;
             winform.focusToReveal = config.focusToReveal;
             winform.dialogType = config.dialogType;
+            winform.enableDomainFocus = config.enableDomainFocus;
             winform.buttonKey = config.buttonKey;
+            winform.existFlicker = config.existFlicker;
             winform.groupCurrentId = (Utils.isArray(config.frames) && config.frames.length > 0 && config.frames[config.frameIndex]) ? config.frames[config.frameIndex].id : null;
             winform.area = {
                 width: _width,
@@ -428,7 +435,7 @@
                 if (config.type !== "group") {
                     var label = document.createElement("label");
                     label.classList.add("layx-label");
-                    label.innerHTML = config.title;
+                    label.innerHTML = config.useFrameTitle === true ? "" : config.title;
                     title.setAttribute("title", label.innerText);
                     title.appendChild(label);
                 } else {
@@ -441,7 +448,7 @@
                             layxWindow.appendChild(groupTab);
                             var label = document.createElement("label");
                             label.classList.add("layx-label");
-                            label.innerHTML = config.title;
+                            label.innerHTML = config.useFrameTitle === true ? "" : config.title;
                             title.setAttribute("title", label.innerText);
                             title.appendChild(label);
                         }
@@ -1107,7 +1114,7 @@
             var that = this;
             var contentShade = (type === "group" ? iframe.parentNode.parentNode : iframe.parentNode).querySelector(".layx-content-shade");
             try {
-                if (config.focusable === true) {
+                if (config.focusable === true && config.enableDomainFocus === true) {
                     if (!iframe.getAttribute("data-focus")) {
                         IframeOnClick.track(iframe, function () {
                             if (Utils.isFunction(config.event.onfocus)) {
@@ -1135,8 +1142,15 @@
                 }
                 iframe.contentWindow.document.addEventListener("click", function (event) {
                     var e = event || window.event || arguments.callee.caller.arguments[0];
-                    if (config.dialogType !== "load" && config.dialogType !== "msg") {
-                        Layx.focusId = config.id;
+                    if (config.focusable === true) {
+                        if (Utils.isFunction(config.event.onfocus)) {
+                            var revel = Utils.isFunction(config.event.onfocus);
+                            if (revel === false) {
+                                return;
+                            }
+                            config.event.onfocus(layxWindow, winform);
+                        }
+                        that.updateZIndex(config.id);
                     }
                 }, false);
                 iframe.contentWindow.document.addEventListener("keydown", function (event) {
@@ -1156,8 +1170,7 @@
                                     var textarea = Layx.getPromptTextArea(focusWindow.id);
                                     focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                                 }
-                            }
-                            else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
+                            } else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
                                 if (focusWindow.dialogType !== "prompt") {
                                     focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                                 } else {
@@ -1611,15 +1624,15 @@
                     }
                     that.updateMinLayout();
                 }
-                var _winform = layxDeepClone({}, winform);
+                var _winform = layxDeepClone({}, {}, winform);
                 delete that.windows[id];
                 that.windows[id] = _winform;
                 that.updateMinLayout();
                 if (layxWindow.classList.contains("layx-min-statu")) {
                     layxWindow.classList.remove("layx-min-statu");
                 }
-                if (Utils.isFunction(winform.event.onrestore.after)) {
-                    winform.event.onrestore.after(layxWindow, winform);
+                if (Utils.isFunction(_winform.event.onrestore.after)) {
+                    _winform.event.onrestore.after(layxWindow, _winform);
                 }
             }
         },
@@ -1808,7 +1821,7 @@
             var that = this;
             that.destroy(id, null, true);
         },
-        destroy: function (id, params, inside, escKey) {
+        destroy: function (id, params, inside, escKey, force) {
             var that = this,
                 windowId = "layx-" + id,
                 layxWindow = document.getElementById(windowId),
@@ -1820,8 +1833,10 @@
                 that.updateZIndex(id);
                 if (Utils.isFunction(winform.event.ondestroy.before)) {
                     var revel = winform.event.ondestroy.before(layxWindow, winform, params || {}, inside === true, escKey === true);
-                    if (revel === false) {
-                        return;
+                    if (force === true) { } else {
+                        if (revel === false) {
+                            return;
+                        }
                     }
                 }
                 if (winform.closable !== true)
@@ -2163,7 +2178,7 @@
         },
         alert: function (title, msg, yes, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 137, 137, 352, 157, ((options && options.dialogIcon) ? true : false));
+            var msgSizeRange = that.getStrSizeRange(msg, 137, 66, 352, 157, ((options && options.dialogIcon) ? true : false));
             var winform = that.create(layxDeepClone({}, {
                 id: (options && options.id) ? options.id : 'layx-dialog-alert-' + Utils.rndNum(8),
                 title: title || "提示消息",
@@ -2172,7 +2187,7 @@
                 content: that.createDialogContent("alert", msg, ((options && options.dialogIcon) ? options.dialogIcon : false)),
                 width: msgSizeRange.width + 20,
                 height: msgSizeRange.height,
-                minHeight: msgSizeRange.height,
+                minHeight: msgSizeRange.height + 73,
                 stickMenu: false,
                 dialogType: "alert",
                 minMenu: false,
@@ -3292,7 +3307,8 @@
                 id: id,
                 title: title,
                 type: 'url',
-                url: url
+                url: url,
+                useFrameTitle: title === true ? true : false
             }, options || {}));
             return winform;
         },
@@ -3311,8 +3327,8 @@
         getWindow: function (id) {
             return Layx.windows[id];
         },
-        destroy: function (id, params) {
-            Layx.destroy(id, params);
+        destroy: function (id, params, force) {
+            Layx.destroy(id, params, false, false, force);
         },
         visual: function (id, status, params) {
             Layx.visual(id, status, params);
@@ -3440,8 +3456,7 @@
                         var textarea = Layx.getPromptTextArea(focusWindow.id);
                         focusWindow.buttons[0].callback(focusWindow.id, (textarea ? textarea.value : "").replace(/(^\s*)|(\s*$)/g, ""), textarea, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                     }
-                }
-                else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
+                } else if (focusWindow.buttonKey.toLowerCase() === "ctrl+enter" && e.ctrlKey) {
                     if (focusWindow.dialogType !== "prompt") {
                         focusWindow.buttons[0].callback(focusWindow.id, Layx.getButton(focusWindow.id, focusWindow.buttons[0].id, e));
                     } else {

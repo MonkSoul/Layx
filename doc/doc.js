@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.8</strong></li>
-                    <li><label>发布日期</label>：2018.06.21</li>
+                    <li><label>当前版本</label>：<strong>v2.4.9</strong></li>
+                    <li><label>发布日期</label>：2018.07.17</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -262,6 +262,17 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.07.17 v2.4.9 发布</h3>
+<pre style="margin-top:0">
+- [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
+- [新增] options.enableDomainFocus参数，设置是否支持跨域点击，默认为true，建议设置为false
+- [新增] 强制关闭窗口方法：layx.destroy(id,params,force)，设置force为true表示强制关闭
+- [更新] 代码优化
+- [修复] alert窗口滚动条 bug
+- [修复] 自动获取iframe标题 bug
+- [修复] iframe窗口焦点事件 bug
+- [修复] 合并窗口组样式 bug
+</pre>
 <h3># 2018.06.21 v2.4.8 发布</h3>
 <pre style="margin-top:0">
 - [新增] options.buttonKey 配置按钮快捷键，支持enter和ctrl+enter
@@ -551,15 +562,19 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] options.buttonKey 配置按钮快捷键，支持enter和ctrl+enter
-- [更新] 输入框prompt快捷键为：Ctrl+Enter，避免和多行文本textarea换行冲突
-- [修复] confirm，prompt 冒泡bug
-- [修复] 输入框prompt 回车值为null bug
+- [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
+- [新增] options.enableDomainFocus参数，设置是否支持跨域点击，默认为true，建议设置为false
+- [新增] 强制关闭窗口方法：layx.destroy(id,params,force)，设置force为true表示强制关闭
+- [更新] 代码优化
+- [修复] alert窗口滚动条 bug
+- [修复] 自动获取iframe标题 bug
+- [修复] iframe窗口焦点事件 bug
+- [修复] 合并窗口组样式 bug
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 170,
+                height: 250,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',

@@ -290,6 +290,24 @@ bottom：下边
             </div>
         </div>
         <div class="doc-item">
+            <p><label>existFlicker：窗口存在闪烁</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false后打开已存在的窗口将不会闪烁。<br />
+            </div>
+        </div>
+        <div class="doc-item">
+            <p><label>enableDomainFocus：启用跨域点击切换窗口</label></p>
+            <div class="doc-des">
+                <span>类型</span>：Boolean<br />
+                <span>必需</span>：否<br />
+                <span>默认值</span>：true<br />
+                <span>说明</span>：设置false后将不支持非同源网站点击切换窗口，设置true有少许性能问题，如果没有涉及到第三方网页，建议设置为false。<br />
+            </div>
+        </div>
+        <div class="doc-item">
             <p><label>frames：窗口组子窗口数组</label></p>
             <div class="doc-des">
                 <span>类型</span>：Array<br />
@@ -934,7 +952,7 @@ winform.event // 窗口事件
         <h3 name="获取当前窗口对象">获取当前窗口对象</h3>
         <pre>var winform = layx.getWindow(id);</pre>
         <h3 name="关闭窗口">关闭窗口</h3>
-        <pre>layx.destroy(id,params);   // 设置了params参数，可以在event.ondestroy.before中监听</pre>
+        <pre>layx.destroy(id,params,force);   // 设置了params参数，可以在event.ondestroy.before中监听；force表示强制关闭窗口，也就是return false失效。</pre>
         <h3 name="显示/隐藏窗口">显示/隐藏窗口</h3>
         <pre>layx.visual(id, status, params);   // status:true显示，false隐藏。设置了params参数，可以在event.onvisual.before中监听</pre>
         <h3 name="窗口最小化">窗口最小化</h3>
