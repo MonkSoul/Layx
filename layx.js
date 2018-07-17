@@ -2186,7 +2186,7 @@
                 type: 'html',
                 content: that.createDialogContent("alert", msg, ((options && options.dialogIcon) ? options.dialogIcon : false)),
                 width: msgSizeRange.width + 20,
-                height: msgSizeRange.height,
+                height: msgSizeRange.height + 73,
                 minHeight: msgSizeRange.height + 73,
                 stickMenu: false,
                 dialogType: "alert",
@@ -2287,7 +2287,7 @@
         },
         prompt: function (title, msg, yes, defaultValue, options) {
             var that = this;
-            var msgSizeRange = that.getStrSizeRange(msg, 200, 165, 352, 200);
+            var msgSizeRange = that.getStrSizeRange(msg, 200, 184, 352, 200);
             var winform = that.create(layxDeepClone({}, {
                 id: (options && options.id) ? options.id : 'layx-dialog-prompt-' + Utils.rndNum(8),
                 title: title || "请输入信息",
