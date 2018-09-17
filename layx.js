@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.9
+ * version : v2.5.0
  * create time : 2018.05.11
- * update time : 2018.07.17
+ * update time : 2018.09.17
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.9',
+        version: '2.5.0',
         defaults: {
             id: '',
             icon: true,
@@ -1942,6 +1942,29 @@
                 layxWindow.style.top = _position.top + "px";
             }
         },
+        setSize: function (id, area) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                if (area) {
+                    if (area["width"]) {
+                        var _width = Utils.compileLayxWidthOrHeight("width", area["width"], that.defaults.width);
+                        winform.area.width = _width;
+                        layxWindow.style.width = _width + "px";
+                    }
+                    if (area["height"]) {
+                        var _height = Utils.compileLayxWidthOrHeight("height", area["height"], that.defaults.height);
+                        winform.area.height = _height;
+                        layxWindow.style.height = _height + "px";
+                    }
+                    if (winform.storeStatus === true) {
+                        that.storeWindowAreaInfo(id, winform.area);
+                    }
+                }
+            }
+        },
         getFrameContext: function (id) {
             var that = this,
                 windowId = "layx-" + id,
@@ -3437,6 +3460,9 @@
         },
         getButton: function (id, buttonId) {
             return Layx.getButton(id, buttonId);
+        },
+        setSize: function (id, area) {
+            Layx.setSize(id, area);
         }
     };
     win.document.addEventListener("keydown", function (event) {

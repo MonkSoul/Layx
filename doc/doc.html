@@ -16,6 +16,8 @@
             height: 100%;
             font-size: 14px;
             line-height: 1.5;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -971,6 +973,8 @@ winform.event // 窗口事件
         <pre>layx.stickToggle(id);</pre>
         <h3 name="设置窗口位置">设置窗口位置</h3>
         <pre>layx.setPosition(id, position,isFloatTarget); // ,isFloatTarget 是否是浮动窗口</pre>
+        <h3 name="设置窗口宽度高度">设置窗口宽度高度</h3>
+        <pre>layx.setSize(id, area); // ,area为json对象 {width:300,height:300} </pre>
         <h3 name="更新浮动窗口位置">更新浮动窗口位置</h3>
         <pre>layx.updateFloatWinPosition(id,direction); // direction，浮动方向</pre>
         <h3 name="获取页面窗口window对象">获取页面窗口window对象</h3>

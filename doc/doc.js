@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.9</strong></li>
-                    <li><label>发布日期</label>：2018.07.17</li>
+                    <li><label>当前版本</label>：<strong>v2.5.0</strong></li>
+                    <li><label>发布日期</label>：2018.09.17</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -160,6 +160,12 @@ window.onload = function () {
             title: '文档',
             type: 'url',
             url: './doc.html'
+        },
+        {
+            id: 'help',
+            title: '<span style="color:#f00;font-weight:600!important;">常见问题</span>',
+            type: 'url',
+            url: './help.html'
         }], 0, {
                 mergeTitle: false,
                 title: 'Layx v' + layx.v,
@@ -262,6 +268,11 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.09.17 v2.5.0 发布</h3>
+<pre style="margin-top:0">
+- [新增] layx.setSize(id,area) 方法，可以动态设置窗口宽度、高度
+- [新增] 【常见问题】栏目
+</pre>
 <h3># 2018.07.17 v2.4.9 发布</h3>
 <pre style="margin-top:0">
 - [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
@@ -562,19 +573,13 @@ window.onload = function () {
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
-- [新增] options.enableDomainFocus参数，设置是否支持跨域点击，默认为true，建议设置为false
-- [新增] 强制关闭窗口方法：layx.destroy(id,params,force)，设置force为true表示强制关闭
-- [更新] 代码优化
-- [修复] alert窗口滚动条 bug
-- [修复] 自动获取iframe标题 bug
-- [修复] iframe窗口焦点事件 bug
-- [修复] 合并窗口组样式 bug
+- [新增] layx.setSize(id,area) 方法，可以动态设置窗口宽度、高度
+- [新增] 【常见问题】栏目
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 250,
+                height: 150,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
