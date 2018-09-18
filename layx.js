@@ -263,11 +263,11 @@
             _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
             _width = Utils.compileLayxWidthOrHeight("width", config.width, that.defaults.width);
             _height = Utils.compileLayxWidthOrHeight("height", config.height, that.defaults.height);
+            _width = Math.max(_width, _minWidth);
+            _height = Math.max(_height, _minHeight);
             var _position = Utils.compileLayxPosition(_width, _height, config.position);
             _top = _position.top;
             _left = _position.left;
-            _width = Math.max(_width, _minWidth);
-            _height = Math.max(_height, _minHeight);
             _top = Math.max(_top, 0);
             _top = Math.min(win.innerHeight - 15, _top);
             _left = Math.max(_left, -(_width - 15));
