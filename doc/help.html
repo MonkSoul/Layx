@@ -51,16 +51,7 @@ top.layx.destroy(id);   // 方法二
         </p>
         <p>
             <a>3. 如何动态设置iframe窗口大小？</a>
-            <pre>function getLayxId() {
-     var id;
-     if (self != top && self.frameElement && self.frameElement.tagName == "IFRAME") {
-         var layxWindow = $(self.frameElement).parents(".layx-window");
-         id = layxWindow.attr("id").substr(5);
-     }
-     return id;
- }
-
-parent.layx.setSize(getLayxId(),{width:1000,height:500});        // 在iframe页面调用
+            <pre>parent.layx.setSize(getLayxId(),{width:1000,height:500});        // 在iframe页面调用
 </pre>
         </p>
     </div>

@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.5.0
+ * version : v2.5.1
  * create time : 2018.05.11
- * update time : 2018.09.17
+ * update time : 2018.09.21
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.5.0',
+        version: '2.5.1',
         defaults: {
             id: '',
             icon: true,
@@ -263,11 +263,11 @@
             _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
             _width = Utils.compileLayxWidthOrHeight("width", config.width, that.defaults.width);
             _height = Utils.compileLayxWidthOrHeight("height", config.height, that.defaults.height);
+            _width = Math.max(_width, _minWidth);
+            _height = Math.max(_height, _minHeight);
             var _position = Utils.compileLayxPosition(_width, _height, config.position);
             _top = _position.top;
             _left = _position.left;
-            _width = Math.max(_width, _minWidth);
-            _height = Math.max(_height, _minHeight);
             _top = Math.max(_top, 0);
             _top = Math.min(win.innerHeight - 15, _top);
             _left = Math.max(_left, -(_width - 15));
