@@ -1129,6 +1129,7 @@
                         iframe.setAttribute("data-focus", "true");
                     }
                 }
+                var iframeTitle = config.title;
                 if (type === "group") {
                     if (frameConfig.useFrameTitle === true) {
                         iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
