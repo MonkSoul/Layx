@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.5.1
+ * version : v2.5.2
  * create time : 2018.05.11
- * update time : 2018.09.21
+ * update time : 2018.09.22
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.5.1',
+        version: '2.5.2',
         defaults: {
             id: '',
             icon: true,
@@ -1129,6 +1129,7 @@
                         iframe.setAttribute("data-focus", "true");
                     }
                 }
+                var iframeTitle = config.title;
                 if (type === "group") {
                     if (frameConfig.useFrameTitle === true) {
                         iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
@@ -1230,7 +1231,6 @@
             iframe.setAttribute("mozallowfullscreen", "");
             iframe.setAttribute("webkitallowfullscreen", "");
             iframe.src = isLoad !== false ? ((type === "group" ? frameConfig.url : config.url) || 'about:blank') : 'about:blank';
-            var iframeTitle = config.title;
             if (iframe.attachEvent) {
                 iframe.attachEvent("onreadystatechange", function () {
                     if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
