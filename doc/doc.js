@@ -101,7 +101,7 @@ window.onload = function () {
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 企业级弹窗组件。</p>
+                <p>Layx 下一代Web弹窗组件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>项目</h2>
                 <ul>
@@ -569,10 +569,10 @@ window.onload = function () {
                 ]
             });
 
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-top'), 'top');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-left'), 'left');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-right'), 'right');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-top'), 'top');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-left'), 'left');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-right'), 'right');
 
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
