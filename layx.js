@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.5.2
+ * version : v2.5.3
  * create time : 2018.05.11
- * update time : 2018.09.22
+ * update time : 2018.10.09
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.5.2',
+        version: '2.5.3',
         defaults: {
             id: '',
             icon: true,
@@ -3024,12 +3024,14 @@
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
                 handle.winform.area.width = handle.layxWindow.offsetWidth;
                 handle.winform.area.height = handle.layxWindow.offsetHeight;
-                Layx.storeWindowAreaInfo(handle.winform.id, {
-                    top: handle.winform.area.top,
-                    left: handle.winform.area.left,
-                    width: handle.winform.area.width,
-                    height: handle.winform.area.height
-                });
+                if (handle.winform.storeStatus === true) {
+                    Layx.storeWindowAreaInfo(handle.winform.id, {
+                        top: handle.winform.area.top,
+                        left: handle.winform.area.left,
+                        width: handle.winform.area.width,
+                        height: handle.winform.area.height
+                    });
+                }
                 if (Utils.isFunction(handle.winform.event.onresize.after)) {
                     handle.winform.event.onresize.after(handle.layxWindow, handle.winform);
                 }
@@ -3220,21 +3222,25 @@
                 LayxDrag.isFirstMoveing = true;
                 handle.winform.area.top = handle.layxWindow.offsetTop;
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
-                Layx.storeWindowAreaInfo(handle.winform.id, {
-                    top: handle.winform.area.top,
-                    left: handle.winform.area.left,
-                    width: handle.winform.area.width,
-                    height: handle.winform.area.height
-                });
-                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true && handle.winform.dragInTopToMax === true) {
-                    handle.winform.area.top = handle.defaultArea.top;
-                    handle.winform.area.left = handle.defaultArea.left;
+                if (handle.winform.storeStatus === true) {
                     Layx.storeWindowAreaInfo(handle.winform.id, {
                         top: handle.winform.area.top,
                         left: handle.winform.area.left,
                         width: handle.winform.area.width,
                         height: handle.winform.area.height
                     });
+                }
+                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true && handle.winform.dragInTopToMax === true) {
+                    handle.winform.area.top = handle.defaultArea.top;
+                    handle.winform.area.left = handle.defaultArea.left;
+                    if (handle.winform.storeStatus === true) {
+                        Layx.storeWindowAreaInfo(handle.winform.id, {
+                            top: handle.winform.area.top,
+                            left: handle.winform.area.left,
+                            width: handle.winform.area.width,
+                            height: handle.winform.area.height
+                        });
+                    }
                     Layx.max(handle.winform.id);
                 }
                 if (Utils.isFunction(handle.winform.event.onmove.after)) {
