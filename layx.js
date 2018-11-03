@@ -1849,7 +1849,9 @@
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
                         var child = html.children[0];
-                        child.style.display = oldNodeInfo.display;
+                        if (child && child.style) {
+                            child.style.display = oldNodeInfo.display;
+                        }
                         if (oldNodeInfo.prev) {
                             setTimeout(function () {
                                 Utils.insertAfter(child, oldNodeInfo.prev);
@@ -1868,7 +1870,9 @@
                             var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-html");
                             if (html) {
                                 var child = html.children[0];
-                                child.style.display = frameInfo.display;
+                                if (child && child.style) {
+                                    child.style.display = frameInfo.display;
+                                }
                                 if (frameInfo.prev) {
                                     setTimeout(function () {
                                         Utils.insertAfter(child, frameInfo.prev);
@@ -2555,10 +2559,12 @@
         },
         insertAfter: function (newEl, targetEl) {
             var parentEl = targetEl.parentNode;
-            if (parentEl.lastChild == targetEl) {
-                parentEl.appendChild(newEl);
-            } else {
-                parentEl.insertBefore(newEl, targetEl.nextSibling);
+            if (newEl) {
+                if (parentEl.lastChild == targetEl) {
+                    parentEl.appendChild(newEl);
+                } else {
+                    parentEl.insertBefore(newEl, targetEl.nextSibling);
+                }
             }
         },
         innerArea: function () {
