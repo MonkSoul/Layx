@@ -101,7 +101,7 @@ window.onload = function () {
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 下一代Web弹窗组件。</p>
+                <p>Layx 新一代Web弹窗组件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>项目</h2>
                 <ul>
@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.5.3</strong></li>
-                    <li><label>发布日期</label>：2018.10.09</li>
+                    <li><label>当前版本</label>：<strong>v2.5.4</strong></li>
+                    <li><label>发布日期</label>：2018.11.03</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -268,6 +268,10 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.11.03 v2.5.4 发布</h3>
+<pre style="margin-top:0">
+- [修复] 关闭窗口、最小化窗口不能恢复页面滚动动态bug，感谢 QQ：869943174
+</pre>
 <h3># 2018.10.09 v2.5.3 发布</h3>
 <pre style="margin-top:0">
 - [修复] 储存窗口大小位置bug，感谢 QQ：315976369
@@ -573,16 +577,16 @@ window.onload = function () {
                 ]
             });
 
-        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-top'), 'top');
-        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
-        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-left'), 'left');
-        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-right'), 'right');
+        layx.tip('Layx 新一代Web弹窗组件.', document.getElementById('tip-top'), 'top');
+        layx.tip('Layx 新一代Web弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
+        layx.tip('Layx 新一代Web弹窗组件.', document.getElementById('tip-left'), 'left');
+        layx.tip('Layx 新一代Web弹窗组件.', document.getElementById('tip-right'), 'right');
 
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [修复] 储存窗口大小位置bug，感谢 QQ：315976369
+- [修复] 关闭窗口、最小化窗口不能恢复页面滚动动态bug，感谢 QQ：869943174
 </pre>
 */ }), {
                 floatTarget: logBtn,

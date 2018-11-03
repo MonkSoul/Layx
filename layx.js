@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.5.3
+ * version : v2.5.4
  * create time : 2018.05.11
- * update time : 2018.10.09
+ * update time : 2018.11.03
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.5.3',
+        version: '2.5.4',
         defaults: {
             id: '',
             icon: true,
@@ -1679,6 +1679,9 @@
                 delete that.windows[id];
                 that.windows[id] = _winform;
                 that.updateMinLayout();
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
+                }
                 if (Utils.isFunction(winform.event.onmin.after)) {
                     winform.event.onmin.after(layxWindow, winform);
                 }
@@ -1882,6 +1885,9 @@
                 Layx.focusId = Layx.prevFocusId;
                 delete that.cloneStore[id];
                 delete that.windows[id];
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
+                }
                 layxWindow.parentNode.removeChild(layxWindow);
                 if (layxShade) {
                     layxShade.parentNode.removeChild(layxShade);
