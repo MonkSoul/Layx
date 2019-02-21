@@ -1,3 +1,9 @@
+# Layx v3.x 版本开发中，新增更多特性：[新特性](https://gitee.com/monksoul/LayX/issues/IRK3V)
+
+# [v3.x 进度](https://gitee.com/monksoul/LayX/tree/v3/)
+
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0219/172155_e701fa71_974299.jpeg "layx.jpg")
+
 # 序言
 
 Layx 新一代Web弹窗组件。
@@ -10,7 +16,6 @@ gzip压缩版仅 `13.5kb`，非常小巧。
 - `开源协议`：MIT
 - `当前版本`：v2.5.4
 - `发布日期`：2018.11.03
-- `交流Q群`：[18863883](//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e)
 - `版权所有`：百签软件（中山）有限公司
 
 # 特性
