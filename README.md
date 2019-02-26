@@ -2,7 +2,7 @@
 
 # [v3.x 进度](https://gitee.com/monksoul/LayX/tree/v3/)
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0226/133328_5fa148e9_974299.png "layx3.0.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0226/145721_0d24161c_974299.png "Layx 3.x Final.png")
 
 # 序言
 
