@@ -1,6 +1,8 @@
-# Layx v3.x 版本开发中，新增更多特性：[新特性](https://gitee.com/monksoul/LayX/issues/IRK3V)
+# Layx v3.x 版本开发中，[v3.x 预览地址](https://monksoul.gitee.io/layx/)
 
-# [v3.x 进度](https://gitee.com/monksoul/LayX/tree/dev/)
+# [v3.x 进度](https://gitee.com/monksoul/LayX/issues/IRK3V)
+
+# [v3.x 项目地址](https://gitee.com/monksoul/LayX/tree/dev/)
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0226/200029_9516065b_974299.png "Layx v3.x Final 2 (1).png")
 
